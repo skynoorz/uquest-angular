@@ -1,0 +1,48 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">Usuarios</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de Usuarios</h5>
+    <div class="my-2 text-left">
+      <button class="btn btn-primary rounded" [routerLink]="['/usuarios/form']">Crear Cliente</button>
+    </div>
+    <div *ngIf="usuarios?.length==0" class="alert-info p-3">
+      No hay registros en la BD
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="usuarios?.length>0">
+      <thead>
+      <tr>
+        <th>id</th>
+        <th>nombres</th>
+        <th>apellidoPat</th>
+        <th>apellidoMat</th>
+        <th>ci</th>
+        <th>sexo</th>
+        <!--      <th>username</th>-->
+        <!--      <th>password</th>-->
+        <th>email</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{usuario.id}}</td>
+        <td>{{usuario.nombres}}</td>
+        <td>{{usuario.apellidoPat}}</td>
+        <td>{{usuario.apellidoMat}}</td>
+        <td>{{usuario.ci}}</td>
+        <td>{{usuario.sexo}}</td>
+        <!--      <td>{{usuario.username}}</td>-->
+        <!--      <td>{{usuario.password}}</td>-->
+        <td>{{usuario.email}}</td>
+        <td>
+          <button [routerLink]="['/usuarios/form',usuario.id]" class="btn btn-primary btn-sm">editar</button>
+        </td>
+        <td>
+          <button (click)="delete(usuario)" class="btn btn-danger btn-sm">eliminar</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

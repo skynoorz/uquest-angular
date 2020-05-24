@@ -1,0 +1,78 @@
+<div class="card bg-dark text-white">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <form>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Nombres</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.nombres" name="nombre" id="nombre">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="apellido_pat" class="col-form-label col-sm-2">Apellido Paterno</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.apellidoPat" name="apellido_pat" id="apellido_pat">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="apellido_mat" class="col-form-label col-sm-2">Apellido Materno</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.apellidoMat" name="apellido_mat" id="apellido_mat">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="ci" class="col-form-label col-sm-2">CI</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.ci" name="ci" id="ci">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="sexo" class="col-form-label col-sm-2">Sexo</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.sexo" name="sexo" id="sexo">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="fnac" class="col-form-label col-sm-2">Fecha Nacimiento</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.fnac" name="fnac" id="fnac">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="email" class="col-form-label col-sm-2">Email</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.email" name="email" id="email">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="username" class="col-form-label col-sm-2">Username</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.username" name="username" id="username">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="password" class="col-form-label col-sm-2">Password</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.password" name="password" id="password">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="enabled" class="col-form-label col-sm-2">Habilitado</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="usuario.enabled" name="enabled" id="enabled">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)="create()" *ngIf="!usuario.id else elseBlock">Crear</button>
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" (click)="update()">Aplicar</button>
+          </ng-template>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+</div>
