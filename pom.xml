@@ -15,7 +15,7 @@
 	<description>Plataforma de Consultoria Estudiantil en la Facultad de Ciencias Puras y Naturales</description>
 
 	<properties>
-		<java.version>14</java.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
@@ -49,6 +49,11 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>2.0.1</version>
 		</dependency>
 	</dependencies>
 
