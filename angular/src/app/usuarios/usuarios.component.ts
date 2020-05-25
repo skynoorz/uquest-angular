@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Usuario} from "./usuario";
 import {UsuarioService} from "./usuario.service";
 import Swal from "sweetalert2";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-usuarios',
@@ -17,9 +18,9 @@ export class UsuariosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.usuarioService.getUsuarios().subscribe(
+    this.usuarioService.getUsuarios().pipe(tap(
       usuarios => this.usuarios = usuarios
-    );
+    )).subscribe();
   }
 
   delete(usuario: Usuario): void {

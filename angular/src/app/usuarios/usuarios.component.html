@@ -27,10 +27,10 @@
       <tbody>
       <tr *ngFor="let usuario of usuarios">
         <td>{{usuario.id}}</td>
-        <td>{{usuario.nombres}}</td>
-        <td>{{usuario.apellidoPat}}</td>
-        <td>{{usuario.apellidoMat}}</td>
-        <td>{{usuario.ci}}</td>
+        <td>{{usuario.nombres | uppercase}}</td>
+        <td>{{usuario.apellidoPat | uppercase}}</td>
+        <td>{{usuario.apellidoMat | uppercase}}</td>
+        <td>{{usuario.fnac | date: "EEEE dd, MMMM, yyyy"}}</td>
         <td>{{usuario.sexo}}</td>
         <!--      <td>{{usuario.username}}</td>-->
         <!--      <td>{{usuario.password}}</td>-->

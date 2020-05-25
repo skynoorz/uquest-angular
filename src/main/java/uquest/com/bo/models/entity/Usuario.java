@@ -1,13 +1,13 @@
 package uquest.com.bo.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -20,66 +20,69 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotEmpty
+    @NotEmpty(message = "no puede estar vacio")
+    @Size(min = 4, max = 22, message = "debe tener entre 4 a 22 letras")
     @Column(nullable = false)
     private String nombres;
 
+    @NotEmpty(message = "no puede estar vacio")
     @Column(nullable = false)
     private String apellidoPat;
 
+    @NotEmpty(message = "no puede estar vacio")
     @Column(nullable = false)
     private String apellidoMat;
 
-    @Column(nullable = false)
+    @NotEmpty(message = "no puede estar vacio")
+    @Size(max = 8, message = "tiene un maximo de 8 caracteres")
+    @Column(nullable = false, unique = true)
     private String ci;
 
+    @NotEmpty(message = "no puede estar vacio")
     @Column(nullable = false)
     private String sexo;
 
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
+    @NotEmpty(message = "no puede estar vacio")
+    @Size(max = 30, message = "tiene un maximo de 30 caracteres")
     @Column(length = 30, unique = true, nullable = false)
     private String username;
 
+    @NotEmpty(message = "no puede estar vacio")
+    @Size(max = 60, message = "tiene un maximo de 60 caracteres")
     @Column(length = 60, nullable = false)
     private String password;
 
     private boolean enabled;
 
+    @NotNull(message = "no puede estar vacio")
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fnac;
 
-    @Email
+    @Email(message = "el correo debe tener formato valido")
+    @NotEmpty(message = "no puede estar vacio")
     @Column(unique = true, nullable = false)
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
+    // RELACIONES
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore
-    @JoinTable(
-            name = "usuarios_institutos",
-            joinColumns = @JoinColumn(name = "instituto_id"),
-            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    @JoinTable(name = "usuarios_institutos", joinColumns = @JoinColumn(name = "instituto_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Instituto> institutos;
 
     @ManyToMany
-    @NotEmpty
+//    @NotEmpty
     @JsonIgnore
-    @JoinTable(
-            name = "usuarios_carreras",
-            joinColumns = @JoinColumn(name = "carrera_id"),
-            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    @JoinTable(name = "usuarios_carreras", joinColumns = @JoinColumn(name = "carrera_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Carrera> carreras;
 
-    //notacion para solo devolver el usuario
     @JsonIgnore
-//    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "usuario_id")
     private List<Encuesta> encuestas;
 
