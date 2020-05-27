@@ -6,10 +6,10 @@ import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-form',
-  templateUrl: './form.component.html'
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
-
   titulo: string = "Crear Cliente"
 
   public usuario: Usuario = new Usuario();

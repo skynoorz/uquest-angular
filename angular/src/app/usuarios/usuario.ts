@@ -10,4 +10,5 @@ export class Usuario{
   enabled: boolean;
   fnac: string;
   email: string;
+  foto: string;
 }

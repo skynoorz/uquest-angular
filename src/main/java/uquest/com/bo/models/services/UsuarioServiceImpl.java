@@ -1,6 +1,8 @@
 package uquest.com.bo.models.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uquest.com.bo.models.dao.IUsuarioDao;
@@ -18,6 +20,12 @@ public class UsuarioServiceImpl implements IUsuarioService{
     @Transactional
     public List<Usuario> findAll() {
         return (List<Usuario>) usuarioDao.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Page<Usuario> findAll(Pageable pageable) {
+        return usuarioDao.findAll(pageable);
     }
 
     @Override

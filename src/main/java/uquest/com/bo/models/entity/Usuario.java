@@ -67,6 +67,10 @@ public class Usuario implements Serializable {
     @Column(unique = true, nullable = false)
     private String email;
 
+    // IMAGEN
+
+    private String foto;
+
     // RELACIONES
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -199,6 +203,14 @@ public class Usuario implements Serializable {
         this.enabled = enabled;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     public void mostrar() {
         System.out.println("ID Usuario: " + this.id);
         for (int i = 0; i < this.carreras.size(); i++) {
@@ -222,6 +234,7 @@ public class Usuario implements Serializable {
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
     }
+
 
     @PrePersist
     public void prePersist() {
