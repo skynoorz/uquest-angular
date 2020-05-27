@@ -47,6 +47,17 @@
           <mat-datepicker #myDatepicker></mat-datepicker>
         </div>
       </div>
+
+      <div class="form-group row">
+        <label for="fnac" class="col-form-label col-sm-2">Carrera</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compararCarrera" class="form-control col-sm-6" [(ngModel)]="usuario.carrera" name="carrera" id="carrera" #carrera="ngModel" style="width: 500px">
+            <option [ngValue]="undefined">--- Seleccionar Carrera ---</option>
+            <option *ngFor="let carrera of carreras" [ngValue]="carrera">{{carrera.nombre}}</option>
+          </select>
+        </div>
+      </div>
+
       <div class="form-group row">
         <label for="email" class="col-form-label col-sm-2">Email</label>
         <div class="col-sm-6">

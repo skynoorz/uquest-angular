@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,7 +56,10 @@ public class Encuesta implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "dispositivo_id"))
     private List<Dispositivo> dispositivos;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+//    @ManyToOne
     private Categoria categoria;
 
     @PrePersist

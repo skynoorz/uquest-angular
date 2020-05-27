@@ -6,6 +6,7 @@ import {map, catchError, tap} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router"
 import {DatePipe} from "@angular/common";
+import {Carrera} from "./carrera";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class UsuarioService {
 
 
   constructor(private http: HttpClient, private router: Router) {
+  }
+
+  getCarreras(): Observable<Carrera[]>{
+    return this.http.get<Carrera[]>(this.urlEndpoint+'/carreras');
   }
 
   getUsuarios(page: number): Observable<any> {

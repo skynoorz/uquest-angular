@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import uquest.com.bo.models.entity.Carrera;
 import uquest.com.bo.models.entity.Usuario;
 import uquest.com.bo.models.services.IUploadFileService;
 import uquest.com.bo.models.services.IUsuarioService;
@@ -131,8 +132,9 @@ public class UsuarioRestController {
             object.setPassword(usuario.getPassword());
 
             object.setEncuestas(usuario.getEncuestas());
-            object.setCarreras(usuario.getCarreras());
-            object.setInstitutos(usuario.getInstitutos());
+            object.setCarrera(usuario.getCarrera());
+//            object.setCarreras(usuario.getCarreras());
+//            object.setInstitutos(usuario.getInstitutos());
             objectUpdated = usuarioService.save(object);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el update en la Base de datos");
@@ -204,5 +206,10 @@ public class UsuarioRestController {
         HttpHeaders cabecera = new HttpHeaders();
         cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
         return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
+    }
+
+    @GetMapping("/usuarios/carreras")
+    public List<Carrera> listarCarreras() {
+        return usuarioService.findAllCarreras();
     }
 }

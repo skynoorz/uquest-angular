@@ -3,6 +3,7 @@ import {Usuario} from "./usuario";
 import {UsuarioService} from "./usuario.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
+import {Carrera} from "./carrera";
 
 @Component({
   selector: 'app-form',
@@ -15,11 +16,16 @@ export class FormComponent implements OnInit {
   public usuario: Usuario = new Usuario();
   public errores: string[];
 
-  constructor(private usuarioService: UsuarioService, private router: Router, private activatedRoute: ActivatedRoute) {
+  carreras: Carrera[];
+
+  constructor(private usuarioService: UsuarioService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.cargarUsuario()
+    this.usuarioService.getCarreras().subscribe(carreras=>{this.carreras = carreras})
   }
 
   cargarUsuario(): void {
@@ -32,6 +38,7 @@ export class FormComponent implements OnInit {
   }
 
   public create(): void {
+    console.log(this.usuario)
     this.usuarioService.create(this.usuario).subscribe(
       response => {
         this.router.navigate(['/usuarios'])
@@ -46,6 +53,7 @@ export class FormComponent implements OnInit {
   }
 
   public update(): void{
+    console.log(this.usuario)
     this.usuarioService.update(this.usuario).subscribe(
       response =>{
         this.router.navigate(['/usuarios'])
@@ -57,6 +65,12 @@ export class FormComponent implements OnInit {
         console.log(error.error.errors)
       }
     )
+  }
+
+  compararCarrera(o1: Carrera, o2: Carrera): boolean{
+    if (o1 === undefined && o2 === undefined)
+      return true;
+    return o1 == null || o2 == null? false: o1.id == o2.id;
   }
 
 }

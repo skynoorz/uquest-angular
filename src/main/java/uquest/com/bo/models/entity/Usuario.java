@@ -1,6 +1,7 @@
 package uquest.com.bo.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,6 +16,8 @@ import java.util.List;
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,16 +76,24 @@ public class Usuario implements Serializable {
 
     // RELACIONES
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonIgnore
-    @JoinTable(name = "usuarios_institutos", joinColumns = @JoinColumn(name = "instituto_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<Instituto> institutos;
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JsonIgnore
+//    @JoinTable(name = "usuarios_institutos",
+//            joinColumns = @JoinColumn(name = "instituto_id"),
+//            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="instituto_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Instituto instituto;
 
-    @ManyToMany
-//    @NotEmpty
-    @JsonIgnore
-    @JoinTable(name = "usuarios_carreras", joinColumns = @JoinColumn(name = "carrera_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<Carrera> carreras;
+//    @ManyToMany
+//    @JsonIgnore
+//    @JoinTable(name = "usuarios_carreras", joinColumns = @JoinColumn(name = "carrera_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="carrera_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @NotNull(message = "la carrera no puede estar vacia")
+    private Carrera carrera;
 
     @JsonIgnore
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
@@ -155,22 +166,6 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    public List<Instituto> getInstitutos() {
-        return institutos;
-    }
-
-    public void setInstitutos(List<Instituto> institutos) {
-        this.institutos = institutos;
-    }
-
-    public List<Carrera> getCarreras() {
-        return carreras;
-    }
-
-    public void setCarreras(List<Carrera> carreras) {
-        this.carreras = carreras;
-    }
-
     public List<Encuesta> getEncuestas() {
         return encuestas;
     }
@@ -203,6 +198,22 @@ public class Usuario implements Serializable {
         this.enabled = enabled;
     }
 
+    public Instituto getInstituto() {
+        return instituto;
+    }
+
+    public void setInstituto(Instituto instituto) {
+        this.instituto = instituto;
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+    }
+
     public String getFoto() {
         return foto;
     }
@@ -211,21 +222,21 @@ public class Usuario implements Serializable {
         this.foto = foto;
     }
 
-    public void mostrar() {
-        System.out.println("ID Usuario: " + this.id);
-        for (int i = 0; i < this.carreras.size(); i++) {
-            System.out.println("Carrera nombre: " + this.carreras.get(i).getNombre());
-            for (int j = 0; j < this.carreras.get(i).getInstitutos().size(); j++) {
-                System.out.println("Insituto nombre: " + this.carreras.get(i).getInstitutos().get(j).getNombre());
-            }
-        }
-    }
-
-    public boolean existeI() {
-        if (this.institutos.size() > 0)
-            return true;
-        return false;
-    }
+//    public void mostrar() {
+//        System.out.println("ID Usuario: " + this.id);
+//        for (int i = 0; i < this.carreras.size(); i++) {
+//            System.out.println("Carrera nombre: " + this.carreras.get(i).getNombre());
+//            for (int j = 0; j < this.carreras.get(i).getInstitutos().size(); j++) {
+//                System.out.println("Insituto nombre: " + this.carreras.get(i).getInstitutos().get(j).getNombre());
+//            }
+//        }
+//    }
+//
+//    public boolean existeI() {
+//        if (this.institutos.size() > 0)
+//            return true;
+//        return false;
+//    }
 
     public Date getCreateAt() {
         return createAt;

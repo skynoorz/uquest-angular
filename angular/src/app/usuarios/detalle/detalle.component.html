@@ -19,7 +19,9 @@
                   <li class="list-group-item">{{usuario.ci}}</li>
                   <li class="list-group-item">{{usuario.sexo}}</li>
                   <li class="list-group-item">{{usuario.email}}</li>
-                  <li class="list-group-item">{{usuario.fnac | date:"fulldate"}}</li>
+                  <li class="list-group-item">{{usuario.carrera.nombre}}</li>
+                  <li class="list-group-item" *ngIf="usuario.instituto">{{usuario.instituto.nombre}}</li>
+                  <li class="list-group-item">{{usuario.fnac | date:"EEEE dd, MMMM, yyyy"}}</li>
                   <li class="list-group-item">{{usuario.username}}</li>
                   <li class="list-group-item">{{usuario.enabled}}</li>
                 </ul>

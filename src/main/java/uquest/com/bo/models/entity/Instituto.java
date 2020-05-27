@@ -1,6 +1,7 @@
 package uquest.com.bo.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -12,6 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "institutos")
 public class Instituto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,13 +32,15 @@ public class Instituto implements Serializable {
     @Email
     private String email;
 
-    @JsonIgnore
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="carrera_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
     private Carrera carrera;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "institutos")
-    private List<Usuario> usuarios;
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "institutos")
+//    private List<Usuario> usuarios;
 
     public Carrera getCarrera() {
         return carrera;
@@ -43,14 +48,6 @@ public class Instituto implements Serializable {
 
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
-    }
-
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
     }
 
     public Long getId() {

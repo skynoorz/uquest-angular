@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uquest.com.bo.models.dao.IUsuarioDao;
+import uquest.com.bo.models.entity.Carrera;
+import uquest.com.bo.models.entity.Instituto;
 import uquest.com.bo.models.entity.Usuario;
 
 import java.util.List;
@@ -42,5 +44,16 @@ public class UsuarioServiceImpl implements IUsuarioService{
     @Override
     public void delete(Long id) {
         usuarioDao.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public List<Carrera> findAllCarreras() {
+        return usuarioDao.findAllCarreras();
+    }
+
+    @Override
+    public List<Instituto> findAllInstitutos() {
+        return usuarioDao.findAllInstitutos();
     }
 }

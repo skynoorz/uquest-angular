@@ -1,3 +1,6 @@
+import {Carrera} from "./carrera";
+import {Instituto} from "./instituto";
+
 export class Usuario{
   id: number;
   nombres: string;
@@ -11,4 +14,6 @@ export class Usuario{
   fnac: string;
   email: string;
   foto: string;
+  carrera: Carrera;
+  instituto: Instituto
 }

@@ -12,6 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "carreras")
 public class Carrera implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,13 +31,9 @@ public class Carrera implements Serializable {
     @Email
     private String email;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "carrera_id")
-    private List<Instituto> institutos;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "carreras")
-    private List<Usuario> usuarios;
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "carreras")
+//    private List<Usuario> usuarios;
 
     public Long getId() {
         return id;
@@ -76,21 +75,4 @@ public class Carrera implements Serializable {
         this.email = email;
     }
 
-    public List<Instituto> getInstitutos() {
-        return institutos;
-    }
-
-    public void setInstitutos(List<Instituto> institutos) {
-        this.institutos.clear();
-        this.institutos.addAll(institutos);
-//        this.institutos = institutos;
-    }
-
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
 }
