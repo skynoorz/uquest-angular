@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "encuestas")
@@ -46,7 +45,7 @@ public class Encuesta implements Serializable {
 
 //    @ManyToOne (fetch = FetchType.LAZY)
     @ManyToOne
-    private Usuario usuario;
+    private Persona persona;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -67,12 +66,12 @@ public class Encuesta implements Serializable {
         createAt = new Date();
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     public List<Dispositivo> getDispositivos() {

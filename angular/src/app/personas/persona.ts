@@ -1,7 +1,7 @@
 import {Carrera} from "./carrera";
 import {Instituto} from "./instituto";
 
-export class Usuario{
+export class Persona{
   id: number;
   nombres: string;
   apellidoPat: string;

@@ -12,18 +12,18 @@
           <div class="container">
             <div class="row">
               <div class="col-sm">
-                <ul class="list-group text-dark mb-3" *ngIf="usuario">
-                  <li class="list-group-item">{{usuario.nombres}}</li>
-                  <li class="list-group-item">{{usuario.apellidoPat}}</li>
-                  <li class="list-group-item">{{usuario.apellidoMat}}</li>
-                  <li class="list-group-item">{{usuario.ci}}</li>
-                  <li class="list-group-item">{{usuario.sexo}}</li>
-                  <li class="list-group-item">{{usuario.email}}</li>
-                  <li class="list-group-item">{{usuario.carrera.nombre}}</li>
-                  <li class="list-group-item" *ngIf="usuario.instituto">{{usuario.instituto.nombre}}</li>
-                  <li class="list-group-item">{{usuario.fnac | date:"EEEE dd, MMMM, yyyy"}}</li>
-                  <li class="list-group-item">{{usuario.username}}</li>
-                  <li class="list-group-item">{{usuario.enabled}}</li>
+                <ul class="list-group text-dark mb-3" *ngIf="persona">
+                  <li class="list-group-item">{{persona.nombres}}</li>
+                  <li class="list-group-item">{{persona.apellidoPat}}</li>
+                  <li class="list-group-item">{{persona.apellidoMat}}</li>
+                  <li class="list-group-item">{{persona.ci}}</li>
+                  <li class="list-group-item">{{persona.sexo}}</li>
+                  <li class="list-group-item">{{persona.email}}</li>
+                  <li class="list-group-item">{{persona.carrera.nombre}}</li>
+                  <li class="list-group-item" *ngIf="persona.instituto">{{persona.instituto.nombre}}</li>
+                  <li class="list-group-item">{{persona.fnac | date:"EEEE dd, MMMM, yyyy"}}</li>
+                  <li class="list-group-item">{{persona.username}}</li>
+                  <li class="list-group-item">{{persona.enabled}}</li>
                 </ul>
                 <div class="input-group mb-3">
                   <div class="custom-file">
@@ -45,8 +45,8 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm" *ngIf="usuario?.foto">
-                <img src="http://localhost:8080/api/uploads/img/{{usuario.foto}}" alt="{{usuario.foto}}"
+              <div class="col-sm" *ngIf="persona?.foto">
+                <img src="http://localhost:8080/api/uploads/img/{{persona.foto}}" alt="{{persona.foto}}"
                      class="img-thumbnail rounded">
               </div>
             </div>

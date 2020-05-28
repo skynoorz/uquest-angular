@@ -40,7 +40,7 @@ public class Instituto implements Serializable {
 
 //    @JsonIgnore
 //    @ManyToMany(mappedBy = "institutos")
-//    private List<Usuario> usuarios;
+//    private List<Persona> usuarios;
 
     public Carrera getCarrera() {
         return carrera;

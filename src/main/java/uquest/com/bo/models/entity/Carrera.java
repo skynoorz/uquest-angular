@@ -33,7 +33,7 @@ public class Carrera implements Serializable {
 
 //    @JsonIgnore
 //    @ManyToMany(mappedBy = "carreras")
-//    private List<Usuario> usuarios;
+//    private List<Persona> usuarios;
 
     public Long getId() {
         return id;

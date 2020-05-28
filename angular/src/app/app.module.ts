@@ -9,23 +9,23 @@ import localeES from "@angular/common/locales/es-BO";
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
-import {UsuariosComponent} from './usuarios/usuarios.component';
+import {PersonasComponent} from './personas/personas.component';
 import { PaginatorComponent } from './paginator/paginator.component';
-import { FormComponent } from './usuarios/form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
-import { DetalleComponent } from './usuarios/detalle/detalle.component';
+import {FormComponent} from "./personas/form.component";
+import {DetalleComponent} from "./personas/detalle/detalle.component";
 
 registerLocaleData(localeES, 'es')
 
 const routes: Routes = [
   {path: '', redirectTo: '/', pathMatch: 'full'},
-  {path: 'usuarios', component: UsuariosComponent},
-  {path: 'usuarios/page/:page', component: UsuariosComponent},
-  {path: 'usuarios/form', component: FormComponent},
-  {path: 'usuarios/form/:id', component: FormComponent},
-  // {path: 'usuarios/ver/:id', component: DetalleComponent}
+  {path: 'personas', component: PersonasComponent},
+  {path: 'personas/page/:page', component: PersonasComponent},
+  {path: 'personas/form', component: FormComponent},
+  {path: 'personas/form/:id', component: FormComponent},
+  // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
 @NgModule({
@@ -33,7 +33,7 @@ const routes: Routes = [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    UsuariosComponent,
+    PersonasComponent,
     FormComponent,
     PaginatorComponent,
     DetalleComponent

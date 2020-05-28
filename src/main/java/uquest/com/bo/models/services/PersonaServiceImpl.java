@@ -5,55 +5,55 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uquest.com.bo.models.dao.IUsuarioDao;
+import uquest.com.bo.models.dao.IPersonaDao;
 import uquest.com.bo.models.entity.Carrera;
 import uquest.com.bo.models.entity.Instituto;
-import uquest.com.bo.models.entity.Usuario;
+import uquest.com.bo.models.entity.Persona;
 
 import java.util.List;
 
 @Service
-public class UsuarioServiceImpl implements IUsuarioService{
+public class PersonaServiceImpl implements IPersonaService {
 
     @Autowired
-    private IUsuarioDao usuarioDao;
+    private IPersonaDao personaDao;
 
     @Override
     @Transactional
-    public List<Usuario> findAll() {
-        return (List<Usuario>) usuarioDao.findAll();
+    public List<Persona> findAll() {
+        return (List<Persona>) personaDao.findAll();
     }
 
     @Override
     @Transactional
-    public Page<Usuario> findAll(Pageable pageable) {
-        return usuarioDao.findAll(pageable);
+    public Page<Persona> findAll(Pageable pageable) {
+        return personaDao.findAll(pageable);
     }
 
     @Override
     @Transactional
-    public Usuario findById(Long id) {
-        return usuarioDao.findById(id).orElse(null);
+    public Persona findById(Long id) {
+        return personaDao.findById(id).orElse(null);
     }
 
     @Override
-    public Usuario save(Usuario usuario) {
-        return usuarioDao.save(usuario);
+    public Persona save(Persona persona) {
+        return personaDao.save(persona);
     }
 
     @Override
     public void delete(Long id) {
-        usuarioDao.deleteById(id);
+        personaDao.deleteById(id);
     }
 
     @Transactional
     @Override
     public List<Carrera> findAllCarreras() {
-        return usuarioDao.findAllCarreras();
+        return personaDao.findAllCarreras();
     }
 
     @Override
     public List<Instituto> findAllInstitutos() {
-        return usuarioDao.findAllInstitutos();
+        return personaDao.findAllInstitutos();
     }
 }

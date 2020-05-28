@@ -10,39 +10,39 @@
       <div class="form-group row">
         <label for="nombre" class="col-form-label col-sm-2">Nombres</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.nombres" name="nombre" id="nombre" #nombre="ngModel"> <!-- required -->
+          <input type="text" class="form-control" [(ngModel)]="persona.nombres" name="nombre" id="nombre" #nombre="ngModel"> <!-- required -->
         </div>
       </div>
       <div class="form-group row">
         <label for="apellido_pat" class="col-form-label col-sm-2">Apellido Paterno</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.apellidoPat" name="apellido_pat"
+          <input type="text" class="form-control" [(ngModel)]="persona.apellidoPat" name="apellido_pat"
                  id="apellido_pat"  #apellido_pat="ngModel">
         </div>
       </div>
       <div class="form-group row">
         <label for="apellido_mat" class="col-form-label col-sm-2">Apellido Materno</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.apellidoMat" name="apellido_mat"
+          <input type="text" class="form-control" [(ngModel)]="persona.apellidoMat" name="apellido_mat"
                  id="apellido_mat" #apellido_mat="ngModel">
         </div>
       </div>
       <div class="form-group row">
         <label for="ci" class="col-form-label col-sm-2">CI</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.ci" name="ci" id="ci"  #ci="ngModel">
+          <input type="text" class="form-control" [(ngModel)]="persona.ci" name="ci" id="ci"  #ci="ngModel">
         </div>
       </div>
       <div class="form-group row">
         <label for="sexo" class="col-form-label col-sm-2">Sexo</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.sexo" name="sexo" id="sexo" #sexo="ngModel">
+          <input type="text" class="form-control" [(ngModel)]="persona.sexo" name="sexo" id="sexo" #sexo="ngModel">
         </div>
       </div>
       <div class="form-group row">
         <label for="fnac" class="col-form-label col-sm-2">Fecha Nacimiento</label>
         <div class="col-sm-6">
-          <input class="form-control col-sm-6" [(ngModel)]="usuario.fnac" name="fnac" id="fnac" #fnac="ngModel" [matDatepicker]="myDatepicker" style="display: inline">
+          <input class="form-control col-sm-6" [(ngModel)]="persona.fnac" name="fnac" id="fnac" #fnac="ngModel" [matDatepicker]="myDatepicker" style="display: inline">
           <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
           <mat-datepicker #myDatepicker></mat-datepicker>
         </div>
@@ -51,9 +51,19 @@
       <div class="form-group row">
         <label for="fnac" class="col-form-label col-sm-2">Carrera</label>
         <div class="col-sm-6">
-          <select [compareWith]="compararCarrera" class="form-control col-sm-6" [(ngModel)]="usuario.carrera" name="carrera" id="carrera" #carrera="ngModel" style="width: 500px">
+          <select [compareWith]="compararCarrera" class="form-control col-sm-6" [(ngModel)]="persona.carrera" name="carrera" id="carrera" #carrera="ngModel" style="width: 500px">
             <option [ngValue]="undefined">--- Seleccionar Carrera ---</option>
             <option *ngFor="let carrera of carreras" [ngValue]="carrera">{{carrera.nombre}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row" *ngIf="carrera">
+        <label for="fnac" class="col-form-label col-sm-2">Instituto</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compararCarrera" class="form-control col-sm-6" [(ngModel)]="persona.instituto" name="instituto" id="instituto" #instituto="ngModel" style="width: 500px">
+            <option [ngValue]="undefined">--- Seleccionar Instituto ---</option>
+            <option *ngFor="let instituto of institutos" [ngValue]="instituto">{{instituto.sigla}}</option>
           </select>
         </div>
       </div>
@@ -61,31 +71,31 @@
       <div class="form-group row">
         <label for="email" class="col-form-label col-sm-2">Email</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.email" name="email" id="email" #email="ngModel">
+          <input type="text" class="form-control" [(ngModel)]="persona.email" name="email" id="email" #email="ngModel">
         </div>
       </div>
       <div class="form-group row">
         <label for="username" class="col-form-label col-sm-2">Username</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.username" name="username" id="username" #username="ngModel">
+          <input type="text" class="form-control" [(ngModel)]="persona.username" name="username" id="username" #username="ngModel">
         </div>
       </div>
       <div class="form-group row">
         <label for="password" class="col-form-label col-sm-2">Password</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.password" name="password" id="password" #password="ngModel">
+          <input type="text" class="form-control" [(ngModel)]="persona.password" name="password" id="password" #password="ngModel">
         </div>
       </div>
       <div class="form-group row">
         <label for="enabled" class="col-form-label col-sm-2">Habilitado</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="usuario.enabled" name="enabled" id="enabled" #enabled="ngModel">
+          <input type="text" class="form-control" [(ngModel)]="persona.enabled" name="enabled" id="enabled" #enabled="ngModel">
         </div>
       </div>
 
       <div class="form-group row">
         <div class="col-sm-6">
-          <button class="btn btn-primary" role="button" (click)="create()" *ngIf="!usuario.id else elseBlock">Crear
+          <button class="btn btn-primary" role="button" (click)="create()" *ngIf="!persona.id else elseBlock">Crear
           </button>
           <ng-template #elseBlock>
             <button class="btn btn-primary" role="button" (click)="update()">Aplicar</button>

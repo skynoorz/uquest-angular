@@ -16,9 +16,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uquest.com.bo.models.entity.Carrera;
-import uquest.com.bo.models.entity.Usuario;
+import uquest.com.bo.models.entity.Instituto;
+import uquest.com.bo.models.entity.Persona;
 import uquest.com.bo.models.services.IUploadFileService;
-import uquest.com.bo.models.services.IUsuarioService;
+import uquest.com.bo.models.services.IPersonaService;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -28,53 +29,53 @@ import java.util.*;
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/api")
-public class UsuarioRestController {
+public class PersonaRestController {
 
-    private final Logger log = LoggerFactory.getLogger(UsuarioRestController.class);
+    private final Logger log = LoggerFactory.getLogger(PersonaRestController.class);
 
     @Autowired
     private IUploadFileService uploadFileService;
 
     @Autowired
-    private IUsuarioService usuarioService;
+    private IPersonaService personaService;
 
-    @GetMapping("/usuarios")
-    public List<Usuario> index() {
-        return usuarioService.findAll();
+    @GetMapping("/personas")
+    public List<Persona> index() {
+        return personaService.findAll();
     }
 
-    @GetMapping("/usuarios/page/{page}")
-    public Page<Usuario> index(@PathVariable Integer page) {
+    @GetMapping("/personas/page/{page}")
+    public Page<Persona> index(@PathVariable Integer page) {
         Pageable pageable = PageRequest.of(page, 3);
-        return usuarioService.findAll(pageable);
+        return personaService.findAll(pageable);
     }
 
-    @GetMapping("/usuarios/{id}")
+    @GetMapping("/personas/{id}")
     public ResponseEntity<?> show(@PathVariable Long id) {
 
-        Usuario usuario = null;
+        Persona persona = null;
         Map<String, Object> response = new HashMap<>();
         try {
-            usuario = usuarioService.findById(id);
+            persona = personaService.findById(id);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar la consulta en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        if (usuario == null) {
+        if (persona == null) {
             response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+        return new ResponseEntity<Persona>(persona, HttpStatus.OK);
     }
 
-    @PostMapping("/usuarios")
+    @PostMapping("/personas")
 //    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> create(@Valid @RequestBody Usuario usuario, BindingResult result) {
-        Usuario usuarioNew;
+    public ResponseEntity<?> create(@Valid @RequestBody Persona persona, BindingResult result) {
+        Persona personaNew;
         Map<String, Object> response = new HashMap<>();
-//        usuario.setEnabled(true);
+//        persona.setEnabled(true);
         // sending error to FE
         if (result.hasErrors()) {
             List<String> errors = new ArrayList<>();
@@ -85,23 +86,23 @@ public class UsuarioRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            usuarioNew = usuarioService.save(usuario);
+            personaNew = personaService.save(persona);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        response.put("usuario", usuarioNew);
-        response.put("mensaje", "El registro del usuario correctamente");
+        response.put("persona", personaNew);
+        response.put("mensaje", "El registro del persona correctamente");
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/usuarios/{id}")
-    public ResponseEntity<?> update(@Valid @RequestBody Usuario usuario, BindingResult result, @PathVariable Long id) {
+    @PutMapping("/personas/{id}")
+    public ResponseEntity<?> update(@Valid @RequestBody Persona persona, BindingResult result, @PathVariable Long id) {
 
-        Usuario object = usuarioService.findById(id);
-        Usuario objectUpdated = null;
+        Persona object = personaService.findById(id);
+        Persona objectUpdated = null;
         Map<String, Object> response = new HashMap<>();
 
         // sending error to FE
@@ -119,75 +120,75 @@ public class UsuarioRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
         try {
-            object.setCi(usuario.getCi());
-            object.setApellidoMat(usuario.getApellidoMat());
-            object.setApellidoPat(usuario.getApellidoPat());
-            object.setNombres(usuario.getNombres());
-            object.setSexo(usuario.getSexo());
-            object.setEmail(usuario.getEmail());
-            object.setEnabled(usuario.isEnabled());
-            object.setFnac(usuario.getFnac());
+            object.setCi(persona.getCi());
+            object.setApellidoMat(persona.getApellidoMat());
+            object.setApellidoPat(persona.getApellidoPat());
+            object.setNombres(persona.getNombres());
+            object.setSexo(persona.getSexo());
+            object.setEmail(persona.getEmail());
+            object.setEnabled(persona.isEnabled());
+            object.setFnac(persona.getFnac());
 
-            object.setUsername(usuario.getUsername());
-            object.setPassword(usuario.getPassword());
+            object.setUsername(persona.getUsername());
+            object.setPassword(persona.getPassword());
 
-            object.setEncuestas(usuario.getEncuestas());
-            object.setCarrera(usuario.getCarrera());
-//            object.setCarreras(usuario.getCarreras());
-//            object.setInstitutos(usuario.getInstitutos());
-            objectUpdated = usuarioService.save(object);
+            object.setEncuestas(persona.getEncuestas());
+            object.setCarrera(persona.getCarrera());
+//            object.setCarreras(persona.getCarreras());
+//            object.setInstitutos(persona.getInstitutos());
+            objectUpdated = personaService.save(object);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el update en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        response.put("mensaje", "El registro del usuario se actualizo correctamente");
-        response.put("usuario", objectUpdated);
+        response.put("mensaje", "El registro del persona se actualizo correctamente");
+        response.put("persona", objectUpdated);
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/usuarios/{id}")
+    @DeleteMapping("/personas/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
         try {
             // BORRAR IMAGEN
-            Usuario usuario = usuarioService.findById(id);
-            String nombreFotoAnterior = usuario.getFoto();
+            Persona persona = personaService.findById(id);
+            String nombreFotoAnterior = persona.getFoto();
 
             uploadFileService.eliminar(nombreFotoAnterior);
 
             // BORRAR CLIENTE
-            usuarioService.delete(id);
+            personaService.delete(id);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al eliminar el cliente en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        response.put("mensaje", "El registro del usuario con id: '".concat(id.toString().concat("' se elimino correctamente")));
+        response.put("mensaje", "El registro de la persona con id: '".concat(id.toString().concat("' se elimino correctamente")));
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/usuarios/upload")
+    @PostMapping("/personas/upload")
     public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
         Map<String, Object> response = new HashMap<>();
-        Usuario usuario = usuarioService.findById(id);
+        Persona persona = personaService.findById(id);
 
         if (!archivo.isEmpty()) {
             String nombreArchivo =null;
             try {
                 nombreArchivo = uploadFileService.copiar(archivo);
             }catch (IOException e){
-                response.put("mensaje", "Error al subir la imagen del usuario");
+                response.put("mensaje", "Error al subir la imagen del persona");
                 response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
                 return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            String nombreFotoAnterior = usuario.getFoto();
+            String nombreFotoAnterior = persona.getFoto();
             uploadFileService.eliminar(nombreFotoAnterior);
 
-            usuario.setFoto(nombreArchivo);
-            usuarioService.save(usuario);
+            persona.setFoto(nombreArchivo);
+            personaService.save(persona);
 
-            response.put("usuario", usuario);
+            response.put("persona", persona);
             response.put("mensaje", "se subio correctamente la imagen: " + nombreArchivo);
         }
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
@@ -208,8 +209,13 @@ public class UsuarioRestController {
         return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
     }
 
-    @GetMapping("/usuarios/carreras")
+    @GetMapping("/personas/carreras")
     public List<Carrera> listarCarreras() {
-        return usuarioService.findAllCarreras();
+        return personaService.findAllCarreras();
+    }
+
+    @GetMapping("/personas/institutos")
+    public List<Instituto> listarInstitutos() {
+        return personaService.findAllInstitutos();
     }
 }

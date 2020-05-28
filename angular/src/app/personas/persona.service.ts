@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Usuario} from "./usuario";
+import {Persona} from "./persona";
 import {Observable, of, throwError} from "rxjs";
 import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from "@angular/common/http";
 import {map, catchError, tap} from "rxjs/operators";
@@ -7,13 +7,14 @@ import Swal from "sweetalert2";
 import {Router} from "@angular/router"
 import {DatePipe} from "@angular/common";
 import {Carrera} from "./carrera";
+import {Instituto} from "./instituto";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService {
+export class PersonaService {
 
-  private urlEndpoint: string = "http://localhost:8080/api/usuarios"
+  private urlEndpoint: string = "http://localhost:8080/api/personas"
   httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
 
 
@@ -23,39 +24,42 @@ export class UsuarioService {
   getCarreras(): Observable<Carrera[]>{
     return this.http.get<Carrera[]>(this.urlEndpoint+'/carreras');
   }
+  getInstitutos(): Observable<Instituto[]>{
+    return this.http.get<Instituto[]>(this.urlEndpoint+'/institutos');
+  }
 
-  getUsuarios(page: number): Observable<any> {
+  getPersonas(page: number): Observable<any> {
     return this.http.get(this.urlEndpoint + '/page/' + page).pipe(
       tap((response: any) => {
-        console.log('usuario service: tap 1');
-        (response.content as Usuario[]).forEach(usuario => {
-          console.log(usuario.nombres)
+        console.log('persona service: tap 1');
+        (response.content as Persona[]).forEach(persona => {
+          console.log(persona.nombres)
         });
       }),
       map((response: any) => {
         // formato personalizado de fecha y demas datos
-        (response.content as Usuario[]).map(usuario => {
+        (response.content as Persona[]).map(persona => {
           // nombres
-          // usuario.nombres = usuario.nombres.toUpperCase();
+          // persona.nombres = persona.nombres.toUpperCase();
           // fecha nacimiento
           // let datePipe = new DatePipe('es')
-          // usuario.fnac = datePipe.transform(usuario.fnac, 'EEEE dd, MMMM, yyyy')
-          return usuario;
+          // persona.fnac = datePipe.transform(persona.fnac, 'EEEE dd, MMMM, yyyy')
+          return persona;
         });
         return response;
       }),
       tap(
         response => {
-          console.log('usuario service: tap 2');
-          (response.content as Usuario[]).forEach(usuario => {
-            console.log(usuario.nombres)
+          console.log('persona service: tap 2');
+          (response.content as Persona[]).forEach(persona => {
+            console.log(persona.nombres)
           });
         })
     )
   }
 
-  create(usuario: Usuario): Observable<any> {
-    return this.http.post<any>(this.urlEndpoint, usuario, {headers: this.httpHeaders}).pipe(
+  create(persona: Persona): Observable<any> {
+    return this.http.post<any>(this.urlEndpoint, persona, {headers: this.httpHeaders}).pipe(
       catchError(err => {
         if (err.status == 400) {
           return throwError(err);
@@ -67,10 +71,10 @@ export class UsuarioService {
     )
   }
 
-  getUsuario(id): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.urlEndpoint}/${id}`).pipe(
+  getPersona(id): Observable<Persona> {
+    return this.http.get<Persona>(`${this.urlEndpoint}/${id}`).pipe(
       catchError(err => {
-        this.router.navigate(['/usuarios'])
+        this.router.navigate(['/personas'])
         console.log(err.error.mensaje)
         Swal.fire({icon: 'error', title: 'Oops...', text: 'Error al editar', footer: err.error.mensaje})
         return throwError(err);
@@ -78,8 +82,8 @@ export class UsuarioService {
     )
   }
 
-  update(usuario: Usuario): Observable<any> {
-    return this.http.put<any>(`${this.urlEndpoint}/${usuario.id}`, usuario, {headers: this.httpHeaders}).pipe(
+  update(persona: Persona): Observable<any> {
+    return this.http.put<any>(`${this.urlEndpoint}/${persona.id}`, persona, {headers: this.httpHeaders}).pipe(
       catchError(err => {
         if (err.status == 400) {
           return throwError(err);
@@ -91,8 +95,8 @@ export class UsuarioService {
     )
   }
 
-  delete(id: number): Observable<Usuario> {
-    return this.http.delete<Usuario>(`${this.urlEndpoint}/${id}`, {headers: this.httpHeaders}).pipe(
+  delete(id: number): Observable<Persona> {
+    return this.http.delete<Persona>(`${this.urlEndpoint}/${id}`, {headers: this.httpHeaders}).pipe(
       catchError(err => {
         console.log(err.error.mensaje)
         Swal.fire({icon: 'error', title: err.error.mensaje, text: err.error.error})

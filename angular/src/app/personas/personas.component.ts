@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Usuario} from "./usuario";
-import {UsuarioService} from "./usuario.service";
+import {Persona} from "./persona";
+import {PersonaService} from "./persona.service";
 import Swal from "sweetalert2";
 import {tap} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
@@ -8,18 +8,18 @@ import {Observable} from "rxjs";
 import {ModalService} from "./detalle/modal.service";
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.css']
+  selector: 'app-personas',
+  templateUrl: './personas.component.html',
+  styleUrls: ['./personas.component.css']
 })
-export class UsuariosComponent implements OnInit {
+export class PersonasComponent implements OnInit {
 
-  usuarios: Usuario[]
+  personas: Persona[]
   paginador: any;
-  usuarioSeleccionado: Usuario;
+  personaSeleccionado: Persona;
 
   //aca inicializamos el service
-  constructor(private usuarioService: UsuarioService,
+  constructor(private personaService: PersonaService,
               private activatedRoute: ActivatedRoute,
               private modalService: ModalService) {
   }
@@ -31,33 +31,33 @@ export class UsuariosComponent implements OnInit {
         if (!page)
           page = 0;
 
-        this.usuarioService.getUsuarios(page)
+        this.personaService.getPersonas(page)
           .pipe(
             tap(response => {
               console.log('ClientesComponent: tap 3');
-              (response.content as Usuario[]).forEach(usuario => {
-                console.log(usuario.nombres);
+              (response.content as Persona[]).forEach(persona => {
+                console.log(persona.nombres);
               });
-              // this.usuarios = usuarios
+              // this.personas = personas
             })).subscribe(response => {
-          this.usuarios = response.content as Usuario[];
+          this.personas = response.content as Persona[];
           this.paginador = response;
         });
       });
-    this.modalService.notificarUpload.subscribe(usuario =>{
-      this.usuarios.map(usuarioOriginal =>{
-        if (usuario.id == usuarioOriginal.id){
-          usuarioOriginal.foto = usuario.foto;
+    this.modalService.notificarUpload.subscribe(persona =>{
+      this.personas.map(personaOriginal =>{
+        if (persona.id == personaOriginal.id){
+          personaOriginal.foto = persona.foto;
         }
-        return usuarioOriginal;
+        return personaOriginal;
       })
     })
   }
 
-  delete(usuario: Usuario): void {
+  delete(persona: Persona): void {
     Swal.fire({
       title: 'Estas seguro?',
-      text: "Esta decision eliminara todas las encuestas creadas por este usuario!",
+      text: "Esta decision eliminara todas las encuestas creadas por este persona!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -65,12 +65,12 @@ export class UsuariosComponent implements OnInit {
       confirmButtonText: 'Si, eliminalo!'
     }).then((result) => {
       if (result.value) {
-        this.usuarioService.delete(usuario.id).subscribe(
+        this.personaService.delete(persona.id).subscribe(
           response => {
-            this.usuarios = this.usuarios.filter(usu => usu !== usuario)
+            this.personas = this.personas.filter(usu => usu !== persona)
             Swal.fire(
               'Eliminado!',
-              `El usuario ${usuario.nombres} a sido eliminado`,
+              `El persona ${persona.nombres} a sido eliminado`,
               'success'
             )
           }
@@ -79,8 +79,8 @@ export class UsuariosComponent implements OnInit {
     })
   }
 
-  abrirModal(usuario: Usuario){
-    this.usuarioSeleccionado = usuario;
+  abrirModal(persona: Persona){
+    this.personaSeleccionado = persona;
     this.modalService.abrirModal();
   }
 
