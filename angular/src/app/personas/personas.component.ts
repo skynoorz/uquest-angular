@@ -6,6 +6,7 @@ import {tap} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 import {ModalService} from "./detalle/modal.service";
+import {AuthService} from "../usuarios/auth.service";
 
 @Component({
   selector: 'app-personas',
@@ -21,32 +22,33 @@ export class PersonasComponent implements OnInit {
   //aca inicializamos el service
   constructor(private personaService: PersonaService,
               private activatedRoute: ActivatedRoute,
-              private modalService: ModalService) {
+              private modalService: ModalService,
+              public authService: AuthService) {
   }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
-        let page: number = +params.get('page');
+      let page: number = +params.get('page');
 
-        if (!page)
-          page = 0;
+      if (!page)
+        page = 0;
 
-        this.personaService.getPersonas(page)
-          .pipe(
-            tap(response => {
-              console.log('ClientesComponent: tap 3');
-              (response.content as Persona[]).forEach(persona => {
-                console.log(persona.nombres);
-              });
-              // this.personas = personas
-            })).subscribe(response => {
-          this.personas = response.content as Persona[];
-          this.paginador = response;
-        });
+      this.personaService.getPersonas(page)
+        .pipe(
+          tap(response => {
+            console.log('ClientesComponent: tap 3');
+            (response.content as Persona[]).forEach(persona => {
+              console.log(persona.nombres);
+            });
+            // this.personas = personas
+          })).subscribe(response => {
+        this.personas = response.content as Persona[];
+        this.paginador = response;
       });
-    this.modalService.notificarUpload.subscribe(persona =>{
-      this.personas.map(personaOriginal =>{
-        if (persona.id == personaOriginal.id){
+    });
+    this.modalService.notificarUpload.subscribe(persona => {
+      this.personas = this.personas.map(personaOriginal => {
+        if (persona.id == personaOriginal.id) {
           personaOriginal.foto = persona.foto;
         }
         return personaOriginal;
@@ -79,7 +81,7 @@ export class PersonasComponent implements OnInit {
     })
   }
 
-  abrirModal(persona: Persona){
+  abrirModal(persona: Persona) {
     this.personaSeleccionado = persona;
     this.modalService.abrirModal();
   }

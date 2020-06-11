@@ -1,1 +1,77 @@
+@font-face {
+  font-family: Metropolis-Black;
+  src: url(../assets/fonts/Metropolis-Black.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-BlackItalic;
+  src: url(../assets/fonts/Metropolis-BlackItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-Bold;
+  src: url(../assets/fonts/Metropolis-Bold.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-BoldItalic;
+  src: url(../assets/fonts/Metropolis-BoldItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-ExtraBold;
+  src: url(../assets/fonts/Metropolis-ExtraBold.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-ExtraBolditalic;
+  src: url(../assets/fonts/Metropolis-ExtraBolditalic.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-ExtraLight;
+  src: url(../assets/fonts/Metropolis-ExtraLight.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-ExtraLightItalic;
+  src: url(../assets/fonts/Metropolis-ExtraLightItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-Light;
+  src: url(../assets/fonts/Metropolis-Light.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-LightItalic;
+  src: url(../assets/fonts/Metropolis-LightItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-Medium;
+  src: url(../assets/fonts/Metropolis-Medium.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-MediumItalic;
+  src: url(../assets/fonts/Metropolis-MediumItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-Regular;
+  src: url(../assets/fonts/Metropolis-Regular.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-RegularItalic;
+  src: url(../assets/fonts/Metropolis-RegularItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-SemiBold;
+  src: url(../assets/fonts/Metropolis-SemiBold.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-SemiBoldItalic;
+  src: url(../assets/fonts/Metropolis-SemiBoldItalic.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-Thin;
+  src: url(../assets/fonts/Metropolis-Thin.otf) format("opentype");
+}
+@font-face {
+  font-family: Metropolis-ThinItalic;
+  src: url(../assets/fonts/Metropolis-ThinItalic.otf) format("opentype");
+}
+
+
+
+
 

@@ -1,0 +1,159 @@
+<div class="container pt-5">
+  <h3 class="h3 card-header">Registro</h3>
+  <mat-vertical-stepper style="background-color: transparent" linear #stepper>
+    <mat-step label="Step 1" [stepControl]="formGroup1" errorMessage="Nombres son requeridos.">
+      <form [formGroup]="formGroup1">
+        <ng-template matStepLabel>Ingresa tus nombres</ng-template>
+        <mat-form-field>
+          <mat-label>Nombre</mat-label>
+          <input matInput placeholder="ej: Pepito" formControlName="nombres" [(ngModel)]="persona.nombres" required autofocus>
+        </mat-form-field>
+        <div>
+          <button mat-stroked-button matStepperPrevious>Atras</button>
+          <button mat-stroked-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Step 2" [stepControl]="formGroup2">
+      <form [formGroup]="formGroup2">
+        <ng-template matStepLabel>Ingrese sus apellidos</ng-template>
+        <mat-form-field>
+          <mat-label>Apellido Paterno</mat-label>
+          <input matInput placeholder="ej: Perez" formControlName="appat" [(ngModel)]="persona.apellidoPat" required>
+        </mat-form-field>
+        <ng-template matStepLabel>Ingrese su apellido Materno</ng-template>
+        <mat-form-field>
+          <mat-label>Apellido Materno</mat-label>
+          <input matInput placeholder="ej: Perez" formControlName="apmat" value="" [(ngModel)]="persona.apellidoMat">
+        </mat-form-field>
+
+        <div>
+          <button mat-stroked-button matStepperPrevious>Atras</button>
+          <button mat-stroked-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+<!--    <mat-step label="Step 3" [stepControl]="formGroup2" optional>-->
+<!--      <form [formGroup]="formGroup2">-->
+<!--        <ng-template matStepLabel>Ingrese su apellido Materno</ng-template>-->
+<!--        <mat-form-field>-->
+<!--          <mat-label>Apellido Materno</mat-label>-->
+<!--          <input matInput placeholder="ej: Perez" formControlName="apmat" [(ngModel)]="persona.apellidoMat" required>-->
+<!--        </mat-form-field>-->
+<!--        <div>-->
+<!--          <button mat-stroked-button matStepperPrevious>Atras</button>-->
+<!--          <button mat-stroked-button matStepperNext>Siguiente</button>-->
+<!--        </div>-->
+<!--      </form>-->
+<!--    </mat-step>-->
+    <mat-step label="Step 4" [stepControl]="formGroup4">
+      <form [formGroup]="formGroup4">
+        <ng-template matStepLabel>Ingrese su cedula de identidad</ng-template>
+        <mat-form-field>
+          <mat-label>CI</mat-label>
+          <input matInput placeholder="ej: 12345678" formControlName="ci" [(ngModel)]="persona.ci" required>
+        </mat-form-field>
+        <div>
+          <button mat-stroked-button matStepperPrevious>Atras</button>
+          <button mat-stroked-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Step 5" [stepControl]="formGroup5">
+      <form [formGroup]="formGroup5">
+        <ng-template matStepLabel>Ingrese su sexo</ng-template>
+        <div class="row">
+          <mat-radio-group formControlName="sexo" class="p-3" [(ngModel)]="persona.sexo">
+            <mat-radio-button class="example-radio-button pl-3 pr-3" *ngFor="let sexo of sexos" [value]="sexo">{{sexo}}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div>
+          <button mat-stroked-button matStepperPrevious>Atras</button>
+          <button mat-stroked-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Step 6" [stepControl]="formGroup6">
+      <form [formGroup]="formGroup6">
+        <ng-template matStepLabel>Ingrese su Fecha de nacimiento</ng-template>
+        <div class="col-sm-6">
+          <input matInput (dateInput)="persona.fnac = $event.value.format('YYYY-MM-DD')" [(ngModel)]="persona.fnac" formControlName="fnac" name="fnac" id="fnac" [matDatepicker]="myDatepicker"
+                 style="display: inline">
+          <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #myDatepicker></mat-datepicker>
+        </div>
+        <div>
+          <button mat-stroked-button matStepperPrevious>Atras</button>
+          <button mat-stroked-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Step 7" [stepControl]="formGroup7">
+      <form [formGroup]="formGroup7">
+        <ng-template matStepLabel>Introduzca su correo electronico.</ng-template>
+        <div class="mb-3">
+          <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input [(ngModel)]="persona.email" formControlName="email" name="email" id="email" matInput [errorStateMatcher]="matcher"
+                   placeholder="Ex. pat@example.com">
+            <!--          <mat-hint>Errors appear instantly!</mat-hint>-->
+            <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-stroked-button matStepperPrevious>Atras</button>
+          <button mat-stroked-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Step 8" [stepControl]="formGroup8">
+      <form [formGroup]="formGroup8">
+        <ng-template matStepLabel>Ingrese su Carrera</ng-template>
+        <mat-form-field  >
+          <mat-label>Carreras</mat-label>
+          <mat-select [(ngModel)]="persona.carrera" name="carrera" formControlName="carrera">
+            <mat-option *ngFor="let carrera of carreras" [value]="carrera">
+              {{carrera.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-stroked-button matStepperPrevious>Atras</button>
+          <button mat-stroked-button matStepperNext (click)="cargaInstitutos()">Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Step 9" [stepControl]="formGroup9" optional>
+      <form [formGroup]="formGroup9">
+        <ng-template matStepLabel>Ingrese su Instituto</ng-template>
+        <mat-form-field  >
+          <mat-label>Institutos</mat-label>
+          <mat-select [(ngModel)]="persona.instituto" name="instituto" formControlName="instituto">
+            <mat-option value="null" >No estoy en ningun instituto</mat-option>
+            <mat-option *ngFor="let instituto of institutos" [value]="instituto">
+              {{instituto.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-stroked-button matStepperPrevious>Atras</button>
+          <button mat-stroked-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Fin</ng-template>
+      <p>Estas listo para empezar!</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="crear()">Enviar</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
+

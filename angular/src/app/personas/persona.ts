@@ -1,7 +1,7 @@
 import {Carrera} from "./carrera";
 import {Instituto} from "./instituto";
 
-export class Persona{
+export class Persona {
   id: number;
   nombres: string;
   apellidoPat: string;
@@ -15,5 +15,6 @@ export class Persona{
   email: string;
   foto: string;
   carrera: Carrera;
-  instituto: Instituto
+  instituto: Instituto;
+  roles: string[] = [];
 }

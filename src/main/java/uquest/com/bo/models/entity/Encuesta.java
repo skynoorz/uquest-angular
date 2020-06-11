@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "encuestas")
 public class Encuesta implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,13 +41,13 @@ public class Encuesta implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "encuesta_id")
-    private List<Pregunta> preguntas = new ArrayList<Pregunta>();
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "encuesta_id")
+//    private List<Usuario> usuarios = new ArrayList<Usuario>();
 
 //    @ManyToOne (fetch = FetchType.LAZY)
-    @ManyToOne
-    private Persona persona;
+//    @ManyToOne()
+//    private Usuario usuario;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -61,17 +63,15 @@ public class Encuesta implements Serializable {
 //    @ManyToOne
     private Categoria categoria;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "encuesta_id")
+    private List<Pregunta> preguntas;
+
     @PrePersist
     public void prePersist() {
         createAt = new Date();
-    }
-
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
     }
 
     public List<Dispositivo> getDispositivos() {
@@ -144,29 +144,5 @@ public class Encuesta implements Serializable {
 
     public void setPreguntas(List<Pregunta> preguntas) {
         this.preguntas = preguntas;
-    }
-
-    public String mostrar(){
-        System.out.println("id:" + this.getId());
-        System.out.println("titulo:" + this.getTitulo());
-        System.out.println("tipo:" + this.getTipo());
-        System.out.println("createAt:" + this.getCreateAt());
-        System.out.println("fechaIni:" + this.getFechaIni());
-        System.out.println("fechaFin:" + this.getFechaFin());
-        try {
-            System.out.println("categoria id: "+this.getCategoria().getId());
-            System.out.println("categoria nombre: "+this.getCategoria().getNombre());
-        }catch (Exception e){
-            System.out.println("error con categoria");
-        };
-        try {
-            for (int i = 0; i < this.getPreguntas().size(); i++) {
-                System.out.println("pregunta "+i+ " id:"+this.getPreguntas().get(i).getId());
-                System.out.println("pregunta "+i+ " descrip:"+this.getPreguntas().get(i).getDescripcion());
-            }
-        }catch (Exception e){
-            System.out.println("error con preguntas");
-        };
-        return "";
     }
 }

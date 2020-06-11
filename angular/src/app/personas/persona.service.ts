@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Persona} from "./persona";
-import {Observable, of, throwError} from "rxjs";
-import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from "@angular/common/http";
+import {Observable, throwError} from "rxjs";
+import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
 import {map, catchError, tap} from "rxjs/operators";
-import Swal from "sweetalert2";
 import {Router} from "@angular/router"
-import {DatePipe} from "@angular/common";
 import {Carrera} from "./carrera";
 import {Instituto} from "./instituto";
 
@@ -14,18 +12,48 @@ import {Instituto} from "./instituto";
 })
 export class PersonaService {
 
-  private urlEndpoint: string = "http://localhost:8080/api/personas"
-  httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
+  private urlEndpoint: string = "http://localhost:8080/api/usuarios"
+  // httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
+  // clase 153
 
+  // private isNoAutorizado(e): boolean{
+  //   if (e.status==401){
+  //     if (this.authService.isAuthenticated())
+  //       this.authService.logout()
+  //     this.router.navigate(['/login'])
+  //     return true;
+  //   }
+  //   if (e.status==403){
+  //     Swal.fire("Acceso denegado","lo siento, no tienes acceso a este recurso", "warning")
+  //     this.router.navigate(['/personas'])
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  getCarreras(): Observable<Carrera[]>{
-    return this.http.get<Carrera[]>(this.urlEndpoint+'/carreras');
+  // private agregarAuthorizationHeader(){
+  //   let token = this.authService.token;
+  //   if (token != null)
+  //   {
+  //     // console.log("Mi token:"+ token);
+  //     return this.httpHeaders.append('Authorization','Bearer '+token);
+  //   }
+  //   return this.httpHeaders;
+  // }
+
+  getCarreras(): Observable<Carrera[]> {
+    return this.http.get<Carrera[]>(this.urlEndpoint + '/carreras');
   }
-  getInstitutos(): Observable<Instituto[]>{
-    return this.http.get<Instituto[]>(this.urlEndpoint+'/institutos');
+
+  getInstitutos(): Observable<Instituto[]> {
+    return this.http.get<Instituto[]>(this.urlEndpoint + '/institutos');
+  }
+
+  getRoles(): Observable<string[]>{
+    return this.http.get<string[]>(this.urlEndpoint+'/roles');
   }
 
   getPersonas(page: number): Observable<any> {
@@ -59,47 +87,50 @@ export class PersonaService {
   }
 
   create(persona: Persona): Observable<any> {
-    return this.http.post<any>(this.urlEndpoint, persona, {headers: this.httpHeaders}).pipe(
+    return this.http.post<any>(this.urlEndpoint, persona).pipe(
       catchError(err => {
-        if (err.status == 400) {
+        if (err.status == 400 ) {
           return throwError(err);
         }
-        console.log(err.error.mensaje)
-        Swal.fire({icon: 'error', title: err.error.mensaje, text: err.error.error})
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
         return throwError(err);
       })
     )
   }
 
   getPersona(id): Observable<Persona> {
+    console.log("respuesta en service: "+this.http.get(`${this.urlEndpoint}/${id}`));
     return this.http.get<Persona>(`${this.urlEndpoint}/${id}`).pipe(
       catchError(err => {
-        this.router.navigate(['/personas'])
-        console.log(err.error.mensaje)
-        Swal.fire({icon: 'error', title: 'Oops...', text: 'Error al editar', footer: err.error.mensaje})
+        if (err.status != 401 && err.error.mensaje){
+          this.router.navigate(['/personas'])
+          console.log(err.error.mensaje)
+        }
         return throwError(err);
       })
     )
   }
 
   update(persona: Persona): Observable<any> {
-    return this.http.put<any>(`${this.urlEndpoint}/${persona.id}`, persona, {headers: this.httpHeaders}).pipe(
+    console.log(persona);
+    return this.http.put<any>(`${this.urlEndpoint}/${persona.id}`, persona).pipe(
       catchError(err => {
         if (err.status == 400) {
           return throwError(err);
         }
-        console.log(err.error.mensaje)
-        Swal.fire({icon: 'error', title: err.error.mensaje, text: err.error.error})
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
         return throwError(err);
       })
     )
   }
 
   delete(id: number): Observable<Persona> {
-    return this.http.delete<Persona>(`${this.urlEndpoint}/${id}`, {headers: this.httpHeaders}).pipe(
+    return this.http.delete<Persona>(`${this.urlEndpoint}/${id}`).pipe(
       catchError(err => {
-        console.log(err.error.mensaje)
-        Swal.fire({icon: 'error', title: err.error.mensaje, text: err.error.error})
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
         return throwError(err);
       })
     )
@@ -109,7 +140,8 @@ export class PersonaService {
     let formData = new FormData();
     formData.append("archivo", archivo);
     formData.append("id", id);
-    const req = new HttpRequest('POST', `${this.urlEndpoint}/upload`, formData,{
+
+    const req = new HttpRequest('POST', `${this.urlEndpoint}/upload`, formData, {
       reportProgress: true
     })
     return this.http.request(req);

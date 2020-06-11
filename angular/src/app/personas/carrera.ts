@@ -1,3 +1,5 @@
+import {Instituto} from "./instituto";
+
 export class Carrera{
 
   id: number;
@@ -5,5 +7,5 @@ export class Carrera{
   direccion: string;
   fono: string;
   email: string;
-  instituto
+  instituto: Instituto[];
 }

@@ -10,10 +10,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "preguntas")
 public class Pregunta implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +31,23 @@ public class Pregunta implements Serializable {
     @NotEmpty
     private String tipo;
 
-    @ManyToOne
-    private Encuesta encuesta;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name="encuesta_id")
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    @NotNull(message = "la encuesta no puede estar vacia")
+//    private Encuesta encuesta;
 
     //sin este json ignore hay error para agregar a la bd
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "preguntas_opciones",
-            joinColumns = @JoinColumn(name = "opcion_id"),
-            inverseJoinColumns = @JoinColumn(name = "pregunta_id"))
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "preguntas_opciones",
+//            joinColumns = @JoinColumn(name = "opcion_id"),
+//            inverseJoinColumns = @JoinColumn(name = "pregunta_id"))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "preguntas_opciones",
+            joinColumns = @JoinColumn(name = "pregunta_id"),
+            inverseJoinColumns = @JoinColumn(name = "opcion_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"pregunta_id","opcion_id"})})
     private List<Opcion> opciones = new ArrayList<>();
 
     @PrePersist
@@ -66,14 +77,6 @@ public class Pregunta implements Serializable {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
-    }
-
-    public Encuesta getEncuesta() {
-        return encuesta;
-    }
-
-    public void setEncuesta(Encuesta encuesta) {
-        this.encuesta = encuesta;
     }
 
     public String getTipo() {

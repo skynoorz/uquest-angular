@@ -19,23 +19,31 @@ export class FormComponent implements OnInit {
 
   carreras: Carrera[];
   institutos: Instituto[];
+  roles: string[];
+
+  ngOnInit(): void {
+    this.cargarPersona()
+    this.personaService.getCarreras().subscribe(carreras=>{this.carreras = carreras})
+    this.personaService.getInstitutos().subscribe(institutos=>{this.institutos = institutos})
+    this.personaService.getRoles().subscribe(roles =>{this.roles = roles})
+  }
 
   constructor(private personaService: PersonaService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
   }
 
-  ngOnInit(): void {
-    this.cargarPersona()
-    this.personaService.getCarreras().subscribe(carreras=>{this.carreras = carreras})
-    this.personaService.getInstitutos().subscribe(institutos=>{this.institutos = institutos})
-  }
+
 
   cargarPersona(): void {
+
     this.activatedRoute.params.subscribe(params => {
       let id = params ['id']
       if (id) {
         this.personaService.getPersona(id).subscribe((persona) => this.persona = persona)
+        console.log(id)
+        console.log("Persona que encuentra: "+this.personaService.getPersona(id));
+        console.log("Persona registrada: "+this.persona)
       }
     })
   }
@@ -56,11 +64,11 @@ export class FormComponent implements OnInit {
   }
 
   public update(): void{
-    console.log(this.persona)
+    console.log("Persona: "+this.persona)
     this.personaService.update(this.persona).subscribe(
       response =>{
-        this.router.navigate(['/personas'])
         Swal.fire('Cliente actualizado', `${response.mensaje}: ${response.persona.nombres}`, 'success')
+        this.router.navigate(['/personas'])
       },
       error => {
         this.errores = error.error.errors as string[];
@@ -71,6 +79,12 @@ export class FormComponent implements OnInit {
   }
 
   compararCarrera(o1: Carrera, o2: Carrera): boolean{
+    if (o1 === undefined && o2 === undefined)
+      return true;
+    return o1 == null || o2 == null? false: o1.id == o2.id;
+  }
+
+  compararInstituto(o1: Instituto, o2: Instituto): boolean{
     if (o1 === undefined && o2 === undefined)
       return true;
     return o1 == null || o2 == null? false: o1.id == o2.id;
