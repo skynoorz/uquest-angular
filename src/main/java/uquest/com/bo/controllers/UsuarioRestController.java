@@ -77,15 +77,6 @@ public class UsuarioRestController {
     public ResponseEntity<?> create(@Valid @RequestBody Usuario usuario, BindingResult result) {
         Usuario usuarioNew;
         Map<String, Object> response = new HashMap<>();
-//
-//        List<Role> roles = null;
-//        Role rol = new Role();
-//        rol.setNombre("ROLE_ADMIN");
-//        Role rol2 = new Role();
-//        rol2.setNombre("ROLE_USER");
-//        roles.add(rol);
-//        roles.add(rol2);
-//        usuario.setRoles(roles);
 
 //        usuario.setEnabled(true);
         // sending error to FE
@@ -97,6 +88,7 @@ public class UsuarioRestController {
             response.put("errors", errors);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
+        usuario.setEnabled(true);
         try {
             usuarioNew = usuarioService.save(usuario);
         } catch (DataAccessException e) {

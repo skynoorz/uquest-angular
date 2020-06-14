@@ -7,6 +7,7 @@ import {CarreraService} from "../services/carrera.service";
 import {Instituto} from "../personas/instituto";
 import {ErrorStateMatcher} from "@angular/material/core";
 import Swal from "sweetalert2";
+import {Rol} from "../classes/rol";
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -34,7 +35,6 @@ export class RegistroComponent implements OnInit {
   isLinear = false;
   formGroup1: FormGroup;
   formGroup2: FormGroup;
-  formGroup3: FormGroup;
   formGroup4: FormGroup;
   formGroup5: FormGroup;
   formGroup6: FormGroup;
@@ -58,13 +58,17 @@ export class RegistroComponent implements OnInit {
     // this.institutos = [];
     this.carreraService.getCarreras().subscribe(carreras=>{this.carreras = carreras})
     this.persona.roles = [];
+    const role = new Rol();
+    role.nombre = 'ROLE_USER';
+    role.id = 1;
+    this.persona.roles.push(role);
     // var role_admin = {"id": 2, "nombre": "ROLE_ADMIN"};
     // var role_user = {"id": 1, "nombre": "ROLE_USER"};
     // this.persona.roles.push(role_admin)
 
     // temporal
     this.persona.username= "nuevo";
-    this.persona.password= "nuevo";
+    this.persona.password= "$2a$10$AuVPIT7a91qFNLWOVYV1Nu/54WoLzas9wWePl6LYMSAUqziEeW8MC";
 
     this.formGroup1 = this._formBuilder.group({
       nombres: ['', Validators.required]
@@ -101,7 +105,7 @@ export class RegistroComponent implements OnInit {
     console.log(this.persona.roles)
     this.personaService.create(this.persona).subscribe(
       response => {
-        Swal.fire('Cliente Guardado', `${response.mensaje}: ${response.persona.nombres}`, 'success')
+        Swal.fire('Cliente Guardado', `${response.mensaje}`, 'success')
       },
       error => {
         this.errores = error.error.errors as string[];

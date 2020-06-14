@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Persona} from "../personas/persona";
+import {Rol} from "../classes/rol";
+import {stringify} from "querystring";
 
 @Injectable({
   providedIn: 'root'
@@ -97,11 +99,14 @@ export class AuthService {
     sessionStorage.clear();
   }
 
+  // hasRole(role: Rol): boolean{
   hasRole(role: string): boolean{
     if (this.isAuthenticated()){
       if (this.persona.roles !=null){
-        if (this.persona.roles.includes(role))
-          return true;
+        for(let i = 0; i < this.persona.roles.length; i++)
+          // @ts-ignore
+          if (this.persona.roles[i] == role)
+            return true;
         return false;
       }
       return false;

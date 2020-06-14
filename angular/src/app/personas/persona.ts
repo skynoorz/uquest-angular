@@ -1,5 +1,6 @@
 import {Carrera} from "./carrera";
 import {Instituto} from "./instituto";
+import {Rol} from "../classes/rol";
 
 export class Persona {
   id: number;
@@ -16,5 +17,5 @@ export class Persona {
   foto: string;
   carrera: Carrera;
   instituto: Instituto;
-  roles: string[] = [];
+  roles: Rol[] = [];
 }
