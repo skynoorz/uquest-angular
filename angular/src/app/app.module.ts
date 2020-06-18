@@ -32,6 +32,8 @@ import {MatSelectModule} from "@angular/material/select";
 
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
+import { PresignComponent } from './registro/presign.component';
+import {MatCardModule} from '@angular/material/card';
 
 registerLocaleData(localeES, 'es')
 
@@ -43,7 +45,8 @@ const routes: Routes = [
   {path: 'personas/form/:id', component: FormComponent},
   {path: 'login', component: LoginComponent},
   {path: '', component: HomeComponent, pathMatch: 'full'},
-  {path: 'registro', component: RegistroComponent},
+  // {path: 'registro', component: RegistroComponent},
+  {path: 'registro', component: PresignComponent},
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
@@ -59,6 +62,7 @@ const routes: Routes = [
     LoginComponent,
     HomeComponent,
     RegistroComponent,
+    PresignComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +78,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatInputModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule
   ],
   providers: [
     {

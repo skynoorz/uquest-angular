@@ -229,4 +229,22 @@ public class UsuarioRestController {
     public List<Role> listarRoles(){
         return usuarioService.findAllRoles();
     }
+
+    @GetMapping("/usuarios/userexist/{username}")
+    public ResponseEntity<?> datauser(@PathVariable String username){
+
+        Usuario usuarioNew = null;
+        Map<String, Object> response = new HashMap<>();
+
+        usuarioNew = usuarioService.findByUsername(username);
+
+        if (usuarioNew != null){
+            response.put("respuesta", true);
+            response.put("mensaje", "El usuario ya existe");
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+        }
+        response.put("respuesta", false);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
+    }
 }

@@ -115,6 +115,7 @@ export class PersonaService {
   update(persona: Persona): Observable<any> {
     console.log(persona);
     return this.http.put<any>(`${this.urlEndpoint}/${persona.id}`, persona).pipe(
+
       catchError(err => {
         if (err.status == 400) {
           return throwError(err);
@@ -145,5 +146,11 @@ export class PersonaService {
       reportProgress: true
     })
     return this.http.request(req);
+  }
+
+  userExist(username: string): Observable<any>{
+    console.log(username);
+    // console.log(this.http.get(`${this.urlEndpoint}/userexist/${username}`))
+    return this.http.get<any>(`${this.urlEndpoint}/userexist/${username}`);
   }
 }
