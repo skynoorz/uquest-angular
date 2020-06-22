@@ -1,123 +1,178 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {Persona} from "../personas/persona";
 import {PersonaService} from "../personas/persona.service";
 import {Carrera} from "../personas/carrera";
 import {CarreraService} from "../services/carrera.service";
 import {Instituto} from "../personas/instituto";
-import {ErrorStateMatcher} from "@angular/material/core";
 import Swal from "sweetalert2";
-import {Rol} from "../classes/rol";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { startWith, map, tap, switchMap } from "rxjs/operators";
 
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
-
-
 export class RegistroComponent implements OnInit {
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
 
-  matcher = new MyErrorStateMatcher();
+  user: any = { carreraId: 1};
+  form = new FormGroup({});
 
-  isLinear = false;
-  formGroup1: FormGroup;
-  formGroup2: FormGroup;
-  formGroup4: FormGroup;
-  formGroup5: FormGroup;
-  formGroup6: FormGroup;
-  formGroup7: FormGroup;
-  formGroup8: FormGroup;
-  formGroup9: FormGroup;
-
-  sexos: string[]= ["Masculino", "Femenino"];
-
-  public persona: Persona = new Persona();
-
-  public institutos: Instituto[];
-  public carreras: Carrera[];
-  public errores: string[];
+  fields: FormlyFieldConfig[] = [
+    {
+      key: 'nombres',
+      type: 'input',
+      templateOptions: {
+        label: 'Nombres',
+        minLength: 4,
+        maxLength: 22,
+        required: true
+      }
+    },
+    {
+      key: 'apellidoPat',
+      type: 'input',
+      templateOptions: {
+        label: 'Apellido paterno',
+        required: true
+      }
+    },
+    {
+      key: 'apellidoMat',
+      type: 'input',
+      templateOptions: {
+        label: 'Apellido materno',
+        required: true
+      }
+    },
+    {
+      key: 'ci',
+      type: 'input',
+      templateOptions: {
+        label: 'CI',
+        maxLength: 8,
+        required: true
+      }
+    },
+    {
+      key: 'sexo',
+      type: 'select',
+      templateOptions: {
+        label: 'Sexo',
+        options: [
+          {label: 'Masculino', value: 'Masculino'},
+          {label: 'Femenino', value: 'Femenino'},
+        ],
+        required: true
+      }
+    },
+    {
+      key: 'fnac',
+      type: 'datepicker',
+      templateOptions: {
+        label: 'Fecha de nacimiento',
+        required: true
+      }
+    },
+    {
+      key: 'carreraId',
+      type: 'select',
+      templateOptions: {
+        label: 'Carrera',
+        options: this.carreraService.getCarreras(),
+        valueProp: 'id',
+        labelProp: 'nombre',
+        required: true
+      }
+    },
+    {
+      key: 'institutoId',
+      type: 'select',
+      templateOptions: {
+        label: 'Instituto',
+        options: [],
+        valueProp: 'id',
+        labelProp: 'nombre'
+      },
+      hooks: {
+        onInit: field => {
+          const carreraControl = this.form.get('carreraId');
+          field.templateOptions.options = carreraControl.valueChanges.pipe(
+            startWith(carreraControl.value),
+            switchMap(carreraId => this.carreraService.getInstitutosByCarreraId(carreraId)),
+            tap(() => field.formControl.setValue(null)),
+          );
+        },
+      },
+    },
+    {
+      key: 'email',
+      type: 'input',
+      templateOptions: {
+        label: 'Email',
+        pattern: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+        required: true,
+      },
+      validation: {
+        messages: {
+          pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" no es una email valida`,
+        },
+      },
+    },
+    {
+      key: 'username',
+      type: 'input',
+      templateOptions: {
+        label: 'Username',
+        maxLength: 30,
+        required: true
+      },
+      modelOptions: {
+        updateOn: 'blur',
+      },
+      asyncValidators: {
+        uniqueUsername: {
+          expression: (control: FormControl) => this.personaService.userExist(control.value).toPromise(),
+          message: 'Usuario ya existente',
+        },
+      }
+    },
+    {
+      key: 'password',
+      type: 'input',
+      templateOptions: {
+        type: 'password',
+        label: 'Password',
+        maxLength: 60,
+        required: true
+      }
+    }
+  ];
 
   constructor(private _formBuilder: FormBuilder,
               private personaService: PersonaService,
               private carreraService: CarreraService) { }
 
   ngOnInit(): void {
-    // this.institutos = [];
-    this.carreraService.getCarreras().subscribe(carreras=>{this.carreras = carreras})
-    this.persona.roles = [];
-    const role = new Rol();
-    role.nombre = 'ROLE_USER';
-    role.id = 1;
-    this.persona.roles.push(role);
-    // var role_admin = {"id": 2, "nombre": "ROLE_ADMIN"};
-    // var role_user = {"id": 1, "nombre": "ROLE_USER"};
-    // this.persona.roles.push(role_admin)
 
-    // temporal
-    this.persona.username= "nuevo";
-    this.persona.password= "$2a$10$AuVPIT7a91qFNLWOVYV1Nu/54WoLzas9wWePl6LYMSAUqziEeW8MC";
-
-    this.formGroup1 = this._formBuilder.group({
-      nombres: ['', Validators.required]
-    });
-    this.formGroup2 = this._formBuilder.group({
-      appat: ['', Validators.required],
-      apmat: ['', ""]
-    });
-    // this.formGroup3 = this._formBuilder.group({
-    //   apmat: ['', Validators.required]
-    // });
-    this.formGroup4 = this._formBuilder.group({
-      ci: ['', Validators.required]
-    });
-    this.formGroup5 = this._formBuilder.group({
-      sexo: ['', Validators.required]
-    });
-    this.formGroup6 = this._formBuilder.group({
-      fnac: ['', Validators.required]
-    });
-    this.formGroup7 = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
-    });
-    this.formGroup8 = this._formBuilder.group({
-      carrera: ['', Validators.required]
-    });
-    this.formGroup9 = this._formBuilder.group({
-      instituto: ['', Validators.required]
-    });
   }
 
-  crear(): void{
-    console.log(this.persona)
-    console.log(this.persona.roles)
-    this.personaService.create(this.persona).subscribe(
+  onSubmit(user: any) {
+    console.log('user', user);
+    // creo persona model
+    user.carrera = {id: user.carreraId};
+    user.instituto = {id: user.institutoId};
+    this.personaService.create(this.user).subscribe(
       response => {
         Swal.fire('Cliente Guardado', `${response.mensaje}`, 'success')
       },
       error => {
-        this.errores = error.error.errors as string[];
+        //this.errores = error.error.errors as string[];
         console.log('Codigo de error desde backend: '+error.status)
         console.log(error.error.errors)
       }
-    )
-  }
-
-  cargaInstitutos() {
-    // console.log("llamo a mi service y le envio mi carrera id: "+this.persona.carrera.id);
-    this.carreraService.getInstitutosByCarreraId(this.persona.carrera.id).subscribe((institutos)=>{this.institutos = institutos});
+    );
   }
 
 }

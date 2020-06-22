@@ -34,6 +34,9 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
 import { PresignComponent } from './registro/presign.component';
 import {MatCardModule} from '@angular/material/card';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { FormlyMatDatepickerModule } from "@ngx-formly/material/datepicker";
 
 registerLocaleData(localeES, 'es')
 
@@ -46,9 +49,28 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', component: HomeComponent, pathMatch: 'full'},
   // {path: 'registro', component: RegistroComponent},
-  {path: 'registro', component: PresignComponent},
+  {path: 'registro', component: RegistroComponent},
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
+
+// TODO traducir!
+// validations config
+export function minlengthValidationMessage(err, field) {
+  return `Should have atleast ${field.templateOptions.minLength} characters`;
+}
+
+export function maxlengthValidationMessage(err, field) {
+  return `This value should be less than ${field.templateOptions.maxLength} characters`;
+}
+
+export function minValidationMessage(err, field) {
+  return `This value should be more than ${field.templateOptions.min}`;
+}
+
+export function maxValidationMessage(err, field) {
+  return `This value should be less than ${field.templateOptions.max}`;
+}
+
 
 @NgModule({
   declarations: [
@@ -79,7 +101,20 @@ const routes: Routes = [
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    FormlyModule.forRoot(
+      {
+        validationMessages: [
+          { name: 'required', message: 'This field is required' },
+          { name: 'minlength', message: minlengthValidationMessage },
+          { name: 'maxlength', message: maxlengthValidationMessage },
+          { name: 'min', message: minValidationMessage },
+          { name: 'max', message: maxValidationMessage },
+        ],
+      }
+    ),
+    FormlyMaterialModule,
+    FormlyMatDatepickerModule
   ],
   providers: [
     {
