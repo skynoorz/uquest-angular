@@ -6,6 +6,7 @@ import {map, catchError, tap} from "rxjs/operators";
 import {Router} from "@angular/router"
 import {Carrera} from "./carrera";
 import {Instituto} from "./instituto";
+import {Rol} from "../classes/rol";
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +88,9 @@ export class PersonaService {
   }
 
   create(persona: Persona): Observable<any> {
+    const rol =  new Rol();
+    rol.id = 1;
+    persona.roles = [rol];
     return this.http.post<any>(this.urlEndpoint, persona).pipe(
       catchError(err => {
         if (err.status == 400 ) {

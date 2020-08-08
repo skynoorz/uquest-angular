@@ -1,8 +1,10 @@
 <div class="container pt-5">
   <h3 class="h3 card-header">Registro</h3>
   <form [formGroup]="form" (ngSubmit)="onSubmit(user)">
-    <formly-form [form]="form" [fields]="fields" [model]="user"></formly-form>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <div class="container">
+      <formly-form [form]="form" [fields]="fields" [model]="user"></formly-form>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div>
   </form>
 </div>
 

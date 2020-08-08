@@ -37,6 +37,9 @@ import {MatCardModule} from '@angular/material/card';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyMatDatepickerModule } from "@ngx-formly/material/datepicker";
+import { EncuestasComponent } from './encuestas/encuestas.component';
+import {MatAccordion, MatExpansionModule} from "@angular/material/expansion";
+import {MatIconModule} from "@angular/material/icon";
 
 registerLocaleData(localeES, 'es')
 
@@ -47,6 +50,7 @@ const routes: Routes = [
   {path: 'personas/form', component: FormComponent},
   {path: 'personas/form/:id', component: FormComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'encuestas', component: EncuestasComponent},
   {path: '', component: HomeComponent, pathMatch: 'full'},
   // {path: 'registro', component: RegistroComponent},
   {path: 'registro', component: RegistroComponent},
@@ -85,6 +89,7 @@ export function maxValidationMessage(err, field) {
     HomeComponent,
     RegistroComponent,
     PresignComponent,
+    EncuestasComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,16 +110,18 @@ export function maxValidationMessage(err, field) {
     FormlyModule.forRoot(
       {
         validationMessages: [
-          { name: 'required', message: 'This field is required' },
-          { name: 'minlength', message: minlengthValidationMessage },
-          { name: 'maxlength', message: maxlengthValidationMessage },
-          { name: 'min', message: minValidationMessage },
-          { name: 'max', message: maxValidationMessage },
+          {name: 'required', message: 'This field is required'},
+          {name: 'minlength', message: minlengthValidationMessage},
+          {name: 'maxlength', message: maxlengthValidationMessage},
+          {name: 'min', message: minValidationMessage},
+          {name: 'max', message: maxValidationMessage},
         ],
       }
     ),
     FormlyMaterialModule,
-    FormlyMatDatepickerModule
+    FormlyMatDatepickerModule,
+    MatExpansionModule,
+    MatIconModule
   ],
   providers: [
     {

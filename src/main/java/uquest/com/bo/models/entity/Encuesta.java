@@ -69,6 +69,8 @@ public class Encuesta implements Serializable {
     @JoinColumn(name = "encuesta_id")
     private List<Pregunta> preguntas;
 
+
+
     @PrePersist
     public void prePersist() {
         createAt = new Date();

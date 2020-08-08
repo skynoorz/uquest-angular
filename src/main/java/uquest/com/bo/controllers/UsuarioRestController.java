@@ -11,16 +11,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import uquest.com.bo.models.entity.Carrera;
-import uquest.com.bo.models.entity.Instituto;
-import uquest.com.bo.models.entity.Role;
-import uquest.com.bo.models.entity.Usuario;
+import uquest.com.bo.models.entity.*;
 import uquest.com.bo.models.services.IUploadFileService;
 import uquest.com.bo.models.services.IUsuarioService;
+import uquest.com.bo.models.services.encuesta.IEncuestaService;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -39,6 +38,12 @@ public class UsuarioRestController {
 
     @Autowired
     private IUsuarioService usuarioService;
+
+    @Autowired
+    private IEncuestaService encuestaService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/usuarios")
     public List<Usuario> index() {
@@ -90,6 +95,7 @@ public class UsuarioRestController {
         }
         usuario.setEnabled(true);
         try {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             usuarioNew = usuarioService.save(usuario);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
@@ -234,5 +240,10 @@ public class UsuarioRestController {
     public ResponseEntity<Boolean> datauser(@PathVariable String username){
         Usuario usuarioNew = usuarioService.findByUsername(username);
         return ResponseEntity.ok(Optional.ofNullable(usuarioNew).isEmpty());
+    }
+
+    @GetMapping("/usuarios/encuestas/{id}")
+    public List<Encuesta> encuestas(@PathVariable Long id){
+        return encuestaService.findAllEncuestas();
     }
 }
