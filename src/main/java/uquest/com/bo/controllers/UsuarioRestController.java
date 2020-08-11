@@ -244,6 +244,11 @@ public class UsuarioRestController {
 
     @GetMapping("/usuarios/encuestas/{id}")
     public List<Encuesta> encuestas(@PathVariable Long id){
-        return encuestaService.findAllEncuestas();
+        return encuestaService.findAllEncuestasByUsuarioId(id);
+    }
+
+    @GetMapping("/usuarios/encuestas/user/{user}")
+    public List<Encuesta> encuestas(@PathVariable String user){
+        return encuestaService.findAllEncuestasByUsername(user);
     }
 }

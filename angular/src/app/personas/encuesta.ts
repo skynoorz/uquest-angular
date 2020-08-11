@@ -1,5 +1,6 @@
 import {Categoria} from "./categoria";
 import {Pregunta} from "./pregunta";
+import {Upr} from "../classes/upr";
 
 export class Encuesta{
   id: number;
@@ -10,4 +11,5 @@ export class Encuesta{
   fechaFin: string;
   categoria: Categoria;
   preguntas: Pregunta[];
+  upr: Upr[];
 }

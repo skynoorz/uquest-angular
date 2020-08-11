@@ -17,4 +17,6 @@ public interface IEncuestaService {
 
     public List<Encuesta> findAllEncuestasByUsuarioId(Long id);
 
+    public List<Encuesta> findAllEncuestasByUsername(String user);
+
 }

@@ -42,3 +42,16 @@ INSERT INTO roles (nombre) VALUES ('ROLE_ADMIN');
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (1,1);
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2,2);
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2,1);
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (3,1);
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (4,1);
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (5,1);
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (6,1);
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (7,1);
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (8,1);
+
+INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (3, 1, 1);
+INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (4, 1, 2);
+INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (5, 1, 1);
+INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (6, 2, 1);
+INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (7, 2, 2);
+INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (8, 2, 1);

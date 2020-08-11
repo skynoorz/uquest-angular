@@ -42,4 +42,9 @@ public class IEncuestaServiceImpl implements IEncuestaService{
     public List<Encuesta> findAllEncuestasByUsuarioId(Long id) {
         return encuestaDao.findAllEncuestasByUsuarioId();
     }
+
+    @Override
+    public List<Encuesta> findAllEncuestasByUsername(String user) {
+        return encuestaDao.findAllEncuestasByUsername(user);
+    }
 }

@@ -50,6 +50,10 @@ public class Pregunta implements Serializable {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"pregunta_id","opcion_id"})})
     private List<Opcion> opciones = new ArrayList<>();
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Encuesta encuesta;
+
     @PrePersist
     public void prePersist() {
         createAt = new Date();

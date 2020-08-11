@@ -1,16 +1,27 @@
-<div class="container">
+<div class="container mt-4">
   <div>
     <h1>Mis encuestas</h1>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Encuesta 1
-        </mat-panel-title>
-        <mat-panel-description>
-          Descripcion de encuesta
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>Respuestas</p>
-    </mat-expansion-panel>
+    <div *ngFor="let encuesta of encuestas">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{encuesta.titulo}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{encuesta.categoria.descripcion}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>Respuestas</p>
+        <div>
+          <div *ngFor="let pregunta of encuesta.preguntas">
+            <p>{{pregunta.descripcion}}</p>
+            <div *ngFor="let opcion of pregunta.opciones">
+              <p>{{opcion.texto}}</p>
+              <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
   </div>
 </div>

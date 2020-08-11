@@ -69,7 +69,9 @@ public class Encuesta implements Serializable {
     @JoinColumn(name = "encuesta_id")
     private List<Pregunta> preguntas;
 
-
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Usuario usuario;
 
     @PrePersist
     public void prePersist() {
@@ -146,5 +148,13 @@ public class Encuesta implements Serializable {
 
     public void setPreguntas(List<Pregunta> preguntas) {
         this.preguntas = preguntas;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

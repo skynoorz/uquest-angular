@@ -40,6 +40,7 @@ import { FormlyMatDatepickerModule } from "@ngx-formly/material/datepicker";
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import {MatAccordion, MatExpansionModule} from "@angular/material/expansion";
 import {MatIconModule} from "@angular/material/icon";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 registerLocaleData(localeES, 'es')
 
@@ -91,38 +92,39 @@ export function maxValidationMessage(err, field) {
     PresignComponent,
     EncuestasComponent,
   ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MatDatepickerModule,
-    MatMomentDateModule,
-    MatButtonModule,
-    MatStepperModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatCardModule,
-    FormlyModule.forRoot(
-      {
-        validationMessages: [
-          {name: 'required', message: 'This field is required'},
-          {name: 'minlength', message: minlengthValidationMessage},
-          {name: 'maxlength', message: maxlengthValidationMessage},
-          {name: 'min', message: minValidationMessage},
-          {name: 'max', message: maxValidationMessage},
-        ],
-      }
-    ),
-    FormlyMaterialModule,
-    FormlyMatDatepickerModule,
-    MatExpansionModule,
-    MatIconModule
-  ],
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot(routes),
+        HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatDatepickerModule,
+        MatMomentDateModule,
+        MatButtonModule,
+        MatStepperModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatCardModule,
+        FormlyModule.forRoot(
+            {
+                validationMessages: [
+                    {name: 'required', message: 'This field is required'},
+                    {name: 'minlength', message: minlengthValidationMessage},
+                    {name: 'maxlength', message: maxlengthValidationMessage},
+                    {name: 'min', message: minValidationMessage},
+                    {name: 'max', message: maxValidationMessage},
+                ],
+            }
+        ),
+        FormlyMaterialModule,
+        FormlyMatDatepickerModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatProgressBarModule
+    ],
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,

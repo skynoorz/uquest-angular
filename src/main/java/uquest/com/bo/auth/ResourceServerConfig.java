@@ -20,7 +20,7 @@ import java.util.Arrays;
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/uploads/img/**", "/images/no_user.png", "/api/carreras", "/api/carreras/institutos/**").permitAll()
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/uploads/img/**", "/images/no_user.png", "/api/carreras", "/api/carreras/institutos/**", "/api/usuarios/encuestas/**", "/api/upr/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/usuarios/userexist/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/").hasAnyRole("USER","ADMIN")
@@ -30,6 +30,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //                .antMatchers(HttpMethod.POST, "/api/usuarios").hasRole("ADMIN")
 //                .antMatchers("/api/usuarios/page/**").hasRole("ADMIN")
                 .antMatchers("/api/usuarios/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.GET,  "/api/usuarios/encuestas/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and().cors().configurationSource(corsConfigurationSource());
     }
