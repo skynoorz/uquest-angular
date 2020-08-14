@@ -1,6 +1,15 @@
 <div class="container mt-4">
   <div>
-    <h1>Mis encuestas</h1>
+    <div class="button-right">
+      <div style="width: 85%">
+        <h1>Mis encuestas</h1>
+      </div>
+      <div style="width: 15%">
+        <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
     <div *ngFor="let encuesta of encuestas">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
