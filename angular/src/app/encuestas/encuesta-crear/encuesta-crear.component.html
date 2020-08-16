@@ -1,6 +1,6 @@
 <div class="container-card" style="margin-top: 30px">
   <form>
-    <div class="generateField">
+    <div>
       <mat-card>
         <mat-form-field style="width: 100%">
           <h3>Nombre de la encuesta:</h3>
@@ -10,33 +10,37 @@
         </mat-form-field>
       </mat-card>
       <!--    tarjeta de pregunta-->
-      <button mat-fab color="primary" aria-label="agrega pregunta" (click)="agregarPregunta()">
-        <mat-icon>add</mat-icon>
-      </button>
-      <mat-card style="margin-top: 10px" *ngFor="let div of divs">
-        <div class="pregunta-header">
-          <div style="width: 70%">
-            <mat-form-field style="width: 50%">
-              <mat-label>Pregunta</mat-label>
-              <input matInput value="Pregunta sin titulo"/>
-<!--              [(ngModel)]="Encuesta.preguntas[0].descripcion"-->
-            </mat-form-field>
+      <div style="display: flex" *ngFor="let div of divs">
+        <mat-card style="margin-top: 10px; width: 100%" >
+          <div class="pregunta-header">
+            <div style="width: 70%">
+              <mat-form-field style="width: 50%">
+                <mat-label>Pregunta</mat-label>
+                <input matInput value="Pregunta sin titulo"/>
+                <!--              [(ngModel)]="Encuesta.preguntas[0].descripcion"-->
+              </mat-form-field>
+            </div>
+            <mat-select [(value)]="tipos[0]" style="width: 30% ">
+              <mat-option *ngFor="let tipo of tipos" [value]="tipo" (onSelectionChange)="tipo_pregunta=tipo">
+                <!--              (onSelectionChange)="tipo_pregunta = tipo"-->
+                {{tipo}}
+              </mat-option>
+            </mat-select>
           </div>
-          <mat-select [(value)]="tipos[0]" style="width: 30% ">
-            <mat-option *ngFor="let tipo of tipos" [value]="tipo" (onSelectionChange)="tipo_pregunta=tipo">
-<!--              (onSelectionChange)="tipo_pregunta = tipo"-->
-              {{tipo}}
-            </mat-option>
-          </mat-select>
+          <div class="pregunta-body container" [ngSwitch]="tipo_pregunta">
+            <div *ngSwitchCase="'Respuesta Simple'">Respuesta Simple</div>
+            <div *ngSwitchCase="'Parrafo'">Parrafo</div>
+            <div *ngSwitchCase="'Opcion Multiple'">Opcion Multiple</div>
+            <div *ngSwitchCase="'Casillas de Verificacion'">Casillas de Verificacion</div>
+            <div *ngSwitchCase="'Escala Lineal'">Escala Lineal</div>
+          </div>
+        </mat-card>
+        <div style="padding: 10px">
+          <button mat-fab color="primary" aria-label="agrega pregunta" (click)="agregarPregunta()">
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
-        <div class="pregunta-body container" [ngSwitch]="tipo_pregunta">
-          <div *ngSwitchCase="'Respuesta Simple'">Respuesta Simple</div>
-          <div *ngSwitchCase="'Parrafo'">Parrafo</div>
-          <div *ngSwitchCase="'Opcion Multiple'">Opcion Multiple</div>
-          <div *ngSwitchCase="'Casillas de Verificacion'">Casillas de Verificacion</div>
-          <div *ngSwitchCase="'Escala Lineal'">Escala Lineal</div>
-        </div>
-      </mat-card>
+      </div>
     </div>
   </form>
 </div>

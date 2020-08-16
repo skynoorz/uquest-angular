@@ -19,13 +19,8 @@ export class EncuestaCrearComponent implements OnInit {
   }
 
   tipos = ['Respuesta Simple', 'Parrafo', 'Opcion Multiple', 'Casillas de Verificacion', 'Escala Lineal'];
-  // tipos = [{value: 'steak-0'}, {value: 'pizza-1'}, {value: 'tacos-2'}];
 
   agregarPregunta(){
     this.divs.push(this.divs.length);
-    // let row = document.createElement('div');
-    //   row.className = 'row';
-    //   row.innerHTML =``;
-    // document.querySelector('.generateField').appendChild(row);
   }
 }
