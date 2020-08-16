@@ -12,7 +12,8 @@ export class EncuestaCrearComponent implements OnInit {
   }
 
   public Encuesta: Encuesta = new Encuesta();
-  tipo_pregunta: String;
+  tipo_pregunta: String = 'Respuesta Simple';
+  divs: number[] = [0];
 
   ngOnInit(): void {
   }
@@ -21,26 +22,10 @@ export class EncuestaCrearComponent implements OnInit {
   // tipos = [{value: 'steak-0'}, {value: 'pizza-1'}, {value: 'tacos-2'}];
 
   agregarPregunta(){
-    console.log("agrega seccion pregunta")
-    let row = document.createElement('div');
-      row.className = 'row';
-      row.innerHTML =` <mat-card style="margin-top: 10px">
-        <div class="pregunta-header">
-          <div style="width: 70%">
-            <mat-form-field style="width: 50%">
-              <mat-label>Pregunta</mat-label>
-              <input matInput value="Pregunta sin titulo"/>
-            </mat-form-field>
-          </div>
-          <mat-select [(value)]="tipos[0]" style="width: 30% ">
-            <mat-option *ngFor="let tipo of tipos" [value]="tipo">
-              {{tipo}}
-            </mat-option>
-          </mat-select>
-        </div>
-        <div class="pregunta-body">
-        </div>
-      </mat-card>`;
-    document.querySelector('.generateField').appendChild(row);
+    this.divs.push(this.divs.length);
+    // let row = document.createElement('div');
+    //   row.className = 'row';
+    //   row.innerHTML =``;
+    // document.querySelector('.generateField').appendChild(row);
   }
 }

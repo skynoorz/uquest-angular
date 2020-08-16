@@ -5,14 +5,15 @@
         <mat-form-field style="width: 100%">
           <h3>Nombre de la encuesta:</h3>
           <!--      <mat-label>Favorite food</mat-label>-->
-          <input matInput [(ngModel)]="Encuesta.titulo"/>
+          <input matInput />
+<!--          [(ngModel)]="Encuesta.titulo"-->
         </mat-form-field>
       </mat-card>
       <!--    tarjeta de pregunta-->
-      <button mat-fab color="primary" aria-label="agrega pregunta" (click)="agregarPregunta()" style="width: 50px; height: 50px">
+      <button mat-fab color="primary" aria-label="agrega pregunta" (click)="agregarPregunta()">
         <mat-icon>add</mat-icon>
       </button>
-      <mat-card style="margin-top: 10px">
+      <mat-card style="margin-top: 10px" *ngFor="let div of divs">
         <div class="pregunta-header">
           <div style="width: 70%">
             <mat-form-field style="width: 50%">
@@ -22,29 +23,19 @@
             </mat-form-field>
           </div>
           <mat-select [(value)]="tipos[0]" style="width: 30% ">
-            <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+            <mat-option *ngFor="let tipo of tipos" [value]="tipo" (onSelectionChange)="tipo_pregunta=tipo">
 <!--              (onSelectionChange)="tipo_pregunta = tipo"-->
               {{tipo}}
             </mat-option>
           </mat-select>
         </div>
-        <div class="pregunta-body" [ngSwitch]="tipo_pregunta">
-<!--          respuestas simples-->
-          <div *ngSwitchCase="'Respuesta Simple'"></div>
-          1
-<!--          Parrafo-->
-          <div *ngSwitchCase="'Parrafo'"></div>
-<!--          seleccion multiple-->
-          2
-          <div></div>
-<!--          Casillas de Verificacion-->
-          3
-          <div></div>
-<!--          Escala Lineal-->
-          4
-          <div></div>
+        <div class="pregunta-body container" [ngSwitch]="tipo_pregunta">
+          <div *ngSwitchCase="'Respuesta Simple'">Respuesta Simple</div>
+          <div *ngSwitchCase="'Parrafo'">Parrafo</div>
+          <div *ngSwitchCase="'Opcion Multiple'">Opcion Multiple</div>
+          <div *ngSwitchCase="'Casillas de Verificacion'">Casillas de Verificacion</div>
+          <div *ngSwitchCase="'Escala Lineal'">Escala Lineal</div>
         </div>
-
       </mat-card>
     </div>
   </form>
