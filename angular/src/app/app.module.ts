@@ -41,6 +41,7 @@ import { EncuestasComponent } from './encuestas/encuestas.component';
 import {MatAccordion, MatExpansionModule} from "@angular/material/expansion";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { EncuestaCrearComponent } from './encuestas/encuesta-crear/encuesta-crear.component';
 
 registerLocaleData(localeES, 'es')
 
@@ -55,25 +56,26 @@ const routes: Routes = [
   {path: '', component: HomeComponent, pathMatch: 'full'},
   // {path: 'registro', component: RegistroComponent},
   {path: 'registro', component: RegistroComponent},
+  {path: 'encuestas/crear', component: EncuestaCrearComponent},
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
 // TODO traducir!
 // validations config
 export function minlengthValidationMessage(err, field) {
-  return `Should have atleast ${field.templateOptions.minLength} characters`;
+  return `Debe tener al menos ${field.templateOptions.minLength} caracteres`;
 }
 
 export function maxlengthValidationMessage(err, field) {
-  return `This value should be less than ${field.templateOptions.maxLength} characters`;
+  return `Este valor no debe tener mas de ${field.templateOptions.maxLength} caracteres`;
 }
 
 export function minValidationMessage(err, field) {
-  return `This value should be more than ${field.templateOptions.min}`;
+  return `Este valor debe ser mas que ${field.templateOptions.min}`;
 }
 
 export function maxValidationMessage(err, field) {
-  return `This value should be less than ${field.templateOptions.max}`;
+  return `Este valor debe ser mas que ${field.templateOptions.max}`;
 }
 
 
@@ -91,6 +93,7 @@ export function maxValidationMessage(err, field) {
     RegistroComponent,
     PresignComponent,
     EncuestasComponent,
+    EncuestaCrearComponent,
   ],
     imports: [
         BrowserModule,
