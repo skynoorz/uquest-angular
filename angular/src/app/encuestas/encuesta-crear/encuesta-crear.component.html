@@ -1,0 +1,51 @@
+<div class="container-card" style="margin-top: 30px">
+  <form>
+    <div class="generateField">
+      <mat-card>
+        <mat-form-field style="width: 100%">
+          <h3>Nombre de la encuesta:</h3>
+          <!--      <mat-label>Favorite food</mat-label>-->
+          <input matInput [(ngModel)]="Encuesta.titulo"/>
+        </mat-form-field>
+      </mat-card>
+      <!--    tarjeta de pregunta-->
+      <button mat-fab color="primary" aria-label="agrega pregunta" (click)="agregarPregunta()" style="width: 50px; height: 50px">
+        <mat-icon>add</mat-icon>
+      </button>
+      <mat-card style="margin-top: 10px">
+        <div class="pregunta-header">
+          <div style="width: 70%">
+            <mat-form-field style="width: 50%">
+              <mat-label>Pregunta</mat-label>
+              <input matInput value="Pregunta sin titulo"/>
+<!--              [(ngModel)]="Encuesta.preguntas[0].descripcion"-->
+            </mat-form-field>
+          </div>
+          <mat-select [(value)]="tipos[0]" style="width: 30% ">
+            <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+<!--              (onSelectionChange)="tipo_pregunta = tipo"-->
+              {{tipo}}
+            </mat-option>
+          </mat-select>
+        </div>
+        <div class="pregunta-body" [ngSwitch]="tipo_pregunta">
+<!--          respuestas simples-->
+          <div *ngSwitchCase="'Respuesta Simple'"></div>
+          1
+<!--          Parrafo-->
+          <div *ngSwitchCase="'Parrafo'"></div>
+<!--          seleccion multiple-->
+          2
+          <div></div>
+<!--          Casillas de Verificacion-->
+          3
+          <div></div>
+<!--          Escala Lineal-->
+          4
+          <div></div>
+        </div>
+
+      </mat-card>
+    </div>
+  </form>
+</div>
