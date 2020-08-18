@@ -42,6 +42,7 @@ import {MatAccordion, MatExpansionModule} from "@angular/material/expansion";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { EncuestaCrearComponent } from './encuestas/encuesta-crear/encuesta-crear.component';
+import {MatBadgeModule} from "@angular/material/badge";
 
 registerLocaleData(localeES, 'es')
 
@@ -126,7 +127,8 @@ export function maxValidationMessage(err, field) {
         FormlyMatDatepickerModule,
         MatExpansionModule,
         MatIconModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatBadgeModule
     ],
   providers: [
     {

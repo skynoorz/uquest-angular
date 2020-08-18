@@ -3,7 +3,7 @@
     <div>
       <mat-card>
         <mat-form-field style="width: 100%">
-          <h3>Nombre de la encuesta:</h3>
+          <h2>Nombre de la encuesta:</h2>
           <!--      <mat-label>Favorite food</mat-label>-->
           <input name="encuestaTitulo" matInput [(ngModel)]="encuesta.titulo" />
         </mat-form-field>
@@ -20,23 +20,60 @@
           <div class="pregunta-header">
             <div style="width: 70%">
               <mat-form-field style="width: 50%">
-                <mat-label>Pregunta</mat-label>
+<!--                <mat-label>Pregunta {{i}}</mat-label>-->
+                <h3>Pregunta: </h3>
                 <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
                 <input name="descripcion{{i}}" matInput  [(ngModel)]="pregunta.descripcion" />
               </mat-form-field>
             </div>
             <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
-            <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo" style="width: 30% ">
+            <mat-form-field appearance="fill">
+            <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo">
               <mat-option *ngFor="let tipo of tipos" [value]="tipo">
-                <!--              (onSelectionChange)="tipo_pregunta = tipo"-->
                 {{tipo}}
               </mat-option>
             </mat-select>
+            </mat-form-field>
           </div>
           <div class="pregunta-body container" [ngSwitch]="pregunta.tipo">
-            <div *ngSwitchCase="'Respuesta Simple'">Respuesta Simple</div>
+            <div *ngSwitchCase="'Respuesta Simple'">
+              <div *ngFor="let opcion of pregunta.opciones">
+                Respuesta Simple:
+                <mat-form-field *ngIf="pregunta.opciones[0]">
+                  <mat-label></mat-label>
+                  <input name="opcionSimple{{i}}" disabled value="Respuesta Simple" matInput [(ngModel)]="pregunta.opciones[0].texto">
+                </mat-form-field>
+
+              </div>
+              <button mat-mini-fab color="primary" aria-label="agregar opcion simple" (click)="agregarOpcionSimple(0)">
+                <mat-icon>add</mat-icon>
+              </button>
+<!--              &lt;!&ndash; tarjeta de opciones&ndash;&gt;-->
+<!--              <div *ngFor="let opcion of pregunta.opciones; let j = index">-->
+<!--                <mat-form-field style="width: 50%">-->
+<!--                  <mat-label>Opcion {{j}}</mat-label>-->
+<!--                  &lt;!&ndash; IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. &ndash;&gt;-->
+<!--                  <input name="opcionSimple{{j}}" matInput  [(ngModel)]="opcion.texto" />-->
+<!--                </mat-form-field>-->
+<!--              </div>-->
+            </div>
             <div *ngSwitchCase="'Parrafo'">Parrafo</div>
-            <div *ngSwitchCase="'Opcion Multiple'">Opcion Multiple</div>
+            <div *ngSwitchCase="'Opcion Multiple'">
+              <button mat-mini-fab color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)">
+                <mat-icon>add</mat-icon>
+              </button>
+              <!-- tarjeta de opciones-->
+              <div *ngFor="let opcion of pregunta.opciones; let j = index">
+                <mat-radio-group>
+                  <mat-radio-button disabled disableRipple></mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field style="width: 50%">
+                  <mat-label>Opcion {{j}}</mat-label>
+                  <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
+                  <input name="opcionSimple{{j}}" matInput  [(ngModel)]="opcion.texto" />
+                </mat-form-field>
+              </div>
+            </div>
             <div *ngSwitchCase="'Casillas de Verificacion'">Casillas de Verificacion</div>
             <div *ngSwitchCase="'Escala Lineal'">Escala Lineal</div>
           </div>
