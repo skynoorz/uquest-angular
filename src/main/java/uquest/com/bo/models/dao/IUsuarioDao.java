@@ -24,4 +24,7 @@ public interface IUsuarioDao extends JpaRepository<Usuario, Long> {
 
     @Query("select u from Usuario u where u.username = ?1")
     public Usuario findByUsername(String username);
+
+    @Query("select u from Usuario u where u.email = ?1")
+    public Usuario findByEmail (String email);
 }

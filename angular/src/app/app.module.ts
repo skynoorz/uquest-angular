@@ -43,6 +43,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { EncuestaCrearComponent } from './encuestas/encuesta-crear/encuesta-crear.component';
 import {MatBadgeModule} from "@angular/material/badge";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatDividerModule} from "@angular/material/divider";
 
 registerLocaleData(localeES, 'es')
 
@@ -61,7 +64,6 @@ const routes: Routes = [
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
-// TODO traducir!
 // validations config
 export function minlengthValidationMessage(err, field) {
   return `Debe tener al menos ${field.templateOptions.minLength} caracteres`;
@@ -128,7 +130,10 @@ export function maxValidationMessage(err, field) {
         MatExpansionModule,
         MatIconModule,
         MatProgressBarModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatTabsModule,
+        MatCheckboxModule,
+        MatDividerModule
     ],
   providers: [
     {

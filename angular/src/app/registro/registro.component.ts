@@ -7,6 +7,7 @@ import {Instituto} from "../personas/instituto";
 import Swal from "sweetalert2";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { startWith, map, tap, switchMap } from "rxjs/operators";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -18,6 +19,13 @@ export class RegistroComponent implements OnInit {
 
   user: any = { carreraId: 1};
   form = new FormGroup({});
+  public errores: string[];
+
+  verificaCarrera (carreraId){
+    if (this.carreraService.getInstitutosByCarreraId(carreraId))
+      return true;
+    return false;
+  }
 
   fields: FormlyFieldConfig[] = [
     {
@@ -84,7 +92,14 @@ export class RegistroComponent implements OnInit {
         valueProp: 'id',
         labelProp: 'nombre',
         required: true
-      }
+      },
+      // hooks:{
+      //   onChanges: field => {
+      //     const institutoControl = this.form.get('institutoId');
+      //     console.log(institutoControl.value);
+      //     console.log(field);
+      //   }
+      // }
     },
     {
       key: 'institutoId',
@@ -101,7 +116,10 @@ export class RegistroComponent implements OnInit {
           field.templateOptions.options = carreraControl.valueChanges.pipe(
             startWith(carreraControl.value),
             switchMap(carreraId => this.carreraService.getInstitutosByCarreraId(carreraId)),
-            tap(() => field.formControl.setValue(null)),
+            tap(() => {
+              field.formControl.setValue(null);
+
+            }),
           );
         },
       },
@@ -119,6 +137,15 @@ export class RegistroComponent implements OnInit {
           pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" no es una email valida`,
         },
       },
+      modelOptions: {
+        updateOn: 'blur',
+      },
+      asyncValidators: {
+        uniqueUsername: {
+          expression: (control: FormControl) => this.personaService.emailExist(control.value).toPromise(),
+          message: 'Correo ya existente',
+        },
+      }
     },
     {
       key: 'username',
@@ -152,7 +179,8 @@ export class RegistroComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder,
               private personaService: PersonaService,
-              private carreraService: CarreraService) { }
+              private carreraService: CarreraService,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -166,9 +194,10 @@ export class RegistroComponent implements OnInit {
     this.personaService.create(this.user).subscribe(
       response => {
         Swal.fire('Cliente Guardado', `${response.mensaje}`, 'success')
+        this.router.navigate(['/login'])
       },
       error => {
-        //this.errores = error.error.errors as string[];
+        this.errores = error.error.errors as string[];
         console.log('Codigo de error desde backend: '+error.status)
         console.log(error.error.errors)
       }

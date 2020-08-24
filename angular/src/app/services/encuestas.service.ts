@@ -26,4 +26,25 @@ export class EncuestasService {
   getEncuestasByUsername(user): Observable<Encuesta[]>{
     return this.http.get<Encuesta[]>(`${this.urlEndpoint}/encuestas/user/${user}`);
   }
+
+  // save(encuesta) :Observable<Encuesta>{
+  //   return this.http.post<Encuesta>(`http://localhost:8080/api/encuestas/${encuesta}`);
+  // }
+
+  save(encuesta: Encuesta): Observable<any>{
+    console.log("entra al save")
+    console.log(encuesta)
+    console.log(JSON.stringify(encuesta))
+
+    return this.http.post<any>("http://localhost:8080/api/encuestas", encuesta).pipe(
+      catchError(err => {
+        if (err.status == 400 ) {
+          return throwError(err);
+        }
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
+        return throwError(err);
+      })
+    )
+  }
 }

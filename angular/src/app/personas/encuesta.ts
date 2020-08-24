@@ -1,6 +1,7 @@
 import {Categoria} from "./categoria";
 import {Pregunta} from "./pregunta";
 import {Upr} from "../classes/upr";
+import {Persona} from "./persona";
 
 export class Encuesta{
   id: number;
@@ -12,4 +13,11 @@ export class Encuesta{
   categoria: Categoria;
   preguntas: Pregunta[];
   upr: Upr[];
+  // usuario: Persona;
+  usuario: {id: number}
+}
+
+export enum TipoEncuestaEnum {
+  ABIERTO = 'Abierto',
+  CERRADO = 'Cerrado'
 }

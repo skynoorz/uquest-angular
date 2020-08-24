@@ -7,7 +7,7 @@ import java.util.List;
 public interface IEncuestaService {
     public List<Encuesta> findAll();
 
-    public void save(Encuesta encuesta);
+    public Encuesta save(Encuesta encuesta);
 
     public Encuesta findOne(Long id);
 

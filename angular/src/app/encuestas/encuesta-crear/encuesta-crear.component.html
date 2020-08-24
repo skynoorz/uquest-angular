@@ -4,35 +4,76 @@
       <mat-card>
         <mat-form-field style="width: 100%">
           <h2>Nombre de la encuesta:</h2>
-          <!--      <mat-label>Favorite food</mat-label>-->
-          <input name="encuestaTitulo" matInput [(ngModel)]="encuesta.titulo" />
+          <input name="encuestaTitulo" matInput [(ngModel)]="encuesta.titulo"/>
         </mat-form-field>
-        <button mat-fab color="primary" aria-label="agrega pregunta" (click)="agregarPregunta()">
-          <mat-icon>add</mat-icon>
-        </button>
-        <button mat-fab color="primary" (click)="salvarEncuesta()">
-          <mat-icon>save</mat-icon>
-        </button>
+
+<!--        <mat-divider></mat-divider>-->
+
+        <div class="container" style="display: flex; margin-top: 30px">
+          <div style="width: 30%">
+            <button mat-fab color="primary" aria-label="agrega pregunta" (click)="agregarPregunta()">
+              <mat-icon>add</mat-icon>
+            </button>
+
+            <button mat-fab color="primary" (click)="salvarEncuesta()">
+              <mat-icon>save</mat-icon>
+            </button>
+          </div>
+
+          <div style="width: 30%">
+            <mat-form-field appearance="fill">
+              <mat-label>Tipo</mat-label>
+              <mat-select name="tipoEncuesta" [(ngModel)]="encuesta.tipo">
+                <mat-option *ngFor="let tipo of tiposEncuesta" [value]="tipo">
+                  {{tipo}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="w-75" style="line-height: 11px">
+              <small class="font-weight-light">* Tipo cerrado solo se accedera mediante un link o codigo QR *</small>
+            </div>
+          </div>
+
+          <div style="width: 30%">
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha Inicio de Encuesta</mat-label>
+              <input matInput [min]="minDate" [matDatepicker]="ffini" name="ffini" [(ngModel)]="encuesta.fechaIni">
+              <mat-datepicker-toggle matSuffix [for]="ffini"></mat-datepicker-toggle>
+              <mat-datepicker #ffini></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha Fin de Encuesta</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="ffin" name="ffini" [(ngModel)]="encuesta.fechaFin">
+              <mat-datepicker-toggle matSuffix [for]="ffin"></mat-datepicker-toggle>
+              <mat-datepicker #ffin></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
       </mat-card>
       <!--    tarjeta de pregunta-->
       <div style="display: flex" *ngFor="let pregunta of encuesta.preguntas; let i = index">
-        <mat-card style="margin-top: 10px; width: 100%" >
+        <mat-card style="margin-top: 10px; width: 100%">
           <div class="pregunta-header">
             <div style="width: 70%">
+              <h3>Pregunta {{i + 1}}: </h3>
               <mat-form-field style="width: 50%">
-<!--                <mat-label>Pregunta {{i}}</mat-label>-->
-                <h3>Pregunta: </h3>
+                <!--                <mat-label>Pregunta {{i}}</mat-label>-->
+
                 <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
-                <input name="descripcion{{i}}" matInput  [(ngModel)]="pregunta.descripcion" />
+                <mat-label>Ingrese su Pregunta a formular</mat-label>
+                <input name="descripcion{{i}}" matInput [(ngModel)]="pregunta.descripcion"/>
               </mat-form-field>
             </div>
             <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
             <mat-form-field appearance="fill">
-            <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo">
-              <mat-option *ngFor="let tipo of tipos" [value]="tipo">
-                {{tipo}}
-              </mat-option>
-            </mat-select>
+              <mat-label>Tipo</mat-label>
+              <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo">
+                <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+                  {{tipo}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div class="pregunta-body container" [ngSwitch]="pregunta.tipo">
@@ -41,21 +82,21 @@
                 Respuesta Simple:
                 <mat-form-field *ngIf="pregunta.opciones[0]">
                   <mat-label></mat-label>
-                  <input name="opcionSimple{{i}}" disabled value="Respuesta Simple" matInput [(ngModel)]="pregunta.opciones[0].texto">
+                  <input name="opcionSimple" disabled value="Respuesta Simple" matInput [(ngModel)]="pregunta.opciones[0].texto">
                 </mat-form-field>
 
               </div>
               <button mat-mini-fab color="primary" aria-label="agregar opcion simple" (click)="agregarOpcionSimple(0)">
                 <mat-icon>add</mat-icon>
               </button>
-<!--              &lt;!&ndash; tarjeta de opciones&ndash;&gt;-->
-<!--              <div *ngFor="let opcion of pregunta.opciones; let j = index">-->
-<!--                <mat-form-field style="width: 50%">-->
-<!--                  <mat-label>Opcion {{j}}</mat-label>-->
-<!--                  &lt;!&ndash; IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. &ndash;&gt;-->
-<!--                  <input name="opcionSimple{{j}}" matInput  [(ngModel)]="opcion.texto" />-->
-<!--                </mat-form-field>-->
-<!--              </div>-->
+              <!--              &lt;!&ndash; tarjeta de opciones&ndash;&gt;-->
+              <!--              <div *ngFor="let opcion of pregunta.opciones; let j = index">-->
+              <!--                <mat-form-field style="width: 50%">-->
+              <!--                  <mat-label>Opcion {{j}}</mat-label>-->
+              <!--                  &lt;!&ndash; IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. &ndash;&gt;-->
+              <!--                  <input name="opcionSimple{{j}}" matInput  [(ngModel)]="opcion.texto" />-->
+              <!--                </mat-form-field>-->
+              <!--              </div>-->
             </div>
             <div *ngSwitchCase="'Parrafo'">Parrafo</div>
             <div *ngSwitchCase="'Opcion Multiple'">
@@ -68,9 +109,9 @@
                   <mat-radio-button disabled disableRipple></mat-radio-button>
                 </mat-radio-group>
                 <mat-form-field style="width: 50%">
-                  <mat-label>Opcion {{j}}</mat-label>
+                  <mat-label>Opcion {{j + 1}}</mat-label>
                   <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
-                  <input name="opcionSimple{{j}}" matInput  [(ngModel)]="opcion.texto" />
+                  <input name="opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
                 </mat-form-field>
               </div>
             </div>

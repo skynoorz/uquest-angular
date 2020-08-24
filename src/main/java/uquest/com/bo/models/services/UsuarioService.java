@@ -102,4 +102,9 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
     public Usuario findByUsername(String name) {
         return usuarioDao.findByUsername(name);
     }
+
+    @Override
+    public Usuario findByEmail(String email) {
+        return usuarioDao.findByEmail(email);
+    }
 }

@@ -157,4 +157,9 @@ export class PersonaService {
     // console.log(this.http.get(`${this.urlEndpoint}/userexist/${username}`))
     return this.http.get<any>(`${this.urlEndpoint}/userexist/${username}`);
   }
+
+  emailExist(email: string): Observable<any>{
+    console.log(email);
+    return this.http.get<any>(`${this.urlEndpoint}/emailexist/${email}`);
+  }
 }

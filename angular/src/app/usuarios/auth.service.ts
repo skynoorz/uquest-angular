@@ -59,6 +59,7 @@ export class AuthService {
   guardarPersona(accessToken: string): void {
     let payload = this.obtenerDatosToken(accessToken);
     this._persona = new Persona();
+    this._persona.id = payload.id;
     this._persona.nombres = payload.nombres;
     this._persona.apellidoPat = payload.apellido_pat;
     this._persona.apellidoMat = payload.apellido_mat;

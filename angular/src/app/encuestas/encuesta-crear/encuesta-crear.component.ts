@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Encuesta } from "../../personas/encuesta";
+import {Encuesta, TipoEncuestaEnum} from "../../personas/encuesta";
 import { Pregunta, TipoPreguntaEnum } from "../../personas/pregunta";
 import {Opcion, TipoOpcionEnum} from "../../personas/opcion";
+import {EncuestasService} from "../../services/encuestas.service";
+import Swal from "sweetalert2";
+import {Router} from "@angular/router";
+import {Persona} from "../../personas/persona";
 
 @Component({
   selector: 'app-encuesta-crear',
@@ -10,13 +14,30 @@ import {Opcion, TipoOpcionEnum} from "../../personas/opcion";
 })
 export class EncuestaCrearComponent implements OnInit {
 
-  constructor() {
+  minDate: Date;
+  maxDate: Date;
+
+  public errores: string[];
+
+  constructor(private encuestasService: EncuestasService,
+              private router: Router) {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    const date = new Date().getDate();
+    this.minDate = new Date(currentYear, currentMonth , date);
+
+    this.maxDate = new Date(currentYear+1, currentMonth , date);
   }
 
   public encuesta: Encuesta = new Encuesta();
 
   ngOnInit(): void {
+    this.encuesta.tipo = TipoEncuestaEnum.ABIERTO;
+    this.agregarPregunta();
   }
+
+
+  tiposEncuesta = Object.keys(TipoEncuestaEnum).map(key => TipoEncuestaEnum[key]);
 
   tipos = Object.keys(TipoPreguntaEnum).map(key => TipoPreguntaEnum[key]);
 
@@ -46,7 +67,24 @@ export class EncuestaCrearComponent implements OnInit {
   }
 
   salvarEncuesta() {
-    console.log('encuesta DTO', this.encuesta);
+    // console.log('encuesta DTO', this.encuesta);
+
+    const usuario = {id: JSON.parse(sessionStorage.getItem('persona')).id};
+    // persona.id = JSON.parse(sessionStorage.getItem('persona')).id;
+    this.encuesta.usuario = usuario
+
+    console.log("mi id desde session storage: "+ this.encuesta.usuario.id);
+    this.encuestasService.save(this.encuesta).subscribe(response => {
+        this.router.navigate(['/encuestas'])
+        Swal.fire('Encuesta Generada', `${response.mensaje}: ${response.encuesta.titulo}`, 'success')
+      },
+      error => {
+        this.errores = error.error.errors as string[];
+        console.log('Codigo de error desde backend: '+error.status)
+        console.log(error.error.errors)
+      }
+    );
+    // console.log(this.encuestasService.save(this.encuesta));
   }
 
   agregarOpcionMultiple(id: number) {

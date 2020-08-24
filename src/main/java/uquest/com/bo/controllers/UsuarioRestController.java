@@ -96,6 +96,8 @@ public class UsuarioRestController {
         usuario.setEnabled(true);
         try {
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            if (usuario.getInstituto().getId() == null)
+                usuario.setInstituto(null);
             usuarioNew = usuarioService.save(usuario);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
@@ -239,6 +241,12 @@ public class UsuarioRestController {
     @GetMapping("/usuarios/userexist/{username}")
     public ResponseEntity<Boolean> datauser(@PathVariable String username){
         Usuario usuarioNew = usuarioService.findByUsername(username);
+        return ResponseEntity.ok(Optional.ofNullable(usuarioNew).isEmpty());
+    }
+
+    @GetMapping("/usuarios/emailexist/{email}")
+    public ResponseEntity<Boolean> dataemail(@PathVariable String email){
+        Usuario usuarioNew = usuarioService.findByEmail(email);
         return ResponseEntity.ok(Optional.ofNullable(usuarioNew).isEmpty());
     }
 

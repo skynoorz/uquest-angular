@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {Rol} from "../classes/rol";
+import { RegistroComponent } from "../registro/registro.component"
 
 @Component({
   selector: 'app-login',

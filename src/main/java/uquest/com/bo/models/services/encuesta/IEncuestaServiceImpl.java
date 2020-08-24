@@ -19,8 +19,8 @@ public class IEncuestaServiceImpl implements IEncuestaService{
     }
 
     @Override
-    public void save(Encuesta encuesta) {
-        encuestaDao.save(encuesta);
+    public Encuesta save(Encuesta encuesta) {
+        return encuestaDao.save(encuesta);
     }
 
     @Override

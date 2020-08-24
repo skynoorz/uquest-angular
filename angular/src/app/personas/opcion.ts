@@ -1,11 +1,11 @@
 export class Opcion{
   id: number;
   texto: string;
-  tipo: string;
+  tipo: number;
 }
 
 export enum TipoOpcionEnum {
-  RESPUESTA_SIMPLE = 'Respuesta Simple',
+  RESPUESTA_SIMPLE = 1,
   PARRAGO = 'Parrafo',
   OPCION_MULTIPLE = 'Opcion Multiple',
   CASILLAS_DE_VERIFICACION = 'Casillas de Verificacion',
