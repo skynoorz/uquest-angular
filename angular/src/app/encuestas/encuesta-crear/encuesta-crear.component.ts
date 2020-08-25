@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Encuesta, TipoEncuestaEnum} from "../../personas/encuesta";
-import { Pregunta, TipoPreguntaEnum } from "../../personas/pregunta";
+import {Pregunta, TipoPreguntaEnum} from "../../personas/pregunta";
 import {Opcion, TipoOpcionEnum} from "../../personas/opcion";
 import {EncuestasService} from "../../services/encuestas.service";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
 import {Persona} from "../../personas/persona";
+import {Categoria} from "../../personas/categoria";
+import {PersonaService} from "../../personas/persona.service";
 
 @Component({
   selector: 'app-encuesta-crear',
@@ -18,21 +20,31 @@ export class EncuestaCrearComponent implements OnInit {
   maxDate: Date;
 
   public errores: string[];
+  public categorias: Categoria[];
 
   constructor(private encuestasService: EncuestasService,
+              private personaService:PersonaService,
               private router: Router) {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
     const date = new Date().getDate();
-    this.minDate = new Date(currentYear, currentMonth , date);
 
-    this.maxDate = new Date(currentYear+1, currentMonth , date);
+    this.minDate = new Date(currentYear, currentMonth, date);
+    this.maxDate = new Date(currentYear + 1, currentMonth, date);
+
+    this.categorias = [];
   }
 
   public encuesta: Encuesta = new Encuesta();
 
   ngOnInit(): void {
     this.encuesta.tipo = TipoEncuestaEnum.ABIERTO;
+    this.encuestasService.getAllCategorias().subscribe(categorias => {
+      categorias.forEach((categoria, index) => {
+        this.categorias[index] = categoria;
+      })
+      console.log("Categorias adentro: " + JSON.stringify(this.categorias));
+    });
     this.agregarPregunta();
   }
 
@@ -54,11 +66,11 @@ export class EncuestaCrearComponent implements OnInit {
 
   agregarOpcionSimple(id) {
     // console.log(id);
-    if (!this.encuesta.preguntas[id].opciones){
+    if (!this.encuesta.preguntas[id].opciones) {
       this.encuesta.preguntas[id].opciones = [];
     }
     // console.log(this.encuesta.preguntas)
-    if (this.encuesta.preguntas[id].opciones.length<1){
+    if (this.encuesta.preguntas[id].opciones.length < 1) {
       const newOpcionSimple = new Opcion();
       newOpcionSimple.tipo = TipoOpcionEnum.RESPUESTA_SIMPLE;
       console.log(this.encuesta.preguntas[id].opciones)
@@ -71,16 +83,21 @@ export class EncuestaCrearComponent implements OnInit {
 
     const usuario = {id: JSON.parse(sessionStorage.getItem('persona')).id};
     // persona.id = JSON.parse(sessionStorage.getItem('persona')).id;
-    this.encuesta.usuario = usuario
+    this.encuesta.usuario = usuario;
 
-    console.log("mi id desde session storage: "+ this.encuesta.usuario.id);
+    // this.personaService.getPersona(JSON.parse(sessionStorage.getItem('persona')).id).subscribe(response=>{
+    //   console.log(response);
+    //   this.encuesta.usuario = response;
+    // })
+
+    console.log("mi id desde session storage: " + this.encuesta.usuario.id);
     this.encuestasService.save(this.encuesta).subscribe(response => {
         this.router.navigate(['/encuestas'])
         Swal.fire('Encuesta Generada', `${response.mensaje}: ${response.encuesta.titulo}`, 'success')
       },
       error => {
         this.errores = error.error.errors as string[];
-        console.log('Codigo de error desde backend: '+error.status)
+        console.log('Codigo de error desde backend: ' + error.status)
         console.log(error.error.errors)
       }
     );
@@ -89,7 +106,7 @@ export class EncuestaCrearComponent implements OnInit {
 
   agregarOpcionMultiple(id: number) {
     console.log(id);
-    if (!this.encuesta.preguntas[id].opciones){
+    if (!this.encuesta.preguntas[id].opciones) {
       this.encuesta.preguntas[id].opciones = [];
     }
     const newOpcionSimple = new Opcion();

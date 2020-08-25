@@ -7,7 +7,7 @@
           <input name="encuestaTitulo" matInput [(ngModel)]="encuesta.titulo"/>
         </mat-form-field>
 
-<!--        <mat-divider></mat-divider>-->
+        <!--        <mat-divider></mat-divider>-->
 
         <div class="container" style="display: flex; margin-top: 30px">
           <div style="width: 30%">
@@ -32,6 +32,14 @@
             <div class="w-75" style="line-height: 11px">
               <small class="font-weight-light">* Tipo cerrado solo se accedera mediante un link o codigo QR *</small>
             </div>
+            <mat-form-field appearance="fill">
+              <mat-label>Categoria</mat-label>
+              <mat-select name="tipoEncuesta" [(ngModel)]="encuesta.categoria">
+                <mat-option *ngFor="let cat of categorias" [value]="cat">
+                  {{cat.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
 
           <div style="width: 30%">

@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {Observable, throwError} from "rxjs";
 import {Encuesta} from "../personas/encuesta";
 import {catchError} from "rxjs/operators";
+import {Categoria} from "../personas/categoria";
+import {Persona} from "../personas/persona";
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +48,9 @@ export class EncuestasService {
         return throwError(err);
       })
     )
+  }
+
+  getAllCategorias(): Observable<Categoria[]>{
+    return this.http.get<Categoria[]>(`http://localhost:8080/api/categorias`);
   }
 }
