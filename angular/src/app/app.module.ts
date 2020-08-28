@@ -46,6 +46,7 @@ import {MatBadgeModule} from "@angular/material/badge";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
+import { EditarComponent } from './personas/editar/editar.component';
 
 registerLocaleData(localeES, 'es')
 
@@ -54,7 +55,7 @@ const routes: Routes = [
   {path: 'personas', component: PersonasComponent},
   {path: 'personas/page/:page', component: PersonasComponent},
   {path: 'personas/form', component: FormComponent},
-  {path: 'personas/form/:id', component: FormComponent},
+  {path: 'personas/form/:id', component: EditarComponent},
   {path: 'login', component: LoginComponent},
   {path: 'encuestas', component: EncuestasComponent},
   {path: '', component: HomeComponent, pathMatch: 'full'},
@@ -97,6 +98,7 @@ export function maxValidationMessage(err, field) {
     PresignComponent,
     EncuestasComponent,
     EncuestaCrearComponent,
+    EditarComponent,
   ],
     imports: [
         BrowserModule,

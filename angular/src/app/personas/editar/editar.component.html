@@ -1,0 +1,19 @@
+<div class="container my-2">
+  <div class="text-left">
+    <button class="btn btn-primary rounded" [routerLink]="['/personas']">Volver</button>
+  </div>
+  <div class="container p-0 mt-2 mb-3 pb-3 card">
+    <h3 class="h3 card-header">{{titulo}}</h3>
+    <form [formGroup]="form" (ngSubmit)="onSubmit(user)">
+      <div class="container">
+        <formly-form [form]="form" [fields]="fields" [model]="user"></formly-form>
+        <button type="submit" class="btn btn-success">Finalizar</button>
+      </div>
+    </form>
+    <ul class="alert alert-danger" style="margin: 10px" *ngIf="errores?.length > 0">
+      <li *ngFor="let err of errores">
+        {{err}}
+      </li>
+    </ul>
+  </div>
+</div>

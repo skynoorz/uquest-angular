@@ -63,6 +63,9 @@ public class UsuarioRestController {
         Map<String, Object> response = new HashMap<>();
         try {
             usuario = usuarioService.findById(id);
+            usuario.setPassword("");
+//            log.info(usuario.getPassword());
+//            passwordEncoder.matches('',usuario.getPassword());
 //            usuario.setEncuestas(null);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar la consulta en la Base de datos");

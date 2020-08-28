@@ -12,6 +12,7 @@ import {AuthService} from "../usuarios/auth.service";
 export class EncuestasComponent implements OnInit {
 
   public encuestas: Encuesta[];
+  upr: any = [];
 
   constructor(private encuestasService: EncuestasService,
               private uprService: UprService,
@@ -25,21 +26,25 @@ export class EncuestasComponent implements OnInit {
     //   }
     // )
     // console.log("username: "+JSON.parse(sessionStorage.getItem("persona")).username)
-    if (this.authService.isAuthenticated()){
+    if (this.authService.isAuthenticated()) {
       this.encuestasService.getEncuestasByUsername(JSON.parse(sessionStorage.getItem("persona")).username).subscribe(encuestas => {
           // this.encuestas = encuestas;
           encuestas.forEach(encuesta => {
-            this.uprService.getUPR(encuesta.id).subscribe(upr => {
-              encuesta.upr = upr;
-              console.log(encuestas);
-              this.encuestas=encuestas;
+            this.uprService.getUPR(encuesta.id).subscribe(uprs => {
+              encuesta.upr = uprs;
+              uprs.forEach((upr, index) => {
+                // console.log("pregunta: " + upr.pregunta.id +" opcion:"+ upr.opcion.id);
+                this.upr[index] = {preguntaId: upr.pregunta.id, opcionId: upr.opcion.id};
+              })
+              // console.log(encuestas);
+              this.encuestas = encuestas;
             });
           })
-          console.log(this.encuestas);
+          // console.log(this.encuestas);
         }
       )
-    }
-    else {
+      console.log("UPR desde onInit: " + this.upr);
+    } else {
       // TODO
       console.log("Mostrar Encuestas Publicas")
     }
@@ -48,6 +53,10 @@ export class EncuestasComponent implements OnInit {
     //     // console.log("UPR: "+JSON.stringify(e))
     //   })
     // })
+  }
+
+  mostrarUPR (){
+    console.log(this.upr);
   }
 
 }

@@ -12,8 +12,8 @@ export class UprService {
 
   constructor(private http: HttpClient) { }
 
-  getUPR(id): Observable<Upr[]>{
-    return this.http.get<Upr[]>(`${this.urlEndpoint}/${id}`);
+  getUPR(id): Observable<any>{
+    return this.http.get<any>(`${this.urlEndpoint}/${id}`);
   }
 
   getAllUpr(): Observable<Upr[]>{
