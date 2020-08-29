@@ -55,7 +55,14 @@ export class EncuestasComponent implements OnInit {
     // })
   }
 
-  mostrarUPR (){
+  mostrarUPR() {
+    console.log(this.upr);
+    this.upr.reduce((acc, curr) => {
+      acc[curr.preguntaId] = acc[curr.preguntaId] || curr;
+      acc[curr.preguntaId].cantidadRespuestas = acc[curr.preguntaId].cantidadRespuestas || 0;
+      acc[curr.preguntaId].cantidadRespuestas++;
+      return acc;
+    }, {});
     console.log(this.upr);
   }
 

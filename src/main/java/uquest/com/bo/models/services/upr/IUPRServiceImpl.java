@@ -37,4 +37,9 @@ public class IUPRServiceImpl implements IUPRService{
     public List<UPR> findByEncuestaId(Long id) {
         return uprDao.findByEncuestaId(id);
     }
+
+    @Override
+    public List<Object> findTotalRespuestasByEncuestaId(Long id) {
+        return uprDao.findTotalRespuestasByEncuestaId(id);
+    }
 }

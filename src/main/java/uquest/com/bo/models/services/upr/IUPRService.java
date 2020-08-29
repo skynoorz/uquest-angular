@@ -14,4 +14,6 @@ public interface IUPRService {
     public void delete(Long id);
 
     public List<UPR> findByEncuestaId(Long id);
+
+    public List<Object> findTotalRespuestasByEncuestaId(Long id);
 }

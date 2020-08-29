@@ -15,7 +15,6 @@ public class Opcion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
     private String texto;
 
     private Integer tipo;

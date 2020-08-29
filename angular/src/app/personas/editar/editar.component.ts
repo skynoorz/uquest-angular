@@ -209,7 +209,7 @@ export class EditarComponent implements OnInit {
     // creo persona model
     user.carrera = {id: user.carreraId};
     user.instituto = {id: user.institutoId};
-    this.personaService.create(this.user).subscribe(
+    this.personaService.update(this.user).subscribe(
       response => {
         Swal.fire('Cliente Guardado', `${response.mensaje}`, 'success')
         this.router.navigate(['/login'])

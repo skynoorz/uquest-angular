@@ -32,21 +32,23 @@ import {MatSelectModule} from "@angular/material/select";
 
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
-import { PresignComponent } from './registro/presign.component';
+import {PresignComponent} from './registro/presign.component';
 import {MatCardModule} from '@angular/material/card';
-import { FormlyModule } from '@ngx-formly/core';
-import { FormlyMaterialModule } from '@ngx-formly/material';
-import { FormlyMatDatepickerModule } from "@ngx-formly/material/datepicker";
-import { EncuestasComponent } from './encuestas/encuestas.component';
+import {FormlyModule} from '@ngx-formly/core';
+import {FormlyMaterialModule} from '@ngx-formly/material';
+import {FormlyMatDatepickerModule} from "@ngx-formly/material/datepicker";
+import {EncuestasComponent} from './encuestas/encuestas.component';
 import {MatAccordion, MatExpansionModule} from "@angular/material/expansion";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
-import { EncuestaCrearComponent } from './encuestas/encuesta-crear/encuesta-crear.component';
+import {EncuestaCrearComponent} from './encuestas/encuesta-crear/encuesta-crear.component';
 import {MatBadgeModule} from "@angular/material/badge";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
-import { EditarComponent } from './personas/editar/editar.component';
+import {EditarComponent} from './personas/editar/editar.component';
+import {MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatSliderModule} from "@angular/material/slider";
 
 registerLocaleData(localeES, 'es')
 
@@ -100,43 +102,45 @@ export function maxValidationMessage(err, field) {
     EncuestaCrearComponent,
     EditarComponent,
   ],
-    imports: [
-        BrowserModule,
-        RouterModule.forRoot(routes),
-        HttpClientModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        MatDatepickerModule,
-        MatMomentDateModule,
-        MatButtonModule,
-        MatStepperModule,
-        MatFormFieldModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatCardModule,
-        FormlyModule.forRoot(
-            {
-                validationMessages: [
-                    {name: 'required', message: 'This field is required'},
-                    {name: 'minlength', message: minlengthValidationMessage},
-                    {name: 'maxlength', message: maxlengthValidationMessage},
-                    {name: 'min', message: minValidationMessage},
-                    {name: 'max', message: maxValidationMessage},
-                ],
-            }
-        ),
-        FormlyMaterialModule,
-        FormlyMatDatepickerModule,
-        MatExpansionModule,
-        MatIconModule,
-        MatProgressBarModule,
-        MatBadgeModule,
-        MatTabsModule,
-        MatCheckboxModule,
-        MatDividerModule
-    ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes),
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatButtonModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatCardModule,
+    FormlyModule.forRoot(
+      {
+        validationMessages: [
+          {name: 'required', message: 'This field is required'},
+          {name: 'minlength', message: minlengthValidationMessage},
+          {name: 'maxlength', message: maxlengthValidationMessage},
+          {name: 'min', message: minValidationMessage},
+          {name: 'max', message: maxValidationMessage},
+        ],
+      }
+    ),
+    FormlyMaterialModule,
+    FormlyMatDatepickerModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatBadgeModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatDividerModule,
+    MatSnackBarModule,
+    MatSliderModule
+  ],
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
@@ -147,7 +151,7 @@ export function maxValidationMessage(err, field) {
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 
-    bootstrap: [AppComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

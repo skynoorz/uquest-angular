@@ -45,7 +45,7 @@ public class EncuestaRestController {
         }
         try {
             encuestaNew = encuestaService.save(encuesta);
-            log.info(encuestaNew.toString());
+//            log.info(encuestaNew.toString());
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {Persona} from "../../personas/persona";
 import {Categoria} from "../../personas/categoria";
 import {PersonaService} from "../../personas/persona.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-encuesta-crear',
@@ -22,15 +23,19 @@ export class EncuestaCrearComponent implements OnInit {
   public errores: string[];
   public categorias: Categoria[];
 
+  public _rangeEscale: [number, number, number, number, number, number, number, number, number];
+
   constructor(private encuestasService: EncuestasService,
               private personaService:PersonaService,
-              private router: Router) {
+              private router: Router,
+              private _snackBar: MatSnackBar) {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
     const date = new Date().getDate();
 
     this.minDate = new Date(currentYear, currentMonth, date);
     this.maxDate = new Date(currentYear + 1, currentMonth, date);
+    this._rangeEscale = [2,3,4,5,6,7,8,9,10];
 
     this.categorias = [];
   }
@@ -84,16 +89,16 @@ export class EncuestaCrearComponent implements OnInit {
     const usuario = {id: JSON.parse(sessionStorage.getItem('persona')).id};
     // persona.id = JSON.parse(sessionStorage.getItem('persona')).id;
     this.encuesta.usuario = usuario;
+    console.log("mi id desde session storage: " + this.encuesta.usuario.id);
 
     // this.personaService.getPersona(JSON.parse(sessionStorage.getItem('persona')).id).subscribe(response=>{
     //   console.log(response);
     //   this.encuesta.usuario = response;
     // })
-
-    console.log("mi id desde session storage: " + this.encuesta.usuario.id);
     this.encuestasService.save(this.encuesta).subscribe(response => {
         this.router.navigate(['/encuestas'])
         Swal.fire('Encuesta Generada', `${response.mensaje}: ${response.encuesta.titulo}`, 'success')
+        // this._snackBar.open("Encuesta Creada", "deshacer", {duration: 4000,verticalPosition: "bottom"});
       },
       error => {
         this.errores = error.error.errors as string[];
