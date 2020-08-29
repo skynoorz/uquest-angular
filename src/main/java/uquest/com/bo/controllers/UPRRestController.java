@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uquest.com.bo.models.entity.UPR;
+import uquest.com.bo.models.projection.UPRgroup;
 import uquest.com.bo.models.services.upr.IUPRService;
 
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class UPRRestController {
     public ResponseEntity<?> count(@PathVariable Long id) {
 
 //        List<UPR> upr = null;
-        List<Object> upr = null;
+        List<UPRgroup> upr = null;
         Map<String, Object> response = new HashMap<>();
         try {
             upr = uprService.findTotalRespuestasByEncuestaId(id);
@@ -72,7 +73,7 @@ public class UPRRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<List<Object>>(upr, HttpStatus.OK);
+        return new ResponseEntity<>(upr, HttpStatus.OK);
     }
 
     public class TemporalUPR {

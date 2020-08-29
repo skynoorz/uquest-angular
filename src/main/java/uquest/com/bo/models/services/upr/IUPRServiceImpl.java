@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uquest.com.bo.models.dao.IUPRDao;
 import uquest.com.bo.models.entity.UPR;
+import uquest.com.bo.models.projection.UPRgroup;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class IUPRServiceImpl implements IUPRService{
     }
 
     @Override
-    public List<Object> findTotalRespuestasByEncuestaId(Long id) {
+    public List<UPRgroup> findTotalRespuestasByEncuestaId(Long id) {
         return uprDao.findTotalRespuestasByEncuestaId(id);
     }
 }
