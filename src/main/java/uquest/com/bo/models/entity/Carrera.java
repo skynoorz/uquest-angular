@@ -19,16 +19,20 @@ public class Carrera implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     @NotEmpty
     private String nombre;
 
+    @Column
     @NotEmpty
     private String direccion;
 
+    @Column
     @NotEmpty
     private String fono;
 
-    @Email
+    @Column
+    @NotEmpty
     private String email;
 
 //    @JsonIgnore

@@ -75,12 +75,12 @@ public class Usuario implements Serializable {
     private String foto;
 
     // RELACIONES
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="instituto_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Instituto instituto;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="carrera_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @NotNull(message = "la carrera no puede estar vacia")
