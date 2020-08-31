@@ -212,7 +212,7 @@ export class EditarComponent implements OnInit {
     this.personaService.update(this.user).subscribe(
       response => {
         Swal.fire('Cliente Guardado', `${response.mensaje}`, 'success')
-        this.router.navigate(['/login'])
+        this.router.navigate(['/personas'])
       },
       error => {
         this.errores = error.error.errors as string[];

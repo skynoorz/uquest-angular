@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {Upr} from "../classes/upr";
 import {HttpClient} from "@angular/common/http";
 
 @Injectable({
@@ -12,11 +11,7 @@ export class UprService {
 
   constructor(private http: HttpClient) { }
 
-  getUPR(id): Observable<any>{
-    return this.http.get<any>(`${this.urlEndpoint}/${id}`);
-  }
-
-  getAllUpr(): Observable<Upr[]>{
-    return this.http.get<Upr[]>(`${this.urlEndpoint}`);
+  getTotalUPR(id): Observable<any>{
+    return this.http.get<any>(`${this.urlEndpoint}/total/${id}`);
   }
 }

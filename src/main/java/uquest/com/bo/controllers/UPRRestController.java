@@ -57,6 +57,7 @@ public class UPRRestController {
         List<UPRgroup> upr = null;
         Map<String, Object> response = new HashMap<>();
         try {
+            Integer total = 0;
             upr = uprService.findTotalRespuestasByEncuestaId(id);
 //            upr.forEach(upr1 -> {
 //                log.warn(upr1.getId().toString());
@@ -74,11 +75,5 @@ public class UPRRestController {
         }
 
         return new ResponseEntity<>(upr, HttpStatus.OK);
-    }
-
-    public class TemporalUPR {
-        private Integer opcion_id;
-        private Integer pregunta_id;
-        private Integer total;
     }
 }

@@ -69,8 +69,8 @@ public class Encuesta implements Serializable {
     @JoinColumn(name = "encuesta_id")
     private List<Pregunta> preguntas;
 
-//    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+//    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 

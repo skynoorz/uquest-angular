@@ -2,12 +2,13 @@
   <div>
     <div class="button-right">
       <div style="width: 85%">
-        <h1 *ngIf="authService.isAuthenticated()">Mis encuestas</h1>
+        <h1 *ngIf="authService.isAuthenticated()" style="font-family: Metropolis-Regular, sans-serif">Mis encuestas</h1>
         <h1 *ngIf="authService.isAuthenticated() == false">Encuestas Publicas</h1>
       </div>
       <div style="width: 15%">
-        <button mat-raised-button color="primary" aria-label="crea encuesta" [routerLink]="['/encuestas/crear']" *ngIf="authService.isAuthenticated()">
-<!--          <mat-icon>add</mat-icon>-->
+        <button style="font-family: Metropolis-Regular, sans-serif" mat-raised-button color="primary" aria-label="crea encuesta" [routerLink]="['/encuestas/crear']"
+                *ngIf="authService.isAuthenticated()">
+          <!--          <mat-icon>add</mat-icon>-->
           Crear Encuesta
         </button>
       </div>
@@ -28,13 +29,23 @@
             <p>{{pregunta.descripcion}}</p>
             <div *ngFor="let opcion of pregunta.opciones">
               <p>{{opcion.texto}}</p>
-              <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+              <mat-progress-bar mode="determinate" value="{{opcion.total}}"></mat-progress-bar>
+              <div style="position:relative;">
+                {{ opcion.total }}
+              </div>
             </div>
           </div>
         </div>
+        <div style="float: right; font-family: Metropolis-Regular, sans-serif">
+          <button style="margin-right: 20px;" mat-raised-button color="secondary" aria-label="crea encuesta" *ngIf="authService.isAuthenticated()">
+            Editar
+          </button>
+          <button mat-raised-button color="warn" aria-label="crea encuesta" *ngIf="authService.isAuthenticated()">
+            Eliminar
+          </button>
+        </div>
       </mat-expansion-panel>
     </div>
-
-    <button (click)="mostrarUPR()">mostrar</button>
   </div>
+  <!--  <button (click)="mostrarEncuesta()">mostrar</button>-->
 </div>

@@ -135,6 +135,10 @@ public class UsuarioRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
         try {
+            if (usuario.getInstituto().getId() == null)
+                usuario.setInstituto(null);
+            String encodedPass = passwordEncoder.encode(usuario.getPassword());
+            usuario.setPassword(encodedPass);
             objectUpdated = usuarioService.save(usuario);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el update en la Base de datos");

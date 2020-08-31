@@ -93,12 +93,6 @@ public class Usuario implements Serializable {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id","role_id"})})
     private List<Role> roles;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JoinColumn(name = "usuario_id")
-    private List<Encuesta> encuestas;
-
     public Long getId() {
         return id;
     }
@@ -221,14 +215,6 @@ public class Usuario implements Serializable {
 
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
-    }
-
-    public List<Encuesta> getEncuestas() {
-        return encuestas;
-    }
-
-    public void setEncuestas(List<Encuesta> encuestas) {
-        this.encuestas = encuestas;
     }
 
     public List<Role> getRoles() {

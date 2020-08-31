@@ -2,6 +2,7 @@ export class Opcion{
   id: number;
   texto: string;
   tipo: number;
+  total: number;
 }
 
 export enum TipoOpcionEnum {

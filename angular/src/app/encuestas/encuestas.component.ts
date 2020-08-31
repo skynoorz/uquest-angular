@@ -3,6 +3,7 @@ import {EncuestasService} from "../services/encuestas.service";
 import {Encuesta} from "../personas/encuesta";
 import {UprService} from "../services/upr.service";
 import {AuthService} from "../usuarios/auth.service";
+import {toArray} from "rxjs/operators";
 
 @Component({
   selector: 'app-encuestas',
@@ -17,53 +18,60 @@ export class EncuestasComponent implements OnInit {
   constructor(private encuestasService: EncuestasService,
               private uprService: UprService,
               public authService: AuthService) {
-  }
 
-  ngOnInit(): void {
-    // this.encuestasService.getEncuestas(1).subscribe(encuesta=>{
-    //     this.encuestas = encuesta;
-    //     console.log(this.encuestas);
-    //   }
-    // )
-    // console.log("username: "+JSON.parse(sessionStorage.getItem("persona")).username)
     if (this.authService.isAuthenticated()) {
       this.encuestasService.getEncuestasByUsername(JSON.parse(sessionStorage.getItem("persona")).username).subscribe(encuestas => {
           // this.encuestas = encuestas;
           encuestas.forEach(encuesta => {
-            this.uprService.getUPR(encuesta.id).subscribe(uprs => {
+            this.uprService.getTotalUPR(encuesta.id).subscribe(uprs => {
+              // guarda en la encuesta
               encuesta.upr = uprs;
+              // guardar en UPR global
               uprs.forEach((upr, index) => {
-                // console.log("pregunta: " + upr.pregunta.id +" opcion:"+ upr.opcion.id);
-                this.upr[index] = {preguntaId: upr.pregunta.id, opcionId: upr.opcion.id};
+                this.upr[index] = {preguntaId: upr.preguntaId, opcionId: upr.opcionId, total: upr.total};
               })
               // console.log(encuestas);
               this.encuestas = encuestas;
+              // por cada pregunta ingresar a opcion y guardar el total
+              this.encuestas.forEach(encuesta => {
+                encuesta.preguntas.forEach(pregunta => {
+                  var total: number = 0;
+                  encuesta.upr.forEach(uprTotal => {
+                    if (pregunta.id == uprTotal.preguntaId)
+                      total = total + uprTotal.total;
+                  })
+                  console.log("TOTAL por pregunta: " + total)
+                  pregunta.opciones.forEach(opcion => {
+                    // opcion.total = 10
+                    encuesta.upr.forEach(uprGuardar => {
+                      //pregunto si equivale cada uno
+                      if (pregunta.id == uprGuardar.preguntaId && opcion.id == uprGuardar.opcionId)
+                        opcion.total = (uprGuardar.total * 100) / total;
+                    })
+                  })
+                })
+              })
+              this.encuestas = encuestas;
+              console.log(encuestas);
             });
           })
-          // console.log(this.encuestas);
         }
       )
-      console.log("UPR desde onInit: " + this.upr);
+      console.log(this.upr);
     } else {
       // TODO
       console.log("Mostrar Encuestas Publicas")
     }
-    // this.uprService.getAllUpr().subscribe(upr => {
-    //   upr.forEach(e => {
-    //     // console.log("UPR: "+JSON.stringify(e))
-    //   })
-    // })
+
   }
 
-  mostrarUPR() {
-    console.log(this.upr);
-    this.upr.reduce((acc, curr) => {
-      acc[curr.preguntaId] = acc[curr.preguntaId] || curr;
-      acc[curr.preguntaId].cantidadRespuestas = acc[curr.preguntaId].cantidadRespuestas || 0;
-      acc[curr.preguntaId].cantidadRespuestas++;
-      return acc;
-    }, {});
-    console.log(this.upr);
+  ngOnInit(): void {
+
+
+  }
+
+  mostrarEncuesta() {
+    console.log(this.encuestas);
   }
 
 }
