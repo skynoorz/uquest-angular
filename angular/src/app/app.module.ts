@@ -49,6 +49,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {EditarComponent} from './personas/editar/editar.component';
 import {MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatSliderModule} from "@angular/material/slider";
+import { EncuestaSolveComponent } from './encuestas/encuesta-solve/encuesta-solve.component';
 
 registerLocaleData(localeES, 'es')
 
@@ -64,6 +65,7 @@ const routes: Routes = [
   // {path: 'registro', component: RegistroComponent},
   {path: 'registro', component: RegistroComponent},
   {path: 'encuestas/crear', component: EncuestaCrearComponent},
+  {path: 'encuestas/solve/:id', component: EncuestaSolveComponent },
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
@@ -101,6 +103,7 @@ export function maxValidationMessage(err, field) {
     EncuestasComponent,
     EncuestaCrearComponent,
     EditarComponent,
+    EncuestaSolveComponent,
   ],
   imports: [
     BrowserModule,

@@ -56,4 +56,9 @@ public class EncuestaRestController {
         response.put("mensaje", "El registro de la encuesta fue satisfactoriamente");
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
+
+    @GetMapping("/encuestas/{id}")
+    public Encuesta encuestas(@PathVariable Long id){
+        return encuestaService.findOne(id);
+    }
 }

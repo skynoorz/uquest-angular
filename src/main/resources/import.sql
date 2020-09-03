@@ -18,8 +18,8 @@ INSERT INTO usuarios (ci, apellido_pat, apellido_mat, nombres, fnac, sexo, email
 INSERT INTO categorias (id, nombre, descripcion) VALUES (1,'Elecciones','Temporadas para las elecciones electorales dentro la UMSA');
 INSERT INTO categorias (id, nombre, descripcion) VALUES (2,'Materias','Respecto a materias que se cursan');
 INSERT INTO encuestas (id,titulo, tipo, create_at, fecha_ini, fecha_fin, categoria_id, usuario_id) VALUES (1, 'Discriminacion de los estudios', 'abierto', '2019-08-28', '2019-08-28', '2019-08-30', 1, 1);
-INSERT INTO preguntas (id, descripcion, create_at, tipo, encuesta_id) VALUES (1, '¿Las persona con discapacidad son mas propensas a estudiar?','2019-08-28','seleccion',1);
-INSERT INTO preguntas (id, descripcion, create_at, tipo, encuesta_id) VALUES (2, '¿Dependiendo la Discapacidad?','2020-01-01','escala',1);
+INSERT INTO preguntas (id, descripcion, create_at, tipo, encuesta_id) VALUES (1, '¿Las persona con discapacidad son mas propensas a estudiar?','2019-08-28','Opcion Multiple',1);
+INSERT INTO preguntas (id, descripcion, create_at, tipo, encuesta_id) VALUES (2, '¿Dependiendo la Discapacidad?','2020-01-01','Opcion Multiple',1);
 INSERT INTO opciones (id, texto, tipo) VALUES (1, 'SI', 1);
 INSERT INTO opciones (id, texto, tipo) VALUES (2, 'NO', 1);
 INSERT INTO preguntas_opciones (pregunta_id, opcion_id) VALUES (1,1);

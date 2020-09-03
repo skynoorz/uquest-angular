@@ -53,17 +53,11 @@ public class UPRRestController {
     @GetMapping("/total/{id}")
     public ResponseEntity<?> count(@PathVariable Long id) {
 
-//        List<UPR> upr = null;
         List<UPRgroup> upr = null;
         Map<String, Object> response = new HashMap<>();
         try {
             Integer total = 0;
             upr = uprService.findTotalRespuestasByEncuestaId(id);
-//            upr.forEach(upr1 -> {
-//                log.warn(upr1.getId().toString());
-//            });
-//            usuario.setEncuestas(null);
-            log.info("entra");
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar la consulta en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

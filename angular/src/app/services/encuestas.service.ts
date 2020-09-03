@@ -13,6 +13,7 @@ import {Persona} from "../personas/persona";
 export class EncuestasService {
 
   private urlEndpoint: string = "http://localhost:8080/api/usuarios"
+  private urlEndpointNative: string = "http://localhost:8080/api"
 
   ngOnInit(): void{
     // this.http.get<Encuesta[]>(`${this.urlEndpoint}/encuestas/${id}`).subscribe(encuestas=>{this.encuestas = encuestas;});
@@ -23,6 +24,10 @@ export class EncuestasService {
 
   getEncuestas(id): Observable<Encuesta[]>{
     return this.http.get<Encuesta[]>(`${this.urlEndpoint}/encuestas/${id}`);
+  }
+
+  getEncuesta(id): Observable<Encuesta>{
+    return this.http.get<Encuesta>(`${this.urlEndpointNative}/encuestas/${id}`)
   }
 
   getEncuestasByUsername(user): Observable<Encuesta[]>{

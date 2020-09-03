@@ -25,14 +25,14 @@
           <form method="post">
             <mat-form-field>
               <input matInput [(ngModel)]="persona.username" placeholder="Usuario" id="username" autofocus required name="username" ngModel #username="ngModel">
-              <mat-error *ngIf="username.invalid">Email is required</mat-error>
+              <mat-error *ngIf="username.invalid">Usuario es necesario</mat-error>
               <mat-icon matSuffix>account_circle</mat-icon>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field style="margin-top: 10px; margin-bottom: 10px">
               <input [(ngModel)]="persona.password" matInput placeholder="Password" type="password" required minlength="5" name="password" ngModel #password="ngModel">
-              <mat-error *ngIf="password.errors && password.errors.required">Password is required
+              <mat-error *ngIf="password.errors && password.errors.required">Password necesario.
               </mat-error>
-              <mat-error *ngIf="password.errors && password.errors.minlength">Password must be of length 6
+              <mat-error *ngIf="password.errors && password.errors.minlength">El password debe tener al menos 5 caracteres.
               </mat-error>
               <mat-icon matSuffix>lock</mat-icon>
             </mat-form-field>

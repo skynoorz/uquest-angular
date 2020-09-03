@@ -14,31 +14,34 @@
       </div>
     </div>
     <div *ngFor="let encuesta of encuestas">
-      <mat-expansion-panel>
+      <mat-expansion-panel style="margin-bottom: 1em">
         <mat-expansion-panel-header>
-          <mat-panel-title>
+          <mat-panel-title style="font-family: Metropolis-Bold, sans-serif">
             {{encuesta.titulo}}
           </mat-panel-title>
           <mat-panel-description>
             {{encuesta.categoria.descripcion}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>Respuestas</p>
+        <h3>Respuestas</h3>
         <div>
           <div *ngFor="let pregunta of encuesta.preguntas">
-            <p>{{pregunta.descripcion}}</p>
-            <div *ngFor="let opcion of pregunta.opciones">
-              <p>{{opcion.texto}}</p>
+            <p class="font-italic">{{pregunta.descripcion}}</p>
+            <div *ngFor="let opcion of pregunta.opciones" style="margin: 10px">
+              <p class="font-weight-bold">{{opcion.texto}}</p>
               <mat-progress-bar mode="determinate" value="{{opcion.total}}"></mat-progress-bar>
-              <div style="position:relative;">
-                {{ opcion.total }}
+              <div *ngIf="opcion.total != undefined" style="position:relative; padding: 10px">
+                {{ opcion.total + " %"}}
+              </div>
+              <div *ngIf="opcion.total == undefined" style="position:relative; padding: 10px">
+                Sin respuestas.
               </div>
             </div>
           </div>
         </div>
         <div style="float: right; font-family: Metropolis-Regular, sans-serif">
           <button style="margin-right: 20px;" mat-raised-button color="secondary" aria-label="crea encuesta" *ngIf="authService.isAuthenticated()">
-            Editar
+            Estadisticas
           </button>
           <button mat-raised-button color="warn" aria-label="crea encuesta" *ngIf="authService.isAuthenticated()">
             Eliminar

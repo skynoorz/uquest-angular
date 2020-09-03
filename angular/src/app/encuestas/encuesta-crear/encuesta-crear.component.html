@@ -3,25 +3,26 @@
     <div>
       <mat-card>
         <mat-form-field style="width: 100%">
-          <h2>Nombre de la encuesta:</h2>
+          <h2 style="font-family: Metropolis-Bold, sans-serif">Nombre de la encuesta:</h2>
           <input name="encuestaTitulo" matInput [(ngModel)]="encuesta.titulo"/>
         </mat-form-field>
 
         <!--        <mat-divider></mat-divider>-->
 
         <div class="container" style="display: flex; margin-top: 30px">
-          <div style="width: 30%">
-            <button mat-fab color="primary" aria-label="agrega pregunta" (click)="agregarPregunta()">
+          <div style="width: 30%;">
+            <button style="margin-right: 10px" mat-raised-button color="primary" aria-label="agrega pregunta" (click)="agregarPreguntaDefault()">
+              Agregar Pregunta
               <mat-icon>add</mat-icon>
             </button>
 
-            <button mat-fab color="primary" (click)="salvarEncuesta()">
+            <button mat-raised-button color="primary" (click)="salvarEncuesta()">
+              Guardar
               <mat-icon>save</mat-icon>
             </button>
           </div>
 
           <div style="width: 30%">
-
             <mat-form-field appearance="fill">
               <mat-label>Tipo</mat-label>
               <mat-select name="tipoEncuesta" [(ngModel)]="encuesta.tipo">
@@ -76,8 +77,8 @@
             <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
             <mat-form-field appearance="fill">
               <mat-label>Tipo</mat-label>
-              <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo">
-                <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+              <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo" (selectionChange)="checkTipo($event, i)">
+                <mat-option *ngFor="let tipo of tipos" [value]="tipo" >
                   {{tipo}}
                 </mat-option>
               </mat-select>
@@ -90,13 +91,13 @@
                 <mat-label></mat-label>
                 <input name="opcionSimple" disabled value="Respuesta Simple" matInput>
               </mat-form-field>
-<!--                            <div *ngFor="let opcion of pregunta.opciones">-->
-<!--                              Respuesta Simple:-->
-<!--                              <mat-form-field *ngIf="pregunta.opciones[0]">-->
-<!--                                <mat-label></mat-label>-->
-<!--                                <input name="opcionSimple" disabled value="Respuesta Simple" matInput [(ngModel)]="pregunta.opciones[0].texto">-->
-<!--                              </mat-form-field>-->
-<!--                            </div>-->
+              <!--                            <div *ngFor="let opcion of pregunta.opciones">-->
+              <!--                              Respuesta Simple:-->
+              <!--                              <mat-form-field *ngIf="pregunta.opciones[0]">-->
+              <!--                                <mat-label></mat-label>-->
+              <!--                                <input name="opcionSimple" disabled value="Respuesta Simple" matInput [(ngModel)]="pregunta.opciones[0].texto">-->
+              <!--                              </mat-form-field>-->
+              <!--                            </div>-->
 
               <!--              <button mat-mini-fab color="primary" aria-label="agregar opcion simple" (click)="agregarOpcionSimple(0)">-->
               <!--                <mat-icon>add</mat-icon>-->
@@ -139,21 +140,21 @@
             </div>
             <div *ngSwitchCase="'Escala Lineal'">
               De:
-              <mat-form-field appearance="none" style="width: 3em" >
-                <mat-select name="linealMin" [(ngModel)]="pregunta.opciones">
+              <mat-form-field appearance="none" style="width: 3em">
+                <mat-select name="linealMin" [(ngModel)]="pregunta.opciones[0].minValue">
                   <mat-option [value]="0">0</mat-option>
                   <mat-option [value]="1">1</mat-option>
                 </mat-select>
               </mat-form-field>
               a:
-              <mat-form-field appearance="none" style="width: 3em" >
-                <mat-select name="linealMax">
+              <mat-form-field appearance="none" style="width: 3em">
+                <mat-select name="linealMax" [(ngModel)]="pregunta.opciones[0].maxValue">
                   <mat-option *ngFor="let range of _rangeEscale" [value]="range">{{range}}</mat-option>
                 </mat-select>
               </mat-form-field>
-              <div>
-                <mat-slider disabled thumbLabel min="1" max="5" step="1" value="2"></mat-slider>
-              </div>
+<!--              <div>-->
+<!--                <mat-slider disabled thumbLabel min="1" max="5" step="1" value="2"></mat-slider>-->
+<!--              </div>-->
             </div>
           </div>
         </mat-card>

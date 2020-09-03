@@ -1,0 +1,55 @@
+<div class="container-card" style="margin-top: 30px">
+  <form>
+    <div class="container">
+      <mat-card>
+        <h2 style="font-family: Metropolis-Bold, sans-serif">{{encuesta.titulo}}</h2>
+        <!--        toda la info necesaria-->
+      </mat-card>
+      <!--    tarjeta de pregunta-->
+      <div style="display: flex" *ngFor="let pregunta of encuesta.preguntas; let i = index" class="seccion-pregunta">
+        <mat-card style="margin-top: 10px; width: 100%">
+          <div class="pregunta-header">
+            <div style="width: 70%">
+              <h3>{{pregunta.descripcion}}</h3>
+            </div>
+            <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
+          </div>
+          <div class="pregunta-body container" [ngSwitch]="pregunta.tipo">
+            <div *ngSwitchCase="'Respuesta Simple'">Respuesta Simple
+              <div class="example-container">
+                <mat-form-field hintLabel="Max 10 characters" appearance="fill">
+                  <mat-label>Ingrese su respuesta</mat-label>
+                  <input matInput #input maxlength="10" placeholder="Ej. Nougat">
+                  <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+            <div *ngSwitchCase="'Parrafo'">Parrafo</div>
+            <div *ngSwitchCase="'Opcion Multiple'">
+              <mat-radio-group aria-label="Selecciona una opcion" style="display: flex">
+                <div *ngFor="let opcion of pregunta.opciones" >
+                  <mat-radio-button style="margin-left: 16px;" value="{{opcion.id}}">{{opcion.texto}}</mat-radio-button>
+                </div>
+              </mat-radio-group>
+
+            </div>
+            <div *ngSwitchCase="'Casillas de Verificacion'">
+              <mat-radio-group aria-label="Selecciona una opcion" style="display: flex">
+                <div *ngFor="let opcion of pregunta.opciones" >
+                  <mat-checkbox style="margin-left: 16px;" value="{{opcion.id}}">{{opcion.texto}}</mat-checkbox>
+                </div>
+              </mat-radio-group>
+            </div>
+            <div *ngSwitchCase="'Escala Lineal'">Escala Lineal
+              <mat-slider
+                thumbLabel
+                tickInterval="1000"
+                min="{{pregunta.opciones[0].minValue}}"
+                max="{{pregunta.opciones[0].maxValue}}"></mat-slider>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </form>
+</div>

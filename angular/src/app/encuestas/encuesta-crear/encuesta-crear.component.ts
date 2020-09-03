@@ -5,7 +5,6 @@ import {Opcion, TipoOpcionEnum} from "../../personas/opcion";
 import {EncuestasService} from "../../services/encuestas.service";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
-import {Persona} from "../../personas/persona";
 import {Categoria} from "../../personas/categoria";
 import {PersonaService} from "../../personas/persona.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -26,7 +25,7 @@ export class EncuestaCrearComponent implements OnInit {
   public _rangeEscale: [number, number, number, number, number, number, number, number, number];
 
   constructor(private encuestasService: EncuestasService,
-              private personaService:PersonaService,
+              private personaService: PersonaService,
               private router: Router,
               private _snackBar: MatSnackBar) {
     const currentYear = new Date().getFullYear();
@@ -35,7 +34,7 @@ export class EncuestaCrearComponent implements OnInit {
 
     this.minDate = new Date(currentYear, currentMonth, date);
     this.maxDate = new Date(currentYear + 1, currentMonth, date);
-    this._rangeEscale = [2,3,4,5,6,7,8,9,10];
+    this._rangeEscale = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     this.categorias = [];
   }
@@ -44,21 +43,24 @@ export class EncuestaCrearComponent implements OnInit {
 
   ngOnInit(): void {
     this.encuesta.tipo = TipoEncuestaEnum.ABIERTO;
-    this.encuestasService.getAllCategorias().subscribe(categorias => {
-      categorias.forEach((categoria, index) => {
-        this.categorias[index] = categoria;
-      })
-      console.log("Categorias adentro: " + JSON.stringify(this.categorias));
-    });
-    this.agregarPregunta();
+    this.cargarCategorias();
+    this.agregarPreguntaDefault();
   }
-
 
   tiposEncuesta = Object.keys(TipoEncuestaEnum).map(key => TipoEncuestaEnum[key]);
 
   tipos = Object.keys(TipoPreguntaEnum).map(key => TipoPreguntaEnum[key]);
 
-  agregarPregunta() {
+  cargarCategorias() {
+    this.encuestasService.getAllCategorias().subscribe(categorias => {
+      categorias.forEach((categoria, index) => {
+        this.categorias[index] = categoria;
+      })
+      // console.log("Categorias adentro: " + JSON.stringify(this.categorias));
+    });
+  }
+
+  agregarPreguntaDefault() {
     if (!this.encuesta.preguntas) {
       // en caso de encuesta nueva, inicializamos las preguntas.
       this.encuesta.preguntas = [];
@@ -69,26 +71,12 @@ export class EncuestaCrearComponent implements OnInit {
     this.encuesta.preguntas.push(newPregunta);
   }
 
-  agregarOpcionSimple(id) {
-    // console.log(id);
-    if (!this.encuesta.preguntas[id].opciones) {
-      this.encuesta.preguntas[id].opciones = [];
-    }
-    // console.log(this.encuesta.preguntas)
-    if (this.encuesta.preguntas[id].opciones.length < 1) {
-      const newOpcionSimple = new Opcion();
-      newOpcionSimple.tipo = TipoOpcionEnum.RESPUESTA_SIMPLE;
-      console.log(this.encuesta.preguntas[id].opciones)
-      this.encuesta.preguntas[id].opciones.push(newOpcionSimple);
-    }
-  }
-
   salvarEncuesta() {
     // console.log('encuesta DTO', this.encuesta);
 
-    const usuario = {id: JSON.parse(sessionStorage.getItem('persona')).id};
+    const usuario_id = {id: JSON.parse(sessionStorage.getItem('persona')).id};
     // persona.id = JSON.parse(sessionStorage.getItem('persona')).id;
-    this.encuesta.usuario = usuario;
+    this.encuesta.usuario = usuario_id;
     console.log("mi id desde session storage: " + this.encuesta.usuario.id);
 
     // this.personaService.getPersona(JSON.parse(sessionStorage.getItem('persona')).id).subscribe(response=>{
@@ -110,13 +98,55 @@ export class EncuestaCrearComponent implements OnInit {
   }
 
   agregarOpcionMultiple(id: number) {
-    console.log(id);
+    this.agregarOpcion(id, TipoOpcionEnum.OPCION_MULTIPLE);
+  }
+
+  agregarOpcion(id: number, tipo: TipoOpcionEnum){
     if (!this.encuesta.preguntas[id].opciones) {
       this.encuesta.preguntas[id].opciones = [];
     }
-    const newOpcionSimple = new Opcion();
-    newOpcionSimple.tipo = TipoOpcionEnum.RESPUESTA_SIMPLE;
+    const newOpcion = new Opcion();
+    newOpcion.tipo = tipo;
     console.log(this.encuesta.preguntas[id].opciones)
-    this.encuesta.preguntas[id].opciones.push(newOpcionSimple);
+    this.encuesta.preguntas[id].opciones.push(newOpcion);
+  }
+
+  checkTipo(event: any, id: number) {
+    console.log(event.value);
+    if (this.encuesta.preguntas[id].opciones)
+      console.log(this.encuesta.preguntas[id].opciones.length)
+    switch (event.value) {
+      case TipoPreguntaEnum.OPCION_MULTIPLE: {
+        if (!this.encuesta.preguntas[id].opciones || this.encuesta.preguntas[id].opciones.length == 0)
+          this.agregarOpcionMultiple(id);
+        break
+      }
+      case TipoPreguntaEnum.CASILLAS_DE_VERIFICACION: {
+        if (!this.encuesta.preguntas[id].opciones || this.encuesta.preguntas[id].opciones.length == 0)
+          this.agregarOpcion(id, TipoOpcionEnum.CASILLAS_DE_VERIFICACION);
+        break
+      }
+      case TipoPreguntaEnum.ESCALA_LINEAL: {
+        this.encuesta.preguntas[id].opciones = [];
+        this.agregarOpcion(id, TipoOpcionEnum.ESCALA_LINEAL);
+        break
+      }
+      case TipoPreguntaEnum.RESPUESTA_SIMPLE: {
+        console.log("comparo: "+TipoOpcionEnum+ " con: "+event.value)
+        this.encuesta.preguntas[id].opciones = [];
+        this.agregarOpcion(id, TipoOpcionEnum.RESPUESTA_SIMPLE);
+        break
+      }
+      case TipoPreguntaEnum.PARRAGO: {
+        this.encuesta.preguntas[id].opciones = [];
+        this.agregarOpcion(id, TipoOpcionEnum.PARRAGO);
+        break
+      }
+    }
+    if (this.encuesta.preguntas[id].opciones){
+      console.log("Ultimo length de las opciones: ")
+      console.log(this.encuesta.preguntas[id].opciones.length)
+    }
+
   }
 }
