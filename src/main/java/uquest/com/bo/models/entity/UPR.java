@@ -10,15 +10,15 @@ public class UPR {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", insertable = false, updatable = false)
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "pregunta_id", insertable = false, updatable = false)
+    @JoinColumn(name = "pregunta_id")
     private Pregunta pregunta;
 
     @ManyToOne
-    @JoinColumn(name = "opcion_id", insertable = false, updatable = false)
+    @JoinColumn(name = "opcion_id")
     private Opcion opcion;
 
     public Long getId() {

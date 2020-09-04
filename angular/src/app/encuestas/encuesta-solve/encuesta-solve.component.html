@@ -1,5 +1,5 @@
 <div class="container-card" style="margin-top: 30px">
-  <form>
+  <form (ngSubmit)="onSubmit(upr)">
     <div class="container">
       <mat-card>
         <h2 style="font-family: Metropolis-Bold, sans-serif">{{encuesta.titulo}}</h2>
@@ -49,6 +49,11 @@
             </div>
           </div>
         </mat-card>
+      </div>
+      <div style="float: right; font-family: Metropolis-Regular, sans-serif; margin-top: 20px">
+        <button style="margin-right: 20px;" mat-raised-button color="secondary" aria-label="enviar">
+          Enviar
+        </button>
       </div>
     </div>
   </form>

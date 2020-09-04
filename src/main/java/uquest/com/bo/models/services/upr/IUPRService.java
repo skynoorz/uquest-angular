@@ -8,7 +8,7 @@ import java.util.List;
 public interface IUPRService {
     public List<UPR> findAll();
 
-    public void save(UPR encuesta);
+    public UPR save(UPR encuesta);
 
     public UPR findOne(Long id);
 

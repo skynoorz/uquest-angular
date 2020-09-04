@@ -20,8 +20,8 @@ public class IUPRServiceImpl implements IUPRService{
     }
 
     @Override
-    public void save(UPR upr) {
-        uprDao.save(upr);
+    public UPR save(UPR upr) {
+        return uprDao.save(upr);
     }
 
     @Override

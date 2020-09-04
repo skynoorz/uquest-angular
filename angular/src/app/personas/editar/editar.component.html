@@ -10,10 +10,12 @@
         <button type="submit" class="btn btn-success">Finalizar</button>
       </div>
     </form>
+
     <ul class="alert alert-danger" style="margin: 10px" *ngIf="errores?.length > 0">
       <li *ngFor="let err of errores">
         {{err}}
       </li>
     </ul>
   </div>
+  <button (click)="mostrar()">mostrar defaults</button>
 </div>

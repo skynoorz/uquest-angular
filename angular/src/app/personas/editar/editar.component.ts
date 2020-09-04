@@ -15,7 +15,11 @@ import {startWith, switchMap, tap} from "rxjs/operators";
 })
 export class EditarComponent implements OnInit {
 
-  user: any = { carreraId: 1, institutoId: 1};
+  user: any = {carreraId: 1, institutoId: 1};
+
+  userDefault: string;
+  emailDefault: string;
+
   // any = { institutoId: 1};
   form = new FormGroup({});
   public errores: string[];
@@ -143,9 +147,19 @@ export class EditarComponent implements OnInit {
       },
       asyncValidators: {
         uniqueUsername: {
-          expression: (control: FormControl) => this.personaService.emailExist(control.value).toPromise(),
+          expression: (control: FormControl) => {
+            this.personaService.emailExist(control.value).toPromise()
+          },
           message: 'Correo ya existente',
         },
+      },
+      validators:{
+        uniqueEmail:{
+          expression:(control: FormControl)=>{
+            this.isEqualToDefaultEmail(control.value)
+          },
+          message: 'Correcto',
+        }
       }
     },
     {
@@ -180,9 +194,17 @@ export class EditarComponent implements OnInit {
 
   ngOnInit(): void {
     // this.user = { carreraId: 1}
+
     console.log(this.user)
     this.cargarPersona();
     // this.user.carreraId = this.user.carrera.id;
+  }
+
+  isEqualToDefaultUsername(username: string){
+    return username == this.userDefault;
+  }
+  isEqualToDefaultEmail(email: string){
+    return email == this.emailDefault;
   }
 
   cargarPersona(): void {
@@ -190,8 +212,13 @@ export class EditarComponent implements OnInit {
       let id = params ['id']
       if (id) {
         this.personaService.getPersona(id).subscribe((user) => {
-          user.password = '';
+          this.userDefault = user.username;
+          this.emailDefault = user.email;
+
+          // ahora el BE me envia vacio.
+          // user.password = '';
           this.user = user;
+
           this.user.carreraId = user.carrera.id;
           if (user.instituto)
             this.user.institutoId = user.instituto.id;
@@ -202,6 +229,11 @@ export class EditarComponent implements OnInit {
         // console.log("Persona registrada: " + this.user)
       }
     })
+  }
+
+  mostrar(){
+    console.log(this.userDefault)
+    console.log(this.emailDefault)
   }
 
   onSubmit(user: any) {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Encuesta} from "../../personas/encuesta";
 import {ActivatedRoute} from "@angular/router";
 import {EncuestasService} from "../../services/encuestas.service";
+import {Upr} from "../../classes/upr";
+import {UprService} from "../../services/upr.service";
 
 @Component({
   selector: 'app-encuesta-solve',
@@ -11,9 +13,11 @@ import {EncuestasService} from "../../services/encuestas.service";
 export class EncuestaSolveComponent implements OnInit {
 
   public encuesta: Encuesta = new Encuesta();
+  public upr: Upr[];
 
   constructor(private activatedRoute: ActivatedRoute,
-              private encuestaService: EncuestasService) {
+              private encuestaService: EncuestasService,
+              private uprService: UprService) {
 
   }
 
@@ -45,4 +49,10 @@ export class EncuestaSolveComponent implements OnInit {
     })
   }
 
+  onSubmit(upr: Upr[]) {
+    console.log("enviamos al backend")
+    this.uprService.sendRespuestas(upr).subscribe(upr=>{
+      console.log(upr);
+    })
+  }
 }

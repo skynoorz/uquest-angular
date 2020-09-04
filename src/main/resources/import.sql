@@ -15,8 +15,9 @@ INSERT INTO usuarios (ci, apellido_pat, apellido_mat, nombres, fnac, sexo, email
 INSERT INTO usuarios (ci, apellido_pat, apellido_mat, nombres, fnac, sexo, email, username, password, enabled, create_at, carrera_id) VALUES ('9352652','Gomez', 'Amestoy','Jaime','1991-09-24','Masculino','gomez_jaime@gmail.com', 'goja', 'goja', 1, '2020-05-25',6)
 INSERT INTO usuarios (ci, apellido_pat, apellido_mat, nombres, fnac, sexo, email, username, password, enabled, create_at, carrera_id) VALUES ('5689782','Jimenez', 'Bernan','Ximena','1992-07-08','Femenino','jimenez_ximena@outlook.com', 'jixi', 'jixi', 1, '2020-05-25',1)
 INSERT INTO usuarios (ci, apellido_pat, apellido_mat, nombres, fnac, sexo, email, username, password, enabled, create_at, carrera_id) VALUES ('15389672','Loza', 'Benavidez','Rosalia','2000-02-13','Masculino','loza_rosalia@yahoo.com', 'loro', 'loro', 1, '2020-05-25',2)
-INSERT INTO categorias (id, nombre, descripcion) VALUES (1,'Elecciones','Temporadas para las elecciones electorales dentro la UMSA');
-INSERT INTO categorias (id, nombre, descripcion) VALUES (2,'Materias','Respecto a materias que se cursan');
+INSERT INTO categorias (nombre, descripcion) VALUES ('Elecciones','Temporadas para las elecciones electorales dentro la UMSA');
+INSERT INTO categorias (nombre, descripcion) VALUES ('Materias','Materias dentro de tu carrera');
+INSERT INTO categorias (nombre, descripcion) VALUES ('Docentes','Opinion respecto a docentes');
 INSERT INTO encuestas (id,titulo, tipo, create_at, fecha_ini, fecha_fin, categoria_id, usuario_id) VALUES (1, 'Discriminacion de los estudios', 'abierto', '2019-08-28', '2019-08-28', '2019-08-30', 1, 1);
 INSERT INTO preguntas (id, descripcion, create_at, tipo, encuesta_id) VALUES (1, '¿Las persona con discapacidad son mas propensas a estudiar?','2019-08-28','Opcion Multiple',1);
 INSERT INTO preguntas (id, descripcion, create_at, tipo, encuesta_id) VALUES (2, '¿Dependiendo la Discapacidad?','2020-01-01','Opcion Multiple',1);
