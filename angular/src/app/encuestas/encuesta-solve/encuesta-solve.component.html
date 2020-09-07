@@ -1,16 +1,17 @@
 <div class="container-card" style="margin-top: 30px">
-  <form (ngSubmit)="onSubmit(upr)">
+  <form (ngSubmit)="onSubmitArray()">
     <div class="container">
       <mat-card>
         <h2 style="font-family: Metropolis-Bold, sans-serif">{{encuesta.titulo}}</h2>
         <!--        toda la info necesaria-->
       </mat-card>
       <!--    tarjeta de pregunta-->
-      <div style="display: flex" *ngFor="let pregunta of encuesta.preguntas; let i = index" class="seccion-pregunta">
+      <div style="display: flex" *ngFor="let pregunta of encuesta.preguntas; let i = index;" class="seccion-pregunta">
         <mat-card style="margin-top: 10px; width: 100%">
           <div class="pregunta-header">
             <div style="width: 70%">
               <h3>{{pregunta.descripcion}}</h3>
+              <input type="hidden" [(ngModel)]="uprPreguntas[i]" value="{{pregunta.id}}" name="preguntaId{{i}}">
             </div>
             <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
           </div>
@@ -27,15 +28,17 @@
             <div *ngSwitchCase="'Parrafo'">Parrafo</div>
             <div *ngSwitchCase="'Opcion Multiple'">
               <mat-radio-group aria-label="Selecciona una opcion" style="display: flex">
-                <div *ngFor="let opcion of pregunta.opciones" >
-                  <mat-radio-button style="margin-left: 16px;" value="{{opcion.id}}">{{opcion.texto}}</mat-radio-button>
+                <div *ngFor="let opcion of pregunta.opciones">
+                  <!-- [(ngModel)]="uprs[i].opcionId"-->
+                  <!-- [(ngModel)]="uprs[i].opcion.id"-->
+                  <mat-radio-button style="margin-left: 16px;" [(ngModel)]="uprOptions[i]" ngDefaultControl name="opcion_{{i}}" value="{{opcion.id}}">{{opcion.texto}}</mat-radio-button>
                 </div>
               </mat-radio-group>
 
             </div>
             <div *ngSwitchCase="'Casillas de Verificacion'">
               <mat-radio-group aria-label="Selecciona una opcion" style="display: flex">
-                <div *ngFor="let opcion of pregunta.opciones" >
+                <div *ngFor="let opcion of pregunta.opciones">
                   <mat-checkbox style="margin-left: 16px;" value="{{opcion.id}}">{{opcion.texto}}</mat-checkbox>
                 </div>
               </mat-radio-group>
