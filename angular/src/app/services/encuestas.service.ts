@@ -39,6 +39,18 @@ export class EncuestasService {
       })
     )
   }
+  saveOptions(opcion: OpcionSend[]): Observable<OpcionSend[]>{
+    return this.http.post<any>(`${this.urlEndpointNative}/opciones`, opcion).pipe(
+      catchError(err => {
+        if (err.status == 400 ) {
+          return throwError(err);
+        }
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
+        return throwError(err);
+      })
+    )
+  }
 
   getIdsFromText(text: string): Observable<any>{
     return this.http.get<any>(`${this.urlEndpointNative}/opciones/${text}`)

@@ -20,7 +20,7 @@
               <div>
                 <mat-form-field hintLabel="Maximo 10 caracteres" appearance="fill">
                   <mat-label>Ingrese su respuesta</mat-label>
-                  <input matInput #input [(ngModel)]="Answers[i]" maxlength="10" name="RespuestaSimple_{{i}}" placeholder="Ej. Nougat">
+                  <input matInput #input [(ngModel)]="AnswersS[i-1]" maxlength="10" name="RespuestaSimple_{{i}}" placeholder="Ej. Nougat">
                   <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
                 </mat-form-field>
               </div>
@@ -28,7 +28,7 @@
             <div *ngSwitchCase="'Parrafo'">
               <mat-form-field hintLabel="Maximo 65 caracteres" appearance="fill" style="width: 75%">
                 <mat-label>Ingrese su respuesta</mat-label>
-                <textarea matInput #input [(ngModel)]="Answers[i]" name="Parrafo_{{i}}" maxlength="65" placeholder="Ej. Nougat"></textarea>
+                <textarea matInput #input [(ngModel)]="AnswersP[i-1]" name="Parrafo_{{i}}" maxlength="65" placeholder="Ej. Nougat"></textarea>
                 <mat-hint align="end">{{input.value?.length || 0}}/65</mat-hint>
               </mat-form-field>
             </div>

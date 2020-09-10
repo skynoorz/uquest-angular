@@ -23,10 +23,37 @@ public class OpcionRestController {
     @Autowired
     private IOpcionService opcionService;
 
-    @PostMapping("/opciones")
-    private ResponseEntity<?> create(@Valid @RequestBody Opcion opcion, BindingResult result){
+//    @PostMapping("/opciones")
+//    private ResponseEntity<?> create(@Valid @RequestBody Opcion opcion, BindingResult result){
+//
+//        Opcion opcionNew;
+//        Map<String, Object> response = new HashMap<>();
+//
+//        if (result.hasErrors()) {
+//            List<String> errors = new ArrayList<>();
+//            for (FieldError err : result.getFieldErrors()) {
+//                errors.add("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
+//            }
+//            response.put("errors", errors);
+//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+//        }
+//        try {
+//            opcionNew = opcionService.save(opcion);
+//        } catch (DataAccessException e) {
+//            response.put("mensaje", "Error al realizar el insert en la Base de datos");
+//            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//
+//        response.put("opcion", opcionNew);
+//        response.put("mensaje", "El registro de la opcion fue satisfactoriamente");
+//        return new ResponseEntity<Map>(response, HttpStatus.CREATED);
+//    }
 
-        Opcion opcionNew;
+    @PostMapping("/opciones")
+    private ResponseEntity<?> create(@Valid @RequestBody List<Opcion> opcion, BindingResult result){
+
+        List<Opcion> opcionNew = new ArrayList<>();
         Map<String, Object> response = new HashMap<>();
 
         if (result.hasErrors()) {
@@ -38,7 +65,9 @@ public class OpcionRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            opcionNew = opcionService.save(opcion);
+            opcion.forEach(opcion1 -> {
+                opcionNew.add(opcionService.save(opcion1));
+            });
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

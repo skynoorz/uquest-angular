@@ -111,7 +111,6 @@ public class UPRRestController {
 //        return new ResponseEntity<Map>(response, HttpStatus.CREATED);
 //    }
 
-    // TODO error al crear @ManyToOne en UPR
     @PostMapping(value = {"/", ""})
     public ResponseEntity<?> create(@Valid @RequestBody UPR upr, BindingResult result) {
         UPR uprNew;
@@ -138,4 +137,36 @@ public class UPRRestController {
         response.put("mensaje", "Se realizo el registro de upr individual correctamente");
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
+
+//    @PostMapping(value = {"/", ""})
+//    public ResponseEntity<?> create(@Valid @RequestBody List<UPR> upr, BindingResult result) {
+//        List<UPR> uprNew = new ArrayList<>();
+//        Map<String, Object> response = new HashMap<>();
+//
+//        // sending error to FE
+//        if (result.hasErrors()) {
+//            List<String> errors = new ArrayList<>();
+//            for (FieldError err : result.getFieldErrors()) {
+//                errors.add("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
+//            }
+//            response.put("errors", errors);
+//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+//        }
+//        try {
+//            upr.forEach(upr1 -> {
+//                uprNew.add(uprService.save(upr1));
+//            });
+////            for (int i = 0; i < upr.length; i++) {
+////                uprNew = uprService.save(upr[i]);
+////            }
+//        } catch (DataAccessException e) {
+//            response.put("mensaje", "Error al realizar el insert en la Base de datos");
+//            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//
+//        response.put("upr", uprNew);
+//        response.put("mensaje", "Se realizo el registro de upr individual correctamente");
+//        return new ResponseEntity<Map>(response, HttpStatus.CREATED);
+//    }
 }
