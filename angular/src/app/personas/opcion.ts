@@ -6,6 +6,10 @@ export class Opcion{
   minValue: number;
   maxValue: number;
 }
+export class OpcionSend{
+  texto: string;
+}
+
 
 export enum TipoOpcionEnum {
   RESPUESTA_SIMPLE = 1,

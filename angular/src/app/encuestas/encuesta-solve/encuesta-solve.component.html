@@ -11,21 +11,27 @@
           <div class="pregunta-header">
             <div style="width: 70%">
               <h3>{{pregunta.descripcion}}</h3>
-              <input type="hidden" [(ngModel)]="uprPreguntas[i]" value="{{pregunta.id}}" name="preguntaId{{i}}">
+              <input type="hidden" [(ngModel)]="uprPreguntas[i]" value="{{pregunta.id}}" name="preguntaId_{{i}}">
             </div>
             <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
           </div>
           <div class="pregunta-body container" [ngSwitch]="pregunta.tipo">
-            <div *ngSwitchCase="'Respuesta Simple'">Respuesta Simple
-              <div class="example-container">
-                <mat-form-field hintLabel="Max 10 characters" appearance="fill">
+            <div *ngSwitchCase="'Respuesta Simple'">
+              <div>
+                <mat-form-field hintLabel="Maximo 10 caracteres" appearance="fill">
                   <mat-label>Ingrese su respuesta</mat-label>
-                  <input matInput #input maxlength="10" placeholder="Ej. Nougat">
+                  <input matInput #input [(ngModel)]="Answers[i]" maxlength="10" name="RespuestaSimple_{{i}}" placeholder="Ej. Nougat">
                   <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
                 </mat-form-field>
               </div>
             </div>
-            <div *ngSwitchCase="'Parrafo'">Parrafo</div>
+            <div *ngSwitchCase="'Parrafo'">
+              <mat-form-field hintLabel="Maximo 65 caracteres" appearance="fill" style="width: 75%">
+                <mat-label>Ingrese su respuesta</mat-label>
+                <textarea matInput #input [(ngModel)]="Answers[i]" name="Parrafo_{{i}}" maxlength="65" placeholder="Ej. Nougat"></textarea>
+                <mat-hint align="end">{{input.value?.length || 0}}/65</mat-hint>
+              </mat-form-field>
+            </div>
             <div *ngSwitchCase="'Opcion Multiple'">
               <mat-radio-group aria-label="Selecciona una opcion" style="display: flex">
                 <div *ngFor="let opcion of pregunta.opciones">
@@ -37,18 +43,19 @@
 
             </div>
             <div *ngSwitchCase="'Casillas de Verificacion'">
-              <mat-radio-group aria-label="Selecciona una opcion" style="display: flex">
-                <div *ngFor="let opcion of pregunta.opciones">
-                  <mat-checkbox style="margin-left: 16px;" value="{{opcion.id}}">{{opcion.texto}}</mat-checkbox>
+              <mat-radio-group aria-label="Selecciona una opcion" >
+                <div *ngFor="let opcion of pregunta.opciones" style="display: flex">
+                  <mat-checkbox style="margin-left: 16px;" name="opcion_{{opcion.id}}_{{i}}" value="{{opcion.id}}">{{opcion.texto}}</mat-checkbox>
                 </div>
               </mat-radio-group>
             </div>
-            <div *ngSwitchCase="'Escala Lineal'">Escala Lineal
+            <div *ngSwitchCase="'Escala Lineal'">{{pregunta.opciones[0].minValue}}
               <mat-slider
                 thumbLabel
                 tickInterval="1000"
                 min="{{pregunta.opciones[0].minValue}}"
                 max="{{pregunta.opciones[0].maxValue}}"></mat-slider>
+              {{pregunta.opciones[0].maxValue}}
             </div>
           </div>
         </mat-card>

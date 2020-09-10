@@ -56,3 +56,20 @@ INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (5, 1, 1);
 INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (6, 2, 1);
 INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (7, 2, 2);
 INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (8, 2, 1);
+
+
+insert into encuestas (create_at, fecha_fin, fecha_ini, tipo, titulo, categoria_id, usuario_id) values ('2020-09-08', '2020-09-24 01:00:00', '2020-09-08 01:00:00', 'Abierto', 'INF - 381', 1, 1)
+insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Evaluacion de examenes', 2, 'Casillas de Verificacion')
+insert into opciones (texto, tipo) values ('25%, 25%, 50%', 3)
+insert into opciones (texto, tipo) values ('30%, 30%, 40%', 3)
+insert into opciones (texto, tipo) values ('35%, 35%, 30%', 3)
+insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Cual es la mencion con la que piensa salir de la carrera?', 2, 'Respuesta Simple')
+insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Explique a detalle la espectativa de esta materia segun usted', 2, 'Parrafo')
+insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Califique a su docente actual entre 1 a 10', 2, 'Escala Lineal')
+insert into opciones (max_value, min_value, tipo) values (10, 1, 5)
+insert into preguntas_opciones (pregunta_id, opcion_id) values (3, 3)
+insert into preguntas_opciones (pregunta_id, opcion_id) values (3, 4)
+insert into preguntas_opciones (pregunta_id, opcion_id) values (3, 5)
+-- insert into preguntas_opciones (pregunta_id, opcion_id) values (5, 6)
+-- insert into preguntas_opciones (pregunta_id, opcion_id) values (6, 7)
+insert into preguntas_opciones (pregunta_id, opcion_id) values (6, 6)

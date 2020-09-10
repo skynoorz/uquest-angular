@@ -6,6 +6,7 @@ import {Encuesta} from "../personas/encuesta";
 import {catchError} from "rxjs/operators";
 import {Categoria} from "../personas/categoria";
 import {Persona} from "../personas/persona";
+import {Opcion, OpcionSend} from "../personas/opcion";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class EncuestasService {
   private urlEndpointNative: string = "http://localhost:8080/api"
 
   ngOnInit(): void{
-    // this.http.get<Encuesta[]>(`${this.urlEndpoint}/encuestas/${id}`).subscribe(encuestas=>{this.encuestas = encuestas;});
+
   }
 
   constructor(private http: HttpClient, private router: Router) {
@@ -24,6 +25,23 @@ export class EncuestasService {
 
   getEncuestas(id): Observable<Encuesta[]>{
     return this.http.get<Encuesta[]>(`${this.urlEndpoint}/encuestas/${id}`);
+  }
+
+  saveOption(opcion: OpcionSend): Observable<OpcionSend>{
+    return this.http.post<any>(`${this.urlEndpointNative}/opciones`, opcion).pipe(
+      catchError(err => {
+        if (err.status == 400 ) {
+          return throwError(err);
+        }
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
+        return throwError(err);
+      })
+    )
+  }
+
+  getIdsFromText(text: string): Observable<any>{
+    return this.http.get<any>(`${this.urlEndpointNative}/opciones/${text}`)
   }
 
   getEncuesta(id): Observable<Encuesta>{

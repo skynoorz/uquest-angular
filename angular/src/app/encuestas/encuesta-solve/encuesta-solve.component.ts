@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {EncuestasService} from "../../services/encuestas.service";
 import {UprService} from "../../services/upr.service";
 import {UprSend} from "../../classes/uprSend";
+import {Opcion, OpcionSend} from "../../personas/opcion";
 
 @Component({
   selector: 'app-encuesta-solve',
@@ -16,8 +17,12 @@ export class EncuestaSolveComponent implements OnInit {
   public uprOptions: number[] = [];
   public uprPreguntas: number[] = [];
   public uprArray: UprSend[] = [];
+  public Answers: string[] = [];
+  public AnswersId: string[] = [];
   public usuarioId: number = JSON.parse(sessionStorage.getItem("persona")).id;
   public uprNew: UprSend = {"usuario": {"id": 1}, "pregunta": {"id": 1}, "opcion": {"id": 1}};
+  public opcionSend: OpcionSend = {"texto": ""}
+
   // public uprNew: UprSend;
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -49,20 +54,43 @@ export class EncuestaSolveComponent implements OnInit {
     })
   }
 
-  onSubmitArray(){
+  onSubmitArray() {
     this.uprArray = [];
-    this.encuesta.preguntas.forEach((p)=>{
+    this.encuesta.preguntas.forEach((p) => {
       this.uprPreguntas.push(p.id);
     })
-    console.log(this.usuarioId)
-    this.encuesta.preguntas.forEach((p,index)=>{
-      console.log("antes de guardar: ",this.uprNew)
+    // console.log(this.usuarioId)
+    // console.log(this.Answers)
+
+    // guardo las nuevas opciones para Respuesta Simple y Parrafo
+    this.Answers.forEach(op => {
+      this.opcionSend.texto = op;
+      this.encuestaService.saveOption(this.opcionSend).subscribe(opcion => {
+        console.log(opcion);
+      })
+    })
+
+    // introduzco los ids en un array
+    this.Answers.forEach((an, i)=>{
+      console.log("envio al backend: "+an)
+      this.encuestaService.getIdsFromText(an).subscribe(response=>{
+        console.log("Response: ")
+        console.log(response);
+        // this.AnswersId[i] = response.value;
+      })
+    })
+
+    console.log("Nuevo Array:")
+    console.log(this.AnswersId)
+
+    this.encuesta.preguntas.forEach((p, index) => {
+      // console.log("antes de guardar: ", this.uprNew)
       this.uprArray.push({"usuario": {"id": this.usuarioId}, "pregunta": {"id": this.uprPreguntas[index]}, "opcion": {"id": this.uprOptions[index]}});
     })
 
-    this.uprArray.forEach(upr=>{
+    this.uprArray.forEach(upr => {
       this.uprService.sendRespuestas(upr).subscribe(upr => {
-        console.log(upr);
+        // console.log(upr);
       })
     })
   }
