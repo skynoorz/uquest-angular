@@ -7,6 +7,7 @@ import {UprSend} from "../../classes/uprSend";
 import {Opcion, OpcionSend} from "../../personas/opcion";
 import {forkJoin, Observable} from "rxjs";
 import {TipoPreguntaEnum} from "../../personas/pregunta";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-encuesta-solve',
@@ -24,8 +25,8 @@ export class EncuestaSolveComponent implements OnInit {
   public uprPreguntas: number[] = [];
   public uprArray: UprSend[] = [];
 
-  public AnswersE: number[] =[]
-  public AnswersIdE: number[] =[]
+  public AnswersE: number[] = []
+  public AnswersIdE: number[] = []
   public uprOptionsEscalaSend: OpcionSend[] = []
 
   public AnswersS: string[] = [];
@@ -77,17 +78,28 @@ export class EncuestaSolveComponent implements OnInit {
 
     // Guardar en UPR
 
-    this.uprArray.forEach(upr => {
-      this.uprService.sendRespuestas(upr).subscribe(upr => {
-        // console.log(upr);
-      })
-    })
+    // this.uprArray.forEach(upr => {
+    //   this.uprService.sendRespuesta(upr).subscribe(response => {
+    //     console.log(response);
+    //   })
+    // })
 
-    this.router.navigate(['/encuestas'])
+    // this.uprService.sendRespuestas(this.uprArray).subscribe(response => {
+      // this.router.navigate(['/encuestas'])
+      // Swal.fire('Respuesta Enviada', `${response.mensaje}`, 'success')
+    // })
+
+    //TODO cuando commento esta linea mi uprArray esta correcto, pero al enviar al BE se arruina
+    this.sendUPR();
+
   }
 
   mostrar(test: any): void {
     console.log(test);
+  }
+
+  sendUPR(){
+    this.uprService.sendRespuestas(this.uprArray).subscribe(response=>{console.log(response)});
   }
 
   guardarOpcionesS(preguntaId: number) {
@@ -95,6 +107,7 @@ export class EncuestaSolveComponent implements OnInit {
       this.arraySendS.push({"texto": op, "tipo": 2});
     })
     this.encuestaService.saveOptions(this.arraySendS).subscribe(opcion => {
+      console.log("Probable uso de id Simple: ", opcion)
       this.getIdsFromTextS(preguntaId);
     })
 
@@ -109,8 +122,8 @@ export class EncuestaSolveComponent implements OnInit {
     })
   }
 
-  guardarOpcionesE(preguntaId: number){
-    this.AnswersE.forEach(op=>{
+  guardarOpcionesE(preguntaId: number) {
+    this.AnswersE.forEach(op => {
       // if (option != undefined)
       this.uprOptionsEscalaSend.push({"texto": op.toString(), "tipo": 6})
     })
@@ -152,7 +165,7 @@ export class EncuestaSolveComponent implements OnInit {
     })
   }
 
-  getIdsFromTextE(index: number){
+  getIdsFromTextE(index: number) {
     this.AnswersE.forEach((an, i) => {
       // console.log("envio al backend: " + an)
       this.encuestaService.getIdsFromText(an.toString()).subscribe(response => {

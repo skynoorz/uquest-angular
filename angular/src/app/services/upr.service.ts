@@ -19,10 +19,24 @@ export class UprService {
     return this.http.get<any>(`${this.urlEndpoint}/total/${id}`);
   }
 
-  sendRespuestas(upr: UprSend): Observable<any> {
+  sendRespuesta(upr: UprSend): Observable<any> {
     console.log("enviamos post: ")
     console.log(upr);
     return this.http.post<any>(`${this.urlEndpoint}/`, upr).pipe(
+      catchError(err => {
+        if (err.status == 400) {
+          return throwError(err);
+        }
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
+        return throwError(err);
+      })
+    );
+  }
+  sendRespuestas(upr: UprSend[]): Observable<any> {
+    console.log("enviamos post: ")
+    console.log(upr);
+    return this.http.post<any>(`${this.urlEndpoint}/multiple`, upr).pipe(
       catchError(err => {
         if (err.status == 400) {
           return throwError(err);
