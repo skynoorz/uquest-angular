@@ -21,24 +21,16 @@ export class EncuestaSolveComponent implements OnInit {
 
   public uprOptionsMultiple: number[] = [];
   public uprOptionsVerificacion: boolean[] = [];
-  // public uprOptionsVerificacionSend: number[] = [];
   public uprPreguntas: number[] = [];
   public uprArray: UprSend[] = [];
 
-  public AnswersE: number[] = []
-  public AnswersIdE: number[] = []
-  public uprOptionsEscalaSend: OpcionSend[] = []
-
+  // Arrays de Respuesta Simple, Parrafo, Escala Lineal
   public AnswersS: string[] = [];
   public AnswersP: string[] = [];
-  public AnswersIdS: number[] = [];
-  public AnswersIdP: number[] = [];
+  public AnswersE: number[] = []
   public arraySendS: OpcionSend[] = []
   public arraySendP: OpcionSend[] = []
-
-
-  // public uprNew: UprSend = {"usuario": {"id": 1}, "pregunta": {"id": 1}, "opcion": {"id": 1}};
-
+  public arraySendE: OpcionSend[] = []
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -63,8 +55,6 @@ export class EncuestaSolveComponent implements OnInit {
   }
 
   onSubmitArray() {
-
-    //Array de Ids de preguntas
     this.uprArray = [];
     this.uprPreguntas = [];
     this.encuesta.preguntas.forEach((p) => {
@@ -72,9 +62,7 @@ export class EncuestaSolveComponent implements OnInit {
     })
 
     this.fillUPR();
-
-    console.log("MI ARRAY UPR")
-    console.log(this.uprArray)
+    console.log("MI ARRAY UPR", this.uprArray)
 
     // Guardar en UPR
 
@@ -84,31 +72,24 @@ export class EncuestaSolveComponent implements OnInit {
     //   })
     // })
 
-    // this.uprService.sendRespuestas(this.uprArray).subscribe(response => {
-      // this.router.navigate(['/encuestas'])
-      // Swal.fire('Respuesta Enviada', `${response.mensaje}`, 'success')
-    // })
+    // Enviar todos los UPR[] al BE
+    // TODO cuando commento esta linea mi uprArray esta correcto, pero al enviar al BE no lo envia completo :S
+    // this.uprService.sendRespuestas(this.uprArray).subscribe(response => {console.log(response)});
 
-    //TODO cuando commento esta linea mi uprArray esta correcto, pero al enviar al BE se arruina
-    this.sendUPR();
-
-  }
-
-  mostrar(test: any): void {
-    console.log(test);
-  }
-
-  sendUPR(){
-    this.uprService.sendRespuestas(this.uprArray).subscribe(response=>{console.log(response)});
   }
 
   guardarOpcionesS(preguntaId: number) {
     this.AnswersS.forEach(op => {
       this.arraySendS.push({"texto": op, "tipo": 2});
     })
-    this.encuestaService.saveOptions(this.arraySendS).subscribe(opcion => {
-      console.log("Probable uso de id Simple: ", opcion)
-      this.getIdsFromTextS(preguntaId);
+    this.encuestaService.saveOptions(this.arraySendS).subscribe(response => {
+      response['opcion'].forEach(opcion => {
+        this.uprArray.push({
+          "usuario": {"id": this.usuarioId},
+          "pregunta": {"id": this.uprPreguntas[preguntaId]},
+          "opcion": {"id": opcion.id}
+        });
+      })
     })
 
   }
@@ -117,65 +98,27 @@ export class EncuestaSolveComponent implements OnInit {
     this.AnswersP.forEach(op => {
       this.arraySendP.push({"texto": op, "tipo": 4});
     })
-    this.encuestaService.saveOptions(this.arraySendP).subscribe(opcion => {
-      this.getIdsFromTextP(preguntaId);
+    this.encuestaService.saveOptions(this.arraySendP).subscribe(response => {
+      response['opcion'].forEach(opcion => {
+        this.uprArray.push({
+          "usuario": {"id": this.usuarioId},
+          "pregunta": {"id": this.uprPreguntas[preguntaId]},
+          "opcion": {"id": opcion.id}
+        });
+      })
     })
   }
 
   guardarOpcionesE(preguntaId: number) {
     this.AnswersE.forEach(op => {
-      // if (option != undefined)
-      this.uprOptionsEscalaSend.push({"texto": op.toString(), "tipo": 6})
+      this.arraySendE.push({"texto": op.toString(), "tipo": 6})
     })
-    this.encuestaService.saveOptions(this.uprOptionsEscalaSend).subscribe(opcion => {
-      this.getIdsFromTextE(preguntaId);
-    })
-  }
-
-  getIdsFromTextS(index: number) {
-    //ojo con este i
-    this.AnswersS.forEach((an, i) => {
-      // console.log("envio al backend: " + an)
-      this.encuestaService.getIdsFromText(an).subscribe(response => {
-        // console.log("Response: ")
-        // console.log(response);
-        this.AnswersIdS.push(response.pop());
+    this.encuestaService.saveOptions(this.arraySendE).subscribe(response => {
+      response['opcion'].forEach(opcion => {
         this.uprArray.push({
           "usuario": {"id": this.usuarioId},
-          "pregunta": {"id": this.uprPreguntas[index]},
-          "opcion": {"id": this.AnswersIdS.pop()}
-        });
-      })
-    })
-  }
-
-  getIdsFromTextP(index: number) {
-    this.AnswersP.forEach((an, i) => {
-      // console.log("envio al backend: " + an)
-      this.encuestaService.getIdsFromText(an).subscribe(response => {
-        // console.log("Response: ")
-        // console.log(response);
-        this.AnswersIdP.push(response.pop());
-        this.uprArray.push({
-          "usuario": {"id": this.usuarioId},
-          "pregunta": {"id": this.uprPreguntas[index]},
-          "opcion": {"id": this.AnswersIdP.pop()}
-        });
-      })
-    })
-  }
-
-  getIdsFromTextE(index: number) {
-    this.AnswersE.forEach((an, i) => {
-      // console.log("envio al backend: " + an)
-      this.encuestaService.getIdsFromText(an.toString()).subscribe(response => {
-        // console.log("Response: ")
-        // console.log(response);
-        this.AnswersIdE.push(response.pop());
-        this.uprArray.push({
-          "usuario": {"id": this.usuarioId},
-          "pregunta": {"id": this.uprPreguntas[index]},
-          "opcion": {"id": this.AnswersIdE.pop()}
+          "pregunta": {"id": this.uprPreguntas[preguntaId]},
+          "opcion": {"id": opcion.id}
         });
       })
     })
