@@ -59,6 +59,7 @@ INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (8, 2, 1);
 
 
 insert into encuestas (create_at, fecha_fin, fecha_ini, tipo, titulo, categoria_id, usuario_id) values ('2020-09-08', '2020-09-24 01:00:00', '2020-09-08 01:00:00', 'Abierto', 'INF - 381', 1, 1)
+-- insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Evaluacion de examenes', 2, 'Casillas de Verificacion')
 insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Evaluacion de examenes', 2, 'Casillas de Verificacion')
 insert into opciones (texto, tipo) values ('25%, 25%, 50%', 3)
 insert into opciones (texto, tipo) values ('30%, 30%, 40%', 3)

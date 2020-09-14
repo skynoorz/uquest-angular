@@ -8,6 +8,7 @@ export class Opcion{
 }
 export class OpcionSend{
   texto: string;
+  tipo: number;
 }
 
 

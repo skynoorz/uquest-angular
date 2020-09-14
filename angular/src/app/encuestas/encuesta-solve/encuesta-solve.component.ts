@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Encuesta} from "../../personas/encuesta";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {EncuestasService} from "../../services/encuestas.service";
 import {UprService} from "../../services/upr.service";
 import {UprSend} from "../../classes/uprSend";
@@ -16,16 +16,31 @@ import {TipoPreguntaEnum} from "../../personas/pregunta";
 export class EncuestaSolveComponent implements OnInit {
 
   public encuesta: Encuesta = new Encuesta();
-  public uprOptions: number[] = [];
+  public usuarioId: number = JSON.parse(sessionStorage.getItem("persona")).id;
+
+  public uprOptionsMultiple: number[] = [];
+  public uprOptionsVerificacion: boolean[] = [];
+  // public uprOptionsVerificacionSend: number[] = [];
   public uprPreguntas: number[] = [];
   public uprArray: UprSend[] = [];
-  public Answers: string[] = [];
-  public AnswersId: number[] = [];
-  public usuarioId: number = JSON.parse(sessionStorage.getItem("persona")).id;
-  public uprNew: UprSend = {"usuario": {"id": 1}, "pregunta": {"id": 1}, "opcion": {"id": 1}};
-  public arraySend: OpcionSend[] = []
+
+  public AnswersE: number[] =[]
+  public AnswersIdE: number[] =[]
+  public uprOptionsEscalaSend: OpcionSend[] = []
+
+  public AnswersS: string[] = [];
+  public AnswersP: string[] = [];
+  public AnswersIdS: number[] = [];
+  public AnswersIdP: number[] = [];
+  public arraySendS: OpcionSend[] = []
+  public arraySendP: OpcionSend[] = []
+
+
+  // public uprNew: UprSend = {"usuario": {"id": 1}, "pregunta": {"id": 1}, "opcion": {"id": 1}};
+
 
   constructor(private activatedRoute: ActivatedRoute,
+              private router: Router,
               private encuestaService: EncuestasService,
               private uprService: UprService) {
   }
@@ -46,109 +61,154 @@ export class EncuestaSolveComponent implements OnInit {
     })
   }
 
-  onSubmit(upr: UprSend) {
-    this.uprService.sendRespuestas(this.uprNew).subscribe(upr => {
-      console.log(upr);
-    })
-  }
-
   onSubmitArray() {
 
     //Array de Ids de preguntas
     this.uprArray = [];
+    this.uprPreguntas = [];
     this.encuesta.preguntas.forEach((p) => {
       this.uprPreguntas.push(p.id);
     })
 
-    console.log(this.Answers);
-
-    // guardo las nuevas opciones para Respuesta Simple y Parrafo
-    this.guardarOpciones();
-
-    /*const arrayDeObservables: Observable<any>[] = this.Answers.map(op => {
-      this.opcionSend.texto = op;
-      return this.encuestaService.saveOption(this.opcionSend)
-    });
-    console.log("ArrayDeObservables")
-    console.log(arrayDeObservables);
-    // llama todos los observables y espera a que todos terminen, luego recien llama el callback
-    forkJoin(arrayDeObservables).subscribe(arrayDeRespuestas => {
-      this.getIdsFromText();
-    });*/
-
-    console.log("Nuevo Array:")
-    console.log(this.AnswersId)
-
-    //Antigua forma
-
-    // this.encuesta.preguntas.forEach((p, index) => {
-    //   // console.log("antes de guardar: ", this.uprNew)
-    //   this.uprArray.push({"usuario": {"id": this.usuarioId}, "pregunta": {"id": this.uprPreguntas[index]}, "opcion": {"id": this.uprOptions[index]}});
-    // })
-
-
-
-    console.log("Preguntas")
-    console.log(this.uprPreguntas)
+    this.fillUPR();
 
     console.log("MI ARRAY UPR")
     console.log(this.uprArray)
+
     // Guardar en UPR
 
-    /*this.uprArray.forEach(upr => {
+    this.uprArray.forEach(upr => {
       this.uprService.sendRespuestas(upr).subscribe(upr => {
         // console.log(upr);
       })
-    })*/
+    })
+
+    this.router.navigate(['/encuestas'])
   }
 
   mostrar(test: any): void {
     console.log(test);
   }
 
-  guardarOpciones(){
-    this.Answers.forEach(op => {
-      this.arraySend.push({"texto":op});
+  guardarOpcionesS(preguntaId: number) {
+    this.AnswersS.forEach(op => {
+      this.arraySendS.push({"texto": op, "tipo": 2});
     })
-    this.encuestaService.saveOptions(this.arraySend).subscribe(opcion => {
-      this.getIdsFromText();
+    this.encuestaService.saveOptions(this.arraySendS).subscribe(opcion => {
+      this.getIdsFromTextS(preguntaId);
     })
 
   }
 
-  getIdsFromText(){
-    this.Answers.forEach((an, i)=>{
-      console.log("envio al backend: "+an)
-      this.encuestaService.getIdsFromText(an).subscribe(response=>{
-        console.log("Response: ")
-        console.log(response);
-        this.AnswersId.push(response.pop());
-        this.fillUPR();
+  guardarOpcionesP(preguntaId: number) {
+    this.AnswersP.forEach(op => {
+      this.arraySendP.push({"texto": op, "tipo": 4});
+    })
+    this.encuestaService.saveOptions(this.arraySendP).subscribe(opcion => {
+      this.getIdsFromTextP(preguntaId);
+    })
+  }
+
+  guardarOpcionesE(preguntaId: number){
+    this.AnswersE.forEach(op=>{
+      // if (option != undefined)
+      this.uprOptionsEscalaSend.push({"texto": op.toString(), "tipo": 6})
+    })
+    this.encuestaService.saveOptions(this.uprOptionsEscalaSend).subscribe(opcion => {
+      this.getIdsFromTextE(preguntaId);
+    })
+  }
+
+  getIdsFromTextS(index: number) {
+    //ojo con este i
+    this.AnswersS.forEach((an, i) => {
+      // console.log("envio al backend: " + an)
+      this.encuestaService.getIdsFromText(an).subscribe(response => {
+        // console.log("Response: ")
+        // console.log(response);
+        this.AnswersIdS.push(response.pop());
+        this.uprArray.push({
+          "usuario": {"id": this.usuarioId},
+          "pregunta": {"id": this.uprPreguntas[index]},
+          "opcion": {"id": this.AnswersIdS.pop()}
+        });
       })
     })
   }
 
-  fillUPR(){
-    this.encuesta.preguntas.forEach((p,index)=>{
+  getIdsFromTextP(index: number) {
+    this.AnswersP.forEach((an, i) => {
+      // console.log("envio al backend: " + an)
+      this.encuestaService.getIdsFromText(an).subscribe(response => {
+        // console.log("Response: ")
+        // console.log(response);
+        this.AnswersIdP.push(response.pop());
+        this.uprArray.push({
+          "usuario": {"id": this.usuarioId},
+          "pregunta": {"id": this.uprPreguntas[index]},
+          "opcion": {"id": this.AnswersIdP.pop()}
+        });
+      })
+    })
+  }
+
+  getIdsFromTextE(index: number){
+    this.AnswersE.forEach((an, i) => {
+      // console.log("envio al backend: " + an)
+      this.encuestaService.getIdsFromText(an.toString()).subscribe(response => {
+        // console.log("Response: ")
+        // console.log(response);
+        this.AnswersIdE.push(response.pop());
+        this.uprArray.push({
+          "usuario": {"id": this.usuarioId},
+          "pregunta": {"id": this.uprPreguntas[index]},
+          "opcion": {"id": this.AnswersIdE.pop()}
+        });
+      })
+    })
+  }
+
+  fillUPR() {
+    this.encuesta.preguntas.forEach((p, index) => {
       switch (p.tipo) {
         case TipoPreguntaEnum.RESPUESTA_SIMPLE:
-          console.log("ANSWERS ID")
-          console.log(JSON.stringify(this.AnswersId));
-
-          this.uprArray.push({"usuario":  {"id": this.usuarioId},
-                              "pregunta": {"id": this.uprPreguntas[index]},
-                              "opcion":   {"id": this.AnswersId.pop()}});
+          this.guardarOpcionesS(index);
           break
         case TipoPreguntaEnum.PARRAGO:
+          this.guardarOpcionesP(index);
           break;
         case TipoPreguntaEnum.CASILLAS_DE_VERIFICACION:
+          p.opciones.forEach((opcion, pos) => {
+            if (this.uprOptionsVerificacion[pos]) {
+              this.uprArray.push({
+                "usuario": {"id": this.usuarioId},
+                "pregunta": {"id": this.uprPreguntas[index]},
+                "opcion": {"id": opcion.id}
+              });
+            }
+          })
           break;
         case TipoPreguntaEnum.OPCION_MULTIPLE:
+          // console.log("OPCION MULTIPLE")
+          this.uprOptionsMultiple.forEach((num, i) => {
+            // console.log("antes de guardar: ", this.uprNew)
+            // console.log(this.uprOptionsMultiple[i]);
+            this.uprArray.push({
+              "usuario": {"id": this.usuarioId},
+              "pregunta": {"id": this.uprPreguntas[index]},
+              "opcion": {"id": this.uprOptionsMultiple[i]}
+            });
+          })
+          // console.log("UPR ARRAY")
+          // console.log(this.uprArray);
           break;
         case TipoPreguntaEnum.ESCALA_LINEAL:
+          this.guardarOpcionesE(index)
           break;
       }
     })
+    console.log("uprOptionsverificacion")
+    console.log(this.uprOptionsVerificacion)
   }
 
 
