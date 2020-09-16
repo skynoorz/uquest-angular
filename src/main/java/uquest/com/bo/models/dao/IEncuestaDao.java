@@ -14,4 +14,7 @@ public interface IEncuestaDao extends CrudRepository<Encuesta, Long> {
 
     @Query("select e from Encuesta e, Usuario u where e.usuario.username = u.username and u.username = ?1")
     public List<Encuesta> findAllEncuestasByUsername(String user);
+
+    @Query("from Encuesta where tipo='Abierto'")
+    public List<Encuesta> findAllPublic();
 }

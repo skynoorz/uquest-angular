@@ -31,7 +31,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from "@angular/material/select";
 
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
-import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
+import {ErrorStateMatcher, MatRippleModule, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
 import {PresignComponent} from './registro/presign.component';
 import {MatCardModule} from '@angular/material/card';
 import {FormlyModule} from '@ngx-formly/core';
@@ -50,6 +50,8 @@ import {EditarComponent} from './personas/editar/editar.component';
 import {MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatSliderModule} from "@angular/material/slider";
 import { EncuestaSolveComponent } from './encuestas/encuesta-solve/encuesta-solve.component';
+import { EncuestaListarComponent } from './encuestas/encuesta-listar/encuesta-listar.component';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 registerLocaleData(localeES, 'es')
 
@@ -66,6 +68,7 @@ const routes: Routes = [
   {path: 'registro', component: RegistroComponent},
   {path: 'encuestas/crear', component: EncuestaCrearComponent},
   {path: 'encuestas/solve/:id', component: EncuestaSolveComponent },
+  {path: 'encuestas/public', component: EncuestaListarComponent },
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
@@ -104,6 +107,7 @@ export function maxValidationMessage(err, field) {
     EncuestaCrearComponent,
     EditarComponent,
     EncuestaSolveComponent,
+    EncuestaListarComponent,
   ],
   imports: [
     BrowserModule,
@@ -142,7 +146,9 @@ export function maxValidationMessage(err, field) {
     MatCheckboxModule,
     MatDividerModule,
     MatSnackBarModule,
-    MatSliderModule
+    MatSliderModule,
+    MatGridListModule,
+    MatRippleModule
   ],
   providers: [
     {

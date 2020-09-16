@@ -47,4 +47,9 @@ public class IEncuestaServiceImpl implements IEncuestaService{
     public List<Encuesta> findAllEncuestasByUsername(String user) {
         return encuestaDao.findAllEncuestasByUsername(user);
     }
+
+    @Override
+    public List<Encuesta> findAllPublic() {
+        return encuestaDao.findAllPublic();
+    }
 }

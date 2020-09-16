@@ -57,6 +57,11 @@ public class EncuestaRestController {
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
+    @GetMapping("/encuestas/public")
+    public List<Encuesta> encuestasPublic(){
+        return this.encuestaService.findAllPublic();
+    }
+
     @GetMapping("/encuestas/{id}")
     public Encuesta encuestas(@PathVariable Long id){
         return encuestaService.findOne(id);

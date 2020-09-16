@@ -88,4 +88,8 @@ export class EncuestasService {
   getAllCategorias(): Observable<Categoria[]>{
     return this.http.get<Categoria[]>(`http://localhost:8080/api/categorias`);
   }
+
+  getAllPublicEncuestas():Observable<Encuesta[]>{
+    return this.http.get<Encuesta[]>(`${this.urlEndpointNative}/encuestas/public`);
+  }
 }

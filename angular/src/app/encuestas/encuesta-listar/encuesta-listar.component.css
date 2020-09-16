@@ -1,0 +1,8 @@
+.container-cards{
+  flex-wrap: wrap; display: flex
+}
+.single-card{
+  width: 500px;
+  max-width: 500px;
+  margin: 1em;
+}

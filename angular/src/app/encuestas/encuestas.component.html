@@ -1,9 +1,8 @@
 <div class="container mt-4">
-  <div>
+  <div *ngIf="authService.isAuthenticated()">
     <div class="button-right">
       <div style="width: 85%">
-        <h1 *ngIf="authService.isAuthenticated()" style="font-family: Metropolis-Regular, sans-serif">Mis encuestas</h1>
-        <h1 *ngIf="authService.isAuthenticated() == false">Encuestas Publicas</h1>
+        <h1 style="font-family: Metropolis-Regular, sans-serif">Mis encuestas</h1>
       </div>
       <div style="width: 15%">
         <button style="font-family: Metropolis-Regular, sans-serif" mat-raised-button color="primary" aria-label="crea encuesta" [routerLink]="['/encuestas/crear']"

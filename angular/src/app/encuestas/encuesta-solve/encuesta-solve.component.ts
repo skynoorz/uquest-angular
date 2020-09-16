@@ -74,7 +74,7 @@ export class EncuestaSolveComponent implements OnInit {
 
     // Enviar todos los UPR[] al BE
     // TODO cuando commento esta linea mi uprArray esta correcto, pero al enviar al BE no lo envia completo :S
-    // this.uprService.sendRespuestas(this.uprArray).subscribe(response => {console.log(response)});
+    this.uprService.sendRespuestas(this.uprArray).subscribe(response => {console.log(response)});
 
   }
 

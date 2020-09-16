@@ -19,4 +19,6 @@ public interface IEncuestaService {
 
     public List<Encuesta> findAllEncuestasByUsername(String user);
 
+    public List<Encuesta> findAllPublic();
+
 }
