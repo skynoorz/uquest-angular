@@ -11,7 +11,8 @@
 <!--      matRipple-->
       <mat-card >
         <mat-card-header>
-          <div mat-card-avatar style="background-size: cover; background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');"></div>
+          <div *ngIf="encuesta.usuario.foto == undefined || encuesta.usuario.foto == null" mat-card-avatar style="background-size: cover; background-image: url('http://localhost:8080/images/no_user.png');"></div>
+          <div *ngIf="encuesta.usuario.foto != undefined || encuesta.usuario.foto != null" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url(http://localhost:8080/api/uploads/img/' + encuesta.usuario.foto + ')'}"></div>
           <mat-card-title>{{encuesta.titulo}}</mat-card-title>
           <mat-card-subtitle>{{encuesta.usuario.nombres}}</mat-card-subtitle>
         </mat-card-header>

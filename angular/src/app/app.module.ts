@@ -52,6 +52,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import { EncuestaSolveComponent } from './encuestas/encuesta-solve/encuesta-solve.component';
 import { EncuestaListarComponent } from './encuestas/encuesta-listar/encuesta-listar.component';
 import {MatGridListModule} from "@angular/material/grid-list";
+import {_MatMenuDirectivesModule, MatMenuModule} from "@angular/material/menu";
 
 registerLocaleData(localeES, 'es')
 
@@ -148,7 +149,9 @@ export function maxValidationMessage(err, field) {
     MatSnackBarModule,
     MatSliderModule,
     MatGridListModule,
-    MatRippleModule
+    MatRippleModule,
+    _MatMenuDirectivesModule,
+    MatMenuModule
   ],
   providers: [
     {

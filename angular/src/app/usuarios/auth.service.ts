@@ -3,7 +3,6 @@ import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Persona} from "../personas/persona";
 import {Rol} from "../classes/rol";
-import {stringify} from "querystring";
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +64,7 @@ export class AuthService {
     this._persona.apellidoMat = payload.apellido_mat;
     this._persona.username = payload.user_name;
     this._persona.email = payload.email;
+    this._persona.foto = payload.foto;
     this._persona.roles = payload.authorities;
     console.log(this._persona)
     console.log("authorities: "+payload.authorities)
