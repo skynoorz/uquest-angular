@@ -13,7 +13,7 @@
         <a class="nav-link" [routerLink]="['/personas']" *ngIf="authService.hasRole('ROLE_ADMIN')">Usuarios</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/encuestas']" *ngIf="authService.hasRole('ROLE_USER') && !authService.hasRole('ROLE_ADMIN')">Encuestas</a>
+        <a class="nav-link" [routerLink]="['/encuestas']" *ngIf="authService.hasRole('ROLE_USER') && !authService.hasRole('ROLE_ADMIN')">Mis Encuestas</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/encuestas/public']" *ngIf="!authService.hasRole('ROLE_ADMIN')">Encuestas Publicas</a>

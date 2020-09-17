@@ -2,7 +2,6 @@ package uquest.com.bo.models.dao;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import uquest.com.bo.controllers.UPRRestController;
 import uquest.com.bo.models.entity.UPR;
 import uquest.com.bo.models.projection.UPRgroup;
 

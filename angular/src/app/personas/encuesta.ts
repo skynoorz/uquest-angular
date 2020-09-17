@@ -6,6 +6,7 @@ import {Persona} from "./persona";
 export class Encuesta{
   id: number;
   titulo: string;
+  descripcion: string;
   tipo: string;
   createAt: string;
   fechaIni: string;

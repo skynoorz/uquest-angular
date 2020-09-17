@@ -27,6 +27,8 @@ public class Encuesta implements Serializable {
     @NotEmpty
     private String titulo;
 
+    private String descripcion;
+
     @NotEmpty
     private String tipo;
 
@@ -157,5 +159,13 @@ public class Encuesta implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

@@ -18,7 +18,7 @@ INSERT INTO usuarios (ci, apellido_pat, apellido_mat, nombres, fnac, sexo, email
 INSERT INTO categorias (nombre, descripcion) VALUES ('Elecciones','Temporadas para las elecciones electorales dentro la UMSA');
 INSERT INTO categorias (nombre, descripcion) VALUES ('Materias','Materias dentro de tu carrera');
 INSERT INTO categorias (nombre, descripcion) VALUES ('Docentes','Opinion respecto a docentes');
-INSERT INTO encuestas (id,titulo, tipo, create_at, fecha_ini, fecha_fin, categoria_id, usuario_id) VALUES (1, 'Discriminacion de los estudios', 'Abierto', '2019-08-28', '2019-08-28', '2019-08-30', 1, 1);
+INSERT INTO encuestas (id,titulo,descripcion, tipo, create_at, fecha_ini, fecha_fin, categoria_id, usuario_id) VALUES (1, 'Discriminacion de los estudios','Existira alguna discriminacion por parte de los alumnos dentro de la carrera?, la discriminación se puede dar de manera silenciosa o evidente y puede provocar daño moral, económico o psicológico.', 'Abierto', '2019-08-28', '2019-08-28', '2019-08-30', 1, 1);
 INSERT INTO preguntas (id, descripcion, create_at, tipo, encuesta_id) VALUES (1, '¿Las persona con discapacidad son mas propensas a estudiar?','2019-08-28','Opcion Multiple',1);
 INSERT INTO preguntas (id, descripcion, create_at, tipo, encuesta_id) VALUES (2, '¿Dependiendo la Discapacidad?','2020-01-01','Opcion Multiple',1);
 INSERT INTO opciones (id, texto, tipo) VALUES (1, 'SI', 1);
@@ -58,7 +58,7 @@ INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (7, 2, 2);
 INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (8, 2, 1);
 
 
-insert into encuestas (create_at, fecha_fin, fecha_ini, tipo, titulo, categoria_id, usuario_id) values ('2020-09-08', '2020-09-24 01:00:00', '2020-09-08 01:00:00', 'Abierto', 'INF - 381', 1, 1)
+insert into encuestas (create_at, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values ('2020-09-08', '2020-09-24 01:00:00', '2020-09-08 01:00:00', 'Abierto', 'INF - 381','Encuesta simple respecto a la materia de INF-181 y sus avances con el docente.', 1, 1)
 -- insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Evaluacion de examenes', 2, 'Casillas de Verificacion')
 insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Evaluacion de examenes', 2, 'Casillas de Verificacion')
 insert into opciones (texto, tipo) values ('25%, 25%, 50%', 3)

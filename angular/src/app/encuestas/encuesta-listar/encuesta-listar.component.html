@@ -14,15 +14,22 @@
           <div *ngIf="encuesta.usuario.foto == undefined || encuesta.usuario.foto == null" mat-card-avatar style="background-size: cover; background-image: url('http://localhost:8080/images/no_user.png');"></div>
           <div *ngIf="encuesta.usuario.foto != undefined || encuesta.usuario.foto != null" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url(http://localhost:8080/api/uploads/img/' + encuesta.usuario.foto + ')'}"></div>
           <mat-card-title>{{encuesta.titulo}}</mat-card-title>
-          <mat-card-subtitle>{{encuesta.usuario.nombres}}</mat-card-subtitle>
+          <mat-card-subtitle>
+            {{encuesta.usuario.nombres}}
+            <mat-chip-list aria-label="properties">
+              <mat-chip>{{encuesta.createAt}}</mat-chip>
+              <mat-chip>{{encuesta.tipo}}</mat-chip>
+            </mat-chip-list>
+          </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <p>
-            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam blanditiis commodi cum dignissimos, impedit incidunt ipsum iste iure maiores nam nostrum quo quos recusandae rerum sit suscipit velit. Incidunt, nesciunt.</span>
+<!--            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam blanditiis commodi cum dignissimos, impedit incidunt ipsum iste iure maiores nam nostrum quo quos recusandae rerum sit suscipit velit. Incidunt, nesciunt.</span>-->
+            <span>{{encuesta.descripcion}}</span>
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button>VER</button>
+          <button [routerLink]="['/encuestas/solve/'+encuesta.id]" mat-button>VER</button>
           <button mat-button>COMPARTIR</button>
         </mat-card-actions>
       </mat-card>

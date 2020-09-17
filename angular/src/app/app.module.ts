@@ -53,6 +53,7 @@ import { EncuestaSolveComponent } from './encuestas/encuesta-solve/encuesta-solv
 import { EncuestaListarComponent } from './encuestas/encuesta-listar/encuesta-listar.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {_MatMenuDirectivesModule, MatMenuModule} from "@angular/material/menu";
+import {MatChipsModule} from "@angular/material/chips";
 
 registerLocaleData(localeES, 'es')
 
@@ -151,7 +152,8 @@ export function maxValidationMessage(err, field) {
     MatGridListModule,
     MatRippleModule,
     _MatMenuDirectivesModule,
-    MatMenuModule
+    MatMenuModule,
+    MatChipsModule
   ],
   providers: [
     {

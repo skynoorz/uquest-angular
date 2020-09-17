@@ -2,10 +2,14 @@
   <form>
     <div>
       <mat-card>
-        <mat-form-field style="width: 100%">
+        <div style="width: 100%">
           <h2 style="font-family: Metropolis-Bold, sans-serif">Nombre de la encuesta:</h2>
-          <input name="encuestaTitulo" matInput [(ngModel)]="encuesta.titulo"/>
-        </mat-form-field>
+          <input name="encuestaTitulo" class="form-control" [(ngModel)]="encuesta.titulo"/>
+          <div style="display: flex; margin: 10px">
+            <h3 style="font-family: Metropolis-Bold, sans-serif; padding-right: 1em">Descripcion:</h3>
+            <input type="text" class="form-control" name="encuestaDesc" [(ngModel)]="encuesta.descripcion"/>
+          </div>
+        </div>
 
         <!--        <mat-divider></mat-divider>-->
 
