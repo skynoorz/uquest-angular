@@ -2,12 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Encuesta} from "../../personas/encuesta";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EncuestasService} from "../../services/encuestas.service";
-import {UprService} from "../../services/upr.service";
-import {UprSend} from "../../classes/uprSend";
-import {Opcion, OpcionSend} from "../../personas/opcion";
-import {forkJoin, Observable} from "rxjs";
-import {TipoPreguntaEnum} from "../../personas/pregunta";
-import Swal from "sweetalert2";
+import { IRespuesta, RespuestasService } from "../../services/respuestas.services";
+
+
 
 @Component({
   selector: 'app-encuesta-solve',
@@ -19,23 +16,16 @@ export class EncuestaSolveComponent implements OnInit {
   public encuesta: Encuesta = new Encuesta();
   public usuarioId: number = JSON.parse(sessionStorage.getItem("persona")).id;
 
-  public uprOptionsMultiple: number[] = [];
-  public uprOptionsVerificacion: boolean[] = [];
-  public uprPreguntas: number[] = [];
-  public uprArray: UprSend[] = [];
-
-  // Arrays de Respuesta Simple, Parrafo, Escala Lineal
-  public AnswersS: string[] = [];
-  public AnswersP: string[] = [];
-  public AnswersE: number[] = []
-  public arraySendS: OpcionSend[] = []
-  public arraySendP: OpcionSend[] = []
-  public arraySendE: OpcionSend[] = []
+  respuestasMap: {
+    [key: number]: {
+      [key: number]: IRespuesta
+    }
+  } = {};
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private encuestaService: EncuestasService,
-              private uprService: UprService) {
+              private respuestaService: RespuestasService) {
   }
 
   ngOnInit(): void {
@@ -47,6 +37,13 @@ export class EncuestaSolveComponent implements OnInit {
       let id = params ['id']
       if (id) {
         this.encuestaService.getEncuesta(id).subscribe((encuesta) => {
+          // initialize respuestasMap
+          encuesta.preguntas.forEach(p => {
+            this.respuestasMap[p.id] = {};
+            p.opciones.forEach(o => {
+              this.respuestasMap[p.id][o.id] = {};
+            })
+          });
           this.encuesta = encuesta;
           console.log(encuesta)
         })
@@ -54,118 +51,43 @@ export class EncuestaSolveComponent implements OnInit {
     })
   }
 
-  onSubmitArray() {
-    this.uprArray = [];
-    this.uprPreguntas = [];
-    this.encuesta.preguntas.forEach((p) => {
-      this.uprPreguntas.push(p.id);
-    })
 
-    this.fillUPR();
-    console.log("MI ARRAY UPR", this.uprArray)
-
-    // Guardar en UPR
-
-    // this.uprArray.forEach(upr => {
-    //   this.uprService.sendRespuesta(upr).subscribe(response => {
-    //     console.log(response);
-    //   })
-    // })
-
-    // Enviar todos los UPR[] al BE
-    // TODO cuando commento esta linea mi uprArray esta correcto, pero al enviar al BE no lo envia completo :S
-    this.uprService.sendRespuestas(this.uprArray).subscribe(response => {console.log(response)});
-
-  }
-
-  guardarOpcionesS(preguntaId: number) {
-    this.AnswersS.forEach(op => {
-      this.arraySendS.push({"texto": op, "tipo": 2});
-    })
-    this.encuestaService.saveOptions(this.arraySendS).subscribe(response => {
-      response['opcion'].forEach(opcion => {
-        this.uprArray.push({
-          "usuario": {"id": this.usuarioId},
-          "pregunta": {"id": this.uprPreguntas[preguntaId]},
-          "opcion": {"id": opcion.id}
-        });
-      })
-    })
-
-  }
-
-  guardarOpcionesP(preguntaId: number) {
-    this.AnswersP.forEach(op => {
-      this.arraySendP.push({"texto": op, "tipo": 4});
-    })
-    this.encuestaService.saveOptions(this.arraySendP).subscribe(response => {
-      response['opcion'].forEach(opcion => {
-        this.uprArray.push({
-          "usuario": {"id": this.usuarioId},
-          "pregunta": {"id": this.uprPreguntas[preguntaId]},
-          "opcion": {"id": opcion.id}
-        });
-      })
+  onSubmit() {
+    // para que veas la estructura del map
+    console.log('respuestasMap', this.respuestasMap);
+    const respuestas = this.convertRespuestaMapToArrayRespuesta(this.respuestasMap);
+    // para que veas como quedo el map despues de la conversion
+    console.log('respuestas', respuestas);
+    this.respuestaService.saveAllRespuetas(respuestas).subscribe(resp => {
+      // do something here
     })
   }
 
-  guardarOpcionesE(preguntaId: number) {
-    this.AnswersE.forEach(op => {
-      this.arraySendE.push({"texto": op.toString(), "tipo": 6})
-    })
-    this.encuestaService.saveOptions(this.arraySendE).subscribe(response => {
-      response['opcion'].forEach(opcion => {
-        this.uprArray.push({
-          "usuario": {"id": this.usuarioId},
-          "pregunta": {"id": this.uprPreguntas[preguntaId]},
-          "opcion": {"id": opcion.id}
-        });
-      })
-    })
+
+  private convertRespuestaMapToArrayRespuesta(respuestasMap): Array<IRespuesta> {
+    const respuestas: Array<IRespuesta> = [];
+
+    Object.keys(respuestasMap).forEach(preguntaId => {
+      const pregunta = respuestasMap[preguntaId];
+      Object.keys(pregunta).forEach(opcionId => {
+        // clono la opcion para no tocar los valores de respuestasMap
+        const respuesta: IRespuesta = Object.assign({}, respuestasMap[preguntaId][opcionId]);
+        // si la respuesta no esta vacia, la incluyo en el array de respuestas
+        // para las casillas debido al checbox opcionId es un booleano, true si ha sido seleccionado, false | undefined si no fue selecionado
+        // con el IF nos aseguramos solo seleccionar aquellas casillas seleccionadas = true
+        if (respuesta.textValue || respuesta.numValue || respuesta.opcionId ) {
+          // sostituimos opcionId porque podria ser boolean debido a las casillas.
+          respuesta.opcionId = Number(opcionId);
+          respuesta.preguntaId = Number(preguntaId);
+          respuesta.usuarioId = this.usuarioId;
+          respuestas.push(respuesta);
+        }
+      });
+    });
+
+    return respuestas;
   }
 
-  fillUPR() {
-    this.encuesta.preguntas.forEach((p, index) => {
-      switch (p.tipo) {
-        case TipoPreguntaEnum.RESPUESTA_SIMPLE:
-          this.guardarOpcionesS(index);
-          break
-        case TipoPreguntaEnum.PARRAGO:
-          this.guardarOpcionesP(index);
-          break;
-        case TipoPreguntaEnum.CASILLAS_DE_VERIFICACION:
-          p.opciones.forEach((opcion, pos) => {
-            if (this.uprOptionsVerificacion[pos]) {
-              this.uprArray.push({
-                "usuario": {"id": this.usuarioId},
-                "pregunta": {"id": this.uprPreguntas[index]},
-                "opcion": {"id": opcion.id}
-              });
-            }
-          })
-          break;
-        case TipoPreguntaEnum.OPCION_MULTIPLE:
-          // console.log("OPCION MULTIPLE")
-          this.uprOptionsMultiple.forEach((num, i) => {
-            // console.log("antes de guardar: ", this.uprNew)
-            // console.log(this.uprOptionsMultiple[i]);
-            this.uprArray.push({
-              "usuario": {"id": this.usuarioId},
-              "pregunta": {"id": this.uprPreguntas[index]},
-              "opcion": {"id": this.uprOptionsMultiple[i]}
-            });
-          })
-          // console.log("UPR ARRAY")
-          // console.log(this.uprArray);
-          break;
-        case TipoPreguntaEnum.ESCALA_LINEAL:
-          this.guardarOpcionesE(index)
-          break;
-      }
-    })
-    console.log("uprOptionsverificacion")
-    console.log(this.uprOptionsVerificacion)
-  }
 
 
 }
