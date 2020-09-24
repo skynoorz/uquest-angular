@@ -1,0 +1,11 @@
+<div style="width: 400px">
+  <h1 mat-dialog-title>Copiar direccion de encuesta.</h1>
+  <div mat-dialog-content>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" disabled  placeholder="{{getPath()}}">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" [cdkCopyToClipboard]="getPath()" (click)="openSnackBar('Se copio a copiado a su portapapeles', 'quitar')" type="button" id="button-addon2">Copiar</button>
+      </div>
+    </div>
+  </div>
+</div>
