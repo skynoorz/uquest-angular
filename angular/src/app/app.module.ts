@@ -54,6 +54,10 @@ import { EncuestaListarComponent } from './encuestas/encuesta-listar/encuesta-li
 import {MatGridListModule} from "@angular/material/grid-list";
 import {_MatMenuDirectivesModule, MatMenuModule} from "@angular/material/menu";
 import {MatChipsModule} from "@angular/material/chips";
+import { PerfilComponent } from './personas/perfil/perfil.component';
+import { CopyModalComponent } from './encuestas/encuesta-listar/copy-modal.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 registerLocaleData(localeES, 'es')
 
@@ -71,6 +75,7 @@ const routes: Routes = [
   {path: 'encuestas/crear', component: EncuestaCrearComponent},
   {path: 'encuestas/solve/:id', component: EncuestaSolveComponent },
   {path: 'encuestas/public', component: EncuestaListarComponent },
+  {path: 'profile', component: PerfilComponent },
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
@@ -110,6 +115,8 @@ export function maxValidationMessage(err, field) {
     EditarComponent,
     EncuestaSolveComponent,
     EncuestaListarComponent,
+    PerfilComponent,
+    CopyModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -153,7 +160,9 @@ export function maxValidationMessage(err, field) {
     MatRippleModule,
     _MatMenuDirectivesModule,
     MatMenuModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule,
+    ClipboardModule
   ],
   providers: [
     {

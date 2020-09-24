@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import {Encuesta} from "../personas/encuesta";
 
 export interface IRespuesta  {
   textValue?: string;
@@ -21,6 +22,10 @@ export class RespuestasService {
 
   saveAllRespuetas(respuestas: IRespuesta[]) {
     return this.http.post(`${this.baseUrl}/all`, respuestas);
+  }
+
+  getRespuestasEncuesta(encuesta: Encuesta){
+    return this.http.get(`${this.baseUrl}/encuesta/${encuesta.id}`);
   }
 
 }

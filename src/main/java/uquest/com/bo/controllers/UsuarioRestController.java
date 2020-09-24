@@ -79,6 +79,29 @@ public class UsuarioRestController {
 
         return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     }
+    @GetMapping("/usuarios/profile/{id}")
+    public ResponseEntity<?> showProfile(@PathVariable Long id) {
+
+        Usuario usuario = null;
+        Map<String, Object> response = new HashMap<>();
+        try {
+            usuario = usuarioService.findById(id);
+            usuario.setPassword("");
+//            log.info(usuario.getPassword());
+//            passwordEncoder.matches('',usuario.getPassword());
+//            usuario.setEncuestas(null);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al realizar la consulta en la Base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        if (usuario == null) {
+            response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+    }
 
     @PostMapping("/usuarios")
 //    @ResponseStatus(HttpStatus.CREATED)

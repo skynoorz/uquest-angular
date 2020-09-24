@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4" style="padding-bottom: 2em">
   <div *ngIf="authService.isAuthenticated()">
     <div class="button-right">
       <div style="width: 85%">
@@ -26,14 +26,18 @@
         <div>
           <div *ngFor="let pregunta of encuesta.preguntas">
             <p class="font-italic">{{pregunta.descripcion}}</p>
-            <div *ngFor="let opcion of pregunta.opciones" style="margin: 10px">
-              <p class="font-weight-bold">{{opcion.texto}}</p>
-              <mat-progress-bar mode="determinate" value="{{opcion.total}}"></mat-progress-bar>
-              <div *ngIf="opcion.total != undefined" style="position:relative; padding: 10px">
-                {{ opcion.total + " %"}}
-              </div>
-              <div *ngIf="opcion.total == undefined" style="position:relative; padding: 10px">
-                Sin respuestas.
+            <div [ngSwitch]="pregunta.tipo">
+              <div *ngSwitchCase="'Opcion Multiple'">
+                <div *ngFor="let opcion of pregunta.opciones" style="margin: 10px">
+                  <p class="font-weight-bold">{{opcion.texto}}</p>
+                  <mat-progress-bar mode="determinate" value="{{opcion.total}}"></mat-progress-bar>
+                  <div *ngIf="opcion.total != undefined" style="position:relative; padding: 10px">
+                    {{ opcion.total + " %"}}
+                  </div>
+                  <div *ngIf="opcion.total == undefined" style="position:relative; padding: 10px">
+                    Sin respuestas.
+                  </div>
+                </div>
               </div>
             </div>
           </div>

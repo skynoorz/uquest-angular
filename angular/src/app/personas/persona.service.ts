@@ -116,6 +116,19 @@ export class PersonaService {
     )
   }
 
+  getPersonaProfile(id): Observable<Persona> {
+    console.log("respuesta en service: "+this.http.get(`${this.urlEndpoint}/profile/${id}`));
+    return this.http.get<Persona>(`${this.urlEndpoint}/profile/${id}`).pipe(
+      catchError(err => {
+        if (err.status != 401 && err.error.mensaje){
+          this.router.navigate(['/'])
+          console.log(err.error.mensaje)
+        }
+        return throwError(err);
+      })
+    )
+  }
+
   update(persona: Persona): Observable<any> {
     console.log(persona);
     return this.http.put<any>(`${this.urlEndpoint}/${persona.id}`, persona).pipe(

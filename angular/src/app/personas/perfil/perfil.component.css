@@ -1,0 +1,54 @@
+.card-header-profile {
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+}
+
+.card-header-profile h1 {
+  display: flex;
+  justify-content: center;
+  font-family: Metropolis-Regular, sans-serif;
+  line-height: 1.25rem;
+}
+
+.header-desc{
+  display: flex;
+  justify-content: center;
+  font-size: .875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+
+.body-desc{
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.body-desc h1{
+  font-family: Metropolis-Regular, sans-serif;
+  line-height: 1.25rem;
+}
+
+.card-content{
+  padding-bottom: 1em;
+  padding-left: 3em;
+}
+.sub-card-content{
+  letter-spacing: 2px;
+  padding-top: 1em;
+  display: flex;
+  align-items: center;
+  /*justify-content: space-evenly;*/
+}
+
+.left-pos{
+  width: 250px;
+  font-family: Metropolis-ExtraLight, sans-serif;
+}
+
+.foto-container{
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
+  width: 100%
+}

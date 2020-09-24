@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Encuesta} from "../../personas/encuesta";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EncuestasService} from "../../services/encuestas.service";
-import { IRespuesta, RespuestasService } from "../../services/respuestas.services";
-
+import {IRespuesta, RespuestasService} from "../../services/respuestas.services";
+import {TipoPreguntaEnum} from "../../personas/pregunta";
 
 
 @Component({
@@ -40,12 +40,16 @@ export class EncuestaSolveComponent implements OnInit {
           // initialize respuestasMap
           encuesta.preguntas.forEach(p => {
             this.respuestasMap[p.id] = {};
-            p.opciones.forEach(o => {
-              this.respuestasMap[p.id][o.id] = {};
-            })
+            if (p.tipo == TipoPreguntaEnum.RESPUESTA_SIMPLE || p.tipo == TipoPreguntaEnum.PARRAGO)
+              this.respuestasMap[p.id][0] = {};
+            else
+              p.opciones.forEach(o => {
+                this.respuestasMap[p.id][o.id] = {};
+              })
           });
           this.encuesta = encuesta;
           console.log(encuesta)
+          console.log(this.respuestasMap)
         })
       }
     })
@@ -58,6 +62,7 @@ export class EncuestaSolveComponent implements OnInit {
     const respuestas = this.convertRespuestaMapToArrayRespuesta(this.respuestasMap);
     // para que veas como quedo el map despues de la conversion
     console.log('respuestas', respuestas);
+
     this.respuestaService.saveAllRespuetas(respuestas).subscribe(resp => {
       // do something here
     })
@@ -77,7 +82,8 @@ export class EncuestaSolveComponent implements OnInit {
         // con el IF nos aseguramos solo seleccionar aquellas casillas seleccionadas = true
         if (respuesta.textValue || respuesta.numValue || respuesta.opcionId ) {
           // sostituimos opcionId porque podria ser boolean debido a las casillas.
-          respuesta.opcionId = Number(opcionId);
+          if (Number(opcionId)!=0)
+            respuesta.opcionId = Number(opcionId);
           respuesta.preguntaId = Number(preguntaId);
           respuesta.usuarioId = this.usuarioId;
           respuestas.push(respuesta);

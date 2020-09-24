@@ -134,12 +134,12 @@ export class EncuestaCrearComponent implements OnInit {
       case TipoPreguntaEnum.RESPUESTA_SIMPLE: {
         console.log("comparo: "+TipoOpcionEnum+ " con: "+event.value)
         this.encuesta.preguntas[id].opciones = [];
-        this.agregarOpcion(id, TipoOpcionEnum.RESPUESTA_SIMPLE);
+        // this.agregarOpcion(id, TipoOpcionEnum.RESPUESTA_SIMPLE);
         break
       }
       case TipoPreguntaEnum.PARRAGO: {
         this.encuesta.preguntas[id].opciones = [];
-        this.agregarOpcion(id, TipoOpcionEnum.PARRAGO);
+        // this.agregarOpcion(id, TipoOpcionEnum.PARRAGO);
         break
       }
     }

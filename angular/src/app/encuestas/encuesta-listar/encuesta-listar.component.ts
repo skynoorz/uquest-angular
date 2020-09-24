@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {EncuestasService} from "../../services/encuestas.service";
 import {Encuesta} from "../../personas/encuesta";
+import {MatDialog} from "@angular/material/dialog";
+import {CopyModalComponent} from "./copy-modal.component";
 
 @Component({
   selector: 'app-encuesta-listar',
@@ -11,7 +13,9 @@ export class EncuestaListarComponent implements OnInit {
   encuestas: Encuesta[];
 
   public color: string = 'lightblue';
-  constructor(private encuestaService: EncuestasService) { }
+  address: string;
+  constructor(private encuestaService: EncuestasService,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.cargarEncuestasPublicas();
@@ -24,4 +28,11 @@ export class EncuestaListarComponent implements OnInit {
     });
   }
 
+  share(encuestaId: number) {
+    this.dialog.open(CopyModalComponent, {
+      data: {
+        address: '/encuestas/solve/'+encuestaId
+      }
+    });
+  }
 }
