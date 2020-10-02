@@ -1,6 +1,6 @@
 import {Carrera} from "./carrera";
 import {Instituto} from "./instituto";
-import {Rol} from "../classes/rol";
+import {Rol} from "./rol";
 
 export class Persona {
   id: number;

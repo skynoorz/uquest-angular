@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Encuesta} from "../../personas/encuesta";
+import {Encuesta} from "../../classes/encuesta";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EncuestasService} from "../../services/encuestas.service";
 import {IRespuesta, RespuestasService} from "../../services/respuestas.services";
-import {TipoPreguntaEnum} from "../../personas/pregunta";
+import {TipoPreguntaEnum} from "../../classes/pregunta";
 
 
 @Component({

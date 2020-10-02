@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import {Encuesta} from "../personas/encuesta";
+import {Encuesta} from "../classes/encuesta";
+import {Observable} from "rxjs";
+import {Respuesta} from "../classes/respuesta";
 
 export interface IRespuesta  {
   textValue?: string;
@@ -26,6 +28,10 @@ export class RespuestasService {
 
   getRespuestasEncuesta(encuesta: Encuesta){
     return this.http.get(`${this.baseUrl}/encuesta/${encuesta.id}`);
+  }
+
+  getRespuestasByEncuestaId(id):Observable<Respuesta[]>{
+    return this.http.get<Respuesta[]>(`${this.baseUrl}s/encuesta/${id}`);
   }
 
 }

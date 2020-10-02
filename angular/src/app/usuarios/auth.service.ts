@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Persona} from "../personas/persona";
+import {Persona} from "../classes/persona";
 import {Rol} from "../classes/rol";
 
 @Injectable({

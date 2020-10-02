@@ -144,3 +144,14 @@ INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (8, 7, 'Me g
 INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (8, 8, 10);
 INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 9, 11);
 INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 10, 16);
+
+-- vistas
+-- CREATE VIEW respuestas_stats_op AS
+-- SELECT pregunta_id, opcion_id AS resp, count(1) AS resp_count FROM respuestas
+-- WHERE opcion_id IS NOT NULL
+-- GROUP BY pregunta_id, opcion_id;
+--
+-- CREATE view respuestas_stats_esc as
+-- SELECT pregunta_id, num_value AS resp, count(1) AS resp_count FROM respuestas
+-- WHERE num_value IS NOT NULL
+-- GROUP BY pregunta_id, num_value;

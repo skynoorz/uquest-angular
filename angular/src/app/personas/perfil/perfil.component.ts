@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../usuarios/auth.service";
 import {PersonaService} from "../persona.service";
-import {Persona} from "../persona";
+import {Persona} from "../../classes/persona";
 
 @Component({
   selector: 'app-perfil',

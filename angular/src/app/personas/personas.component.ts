@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Persona} from "./persona";
+import {Persona} from "../classes/persona";
 import {PersonaService} from "./persona.service";
 import Swal from "sweetalert2";
 import {tap} from "rxjs/operators";

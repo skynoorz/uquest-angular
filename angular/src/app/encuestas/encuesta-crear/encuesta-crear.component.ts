@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Encuesta, TipoEncuestaEnum} from "../../personas/encuesta";
-import {Pregunta, TipoPreguntaEnum} from "../../personas/pregunta";
-import {Opcion, TipoOpcionEnum} from "../../personas/opcion";
+import {Encuesta, TipoEncuestaEnum} from "../../classes/encuesta";
+import {Pregunta, TipoPreguntaEnum} from "../../classes/pregunta";
+import {Opcion, TipoOpcionEnum} from "../../classes/opcion";
 import {EncuestasService} from "../../services/encuestas.service";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
-import {Categoria} from "../../personas/categoria";
+import {Categoria} from "../../classes/categoria";
 import {PersonaService} from "../../personas/persona.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 

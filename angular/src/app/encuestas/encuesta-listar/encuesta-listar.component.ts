@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {EncuestasService} from "../../services/encuestas.service";
-import {Encuesta} from "../../personas/encuesta";
+import {Encuesta} from "../../classes/encuesta";
 import {MatDialog} from "@angular/material/dialog";
 import {CopyModalComponent} from "./copy-modal.component";
 

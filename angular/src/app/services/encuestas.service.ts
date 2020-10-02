@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Observable, throwError} from "rxjs";
-import {Encuesta} from "../personas/encuesta";
+import {Encuesta} from "../classes/encuesta";
 import {catchError} from "rxjs/operators";
-import {Categoria} from "../personas/categoria";
-import {Persona} from "../personas/persona";
-import {Opcion, OpcionSend} from "../personas/opcion";
+import {Categoria} from "../classes/categoria";
+import {Persona} from "../classes/persona";
+import {Opcion, OpcionSend} from "../classes/opcion";
+import {Respuesta} from "../classes/respuesta";
 
 @Injectable({
   providedIn: 'root'
@@ -92,4 +93,6 @@ export class EncuestasService {
   getAllPublicEncuestas():Observable<Encuesta[]>{
     return this.http.get<Encuesta[]>(`${this.urlEndpointNative}/encuestas/public`);
   }
+
+
 }

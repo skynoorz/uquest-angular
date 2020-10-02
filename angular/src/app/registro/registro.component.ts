@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {PersonaService} from "../personas/persona.service";
-import {Carrera} from "../personas/carrera";
+import {Carrera} from "../classes/carrera";
 import {CarreraService} from "../services/carrera.service";
-import {Instituto} from "../personas/instituto";
+import {Instituto} from "../classes/instituto";
 import Swal from "sweetalert2";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { startWith, map, tap, switchMap } from "rxjs/operators";
