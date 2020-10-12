@@ -71,16 +71,28 @@ export class EncuestaSolveComponent implements OnInit {
 
   private convertRespuestaMapToArrayRespuesta(respuestasMap): Array<IRespuesta> {
     const respuestas: Array<IRespuesta> = [];
+    console.log("respuestasMap: ",respuestasMap)
 
     Object.keys(respuestasMap).forEach(preguntaId => {
       const pregunta = respuestasMap[preguntaId];
+      // Object.values(pregunta).forEach(pregunta=>{
+      //   console.log(pregunta.numValue)
+      // })
+
       Object.keys(pregunta).forEach(opcionId => {
         // clono la opcion para no tocar los valores de respuestasMap
         const respuesta: IRespuesta = Object.assign({}, respuestasMap[preguntaId][opcionId]);
+        console.log("respuesta para enviar:", respuesta)
         // si la respuesta no esta vacia, la incluyo en el array de respuestas
         // para las casillas debido al checbox opcionId es un booleano, true si ha sido seleccionado, false | undefined si no fue selecionado
         // con el IF nos aseguramos solo seleccionar aquellas casillas seleccionadas = true
-        if (respuesta.textValue || respuesta.numValue || respuesta.opcionId ) {
+        if (respuesta.numValue) {
+          console.log("hay numvalue: ",respuesta.numValue)
+          respuesta.preguntaId = Number(preguntaId);
+          respuesta.usuarioId = this.usuarioId;
+          respuestas.push(respuesta);
+        }
+        if (respuesta.textValue ||  respuesta.opcionId ) {
           // sostituimos opcionId porque podria ser boolean debido a las casillas.
           if (Number(opcionId)!=0)
             respuesta.opcionId = Number(opcionId);

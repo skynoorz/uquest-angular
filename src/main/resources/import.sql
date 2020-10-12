@@ -78,12 +78,12 @@ insert into opciones (max_value, min_value, tipo) values (10, 1, 5)
 -- insert into preguntas_opciones (pregunta_id, opcion_id) values (6, 7)
 insert into preguntas_opciones (pregunta_id, opcion_id) values (6, 6)
 
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (3, 1, 1);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 1, 1);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 1, 2);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 2, 2);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 2, 2);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 2, 2);
+-- INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (3, 1, 1);
+-- INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 1, 1);
+-- INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 1, 2);
+-- INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 2, 2);
+-- INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 2, 2);
+-- INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 2, 2);
 
 -- ENCUESTA CLASES VIRTUALES
 insert into encuestas (create_at, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values ('2020-09-24', '2020-10-24 01:00:00', '2020-09-24 01:00:00', 'Abierto', 'Clases Virtuales','Encuesta para saber la opinion de los estudiatnes respecto a las satisfaccion de las clases virtuales.', 1, 3)

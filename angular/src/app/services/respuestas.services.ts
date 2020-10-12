@@ -23,6 +23,7 @@ export class RespuestasService {
   constructor(private http: HttpClient) {}
 
   saveAllRespuetas(respuestas: IRespuesta[]) {
+    console.log("respuestasService: ",respuestas)
     return this.http.post(`${this.baseUrl}/all`, respuestas);
   }
 

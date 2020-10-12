@@ -58,6 +58,7 @@ import { PerfilComponent } from './personas/perfil/perfil.component';
 import { CopyModalComponent } from './encuestas/encuesta-listar/copy-modal.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {ClipboardModule} from "@angular/cdk/clipboard";
+import { StadisticsComponent } from './encuestas/stadistics/stadistics.component';
 
 registerLocaleData(localeES, 'es')
 
@@ -76,6 +77,7 @@ const routes: Routes = [
   {path: 'encuestas/solve/:id', component: EncuestaSolveComponent },
   {path: 'encuestas/public', component: EncuestaListarComponent },
   {path: 'profile', component: PerfilComponent },
+  {path: 'stadistics/encuesta/:id', component: StadisticsComponent },
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
@@ -117,6 +119,7 @@ export function maxValidationMessage(err, field) {
     EncuestaListarComponent,
     PerfilComponent,
     CopyModalComponent,
+    StadisticsComponent,
   ],
   imports: [
     BrowserModule,
