@@ -45,4 +45,11 @@ public class RespuestaRestController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/usuarios/encuesta/{encuestaId}")
+    public ResponseEntity<List<Long>> findUsersWhoAnsweredEncuesta(@PathVariable("encuestaId") Long encuestaId) {
+        return ResponseEntity.ok(
+                respuestaService.findAllUsersAnsweredByEncuesta(encuestaId)
+        );
+    }
+
 }

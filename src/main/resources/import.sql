@@ -52,12 +52,12 @@ INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (6,1);
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (7,1);
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (8,1);
 
-INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (3, 1, 1);
-INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (4, 1, 2);
-INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (5, 1, 1);
-INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (6, 2, 1);
-INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (7, 2, 2);
-INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (8, 2, 1);
+-- INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (3, 1, 1);
+-- INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (4, 1, 2);
+-- INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (5, 1, 1);
+-- INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (6, 2, 1);
+-- INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (7, 2, 2);
+-- INSERT INTO upr (usuario_id, pregunta_id, opcion_id) VALUES (8, 2, 1);
 
 
 insert into encuestas (create_at, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values ('2020-09-08', '2020-09-24 01:00:00', '2020-09-08 01:00:00', 'Abierto', 'INF - 381','Encuesta simple respecto a la materia de INF-181 y sus avances con el docente.', 1, 1)

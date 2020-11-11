@@ -28,4 +28,8 @@ public class RespuestaService {
   public List<Respuesta> getAllRespuestasByEncuesta(Long encuestaId) {
     return respuestaDao.findAllByEncuesta(encuestaId);
   }
+
+  public List<Long> findAllUsersAnsweredByEncuesta(Long encuestaId){
+    return respuestaDao.findAllUsersAnsweredByEncuesta(encuestaId);
+  }
 }

@@ -4,6 +4,8 @@ import {Encuesta} from "../classes/encuesta";
 import {AuthService} from "../usuarios/auth.service";
 import {RespuestasService} from "../services/respuestas.services";
 import {TipoPreguntaEnum} from "../classes/pregunta";
+import Swal from "sweetalert2";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-encuestas',
@@ -16,6 +18,7 @@ export class EncuestasComponent implements OnInit {
 
   constructor(private encuestasService: EncuestasService,
               public authService: AuthService,
+              private router: Router,
               private respuestaService: RespuestasService) {
 
     if (this.authService.isAuthenticated()) {
@@ -31,7 +34,8 @@ export class EncuestasComponent implements OnInit {
       })
     } else {
       // TODO
-      console.log("Redireccionar a encuestas publicas")
+      this.router.navigate(['/encuestas'])
+      Swal.fire('Error', `Debe estar authenticado para realizar esta operacion`, 'error')
     }
 
   }

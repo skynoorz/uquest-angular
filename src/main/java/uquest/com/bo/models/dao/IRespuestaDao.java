@@ -15,6 +15,9 @@ public interface IRespuestaDao extends CrudRepository<Respuesta, Long> {
   @Query("select r from Respuesta r join Pregunta p on r.preguntaId = p.id and p.encuesta.id = :encuestaId")
   List<Respuesta> findAllByEncuesta(@Param("encuestaId") Long encuestaId);
 
+  @Query("select DISTINCT r.usuarioId from Respuesta r join Pregunta p on r.preguntaId = p.id and p.encuesta.id = :encuestaId")
+  List<Long> findAllUsersAnsweredByEncuesta(@Param("encuestaId") Long encuestaId);
+
   @Query(value="select\n" +
           "p.id as pregunta_id,\n" +
           "p.encuesta_id , p.descripcion,\n" +
