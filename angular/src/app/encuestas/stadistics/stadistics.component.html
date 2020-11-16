@@ -1,20 +1,26 @@
-<div class="container" style="margin-top: 1em">
-  <div >
-<!--    <div *ngFor="let pregunta of encuesta.preguntas" >-->
+<div class="container" style="margin-bottom: 100px">
+  <div class="card" style="margin-top: 1em">
+    <div >
+      <!--    <div *ngFor="let pregunta of encuesta.preguntas" >-->
       <!--    [ngSwitch]="pregunta.tipo"-->
-      <div #containerPreguntas>
-        <!--      <h1 style="font-family: Metropolis-ExtraLight, sans-serif">{{pregunta.descripcion}}</h1>-->
-        <!--      <div *ngSwitchCase="'Respuesta Simple'"></div>-->
-        <!--      <div *ngSwitchCase="'Parrafo'"></div>-->
-        <!--      <div *ngSwitchCase="'Opcion Multiple'">-->
-        <!--        <div #chartOpcionMultiple id="chartdiv_{{pregunta.id}}" style="width: 100%; height: 500px"></div>-->
-        <!--      </div>-->
-        <!--      <div *ngSwitchCase="'Casillas de Verificacion'">-->
-        <!--      </div>-->
-        <!--      <div *ngSwitchCase="'Escala Lineal'"></div>-->
+      <div style="text-align: center; width: 100%" class="card-header">
+        <h1>{{encuesta.titulo}}</h1>
       </div>
-
+      <div class="container">
+        <div #containerPreguntas>
+          <!--      <h1 style="font-family: Metropolis-ExtraLight, sans-serif">{{pregunta.descripcion}}</h1>-->
+          <!--      <div *ngSwitchCase="'Respuesta Simple'"></div>-->
+          <!--      <div *ngSwitchCase="'Parrafo'"></div>-->
+          <!--      <div *ngSwitchCase="'Opcion Multiple'">-->
+          <!--        <div #chartOpcionMultiple id="chartdiv_{{pregunta.id}}" style="width: 100%; height: 500px"></div>-->
+          <!--      </div>-->
+          <!--      <div *ngSwitchCase="'Casillas de Verificacion'">-->
+          <!--      </div>-->
+          <!--      <div *ngSwitchCase="'Escala Lineal'"></div>-->
+        </div>
+      </div>
     </div>
-<!--  </div>-->
+    <!--  </div>-->
+  </div>
 </div>
 

@@ -6,6 +6,8 @@ import {RespuestasService} from "../services/respuestas.services";
 import {TipoPreguntaEnum} from "../classes/pregunta";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {CopyModalComponent} from "./encuesta-listar/copy-modal.component";
 
 @Component({
   selector: 'app-encuestas',
@@ -19,7 +21,8 @@ export class EncuestasComponent implements OnInit {
   constructor(private encuestasService: EncuestasService,
               public authService: AuthService,
               private router: Router,
-              private respuestaService: RespuestasService) {
+              private respuestaService: RespuestasService,
+              public dialog: MatDialog) {
 
     if (this.authService.isAuthenticated()) {
       this.encuestasService.getEncuestasByUsername(JSON.parse(sessionStorage.getItem("persona")).username).subscribe(encuestas=>{
@@ -34,13 +37,21 @@ export class EncuestasComponent implements OnInit {
       })
     } else {
       // TODO
-      this.router.navigate(['/encuestas'])
-      Swal.fire('Error', `Debe estar authenticado para realizar esta operacion`, 'error')
+      this.router.navigate(['/'])
+      Swal.fire('Error', `Debe estar authenticado para acceder a este recurso`, 'error')
     }
 
   }
 
   ngOnInit(): void {
 
+  }
+
+  popupModal(encuestaId: number) {
+    this.dialog.open(CopyModalComponent, {
+      data: {
+        address: '/encuestas/solve/'+encuestaId
+      }
+    });
   }
 }

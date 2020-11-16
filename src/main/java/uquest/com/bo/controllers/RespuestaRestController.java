@@ -52,4 +52,11 @@ public class RespuestaRestController {
         );
     }
 
+    @GetMapping("/usuarios/pregunta/{preguntaId}")
+    public ResponseEntity<List<String>> findRespuestasByPregunta(@PathVariable("preguntaId") Long preguntaId) {
+        return ResponseEntity.ok(
+                respuestaService.findTextValueByPregunta(preguntaId)
+        );
+    }
+
 }

@@ -5,6 +5,7 @@ import {EncuestasService} from "../../services/encuestas.service";
 import {IRespuesta, RespuestasService} from "../../services/respuestas.services";
 import {TipoPreguntaEnum} from "../../classes/pregunta";
 import Swal from "sweetalert2";
+import {AuthService} from "../../usuarios/auth.service";
 
 
 @Component({
@@ -15,7 +16,8 @@ import Swal from "sweetalert2";
 export class EncuestaSolveComponent implements OnInit {
 
   public encuesta: Encuesta = new Encuesta();
-  public usuarioId: number = JSON.parse(sessionStorage.getItem("persona")).id;
+  // public usuarioId: number = JSON.parse(sessionStorage.getItem("persona")).id;
+  public usuarioId: number;
 
   respuestasMap: {
     [key: number]: {
@@ -26,7 +28,8 @@ export class EncuestaSolveComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private encuestaService: EncuestasService,
-              private respuestaService: RespuestasService) {
+              private respuestaService: RespuestasService,
+              public authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -39,6 +42,7 @@ export class EncuestaSolveComponent implements OnInit {
   checkIfAnswered() {
     this.activatedRoute.params.subscribe(params => {
       let id = params ['id']
+
       if (id) {
         this.encuestaService.getEncuesta(id).subscribe((encuesta) => {
           // initialize respuestasMap
@@ -46,15 +50,22 @@ export class EncuestaSolveComponent implements OnInit {
             //TODO si es abierto validacion por ip
 
           } else if (encuesta.tipo == 'Cerrado') {
-            this.respuestaService.getUsersWhoAnsweredEncuesta(id).subscribe(response => {
-              console.log("Para validar si esta: ", response);
-              response.forEach(e => {
-                if (e == JSON.parse(sessionStorage.getItem("persona")).id) {
-                  this.router.navigate(['/encuestas/public'])
-                  Swal.fire('Aviso', `Usted ya respondio a esta encuesta.`, 'warning')
-                }
+            console.log("enmtra cerrado")
+            if (this.authService.isAuthenticated()) {
+              this.respuestaService.getUsersWhoAnsweredEncuesta(id).subscribe(response => {
+                console.log("Para validar si esta: ", response);
+                response.forEach(e => {
+                  if (e == JSON.parse(sessionStorage.getItem("persona")).id) {
+                    this.router.navigate(['/encuestas/public'])
+                    Swal.fire('Aviso', `Usted ya respondio a esta encuesta.`, 'warning')
+                  }
+                })
               })
-            })
+            } else {
+              this.router.navigate(['/login'])
+              Swal.fire('Aviso', `Usted necesita estar authenticado para responder encuestas cerradas.`, 'warning')
+            }
+
           }
         })
       }
@@ -64,6 +75,13 @@ export class EncuestaSolveComponent implements OnInit {
   cargarEncuesta(): void {
     this.activatedRoute.params.subscribe(params => {
       let id = params ['id']
+      console.log(id);
+      if (!JSON.parse(sessionStorage.getItem("persona"))) {
+        console.log("es anonimo");
+        this.usuarioId = 0;
+      } else {
+        this.usuarioId = JSON.parse(sessionStorage.getItem("persona")).id;
+      }
       if (id) {
         this.encuestaService.getEncuesta(id).subscribe((encuesta) => {
           // initialize respuestasMap

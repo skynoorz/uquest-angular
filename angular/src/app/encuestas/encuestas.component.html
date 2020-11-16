@@ -12,46 +12,59 @@
         </button>
       </div>
     </div>
+    <div *ngIf="encuestas.length == 0">
+      <mat-card>
+        <h3>No tienes ninguna encuesta!, empieza creando una.</h3>
+      </mat-card>
+    </div>
     <div *ngFor="let encuesta of encuestas">
       <mat-expansion-panel style="margin-bottom: 1em">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header style="vertical-align: middle">
           <mat-panel-title style="font-family: Metropolis-Bold, sans-serif">
-            {{encuesta.titulo}}
+              <h3>{{encuesta.titulo}}</h3>
+              <mat-chip-list aria-label="tipo">
+                <mat-chip>{{encuesta.tipo}}</mat-chip>
+              </mat-chip-list>
           </mat-panel-title>
           <mat-panel-description>
             {{encuesta.categoria.descripcion}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <h3>Respuestas</h3>
+        <h3>Preguntas</h3>
         <div>
           <div *ngFor="let pregunta of encuesta.preguntas">
-            <p class="font-italic">{{pregunta.descripcion}}</p>
-            <div [ngSwitch]="pregunta.tipo">
-              <div *ngSwitchCase="'Opcion Multiple'">
-                <div *ngFor="let opcion of pregunta.opciones" style="margin: 10px">
-                  <p class="font-weight-bold">{{opcion.texto}}</p>
-                  <mat-progress-bar mode="determinate" value="{{opcion.total}}"></mat-progress-bar>
-                  <div *ngIf="opcion.total != undefined" style="position:relative; padding: 10px">
-                    {{ opcion.total + " %"}}
-                  </div>
-                  <div *ngIf="opcion.total == undefined" style="position:relative; padding: 10px">
-                    Sin respuestas.
-                  </div>
-                </div>
-              </div>
-            </div>
+            <p class="font-italic">- {{pregunta.descripcion}}</p>
+            <!--            <div [ngSwitch]="pregunta.tipo">-->
+            <!--              <div *ngSwitchCase="'Opcion Multiple'">-->
+            <!--                <div *ngFor="let opcion of pregunta.opciones" style="margin: 10px">-->
+            <!--                  <p class="font-weight-bold">{{opcion.texto}}</p>-->
+            <!--                  <mat-progress-bar mode="determinate" value="{{opcion.total}}"></mat-progress-bar>-->
+            <!--                  <div *ngIf="opcion.total != undefined" style="position:relative; padding: 10px">-->
+            <!--                    {{ opcion.total + " %"}}-->
+            <!--                  </div>-->
+            <!--                  <div *ngIf="opcion.total == undefined" style="position:relative; padding: 10px">-->
+            <!--                    Sin respuestas.-->
+            <!--                  </div>-->
+            <!--                </div>-->
+            <!--              </div>-->
+            <!--            </div>-->
           </div>
         </div>
         <div style="float: right; font-family: Metropolis-Regular, sans-serif">
+          <button (click)="popupModal(encuesta.id)" style="margin-right: 20px;" mat-raised-button color="accent" aria-label="compartir">
+            Compartir
+          </button>
           <button [routerLink]="['/stadistics/encuesta/'+encuesta.id]" style="margin-right: 20px;" mat-raised-button color="secondary" aria-label="crea encuesta" *ngIf="authService.isAuthenticated()">
             Estadisticas
           </button>
           <button mat-raised-button color="warn" aria-label="crea encuesta" *ngIf="authService.isAuthenticated()">
             Eliminar
           </button>
+
         </div>
       </mat-expansion-panel>
     </div>
+
   </div>
   <!--  <button (click)="mostrarEncuesta()">mostrar</button>-->
 </div>

@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/personas'])
       else
         this.router.navigate(['/'])
-      Swal.fire('Login', `Hola ${usuario.username}, has iniciado sesion con exito!`, "success")
+      Swal.fire('Login', `Hola ${usuario.nombres}, Bienvenido!`, "success")
     }, error => {
       if (error.status == 400) {
         Swal.fire("Error Login", "Usuario o clave incorrecta", 'error');

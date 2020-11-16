@@ -32,4 +32,7 @@ public interface IRespuestaDao extends CrudRepository<Respuesta, Long> {
           "where p.encuesta_id = ?1\n" +
           "order by p.id, o.id;", nativeQuery = true)
   public List<RespuestasStats> getRespuestasOp(Long idEncuesta);
+
+  @Query("select r.textValue from Respuesta r where r.preguntaId = ?1")
+  public List<String> getRespuestasTextValueByPregunta(Long idEncuesta);
 }

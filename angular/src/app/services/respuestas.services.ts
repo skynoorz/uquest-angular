@@ -39,4 +39,7 @@ export class RespuestasService {
     return this.http.get<number[]>(`${this.baseUrl}/usuarios/encuesta/${id}`);
   }
 
+  getRespuestasByPreguntaId(idPregunta):Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/usuarios/pregunta/${idPregunta}`);
+  }
 }

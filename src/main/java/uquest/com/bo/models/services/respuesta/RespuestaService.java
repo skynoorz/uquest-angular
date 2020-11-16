@@ -32,4 +32,9 @@ public class RespuestaService {
   public List<Long> findAllUsersAnsweredByEncuesta(Long encuestaId){
     return respuestaDao.findAllUsersAnsweredByEncuesta(encuestaId);
   }
+
+  public List<String> findTextValueByPregunta(Long encuestaId){
+    return respuestaDao.getRespuestasTextValueByPregunta(encuestaId);
+  }
+
 }

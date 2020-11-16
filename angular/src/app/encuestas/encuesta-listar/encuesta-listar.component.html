@@ -29,8 +29,9 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button [routerLink]="['/encuestas/solve/'+encuesta.id]" mat-button>VER</button>
+          <button [routerLink]="['/encuestas/solve/'+encuesta.id]" mat-button>RESPONDER</button>
           <button mat-button (click)="share(encuesta.id)">COMPARTIR</button>
+          <button mat-button >ESTADISTICAS</button>
         </mat-card-actions>
       </mat-card>
     </div>
