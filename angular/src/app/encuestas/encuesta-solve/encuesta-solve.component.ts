@@ -59,7 +59,7 @@ export class EncuestaSolveComponent implements OnInit {
                     this.router.navigate(['/encuestas/public'])
                     Swal.fire('Aviso', `Usted ya respondio a esta encuesta.`, 'warning')
                   }
-                })
+                })  
               })
             } else {
               this.router.navigate(['/login'])
