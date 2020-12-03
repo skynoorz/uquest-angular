@@ -173,6 +173,43 @@ public class UsuarioRestController {
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
+    @PutMapping("/usuarios/profile/{id}")
+    public ResponseEntity<?> updateProfile(@Valid @RequestBody Usuario usuario, BindingResult result, @PathVariable Long id) {
+
+        Usuario object = usuarioService.findById(id);
+        Usuario objectUpdated = null;
+        Map<String, Object> response = new HashMap<>();
+
+        // sending error to FE
+        if (result.hasErrors()) {
+            List<String> errors = new ArrayList<>();
+            for (FieldError err : result.getFieldErrors()) {
+                errors.add("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
+            }
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        if (usuario.getId() == null) {
+            response.put("mensaje", "Error, no se pudo editar el cliente con id: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+        try {
+            if (usuario.getInstituto().getId() == null)
+                usuario.setInstituto(null);
+            String encodedPass = passwordEncoder.encode(usuario.getPassword());
+            usuario.setPassword(encodedPass);
+            objectUpdated = usuarioService.save(usuario);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al realizar el update en la Base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "El registro del usuario se actualizo correctamente");
+        response.put("usuario", objectUpdated);
+        return new ResponseEntity<Map>(response, HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();

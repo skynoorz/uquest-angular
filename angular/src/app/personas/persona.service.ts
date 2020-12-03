@@ -143,6 +143,20 @@ export class PersonaService {
       })
     )
   }
+  updateProfile(persona: Persona): Observable<any> {
+    console.log(persona);
+    return this.http.put<any>(`${this.urlEndpoint}/profile/${persona.id}`, persona).pipe(
+
+      catchError(err => {
+        if (err.status == 400) {
+          return throwError(err);
+        }
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
+        return throwError(err);
+      })
+    )
+  }
 
   delete(id: number): Observable<Persona> {
     return this.http.delete<Persona>(`${this.urlEndpoint}/${id}`).pipe(

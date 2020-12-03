@@ -21,8 +21,23 @@
           <h3 class="left-pos">FOTO:</h3>
           <div class="foto-container">
             <p style="font-family: Metropolis-LightItalic, sans-serif">Puedes personalizar tu cuenta con una foto.</p>
+
             <div mat-card-avatar style="background-size: cover; width: 80px;height: 80px"
                  [ngStyle]="{ 'background-image': 'url(http://localhost:8080/api/uploads/img/' + authService.persona.foto + ')'}"></div>
+          </div>
+
+        </div>
+        <div style="display: flex; padding-bottom: 1em">
+          <div class="custom-file" style="width: 100%">
+            <input (change)="seleccionarFoto($event)" type="file" class="custom-file-input"
+                   id="inputGroupFile04"
+                   aria-describedby="inputGroupFileAddon04">
+            <label class="custom-file-label" for="inputGroupFile04">Seleccionar Foto</label>
+          </div>
+          <div class="input-group-append" style="width: available">
+            <button (click)="subirFoto()" [disabled]="!fotoSeleccionada" class="btn btn-outline-secondary"
+                    type="button" id="inputGroupFileAddon04">Subir
+            </button>
           </div>
         </div>
         <mat-divider></mat-divider>

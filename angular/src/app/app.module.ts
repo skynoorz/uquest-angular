@@ -59,6 +59,8 @@ import { CopyModalComponent } from './encuestas/encuesta-listar/copy-modal.compo
 import {MatDialogModule} from "@angular/material/dialog";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import { StadisticsComponent } from './encuestas/stadistics/stadistics.component';
+import { EditarPerfilComponent } from './personas/editar-perfil/editar-perfil.component';
+import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 
 registerLocaleData(localeES, 'es')
 
@@ -77,6 +79,7 @@ const routes: Routes = [
   {path: 'encuestas/solve/:id', component: EncuestaSolveComponent },
   {path: 'encuestas/public', component: EncuestaListarComponent },
   {path: 'profile', component: PerfilComponent },
+  {path: 'profile/editar/:id', component: EditarPerfilComponent },
   {path: 'stadistics/encuesta/:id', component: StadisticsComponent },
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
@@ -120,6 +123,7 @@ export function maxValidationMessage(err, field) {
     PerfilComponent,
     CopyModalComponent,
     StadisticsComponent,
+    EditarPerfilComponent,
   ],
   imports: [
     BrowserModule,
@@ -165,7 +169,8 @@ export function maxValidationMessage(err, field) {
     MatMenuModule,
     MatChipsModule,
     MatDialogModule,
-    ClipboardModule
+    ClipboardModule,
+    NgxQRCodeModule
   ],
   providers: [
     {
