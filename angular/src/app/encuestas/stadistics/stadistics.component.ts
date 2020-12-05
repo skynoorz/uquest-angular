@@ -10,7 +10,7 @@ import {Encuesta} from "../../classes/encuesta";
 import {ActivatedRoute, Router} from "@angular/router";
 import {map} from "rxjs/operators";
 import {RespuestasService} from "../../services/respuestas.services";
-import {disable} from "@amcharts/amcharts4/.internal/core/utils/Debug";
+import {disable, enable} from "@amcharts/amcharts4/.internal/core/utils/Debug";
 import Swal from "sweetalert2";
 
 @Component({
@@ -80,11 +80,12 @@ export class StadisticsComponent implements OnInit {
               console.log("Respuestas: ", respuestas)
               console.log("Encuesta: ", encuesta)
               // Empiezo a generar los charts por cada pregunta
-              this.encuesta.preguntas.forEach(pregunta => {
+              this.encuesta.preguntas.forEach((pregunta,index) => {
 
                 // genero divs en document
                 const div = document.createElement('div');
                 div.setAttribute("id", "chart_" + pregunta.id);
+                div.setAttribute("style", "margin-top: 30px; margin-bottom: 30px;" + pregunta.id);
                 this.ids.push("chart_" + pregunta.id);
 
                 // titutlo
@@ -96,6 +97,10 @@ export class StadisticsComponent implements OnInit {
                 const divcontent = document.createElement('div');
                 // h1.setAttribute("id", "h1_" + pregunta.id);
                 divcontent.setAttribute("id", "chart_content_" + pregunta.id);
+                if (pregunta.tipo != 'Respuesta Simple') {
+                  if (pregunta.tipo != 'Parrafo')
+                    divcontent.setAttribute("style", "height: 300px;" + pregunta.id);
+                }
 
                 // div.appendChild(h1)
                 div.appendChild(divcontent)
@@ -128,7 +133,7 @@ export class StadisticsComponent implements OnInit {
                     this.chartOM = am4core.create(divcontent.getAttribute("id"), am4charts.PieChart);
                     // TITULO
                     let title = this.chartOM.titles.create();
-                    title.text = pregunta.descripcion;
+                    title.text = index+".- "+pregunta.descripcion;
                     title.fontSize = 25;
                     title.marginBottom = 30;
 
@@ -142,16 +147,22 @@ export class StadisticsComponent implements OnInit {
                     })
                     this.chartOM.logo.disabled = true;
                     this.chartOM.exporting.menu = new am4core.ExportMenu();
+
+                    this.chartOM.height = 300;
+                    this.chartOM.maxHeight = 300;
+
+
                     let pieSeries = this.chartOM.series.push(new am4charts.PieSeries());
                     pieSeries.dataFields.value = "respuestas";
                     pieSeries.dataFields.category = "pregunta";
+
                     this.arrChartOM.push(this.chartOM);
                     break;
                   case 'Casillas de Verificacion':
                     this.chartVerif = am4core.create(divcontent.getAttribute("id"), am4charts.PieChart);
                     // TITULO
                     let title2 = this.chartVerif.titles.create();
-                    title2.text = pregunta.descripcion;
+                    title2.text = index+".- "+pregunta.descripcion;
                     title2.fontSize = 25;
                     title2.marginBottom = 30;
                     // @ts-ignore
@@ -174,7 +185,7 @@ export class StadisticsComponent implements OnInit {
                     this.chartLineal = am4core.create(divcontent.getAttribute("id"), am4charts.XYChart);
                     // TITULO
                     let title3 = this.chartLineal.titles.create();
-                    title3.text = pregunta.descripcion;
+                    title3.text = index+".- "+pregunta.descripcion;
                     title3.fontSize = 25;
                     title3.marginBottom = 30;
 
