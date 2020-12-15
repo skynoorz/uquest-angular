@@ -36,7 +36,6 @@ export class EncuestasComponent implements OnInit {
         console.log(this.encuestas);
       })
     } else {
-      // TODO
       this.router.navigate(['/'])
       Swal.fire('Error', `Debe estar authenticado para acceder a este recurso`, 'error')
     }

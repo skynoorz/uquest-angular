@@ -59,4 +59,11 @@ public class RespuestaRestController {
         );
     }
 
+    @GetMapping("/usuarios/pregunta/public/{preguntaId}")
+    public ResponseEntity<List<String>> findRespuestasPublicByPregunta(@PathVariable("preguntaId") Long preguntaId) {
+        return ResponseEntity.ok(
+                respuestaService.findTextValueByPregunta(preguntaId)
+        );
+    }
+
 }

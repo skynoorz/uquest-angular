@@ -5,7 +5,8 @@ export class Pregunta{
   descripcion: string;
   createAt: string;
   tipo: TipoPreguntaEnum;
-  opciones: Opcion[]
+  opciones: Opcion[];
+  required: boolean;
 }
 
 // ['Respuesta Simple', 'Parrafo', 'Opcion Multiple', 'Casillas de Verificacion', 'Escala Lineal'];

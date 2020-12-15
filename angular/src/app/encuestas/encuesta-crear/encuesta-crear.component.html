@@ -79,14 +79,18 @@
               </mat-form-field>
             </div>
             <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
-            <mat-form-field appearance="fill">
-              <mat-label>Tipo</mat-label>
-              <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo" (selectionChange)="checkTipo($event, i)">
-                <mat-option *ngFor="let tipo of tipos" [value]="tipo" >
-                  {{tipo}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+
+            <div style="display: flex">
+              <mat-slide-toggle style="padding-right: 30px" [(ngModel)]="pregunta.required" ngDefaultControl name="required_{{pregunta.id}}_{{i}}}">Obligatorio *</mat-slide-toggle>
+              <mat-form-field appearance="fill">
+                <mat-label>Tipo</mat-label>
+                <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo" (selectionChange)="checkTipo($event, i)">
+                  <mat-option *ngFor="let tipo of tipos" [value]="tipo" >
+                    {{tipo}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
           <div class="pregunta-body container" [ngSwitch]="pregunta.tipo">
             <div *ngSwitchCase="'Respuesta Simple'">

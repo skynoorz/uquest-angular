@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, NgZone, OnInit, PLATFORM_ID, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, NgZone, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 
 // amCharts imports
@@ -8,9 +8,7 @@ import {EncuestasService} from "../../services/encuestas.service";
 import {AuthService} from "../../usuarios/auth.service";
 import {Encuesta} from "../../classes/encuesta";
 import {ActivatedRoute, Router} from "@angular/router";
-import {map} from "rxjs/operators";
 import {RespuestasService} from "../../services/respuestas.services";
-import {disable, enable} from "@amcharts/amcharts4/.internal/core/utils/Debug";
 import Swal from "sweetalert2";
 
 @Component({
@@ -22,9 +20,6 @@ export class StadisticsComponent implements OnInit {
 
   public encuesta: Encuesta = new Encuesta();
 
-  private ids: string[] = [];
-  // private ids: string[] = ["chart_9","chart_10"];
-
   private chartOM: am4charts.PieChart;
   private chartVerif: am4charts.PieChart;
   private chartLineal: am4charts.XYChart;
@@ -32,6 +27,8 @@ export class StadisticsComponent implements OnInit {
   private arrChartOM: am4charts.PieChart[] = [];
   private arrChartVerif: am4charts.PieChart[] = [];
   private arrChartLineal: am4charts.XYChart[] = [];
+
+  private preguntaRespuestas: {preguntaDescripcion: string, respuestas: string[]}[] = []
 
   @ViewChild('containerPreguntas', {static: true}) divView: ElementRef
 
@@ -86,7 +83,6 @@ export class StadisticsComponent implements OnInit {
                 const div = document.createElement('div');
                 div.setAttribute("id", "chart_" + pregunta.id);
                 div.setAttribute("style", "margin-top: 30px; margin-bottom: 30px;" + pregunta.id);
-                this.ids.push("chart_" + pregunta.id);
 
                 // titutlo
                 // const h1 = document.createElement('h1');
@@ -112,20 +108,36 @@ export class StadisticsComponent implements OnInit {
                 switch (pregunta.tipo) {
                   case 'Respuesta Simple':
                     this.respuestaService.getRespuestasByPreguntaId(pregunta.id).subscribe(respuestas => {
+
+                      const titulo = document.createElement('span');
+                      titulo.setAttribute("style","font-style: 400 14px/20px 'Roboto,Helvetica Neue', sans-serif;");
+                      titulo.innerHTML = index+1+".- "+pregunta.descripcion;
+                      div.appendChild(titulo);
+
                       respuestas.forEach(respuesta => {
                         const span = document.createElement('li')
                         span.innerHTML = respuesta + "</br>"
                         div.appendChild(span);
+                        // this.respuestasSimple.push(new Map().set(pregunta.descripcion,respuesta));
                       })
+                      this.preguntaRespuestas.push({preguntaDescripcion: pregunta.descripcion, respuestas: respuestas})
+                      console.log("preguntaRespuestas: ",this.preguntaRespuestas);
                     })
                     break;
                   case 'Parrafo':
                     this.respuestaService.getRespuestasByPreguntaId(pregunta.id).subscribe(respuestas => {
+                      const titulo = document.createElement('div');
+                      titulo.setAttribute("style","font-size: 25px;font-weight: 400;font-stretch: normal;line-height: 20px; padding-top: 30px; padding-bottom:30px; text-align: center");
+                      titulo.innerHTML = index+1+".- "+pregunta.descripcion;
+                      div.appendChild(titulo);
                       respuestas.forEach(respuesta => {
                         const span = document.createElement('li')
                         span.innerHTML = respuesta + "</br>"
                         div.appendChild(span);
+                        // this.respuestasParrafo.push(new Map().set(pregunta.descripcion,respuesta));
                       })
+                      this.preguntaRespuestas.push({preguntaDescripcion: pregunta.descripcion, respuestas: respuestas})
+                      console.log("preguntaRespuestas: ",this.preguntaRespuestas);
                     })
                     break;
                   case 'Opcion Multiple':
@@ -133,7 +145,7 @@ export class StadisticsComponent implements OnInit {
                     this.chartOM = am4core.create(divcontent.getAttribute("id"), am4charts.PieChart);
                     // TITULO
                     let title = this.chartOM.titles.create();
-                    title.text = index+".- "+pregunta.descripcion;
+                    title.text = index+1+".- "+pregunta.descripcion;
                     title.fontSize = 25;
                     title.marginBottom = 30;
 
@@ -162,7 +174,7 @@ export class StadisticsComponent implements OnInit {
                     this.chartVerif = am4core.create(divcontent.getAttribute("id"), am4charts.PieChart);
                     // TITULO
                     let title2 = this.chartVerif.titles.create();
-                    title2.text = index+".- "+pregunta.descripcion;
+                    title2.text = index+1+".- "+pregunta.descripcion;
                     title2.fontSize = 25;
                     title2.marginBottom = 30;
                     // @ts-ignore
@@ -185,7 +197,7 @@ export class StadisticsComponent implements OnInit {
                     this.chartLineal = am4core.create(divcontent.getAttribute("id"), am4charts.XYChart);
                     // TITULO
                     let title3 = this.chartLineal.titles.create();
-                    title3.text = index+".- "+pregunta.descripcion;
+                    title3.text = index+1+".- "+pregunta.descripcion;
                     title3.fontSize = 25;
                     title3.marginBottom = 30;
 
@@ -231,12 +243,15 @@ export class StadisticsComponent implements OnInit {
   ngOnDestroy() {
     // Clean up chart when the component is removed
     this.browserOnly(() => {
-      // if (this.chart) {
-      //   this.chart.dispose();
-      // }
-      // if (this.chartVerif) {
-      //   this.chartVerif.dispose();
-      // }
+      if (this.chartOM) {
+        this.chartOM.dispose();
+      }
+      if (this.chartVerif) {
+        this.chartVerif.dispose();
+      }
+      if (this.chartLineal) {
+        this.chartLineal.dispose();
+      }
     });
   }
 
@@ -271,13 +286,25 @@ export class StadisticsComponent implements OnInit {
 
       let countRes = 1;
 
+      var d = new Date();
+
+      var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+        d.getFullYear() + " a las " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+
+
       console.log("res", res)
       pdfMake = res[0];
       let doc = {
         pageSize: "A4",
         pageOrientation: "portrait",
         pageMargins: [30, 30, 30, 30],
-        content: []
+        content: [],
+        header: {
+          columns: [
+            { text: 'Encuesta creada en '+this.encuesta.createAt, alignment: 'left', margin:  [5, 2]},
+            { text: 'Estadisticas generadas el '+datestring, alignment: 'right', margin:  [5, 2]}
+          ]
+        },
       }
 
       doc.content.push({
@@ -288,12 +315,52 @@ export class StadisticsComponent implements OnInit {
       });
 
       doc.content.push({
+        text: '(tipo: '+this.encuesta.tipo+', categoria: '+this.encuesta.categoria.nombre+')',
+        fontSize: 10,
+        italics: true,
+        margin: [0, 0, 0, 20]
+      });
+
+      doc.content.push({
         text: this.encuesta.descripcion,
         fontSize: 15,
         margin: [0, 0, 0, 15]
       });
 
       // GRAFICOS
+
+      //Pregunta simple y Parrafo
+
+      if (this.preguntaRespuestas.length >0){
+        this.preguntaRespuestas.forEach(pr=>{
+          doc.content.push({
+            text: pr.preguntaDescripcion,
+            alignment: 'center',
+            fontSize: 15,
+            margin: [0, 0, 0, 15]
+          });
+          pr.respuestas.forEach(respuesta=>{
+            doc.content.push({
+              text: "- "+respuesta,
+              fontSize: 9,
+              margin: [0, 0, 0, 0]
+            })
+          })
+        })
+      }
+      // Lineal
+      this.arrChartLineal.forEach(ch => {
+        doc.content.push({
+          text: ch.titles,
+          fontSize: 15,
+          margin: [0, 0, 0, 15]
+        });
+        doc.content.push({
+          image: res[countRes],
+          width: 530
+        });
+        countRes++;
+      })
 
       // Opcion Multiple
       this.arrChartOM.forEach(ch => {
@@ -308,19 +375,7 @@ export class StadisticsComponent implements OnInit {
         });
         countRes++;
       })
-      // Lineal
-      this.arrChartLineal.forEach(ch => {
-        doc.content.push({
-          text: ch.titles,
-          fontSize: 15,
-          margin: [0, 0, 0, 15]
-        });
-        doc.content.push({
-          image: res[countRes],
-          width: 530
-        });
-        countRes++;
-      })
+
       // Casillas de Verif
       this.arrChartVerif.forEach(ch => {
         doc.content.push({
@@ -335,48 +390,12 @@ export class StadisticsComponent implements OnInit {
         countRes++;
       })
 
+
+
       pdfMake.createPdf(doc).download("reporte_" + this.encuesta.createAt + ".pdf");
     });
 
 
-  }
-
-  savePDF2() {
-    var chartsRemaining = this.ids.length;
-    console.log(this.ids)
-    // loop over all charts
-    this.ids.forEach((id, index) => {
-
-      console.log("window[id] ", window[id])
-      console.log("window[id].exporting ", window[id].exporting)
-      if (window[id].exporting != undefined) {
-        window[id].exporting.getImage("jpg").then((imgData) => {
-
-          // save image data to chart itself for later reference
-          window[id].exportedImage = imgData;
-
-          // one more chart complete :-)
-          chartsRemaining--;
-
-          // Check if we got all of the charts
-          if (chartsRemaining == 0) {
-            // Yup, we got all of them
-            // Let's proceed to putting PDF together
-            this.generatePDF();
-          }
-        });
-      } else {
-
-      }
-
-    });
-  }
-
-  savePDF3() {
-    console.log("Starting export...")
-    this.chartOM.exporting.extraSprites.push(this.chartLineal)
-    this.chartOM.exporting.extraSprites.push(this.chartVerif)
-    this.chartOM.exporting.export("png");
   }
 
   generatePDF() {

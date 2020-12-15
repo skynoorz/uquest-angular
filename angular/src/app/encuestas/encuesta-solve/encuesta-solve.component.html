@@ -10,7 +10,7 @@
         <mat-card style="margin-top: 10px; width: 100%">
           <div class="pregunta-header">
             <div style="width: 70%">
-              <h3>{{pregunta.descripcion}}</h3>
+              <h3>{{pregunta.descripcion}}<span style="color: red" *ngIf="pregunta.required"> *</span></h3>
 <!--              <input type="hidden" [(ngModel)]="uprPreguntas[i]" value="{{pregunta.id}}" name="preguntaId_{{i}}">-->
             </div>
             <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
@@ -20,8 +20,12 @@
               <div>
                 <mat-form-field hintLabel="Maximo 30 caracteres" appearance="fill">
                   <mat-label>Ingrese su respuesta</mat-label>
-                  <input  matInput #input [(ngModel)]="respuestasMap[pregunta.id][0].textValue" maxlength="30" name="RespuestaSimple_{{i}}" placeholder="Ej. Nougat">
-                  <mat-hint align="end">{{input.value?.length || 0}}/30</mat-hint>
+<!--                  TODO validar campos para depender de pregunta.required-->
+                  <div *ngIf="!pregunta.required"><input  matInput #input [(ngModel)]="respuestasMap[pregunta.id][0].textValue" maxlength="30" name="RespuestaSimple_{{i}}" placeholder="Ej. Nougat"><mat-hint align="end">{{input.value?.length || 0}}/30</mat-hint></div>
+                  <div *ngIf="pregunta.required"><input  matInput #input [(ngModel)]="respuestasMap[pregunta.id][0].textValue" maxlength="30" name="RespuestaSimple_{{i}}" placeholder="Ej. Nougat" required>
+                    <mat-hint align="end">{{input.value?.length || 0}}/30</mat-hint>
+                  </div>
+
                 </mat-form-field>
               </div>
             </div>

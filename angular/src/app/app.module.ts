@@ -61,6 +61,8 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
 import { StadisticsComponent } from './encuestas/stadistics/stadistics.component';
 import { EditarPerfilComponent } from './personas/editar-perfil/editar-perfil.component';
 import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
+import { StadisticsPublicComponent } from './encuestas/stadistics-public/stadistics-public.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 registerLocaleData(localeES, 'es')
 
@@ -81,6 +83,7 @@ const routes: Routes = [
   {path: 'profile', component: PerfilComponent },
   {path: 'profile/editar/:id', component: EditarPerfilComponent },
   {path: 'stadistics/encuesta/:id', component: StadisticsComponent },
+  {path: 'stadistics-public/encuesta/:id', component: StadisticsPublicComponent },
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
@@ -124,54 +127,56 @@ export function maxValidationMessage(err, field) {
     CopyModalComponent,
     StadisticsComponent,
     EditarPerfilComponent,
+    StadisticsPublicComponent,
   ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MatDatepickerModule,
-    MatMomentDateModule,
-    MatButtonModule,
-    MatStepperModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatCardModule,
-    FormlyModule.forRoot(
-      {
-        validationMessages: [
-          {name: 'required', message: 'This field is required'},
-          {name: 'minlength', message: minlengthValidationMessage},
-          {name: 'maxlength', message: maxlengthValidationMessage},
-          {name: 'min', message: minValidationMessage},
-          {name: 'max', message: maxValidationMessage},
-        ],
-      }
-    ),
-    FormlyMaterialModule,
-    FormlyMatDatepickerModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatProgressBarModule,
-    MatBadgeModule,
-    MatTabsModule,
-    MatCheckboxModule,
-    MatDividerModule,
-    MatSnackBarModule,
-    MatSliderModule,
-    MatGridListModule,
-    MatRippleModule,
-    _MatMenuDirectivesModule,
-    MatMenuModule,
-    MatChipsModule,
-    MatDialogModule,
-    ClipboardModule,
-    NgxQRCodeModule
-  ],
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot(routes),
+        HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatDatepickerModule,
+        MatMomentDateModule,
+        MatButtonModule,
+        MatStepperModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatCardModule,
+        FormlyModule.forRoot(
+            {
+                validationMessages: [
+                    {name: 'required', message: 'This field is required'},
+                    {name: 'minlength', message: minlengthValidationMessage},
+                    {name: 'maxlength', message: maxlengthValidationMessage},
+                    {name: 'min', message: minValidationMessage},
+                    {name: 'max', message: maxValidationMessage},
+                ],
+            }
+        ),
+        FormlyMaterialModule,
+        FormlyMatDatepickerModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatBadgeModule,
+        MatTabsModule,
+        MatCheckboxModule,
+        MatDividerModule,
+        MatSnackBarModule,
+        MatSliderModule,
+        MatGridListModule,
+        MatRippleModule,
+        _MatMenuDirectivesModule,
+        MatMenuModule,
+        MatChipsModule,
+        MatDialogModule,
+        ClipboardModule,
+        NgxQRCodeModule,
+        MatSlideToggleModule
+    ],
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
