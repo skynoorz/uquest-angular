@@ -16,7 +16,7 @@ import {CopyModalComponent} from "./encuesta-listar/copy-modal.component";
 })
 export class EncuestasComponent implements OnInit {
 
-  public encuestas: Encuesta[];
+  public encuestas: Encuesta[] = [];
 
   constructor(private encuestasService: EncuestasService,
               public authService: AuthService,

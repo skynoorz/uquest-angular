@@ -105,7 +105,7 @@ export class EncuestaSolveComponent implements OnInit {
   onSubmit() {
     // para que veas la estructura del map
     console.log('respuestasMap', this.respuestasMap);
-    return;
+
     const respuestas = this.convertRespuestaMapToArrayRespuesta(this.respuestasMap);
     // para que veas como quedo el map despues de la conversion
     console.log('respuestas', respuestas);
