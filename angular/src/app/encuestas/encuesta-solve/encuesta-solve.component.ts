@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {Encuesta} from "../../classes/encuesta";
-import {ActivatedRoute, Router} from "@angular/router";
-import {EncuestasService} from "../../services/encuestas.service";
-import {IRespuesta, RespuestasService} from "../../services/respuestas.services";
-import {TipoPreguntaEnum} from "../../classes/pregunta";
+import { Component, OnInit } from '@angular/core';
+import { Encuesta } from "../../classes/encuesta";
+import { ActivatedRoute, Router } from "@angular/router";
+import { EncuestasService } from "../../services/encuestas.service";
+import { IRespuesta, RespuestasService } from "../../services/respuestas.services";
+import { TipoPreguntaEnum } from "../../classes/pregunta";
 import Swal from "sweetalert2";
-import {AuthService} from "../../usuarios/auth.service";
+import { AuthService } from "../../usuarios/auth.service";
 
 
 @Component({
@@ -59,7 +59,7 @@ export class EncuestaSolveComponent implements OnInit {
                     this.router.navigate(['/encuestas/public'])
                     Swal.fire('Aviso', `Usted ya respondio a esta encuesta.`, 'warning')
                   }
-                })  
+                })
               })
             } else {
               this.router.navigate(['/login'])
@@ -105,6 +105,7 @@ export class EncuestaSolveComponent implements OnInit {
   onSubmit() {
     // para que veas la estructura del map
     console.log('respuestasMap', this.respuestasMap);
+    return;
     const respuestas = this.convertRespuestaMapToArrayRespuesta(this.respuestasMap);
     // para que veas como quedo el map despues de la conversion
     console.log('respuestas', respuestas);
@@ -114,6 +115,26 @@ export class EncuestaSolveComponent implements OnInit {
       this.router.navigate(['/encuestas/public'])
       Swal.fire('¡Gracias por su Respuesta!', `Se recibio su respuesta satisfactoriamente.`, 'success')
     })
+  }
+
+  get areAllCheckboxesRequiredValid() {
+    if (!this.encuesta || !this.encuesta.preguntas) {
+      return false;
+    }
+
+    const requiredCheckboxesIds = this.encuesta.preguntas
+      .filter(p => p.tipo === TipoPreguntaEnum.CASILLAS_DE_VERIFICACION && p.required)
+      .map(p => p.id);
+
+    if (!requiredCheckboxesIds.length) {
+      return true;
+    }
+
+    return requiredCheckboxesIds
+      .map(id => this.respuestasMap[id])
+      .map(resp => Object.values(resp))
+      .map(resp => resp.map(r => r.opcionId).reduce((isValid, c) => isValid || !!c , false))
+      .reduce((isValid, c) => isValid || !!c , false);
   }
 
   private convertRespuestaMapToArrayRespuesta(respuestasMap): Array<IRespuesta> {
