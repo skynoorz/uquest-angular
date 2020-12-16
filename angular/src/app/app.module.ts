@@ -31,17 +31,38 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from "@angular/material/select";
 
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
-import {ErrorStateMatcher, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
-import { PresignComponent } from './registro/presign.component';
+import {ErrorStateMatcher, MatRippleModule, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
+import {PresignComponent} from './registro/presign.component';
 import {MatCardModule} from '@angular/material/card';
-import { FormlyModule } from '@ngx-formly/core';
-import { FormlyMaterialModule } from '@ngx-formly/material';
-import { FormlyMatDatepickerModule } from "@ngx-formly/material/datepicker";
-import { EncuestasComponent } from './encuestas/encuestas.component';
+import {FormlyModule} from '@ngx-formly/core';
+import {FormlyMaterialModule} from '@ngx-formly/material';
+import {FormlyMatDatepickerModule} from "@ngx-formly/material/datepicker";
+import {EncuestasComponent} from './encuestas/encuestas.component';
 import {MatAccordion, MatExpansionModule} from "@angular/material/expansion";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
-import { EncuestaCrearComponent } from './encuestas/encuesta-crear/encuesta-crear.component';
+import {EncuestaCrearComponent} from './encuestas/encuesta-crear/encuesta-crear.component';
+import {MatBadgeModule} from "@angular/material/badge";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatDividerModule} from "@angular/material/divider";
+import {EditarComponent} from './personas/editar/editar.component';
+import {MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatSliderModule} from "@angular/material/slider";
+import { EncuestaSolveComponent } from './encuestas/encuesta-solve/encuesta-solve.component';
+import { EncuestaListarComponent } from './encuestas/encuesta-listar/encuesta-listar.component';
+import {MatGridListModule} from "@angular/material/grid-list";
+import {_MatMenuDirectivesModule, MatMenuModule} from "@angular/material/menu";
+import {MatChipsModule} from "@angular/material/chips";
+import { PerfilComponent } from './personas/perfil/perfil.component';
+import { CopyModalComponent } from './encuestas/encuesta-listar/copy-modal.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {ClipboardModule} from "@angular/cdk/clipboard";
+import { StadisticsComponent } from './encuestas/stadistics/stadistics.component';
+import { EditarPerfilComponent } from './personas/editar-perfil/editar-perfil.component';
+import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
+import { StadisticsPublicComponent } from './encuestas/stadistics-public/stadistics-public.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 registerLocaleData(localeES, 'es')
 
@@ -50,17 +71,22 @@ const routes: Routes = [
   {path: 'personas', component: PersonasComponent},
   {path: 'personas/page/:page', component: PersonasComponent},
   {path: 'personas/form', component: FormComponent},
-  {path: 'personas/form/:id', component: FormComponent},
+  {path: 'personas/form/:id', component: EditarComponent},
   {path: 'login', component: LoginComponent},
   {path: 'encuestas', component: EncuestasComponent},
   {path: '', component: HomeComponent, pathMatch: 'full'},
   // {path: 'registro', component: RegistroComponent},
   {path: 'registro', component: RegistroComponent},
   {path: 'encuestas/crear', component: EncuestaCrearComponent},
+  {path: 'encuestas/solve/:id', component: EncuestaSolveComponent },
+  {path: 'encuestas/public', component: EncuestaListarComponent },
+  {path: 'profile', component: PerfilComponent },
+  {path: 'profile/editar/:id', component: EditarPerfilComponent },
+  {path: 'stadistics/encuesta/:id', component: StadisticsComponent },
+  {path: 'stadistics-public/encuesta/:id', component: StadisticsPublicComponent },
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
-// TODO traducir!
 // validations config
 export function minlengthValidationMessage(err, field) {
   return `Debe tener al menos ${field.templateOptions.minLength} caracteres`;
@@ -94,6 +120,14 @@ export function maxValidationMessage(err, field) {
     PresignComponent,
     EncuestasComponent,
     EncuestaCrearComponent,
+    EditarComponent,
+    EncuestaSolveComponent,
+    EncuestaListarComponent,
+    PerfilComponent,
+    CopyModalComponent,
+    StadisticsComponent,
+    EditarPerfilComponent,
+    StadisticsPublicComponent,
   ],
     imports: [
         BrowserModule,
@@ -126,7 +160,22 @@ export function maxValidationMessage(err, field) {
         FormlyMatDatepickerModule,
         MatExpansionModule,
         MatIconModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatBadgeModule,
+        MatTabsModule,
+        MatCheckboxModule,
+        MatDividerModule,
+        MatSnackBarModule,
+        MatSliderModule,
+        MatGridListModule,
+        MatRippleModule,
+        _MatMenuDirectivesModule,
+        MatMenuModule,
+        MatChipsModule,
+        MatDialogModule,
+        ClipboardModule,
+        NgxQRCodeModule,
+        MatSlideToggleModule
     ],
   providers: [
     {
@@ -138,7 +187,7 @@ export function maxValidationMessage(err, field) {
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 
-    bootstrap: [AppComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

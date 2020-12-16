@@ -75,12 +75,12 @@ public class Usuario implements Serializable {
     private String foto;
 
     // RELACIONES
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="instituto_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Instituto instituto;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="carrera_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @NotNull(message = "la carrera no puede estar vacia")
@@ -92,12 +92,6 @@ public class Usuario implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id","role_id"})})
     private List<Role> roles;
-
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JoinColumn(name = "usuario_id")
-    private List<Encuesta> encuestas;
 
     public Long getId() {
         return id;
@@ -221,14 +215,6 @@ public class Usuario implements Serializable {
 
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
-    }
-
-    public List<Encuesta> getEncuestas() {
-        return encuestas;
-    }
-
-    public void setEncuestas(List<Encuesta> encuestas) {
-        this.encuestas = encuestas;
     }
 
     public List<Role> getRoles() {

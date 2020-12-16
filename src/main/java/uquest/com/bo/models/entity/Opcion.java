@@ -15,10 +15,13 @@ public class Opcion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
     private String texto;
 
     private Integer tipo;
+
+    private Integer minValue;
+
+    private Integer maxValue;
 
     public Long getId() {
         return id;
@@ -44,4 +47,19 @@ public class Opcion {
         this.tipo = tipo;
     }
 
+    public Integer getMinValue() {
+        return minValue;
+    }
+
+    public void setMinValue(Integer minValue) {
+        this.minValue = minValue;
+    }
+
+    public Integer getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(Integer maxValue) {
+        this.maxValue = maxValue;
+    }
 }

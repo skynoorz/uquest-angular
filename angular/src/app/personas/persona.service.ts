@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Persona} from "./persona";
+import {Persona} from "../classes/persona";
 import {Observable, throwError} from "rxjs";
 import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
 import {map, catchError, tap} from "rxjs/operators";
 import {Router} from "@angular/router"
-import {Carrera} from "./carrera";
-import {Instituto} from "./instituto";
+import {Carrera} from "../classes/carrera";
+import {Instituto} from "../classes/instituto";
 import {Rol} from "../classes/rol";
 
 @Injectable({
@@ -116,9 +116,36 @@ export class PersonaService {
     )
   }
 
+  getPersonaProfile(id): Observable<Persona> {
+    console.log("respuesta en service: "+this.http.get(`${this.urlEndpoint}/profile/${id}`));
+    return this.http.get<Persona>(`${this.urlEndpoint}/profile/${id}`).pipe(
+      catchError(err => {
+        if (err.status != 401 && err.error.mensaje){
+          this.router.navigate(['/'])
+          console.log(err.error.mensaje)
+        }
+        return throwError(err);
+      })
+    )
+  }
+
   update(persona: Persona): Observable<any> {
     console.log(persona);
     return this.http.put<any>(`${this.urlEndpoint}/${persona.id}`, persona).pipe(
+
+      catchError(err => {
+        if (err.status == 400) {
+          return throwError(err);
+        }
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
+        return throwError(err);
+      })
+    )
+  }
+  updateProfile(persona: Persona): Observable<any> {
+    console.log(persona);
+    return this.http.put<any>(`${this.urlEndpoint}/profile/${persona.id}`, persona).pipe(
 
       catchError(err => {
         if (err.status == 400) {
@@ -156,5 +183,10 @@ export class PersonaService {
     console.log(username);
     // console.log(this.http.get(`${this.urlEndpoint}/userexist/${username}`))
     return this.http.get<any>(`${this.urlEndpoint}/userexist/${username}`);
+  }
+
+  emailExist(email: string): Observable<any>{
+    console.log(email);
+    return this.http.get<any>(`${this.urlEndpoint}/emailexist/${email}`);
   }
 }

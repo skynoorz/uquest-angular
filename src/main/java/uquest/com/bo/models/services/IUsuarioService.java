@@ -28,4 +28,6 @@ public interface IUsuarioService {
     public List<Role> findAllRoles();
 
     Usuario findByUsername(String name);
+
+    Usuario findByEmail(String email);
 }

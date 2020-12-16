@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Persona} from "./persona";
+import {Persona} from "../classes/persona";
 import {PersonaService} from "./persona.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
-import {Carrera} from "./carrera";
-import {Instituto} from "./instituto";
+import {Carrera} from "../classes/carrera";
+import {Instituto} from "../classes/instituto";
 
 @Component({
   selector: 'app-form',

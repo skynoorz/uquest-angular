@@ -20,16 +20,20 @@ public class Instituto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     @NotEmpty
     private String nombre;
 
+    @Column
     @NotEmpty
     private String sigla;
 
+    @Column
     @NotEmpty
     private String fono;
 
-    @Email
+    @Column
+    @NotEmpty
     private String email;
 
     @ManyToOne(fetch = FetchType.LAZY)

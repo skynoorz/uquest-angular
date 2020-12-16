@@ -31,6 +31,8 @@ public class Pregunta implements Serializable {
     @NotEmpty
     private String tipo;
 
+    private Boolean required;
+
 //    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @JoinColumn(name="encuesta_id")
 //    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -43,7 +45,10 @@ public class Pregunta implements Serializable {
 //            name = "preguntas_opciones",
 //            joinColumns = @JoinColumn(name = "opcion_id"),
 //            inverseJoinColumns = @JoinColumn(name = "pregunta_id"))
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+
+    //Error de Multiple representations of the same entity are being merged, solution
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "preguntas_opciones",
             joinColumns = @JoinColumn(name = "pregunta_id"),
             inverseJoinColumns = @JoinColumn(name = "opcion_id"),
@@ -97,5 +102,13 @@ public class Pregunta implements Serializable {
 
     public void setOpciones(List<Opcion> opciones) {
         this.opciones = opciones;
+    }
+
+    public Boolean isRequired() {
+        return required;
+    }
+
+    public void setRequired(Boolean required) {
+        this.required = required;
     }
 }

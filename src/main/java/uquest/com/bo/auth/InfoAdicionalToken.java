@@ -27,7 +27,8 @@ public class InfoAdicionalToken implements TokenEnhancer {
         info.put("apellido_pat", usuario.getApellidoPat());
         info.put("apellido_mat", usuario.getApellidoMat());
         info.put("email", usuario.getEmail());
-        info.put("sexo", usuario.getSexo());
+        info.put("foto",usuario.getFoto());
+//        info.put("sexo", usuario.getSexo());
 //        info.put("roles",usuario.getRoles());
 //        info.put("carrera", usuario.getCarrera());
 

@@ -1,7 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
-import {EncuestaListarComponent} from "./encuesta-listar.component";
+
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels} from "@techiediaries/ngx-qrcode";
 
 @Component({
   selector: 'app-copy-modal',
@@ -10,7 +11,15 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class CopyModalComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: EncuestaListarComponent,
+  title='Copiar URL';
+  url = `http://localhost:4200`+this.data.address;
+  elementType = NgxQrcodeElementTypes.URL;
+  errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+  value = this.url;
+
+  constructor(
+    // @Inject(MAT_DIALOG_DATA) public data: EncuestaListarComponent,
+    @Inject(MAT_DIALOG_DATA) public data: { address: string} ,
               private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {

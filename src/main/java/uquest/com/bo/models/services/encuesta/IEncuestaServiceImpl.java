@@ -19,8 +19,8 @@ public class IEncuestaServiceImpl implements IEncuestaService{
     }
 
     @Override
-    public void save(Encuesta encuesta) {
-        encuestaDao.save(encuesta);
+    public Encuesta save(Encuesta encuesta) {
+        return encuestaDao.save(encuesta);
     }
 
     @Override
@@ -46,5 +46,10 @@ public class IEncuestaServiceImpl implements IEncuestaService{
     @Override
     public List<Encuesta> findAllEncuestasByUsername(String user) {
         return encuestaDao.findAllEncuestasByUsername(user);
+    }
+
+    @Override
+    public List<Encuesta> findAllPublic() {
+        return encuestaDao.findAllPublic();
     }
 }

@@ -1,0 +1,14 @@
+<div class="container" style="margin-bottom: 100px">
+  <div class="card" style="margin-top: 1em">
+    <div>
+      <div style="text-align: center; width: 100%" class="card-header">
+        <h1>{{encuesta.titulo}}</h1>
+      </div>
+      <div class="mat-button alert-primary m-3" (click)="savePDF()">exportar PDF</div>
+      <div class="container">
+        <div #containerPreguntas></div>
+      </div>
+    </div>
+  </div>
+</div>
+

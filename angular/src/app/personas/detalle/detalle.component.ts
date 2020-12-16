@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Persona} from "../persona";
+import {Persona} from "../../classes/persona";
 import {PersonaService} from "../persona.service";
 import {ActivatedRoute} from "@angular/router";
 import Swal from "sweetalert2";
@@ -44,10 +44,10 @@ export class DetalleComponent implements OnInit {
         .subscribe(event => {
           if (event.type === HttpEventType.UploadProgress) {
             this.progreso = Math.round((event.loaded / event.total) * 100);
-            console.log("entra al if")
+            // console.log("entra al if")
 
           } else if (event.type === HttpEventType.Response) {
-            console.log("entra al else")
+            // console.log("entra al else")
             let response: any = event.body;
             this.persona = response.persona as Persona;
 

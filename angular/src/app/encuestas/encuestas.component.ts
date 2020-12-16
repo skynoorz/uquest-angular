@@ -1,7 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {EncuestasService} from "../services/encuestas.service";
-import {Encuesta} from "../personas/encuesta";
-import {UprService} from "../services/upr.service";
+import {Encuesta} from "../classes/encuesta";
+import {AuthService} from "../usuarios/auth.service";
+import {RespuestasService} from "../services/respuestas.services";
+import {TipoPreguntaEnum} from "../classes/pregunta";
+import Swal from "sweetalert2";
+import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {CopyModalComponent} from "./encuesta-listar/copy-modal.component";
 
 @Component({
   selector: 'app-encuestas',
@@ -10,36 +16,41 @@ import {UprService} from "../services/upr.service";
 })
 export class EncuestasComponent implements OnInit {
 
-  public encuestas: Encuesta[];
+  public encuestas: Encuesta[] = [];
 
   constructor(private encuestasService: EncuestasService,
-              private uprService: UprService) {
+              public authService: AuthService,
+              private router: Router,
+              private respuestaService: RespuestasService,
+              public dialog: MatDialog) {
+
+    if (this.authService.isAuthenticated()) {
+      this.encuestasService.getEncuestasByUsername(JSON.parse(sessionStorage.getItem("persona")).username).subscribe(encuestas=>{
+        this.encuestas = encuestas;
+        encuestas.map(encuesta=> {
+          this.respuestaService.getRespuestasByEncuestaId(encuesta.id).subscribe(response=>{
+            console.log('Encuesta id: ',encuesta.id)
+            console.log(`Respuestas: `,response);
+          })
+        })
+        console.log(this.encuestas);
+      })
+    } else {
+      this.router.navigate(['/'])
+      Swal.fire('Error', `Debe estar authenticado para acceder a este recurso`, 'error')
+    }
+
   }
 
   ngOnInit(): void {
-    // this.encuestasService.getEncuestas(1).subscribe(encuesta=>{
-    //     this.encuestas = encuesta;
-    //     console.log(this.encuestas);
-    //   }
-    // )
-    // console.log("username: "+JSON.parse(sessionStorage.getItem("persona")).username)
-    this.encuestasService.getEncuestasByUsername(JSON.parse(sessionStorage.getItem("persona")).username).subscribe(encuestas => {
-        // this.encuestas = encuestas;
-        encuestas.forEach(encuesta => {
-          this.uprService.getUPR(encuesta.id).subscribe(upr => {
-            encuesta.upr = upr;
-            console.log(encuestas);
-            this.encuestas=encuestas;
-          });
-        })
-        console.log(this.encuestas);
-      }
-    )
-    // this.uprService.getAllUpr().subscribe(upr => {
-    //   upr.forEach(e => {
-    //     // console.log("UPR: "+JSON.stringify(e))
-    //   })
-    // })
+
   }
 
+  popupModal(encuestaId: number) {
+    this.dialog.open(CopyModalComponent, {
+      data: {
+        address: '/encuestas/solve/'+encuestaId
+      }
+    });
+  }
 }

@@ -1,0 +1,106 @@
+<div class="container" style="padding: 1em 1em 5em 1em;" *ngIf="authService.isAuthenticated()">
+  <div class="card-header-profile">
+    <h1>Informacion Personal</h1>
+    <div class="header-desc">
+      Informacion basica, como el nombre, la foto que utilizas para UQUEST
+    </div>
+  </div>
+  <mat-card>
+    <mat-card-header>
+      <div class="body-desc">
+        <h1>Perfil</h1>
+        <div class="header-desc">
+          Es posible que otros usuarios puedan ver parte de la información
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <div class="card-content">
+        <div class="sub-card-content" style="padding-bottom: 1em;">
+          <h3 class="left-pos">FOTO:</h3>
+          <div class="foto-container">
+            <p style="font-family: Metropolis-LightItalic, sans-serif">Puedes personalizar tu cuenta con una foto.</p>
+
+            <div mat-card-avatar style="background-size: cover; width: 80px;height: 80px"
+                 [ngStyle]="{ 'background-image': 'url(http://localhost:8080/api/uploads/img/' + authService.persona.foto + ')'}"></div>
+          </div>
+
+        </div>
+        <div style="display: flex; padding-bottom: 1em">
+          <div class="custom-file" style="width: 100%">
+            <input (change)="seleccionarFoto($event)" type="file" class="custom-file-input"
+                   id="inputGroupFile04"
+                   aria-describedby="inputGroupFileAddon04">
+            <label class="custom-file-label" for="inputGroupFile04">Seleccionar Foto</label>
+          </div>
+          <div class="input-group-append" style="width: available">
+            <button (click)="subirFoto()" [disabled]="!fotoSeleccionada" class="btn btn-outline-secondary"
+                    type="button" id="inputGroupFileAddon04">Subir
+            </button>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">NOMBRES:</h3>
+          <div>{{persona.nombres}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">APELLIDO PATERNO:</h3>
+          <div>{{persona.apellidoPat}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">APELLIDO MATERNO:</h3>
+          <div>{{persona.apellidoMat}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">SEXO:</h3>
+          <div>{{persona.sexo}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">FECHA DE NACIMIENTO:</h3>
+          <div>{{persona.fnac | date:"EEEE dd, MMMM, yyyy"}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">USERNAME:</h3>
+          <div>{{persona.username}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">CONTRASEÑA:</h3>
+          <div>••••••••</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">EMAIL:</h3>
+          <div>{{persona.email}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div *ngIf="persona.instituto">
+          <div class="sub-card-content">
+            <h3 class="left-pos">CARRERA:</h3>
+            <div>{{persona.carrera.nombre}}</div>
+          </div>
+        </div>
+        <div *ngIf="persona.instituto">
+          <mat-divider></mat-divider>
+          <div class="sub-card-content">
+            <h3 class="left-pos">INSTITUTO:</h3>
+            <div>{{persona.instituto.nombre}}</div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div style="padding: 1em; align-self: end">
+
+  </div>
+  <div style="float: right; font-family: Metropolis-Regular, sans-serif">
+    <button mat-raised-button aria-label="editar" (click)="editar()"> Editar</button>
+  </div>
+</div>

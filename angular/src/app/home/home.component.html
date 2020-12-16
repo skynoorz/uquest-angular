@@ -5,7 +5,7 @@
   </div>
   <div style="flex-wrap: wrap; text-align: center !important">
     <a [routerLink]="['/registro']"><button class="btn-l" mat-raised-button>Registrarse</button></a>
-    <a [routerLink]="['/registro']"><button class="btn-r" mat-raised-button>Encuestas</button></a>
+    <a [routerLink]="['/encuestas/public']"><button class="btn-r" mat-raised-button>Encuestas</button></a>
   </div>
   <div class="second-container text-center p-5">
     <!--    <img src="assets/images/phone-and-pc.png" alt="header-pc-and-phone" style="width: 800px;height: 450px">-->
@@ -16,11 +16,11 @@
   <div style="display: flex; justify-content: center">
     <div class="p-5">
       <div style="font-family: Metropolis-Bold, sans-serif" class="text-white"><h1>Recibe Encuestas</h1></div>
-      <div class="text-white" style="font-family: Metropolis-Light, sans-serif">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias architecto consequatur dignissimos distinctio, est ex, explicabo fugiat iusto, placeat qui quidem sunt totam vitae? Cumque doloremque incidunt itaque molestias repellendus?</div>
+      <div class="text-white" style="font-family: Metropolis-Light, sans-serif">{{descripcionRecibe}}</div>
     </div>
     <div class="p-5">
       <div style="font-family: Metropolis-Bold, sans-serif" class="text-white"><h1>Encuestas Privadas</h1></div>
-      <div class="text-white" style="font-family: Metropolis-Light, sans-serif">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias architecto consequatur dignissimos distinctio, est ex, explicabo fugiat iusto, placeat qui quidem sunt totam vitae? Cumque doloremque incidunt itaque molestias repellendus?</div>
+      <div class="text-white" style="font-family: Metropolis-Light, sans-serif">{{descripcionPrivada}}</div>
     </div>
   </div>
 </div>

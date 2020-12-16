@@ -63,6 +63,32 @@ public class UsuarioRestController {
         Map<String, Object> response = new HashMap<>();
         try {
             usuario = usuarioService.findById(id);
+            usuario.setPassword("");
+//            log.info(usuario.getPassword());
+//            passwordEncoder.matches('',usuario.getPassword());
+//            usuario.setEncuestas(null);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al realizar la consulta en la Base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        if (usuario == null) {
+            response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+    }
+    @GetMapping("/usuarios/profile/{id}")
+    public ResponseEntity<?> showProfile(@PathVariable Long id) {
+
+        Usuario usuario = null;
+        Map<String, Object> response = new HashMap<>();
+        try {
+            usuario = usuarioService.findById(id);
+            usuario.setPassword("");
+//            log.info(usuario.getPassword());
+//            passwordEncoder.matches('',usuario.getPassword());
 //            usuario.setEncuestas(null);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar la consulta en la Base de datos");
@@ -96,6 +122,8 @@ public class UsuarioRestController {
         usuario.setEnabled(true);
         try {
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            if (usuario.getInstituto().getId() == null)
+                usuario.setInstituto(null);
             usuarioNew = usuarioService.save(usuario);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
@@ -125,30 +153,53 @@ public class UsuarioRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
 
-        if (object == null) {
+        if (usuario.getId() == null) {
             response.put("mensaje", "Error, no se pudo editar el cliente con id: ".concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
         try {
-            object.setCi(usuario.getCi());
-            object.setApellidoMat(usuario.getApellidoMat());
-            object.setApellidoPat(usuario.getApellidoPat());
-            object.setNombres(usuario.getNombres());
-            object.setSexo(usuario.getSexo());
-            object.setEmail(usuario.getEmail());
-            object.setEnabled(usuario.isEnabled());
-            object.setFnac(usuario.getFnac());
+            if (usuario.getInstituto().getId() == null)
+                usuario.setInstituto(null);
+            String encodedPass = passwordEncoder.encode(usuario.getPassword());
+            usuario.setPassword(encodedPass);
+            objectUpdated = usuarioService.save(usuario);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al realizar el update en la Base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "El registro del usuario se actualizo correctamente");
+        response.put("usuario", objectUpdated);
+        return new ResponseEntity<Map>(response, HttpStatus.CREATED);
+    }
 
-            object.setUsername(usuario.getUsername());
-            object.setPassword(usuario.getPassword());
+    @PutMapping("/usuarios/profile/{id}")
+    public ResponseEntity<?> updateProfile(@Valid @RequestBody Usuario usuario, BindingResult result, @PathVariable Long id) {
 
-            object.setEncuestas(usuario.getEncuestas());
-            object.setCarrera(usuario.getCarrera());
-            if (usuario.getInstituto() != null)
-                object.setInstituto(usuario.getInstituto());
-//            object.setCarreras(usuario.getCarreras());
-//            object.setInstitutos(usuario.getInstitutos());
-            objectUpdated = usuarioService.save(object);
+        Usuario object = usuarioService.findById(id);
+        Usuario objectUpdated = null;
+        Map<String, Object> response = new HashMap<>();
+
+        // sending error to FE
+        if (result.hasErrors()) {
+            List<String> errors = new ArrayList<>();
+            for (FieldError err : result.getFieldErrors()) {
+                errors.add("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
+            }
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        if (usuario.getId() == null) {
+            response.put("mensaje", "Error, no se pudo editar el cliente con id: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+        try {
+            if (usuario.getInstituto().getId() == null)
+                usuario.setInstituto(null);
+            String encodedPass = passwordEncoder.encode(usuario.getPassword());
+            usuario.setPassword(encodedPass);
+            objectUpdated = usuarioService.save(usuario);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el update en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -239,6 +290,12 @@ public class UsuarioRestController {
     @GetMapping("/usuarios/userexist/{username}")
     public ResponseEntity<Boolean> datauser(@PathVariable String username){
         Usuario usuarioNew = usuarioService.findByUsername(username);
+        return ResponseEntity.ok(Optional.ofNullable(usuarioNew).isEmpty());
+    }
+
+    @GetMapping("/usuarios/emailexist/{email}")
+    public ResponseEntity<Boolean> dataemail(@PathVariable String email){
+        Usuario usuarioNew = usuarioService.findByEmail(email);
         return ResponseEntity.ok(Optional.ofNullable(usuarioNew).isEmpty());
     }
 
