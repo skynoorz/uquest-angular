@@ -42,6 +42,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.requiresChannel()
+            .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+            .requiresSecure();
     }
 
     @Override

@@ -169,7 +169,11 @@
 		<profile>
 			<id>heroku</id>
 			<dependencies>
-
+				<dependency>
+					<groupId>io.github.createam-labs</groupId>
+					<artifactId>spring-boot-starter-heroku</artifactId>
+					<version>1.1</version>
+				</dependency>
 			</dependencies>
 		</profile>
 	</profiles>
