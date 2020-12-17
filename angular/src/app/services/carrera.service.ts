@@ -6,13 +6,15 @@ import {map, catchError, tap} from "rxjs/operators";
 import {Router} from "@angular/router"
 import {Carrera} from "../classes/carrera";
 import {Instituto} from "../classes/instituto";
+import { environment } from "../../environments/environment";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarreraService {
 
-  private urlEndpoint: string = "http://localhost:8080/api/carreras"
+  private urlEndpoint: string = environment.basePath + "/api/carreras";
 
   public institutos: Instituto[];
 
