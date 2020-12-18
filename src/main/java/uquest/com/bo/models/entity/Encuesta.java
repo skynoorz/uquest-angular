@@ -51,14 +51,6 @@ public class Encuesta implements Serializable {
 //    @ManyToOne()
 //    private Usuario usuario;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "dispositivos_encuestas",
-            joinColumns = @JoinColumn(name = "encuesta_id"),
-            inverseJoinColumns = @JoinColumn(name = "dispositivo_id"))
-    private List<Dispositivo> dispositivos;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
@@ -79,14 +71,6 @@ public class Encuesta implements Serializable {
     @PrePersist
     public void prePersist() {
         createAt = new Date();
-    }
-
-    public List<Dispositivo> getDispositivos() {
-        return dispositivos;
-    }
-
-    public void setDispositivos(List<Dispositivo> dispositivos) {
-        this.dispositivos = dispositivos;
     }
 
     public Categoria getCategoria() {

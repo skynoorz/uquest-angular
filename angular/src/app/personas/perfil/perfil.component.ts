@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {HttpEventType} from "@angular/common/http";
 import {ModalService} from "../detalle/modal.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-perfil',
@@ -15,6 +16,7 @@ import {ModalService} from "../detalle/modal.service";
 export class PerfilComponent implements OnInit {
 
   persona: Persona = new Persona();
+  basePath: string = environment.basePath;
 
   titulo: string = "Detalle Persona";
   progreso: number = 0;

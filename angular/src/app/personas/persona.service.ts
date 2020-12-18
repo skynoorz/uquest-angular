@@ -7,13 +7,14 @@ import {Router} from "@angular/router"
 import {Carrera} from "../classes/carrera";
 import {Instituto} from "../classes/instituto";
 import {Rol} from "../classes/rol";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonaService {
 
-  private urlEndpoint: string = "http://localhost:8080/api/usuarios"
+  private urlEndpoint: string = environment.basePath +"/api/usuarios"
   // httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
   // clase 153
 

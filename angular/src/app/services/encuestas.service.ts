@@ -5,17 +5,16 @@ import {Observable, throwError} from "rxjs";
 import {Encuesta} from "../classes/encuesta";
 import {catchError} from "rxjs/operators";
 import {Categoria} from "../classes/categoria";
-import {Persona} from "../classes/persona";
-import {Opcion, OpcionSend} from "../classes/opcion";
-import {Respuesta} from "../classes/respuesta";
+import {OpcionSend} from "../classes/opcion";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EncuestasService {
 
-  private urlEndpoint: string = "http://localhost:8080/api/usuarios"
-  private urlEndpointNative: string = "http://localhost:8080/api"
+  private urlEndpoint: string = environment.basePath +"/api/usuarios"
+  private urlEndpointNative: string = environment.basePath + "/api"
 
   ngOnInit(): void{
 
@@ -65,16 +64,12 @@ export class EncuestasService {
     return this.http.get<Encuesta[]>(`${this.urlEndpoint}/encuestas/user/${user}`);
   }
 
-  // save(encuesta) :Observable<Encuesta>{
-  //   return this.http.post<Encuesta>(`http://localhost:8080/api/encuestas/${encuesta}`);
-  // }
-
   save(encuesta: Encuesta): Observable<any>{
     console.log("entra al save")
     console.log(encuesta)
     console.log(JSON.stringify(encuesta))
 
-    return this.http.post<any>("http://localhost:8080/api/encuestas", encuesta).pipe(
+    return this.http.post<any>(environment.basePath +"/api/encuestas", encuesta).pipe(
       catchError(err => {
         if (err.status == 400 ) {
           return throwError(err);
@@ -87,7 +82,7 @@ export class EncuestasService {
   }
 
   getAllCategorias(): Observable<Categoria[]>{
-    return this.http.get<Categoria[]>(`http://localhost:8080/api/categorias`);
+    return this.http.get<Categoria[]>(environment.basePath + `/api/categorias`);
   }
 
   getAllPublicEncuestas():Observable<Encuesta[]>{

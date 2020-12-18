@@ -3,6 +3,7 @@ import {EncuestasService} from "../../services/encuestas.service";
 import {Encuesta} from "../../classes/encuesta";
 import {MatDialog} from "@angular/material/dialog";
 import {CopyModalComponent} from "./copy-modal.component";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-encuesta-listar',
@@ -11,6 +12,8 @@ import {CopyModalComponent} from "./copy-modal.component";
 })
 export class EncuestaListarComponent implements OnInit {
   encuestas: Encuesta[];
+
+  basePathFoto: string = environment.basePath;
 
   public color: string = 'lightblue';
   address: string;

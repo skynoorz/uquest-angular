@@ -22,8 +22,7 @@
           <div class="foto-container">
             <p style="font-family: Metropolis-LightItalic, sans-serif">Puedes personalizar tu cuenta con una foto.</p>
 
-            <div mat-card-avatar style="background-size: cover; width: 80px;height: 80px"
-                 [ngStyle]="{ 'background-image': 'url(http://localhost:8080/api/uploads/img/' + authService.persona.foto + ')'}"></div>
+            <div mat-card-avatar style="background-size: cover; width: 80px;height: 80px" [ngStyle]="{ 'background-image': 'url('+basePath+'/api/uploads/img/' + authService.persona.foto + ')'}"></div>
           </div>
 
         </div>

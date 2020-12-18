@@ -38,8 +38,8 @@
               <mat-card style="display: none"></mat-card>
               <div class="box-menu">
                 <span style="padding-right: 8px; padding-left: 5px">{{authService.persona.username}}</span>
-                <div *ngIf="!hasFoto()" mat-card-avatar class="no-user"></div>
-                <div *ngIf="hasFoto()"  mat-card-avatar style="background-size: cover;"  [ngStyle]="{ 'background-image': 'url(http://localhost:8080/api/uploads/img/' + authService.persona.foto + ')'}"></div>
+                <div *ngIf="!hasFoto()" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/images/no_user.png)'}"></div>
+                <div  *ngIf="hasFoto()" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/api/uploads/img/' + authService.persona.foto + ')'}"></div>
               </div>
             </button>
           </div>

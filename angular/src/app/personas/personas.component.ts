@@ -7,6 +7,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 import {ModalService} from "./detalle/modal.service";
 import {AuthService} from "../usuarios/auth.service";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-personas',
@@ -18,6 +19,7 @@ export class PersonasComponent implements OnInit {
   personas: Persona[]
   paginador: any;
   personaSeleccionado: Persona;
+  basePath: string = environment.basePath;
 
   //aca inicializamos el service
   constructor(private personaService: PersonaService,

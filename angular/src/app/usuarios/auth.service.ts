@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Persona} from "../classes/persona";
 import {Rol} from "../classes/rol";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class AuthService {
 
 
   login(persona: Persona): Observable<any> {
-    const urlEndpoint = 'http://localhost:8080/oauth/token';
+    const urlEndpoint = environment.basePath +'/oauth/token';
 
     const credenciales = btoa('angularapp' + ':' + '12345');
     const httpHeaders = new HttpHeaders({

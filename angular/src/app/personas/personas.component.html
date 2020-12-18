@@ -29,11 +29,11 @@
       <tr *ngFor="let persona of personas">
         <td>
           <img *ngIf="persona?.foto" (click)="abrirModal(persona)"
-               src="http://localhost:8080/api/uploads/img/{{persona.foto}}" alt="{{persona.foto}}"
+               src="{{basePath}}/api/uploads/img/{{persona.foto}}" alt="{{persona.foto}}"
                class="img-thumbnail rounded"
                style="width: 64px; cursor: pointer;height: 64px">
           <img *ngIf="!persona?.foto" (click)="abrirModal(persona)"
-               src="http://localhost:8080/images/no_user.png" alt="sin_foto"
+               src="{{basePath}}/images/no_user.png" alt="sin_foto"
                class="img-thumbnail rounded"
                style="width: 64px; cursor: pointer;height: 64px">
           <!--          [routerLink]="['/personas/ver/',persona.id]"-->

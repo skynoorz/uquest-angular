@@ -7,11 +7,6 @@
   color: white;
   font-family: Metropolis-BoldItalic, sans-serif;
 }
-
-.no-user{
-  background-size: cover;
-  background-image: url('http://localhost:8080/images/no_user.png');
-}
 .min-height-width{
   min-width: 100px;
   min-height: 100px;

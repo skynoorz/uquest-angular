@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Persona} from "../classes/persona";
 import {Observable, throwError} from "rxjs";
-import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
-import {map, catchError, tap} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
+import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router"
 import {Carrera} from "../classes/carrera";
 import {Instituto} from "../classes/instituto";

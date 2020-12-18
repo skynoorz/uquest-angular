@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import Swal from "sweetalert2";
 import {HttpEventType} from "@angular/common/http";
 import {ModalService} from "./modal.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'detalle-persona',
@@ -17,6 +18,7 @@ export class DetalleComponent implements OnInit {
   titulo: string = "Detalle Persona";
   progreso: number = 0;
   public fotoSeleccionada: File;
+  basePath: string= environment.basePath;
 
   constructor(private personaService: PersonaService,
               private activatedRoute: ActivatedRoute,

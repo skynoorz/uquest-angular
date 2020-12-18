@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import {Encuesta} from "../classes/encuesta";
 import {Observable} from "rxjs";
 import {Respuesta} from "../classes/respuesta";
+import {environment} from "../../environments/environment";
 
 export interface IRespuesta  {
   textValue?: string;
@@ -18,7 +19,7 @@ export interface IRespuesta  {
 export class RespuestasService {
 
 
-  private baseUrl: string = "http://localhost:8080/api/respuesta";
+  private baseUrl: string = environment.basePath + "/api/respuesta";
 
   constructor(private http: HttpClient) {}
 

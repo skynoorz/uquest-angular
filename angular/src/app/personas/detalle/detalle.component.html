@@ -46,7 +46,7 @@
                 </div>
               </div>
               <div class="col-sm" *ngIf="persona?.foto">
-                <img src="http://localhost:8080/api/uploads/img/{{persona.foto}}" alt="{{persona.foto}}"
+                <img src="{{basePath}}/api/uploads/img/{{persona.foto}}" alt="{{persona.foto}}"
                      class="img-thumbnail rounded">
               </div>
             </div>
