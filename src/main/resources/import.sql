@@ -45,7 +45,7 @@ INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (7,1);
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (8,1);
 
 
-insert into encuestas (create_at, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values ('2020-09-08', '2020-09-24 01:00:00', '2020-09-08 01:00:00', 'Abierto', 'INF - 381','Encuesta simple respecto a la materia de INF-181 y sus avances con el docente.', 1, 1);
+insert into encuestas (id, create_at, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values (2, '2020-09-08', '2020-09-24 01:00:00', '2020-09-08 01:00:00', 'Abierto', 'INF - 381','Encuesta simple respecto a la materia de INF-181 y sus avances con el docente.', 1, 1);
 -- insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Evaluacion de examenes', 2, 'Casillas de Verificacion')
 insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Evaluacion de examenes', 2, 'Opcion Multiple');
 insert into opciones (texto, tipo) values ('25%, 25%, 50%', 3);
@@ -71,7 +71,7 @@ insert into preguntas_opciones (pregunta_id, opcion_id) values (6, 6);
 -- INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 2, 2);
 
 -- ENCUESTA CLASES VIRTUALES
-insert into encuestas (create_at, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values ('2020-09-24', '2020-10-24 01:00:00', '2020-09-24 01:00:00', 'Abierto', 'Clases Virtuales','Encuesta para saber la opinion de los estudiatnes respecto a las satisfaccion de las clases virtuales.', 1, 3);
+insert into encuestas (id, create_at, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values (3, '2020-09-24', '2020-10-24 01:00:00', '2020-09-24 01:00:00', 'Abierto', 'Clases Virtuales','Encuesta para saber la opinion de los estudiatnes respecto a las satisfaccion de las clases virtuales.', 1, 3);
 insert into preguntas (id, create_at, descripcion, encuesta_id, tipo) values (7, '2020-09-24', '¿Que te parecio las clases en modalidad presencial?', 3, 'Parrafo');
 insert into preguntas (id, create_at, descripcion, encuesta_id, tipo) values (8, '2020-09-24', 'Califica del 1 al 10 las clases virtuales en cuanto a calidad', 3, 'Escala Lineal');
 insert into opciones (id, max_value, min_value, tipo) values (7, 10, 1, 5);
