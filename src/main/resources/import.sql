@@ -31,8 +31,8 @@ INSERT INTO preguntas_opciones (pregunta_id, opcion_id) VALUES (2,1);
 INSERT INTO preguntas_opciones (pregunta_id, opcion_id) VALUES (2,2);
 
 
-INSERT INTO roles (nombre) VALUES ('ROLE_USER');
-INSERT INTO roles (nombre) VALUES ('ROLE_ADMIN');
+INSERT INTO roles (id, nombre) VALUES (1, 'ROLE_USER');
+INSERT INTO roles (id, nombre) VALUES (2, 'ROLE_ADMIN');
 
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (1,1);
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2,2);
@@ -47,17 +47,17 @@ INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (8,1);
 
 insert into encuestas (id, create_at, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values (2, '2020-09-08', '2020-09-24 01:00:00', '2020-09-08 01:00:00', 'Abierto', 'INF - 381','Encuesta simple respecto a la materia de INF-181 y sus avances con el docente.', 1, 1);
 -- insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Evaluacion de examenes', 2, 'Casillas de Verificacion')
-insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Evaluacion de examenes', 2, 'Opcion Multiple');
-insert into opciones (texto, tipo) values ('25%, 25%, 50%', 3);
-insert into opciones (texto, tipo) values ('30%, 30%, 40%', 3);
-insert into opciones (texto, tipo) values ('35%, 35%, 30%', 3);
+insert into preguntas (id, create_at, descripcion, encuesta_id, tipo) values (3, '2020-09-08', 'Evaluacion de examenes', 2, 'Opcion Multiple');
+insert into opciones (id, texto, tipo) values (3, '25%, 25%, 50%', 3);
+insert into opciones (id, texto, tipo) values (4, '30%, 30%, 40%', 3);
+insert into opciones (id, texto, tipo) values (5, '35%, 35%, 30%', 3);
 insert into preguntas_opciones (pregunta_id, opcion_id) values (3, 3);
 insert into preguntas_opciones (pregunta_id, opcion_id) values (3, 4);
 insert into preguntas_opciones (pregunta_id, opcion_id) values (3, 5);
-insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Cual es la mencion con la que piensa salir de la carrera?', 2, 'Respuesta Simple');
-insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Explique a detalle la espectativa de esta materia segun usted', 2, 'Parrafo');
-insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-08', 'Califique a su docente actual entre 1 a 10', 2, 'Escala Lineal');
-insert into opciones (max_value, min_value, tipo) values (10, 1, 5);
+insert into preguntas (id, create_at, descripcion, encuesta_id, tipo) values (4, '2020-09-08', 'Cual es la mencion con la que piensa salir de la carrera?', 2, 'Respuesta Simple');
+insert into preguntas (id, create_at, descripcion, encuesta_id, tipo) values (5, '2020-09-08', 'Explique a detalle la espectativa de esta materia segun usted', 2, 'Parrafo');
+insert into preguntas (id, create_at, descripcion, encuesta_id, tipo) values (6, '2020-09-08', 'Califique a su docente actual entre 1 a 10', 2, 'Escala Lineal');
+insert into opciones (id, max_value, min_value, tipo) values (6, 10, 1, 5);
 
 -- insert into preguntas_opciones (pregunta_id, opcion_id) values (5, 6)
 -- insert into preguntas_opciones (pregunta_id, opcion_id) values (6, 7)
@@ -99,36 +99,36 @@ insert into preguntas_opciones (pregunta_id, opcion_id) values (10, 15);
 insert into preguntas_opciones (pregunta_id, opcion_id) values (10, 16);
 insert into preguntas_opciones (pregunta_id, opcion_id) values (10, 17);
 -- respuestas usuario 4 Helguero
-INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (4, 7, 'Dependiendo el docente encargado para que la enseñanza llegue a ser buena');
-INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (4, 8, 7);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 9, 10);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 9, 11);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 10, 16);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, text_value) VALUES (1, 4, 7, 'Dependiendo el docente encargado para que la enseñanza llegue a ser buena');
+INSERT INTO respuestas (id, usuario_id, pregunta_id, num_value) VALUES (2, 4, 8, 7);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (3, 4, 9, 10);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (4, 4, 9, 11);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (5, 4, 10, 16);
 -- respuestas usuario 5 Garcia
-INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (5, 7, 'Me parecio muy buena en todas las materias');
-INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (5, 8, 9);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 9, 8);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 9, 10);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 9, 11);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 10, 15);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, text_value) VALUES (6, 5, 7, 'Me parecio muy buena en todas las materias');
+INSERT INTO respuestas (id, usuario_id, pregunta_id, num_value) VALUES (7, 5, 8, 9);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (8, 5, 9, 8);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (9, 5, 9, 10);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (10, 5, 9, 11);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (11, 5, 10, 15);
 -- respuestas usuario 6 Gomez
-INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (6, 7, 'Pesima, prefiero las clases en modalidad presencial');
-INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (6, 8, 1);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 9, 10);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 9, 11);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 10, 16);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, text_value) VALUES (12, 6, 7, 'Pesima, prefiero las clases en modalidad presencial');
+INSERT INTO respuestas (id, usuario_id, pregunta_id, num_value) VALUES (13, 6, 8, 1);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (14, 6, 9, 10);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (15, 6, 9, 11);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (16, 6, 10, 16);
 -- respuestas usuario 7 Jimenez
-INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (7, 7, 'Regular, hubo algunos docentes que no sabian usar las plataformas de comunicacion.');
-INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (7, 8, 5);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 9, 9);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 9, 10);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 9, 11);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 10, 15);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, text_value) VALUES (17, 7, 7, 'Regular, hubo algunos docentes que no sabian usar las plataformas de comunicacion.');
+INSERT INTO respuestas (id, usuario_id, pregunta_id, num_value) VALUES (18, 7, 8, 5);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (19, 7, 9, 9);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (20, 7, 9, 10);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (21, 7, 9, 11);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (22, 7, 10, 15);
 -- respuestas usuario 8 Loza
-INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (8, 7, 'Me gusto esta nueva modalidad de enseñanza, es mas moderna y creo que debemos habituarnos');
-INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (8, 8, 10);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 9, 11);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 10, 16);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, text_value) VALUES (23, 8, 7, 'Me gusto esta nueva modalidad de enseñanza, es mas moderna y creo que debemos habituarnos');
+INSERT INTO respuestas (id, usuario_id, pregunta_id, num_value) VALUES (24, 8, 8, 10);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (25, 8, 9, 11);
+INSERT INTO respuestas (id, usuario_id, pregunta_id, opcion_id) VALUES (26, 8, 10, 16);
 
 -- vistas
 -- CREATE VIEW respuestas_stats_op AS
