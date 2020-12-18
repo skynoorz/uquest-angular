@@ -81,7 +81,7 @@ public class EncuestaRestController {
             respuestasNew = respuestaDao.getRespuestasOp(id);
 //            log.info(encuestaNew.toString());
         } catch (DataAccessException e) {
-            response.put("mensaje", "Error al realizar el insert en la Base de datos");
+            response.put("mensaje", "No existen respuestas para la encuesta id: "+id);
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
