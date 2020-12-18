@@ -3,7 +3,6 @@ import {EncuestasService} from "../services/encuestas.service";
 import {Encuesta} from "../classes/encuesta";
 import {AuthService} from "../usuarios/auth.service";
 import {RespuestasService} from "../services/respuestas.services";
-import {TipoPreguntaEnum} from "../classes/pregunta";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
@@ -27,12 +26,12 @@ export class EncuestasComponent implements OnInit {
     if (this.authService.isAuthenticated()) {
       this.encuestasService.getEncuestasByUsername(JSON.parse(sessionStorage.getItem("persona")).username).subscribe(encuestas=>{
         this.encuestas = encuestas;
-        encuestas.map(encuesta=> {
-          this.respuestaService.getRespuestasByEncuestaId(encuesta.id).subscribe(response=>{
-            console.log('Encuesta id: ',encuesta.id)
-            console.log(`Respuestas: `,response);
-          })
-        })
+        // encuestas.map(encuesta=> {
+        //   this.respuestaService.getRespuestasByEncuestaId(encuesta.id).subscribe(response=>{
+        //     console.log('Encuesta id: ',encuesta.id)
+        //     console.log(`Respuestas: `,response);
+        //   })
+        // })
         console.log(this.encuestas);
       })
     } else {
