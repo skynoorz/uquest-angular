@@ -32,7 +32,6 @@ import {MatSelectModule} from "@angular/material/select";
 
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {ErrorStateMatcher, MatRippleModule, ShowOnDirtyErrorStateMatcher} from "@angular/material/core";
-import {PresignComponent} from './registro/presign.component';
 import {MatCardModule} from '@angular/material/card';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
@@ -63,6 +62,7 @@ import { EditarPerfilComponent } from './personas/editar-perfil/editar-perfil.co
 import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 import { StadisticsPublicComponent } from './encuestas/stadistics-public/stadistics-public.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 registerLocaleData(localeES, 'es')
 
@@ -117,7 +117,6 @@ export function maxValidationMessage(err, field) {
     LoginComponent,
     HomeComponent,
     RegistroComponent,
-    PresignComponent,
     EncuestasComponent,
     EncuestaCrearComponent,
     EditarComponent,
@@ -175,7 +174,8 @@ export function maxValidationMessage(err, field) {
         MatDialogModule,
         ClipboardModule,
         NgxQRCodeModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatToolbarModule
     ],
   providers: [
     {

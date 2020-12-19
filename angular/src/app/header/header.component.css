@@ -1,13 +1,20 @@
-*:focus {
-  outline: none !important;
-  border: 0 !important;
+.navbar-global{
+  padding-top: 8px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  height: 60px;
+  left: 0;
+  right: 0;
 }
-.box-menu{
-  display: flex;
-  color: white;
-  font-family: Metropolis-BoldItalic, sans-serif;
+.left-navbar{
+  background-image: url("src/favicon.ico");
+  background-repeat: no-repeat;
+  background-size: 45px 45px;
+  width: 45px;
+  height: 45px;
 }
-.min-height-width{
-  min-width: 100px;
-  min-height: 100px;
+.navbar-button{
+  color: black;
+  font-size: 14px;
+  font-family: Metropolis-Bold, sans-serif;
 }

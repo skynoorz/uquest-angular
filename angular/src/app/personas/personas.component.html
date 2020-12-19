@@ -31,7 +31,7 @@
           <img *ngIf="persona?.foto" (click)="abrirModal(persona)"
                src="{{basePath}}/api/uploads/img/{{persona.foto}}" alt="{{persona.foto}}"
                class="img-thumbnail rounded"
-               style="width: 64px; cursor: pointer;height: 64px">
+               style="width: 64px; cursor: pointer;">
           <img *ngIf="!persona?.foto" (click)="abrirModal(persona)"
                src="{{basePath}}/images/no_user.png" alt="sin_foto"
                class="img-thumbnail rounded"
