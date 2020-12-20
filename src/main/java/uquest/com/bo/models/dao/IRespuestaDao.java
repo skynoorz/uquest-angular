@@ -22,7 +22,7 @@ public interface IRespuestaDao extends CrudRepository<Respuesta, Long> {
           "p.id as pregunta_id,\n" +
           "p.encuesta_id , p.descripcion,\n" +
           "o.id as opcion_id,\n" +
-          "case when o.texto is null then rse.resp else o.texto end as resp_text,\n" +
+          "case when o.texto is null then CAST(rse.resp as VARCHAR) else o.texto end as resp_text,\n" +
           "case when rso.resp_count is null then rse.resp_count else rso.resp_count end as resp_count\n" +
           "from preguntas p\n" +
           "join preguntas_opciones po on p.id = po.pregunta_id\n" +
