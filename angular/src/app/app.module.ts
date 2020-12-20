@@ -5,6 +5,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule, Routes} from "@angular/router";
 import {registerLocaleData} from "@angular/common";
 import localeES from "@angular/common/locales/es-BO";
+// HASH import
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
@@ -37,7 +39,7 @@ import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyMatDatepickerModule} from "@ngx-formly/material/datepicker";
 import {EncuestasComponent} from './encuestas/encuestas.component';
-import {MatAccordion, MatExpansionModule} from "@angular/material/expansion";
+import {MatExpansionModule} from "@angular/material/expansion";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {EncuestaCrearComponent} from './encuestas/encuesta-crear/encuesta-crear.component';
@@ -182,6 +184,7 @@ export function maxValidationMessage(err, field) {
       provide: STEPPER_GLOBAL_OPTIONS,
       useValue: {showError: false}
     },
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},
     {provide: LOCALE_ID, useValue: 'es'},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
