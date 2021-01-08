@@ -4,23 +4,47 @@
     <p class="p2">Resuelve Encuestas, ayuda a la Facultad</p>
   </div>
   <div style="flex-wrap: wrap; text-align: center !important">
-    <a [routerLink]="['/registro']"><button class="btn-l" mat-raised-button>Registrarse</button></a>
-    <a [routerLink]="['/encuestas/public']"><button class="btn-r" mat-raised-button>Encuestas</button></a>
+    <a [routerLink]="['/registro']">
+      <button class="btn-l" mat-raised-button>Registrarse</button>
+    </a>
+    <a [routerLink]="['/encuestas/public']">
+      <button class="btn-r" mat-raised-button>Encuestas</button>
+    </a>
   </div>
   <div class="second-container text-center p-5">
     <!--    <img src="assets/images/phone-and-pc.png" alt="header-pc-and-phone" style="width: 800px;height: 450px">-->
     <img src="assets/images/phone-and-pc.png" alt="header-pc-and-phone" style="width: 100%;height: 100%">
   </div>
 </div>
-<div style="background-color: #6c757d">
-  <div style="display: flex; justify-content: center">
+<div class="highlights-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 highlight-block">
+        <div class="icon-wrapper">
+          <img src="https://d33wubrfki0l68.cloudfront.net/af047ac54e246e4a16a9874f8f8e8b23b944786a/4f102/3d.87c64f5b.svg">
+        </div>
+        <h5>Acessible</h5>
+        <p> El acceso a cada encuesta es de fácil y rapido acceso, a unos cuantos clicks de distancia, no podia ser mas facil!</p></div>
+      <div class="col-md-4 highlight-block">
+        <div class="icon-wrapper"><img src="https://d33wubrfki0l68.cloudfront.net/6fd3f1586e44b418a4afd53bc81c76f5d970f51a/d33f9/magic-wand.f171d0b3.svg"></div>
+        <h5>Intuitivo</h5>
+        <p> Nos preocupamos por ti!, tenemos una interfaz intuitiva a todos nuestros usuarios, comprender y entender uquest es de vital importancia para nosotros. </p></div>
+      <div class="col-md-4 highlight-block">
+        <div class="icon-wrapper"><img src="https://d33wubrfki0l68.cloudfront.net/c62c21329677dea388a08c2da8912c6d655b935e/9b1d8/quality.2871f361.svg"></div>
+        <h5>Publico</h5>
+        <p> Tenemos datos que podrian servirte por eso gran parte de las encuestas son publicas para poder ayudar a nuestra facultad. </p></div>
+    </div>
+  </div>
+</div>
+<div style="background-color: #727373">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-around">
     <div class="p-5">
       <div style="font-family: Metropolis-Bold, sans-serif" class="text-white"><h1>Recibe Encuestas</h1></div>
-      <div class="text-white" style="font-family: Metropolis-Light, sans-serif">{{descripcionRecibe}}</div>
+      <div class="text-white" style="font-family: Metropolis-Light, sans-serif; max-width: 600px;">{{descripcionRecibe}}</div>
     </div>
     <div class="p-5">
       <div style="font-family: Metropolis-Bold, sans-serif" class="text-white"><h1>Encuestas Privadas</h1></div>
-      <div class="text-white" style="font-family: Metropolis-Light, sans-serif">{{descripcionPrivada}}</div>
+      <div class="text-white" style="font-family: Metropolis-Light, sans-serif; max-width: 600px;">{{descripcionPrivada}}</div>
     </div>
   </div>
 </div>

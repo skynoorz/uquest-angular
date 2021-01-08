@@ -65,6 +65,7 @@ import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 import { StadisticsPublicComponent } from './encuestas/stadistics-public/stadistics-public.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 registerLocaleData(localeES, 'es')
 
@@ -177,7 +178,8 @@ export function maxValidationMessage(err, field) {
         ClipboardModule,
         NgxQRCodeModule,
         MatSlideToggleModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatTooltipModule
     ],
   providers: [
     {

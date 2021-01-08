@@ -90,4 +90,22 @@ public class EncuestaRestController {
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
 
     }
+
+    @GetMapping("/respuestas-total/encuesta/{id}")
+    public ResponseEntity<?> respuestasTotal(@PathVariable Long id) {
+        List<RespuestasStats> respuestasNew;
+        Long total;
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            total = respuestaDao.getRespuestasTotalByEncuestaId(id);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "No existen respuestas para la encuesta id: "+id);
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("respuestas", total);
+        return new ResponseEntity<Map>(response, HttpStatus.OK);
+
+    }
 }

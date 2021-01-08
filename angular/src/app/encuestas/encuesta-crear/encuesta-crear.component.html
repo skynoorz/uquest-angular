@@ -11,23 +11,9 @@
           </div>
         </div>
 
-        <!--        <mat-divider></mat-divider>-->
-
-        <div class="container" style="display: flex; margin-top: 30px">
-          <div style="width: 30%;">
-            <button style="margin-right: 10px" mat-raised-button color="primary" aria-label="agrega pregunta" (click)="agregarPreguntaDefault()">
-              Agregar Pregunta
-              <mat-icon>add</mat-icon>
-            </button>
-
-            <button mat-raised-button color="primary" (click)="salvarEncuesta()">
-              Guardar
-              <mat-icon>save</mat-icon>
-            </button>
-          </div>
-
-          <div style="width: 30%">
-            <mat-form-field appearance="fill">
+        <div class="encuesta-header">
+          <div class="middle-header">
+            <mat-form-field appearance="fill" style="padding-right: 10px">
               <mat-label>Tipo</mat-label>
               <mat-select name="tipoEncuesta" [(ngModel)]="encuesta.tipo">
                 <mat-option *ngFor="let tipo of tiposEncuesta" [value]="tipo">
@@ -37,7 +23,7 @@
               <mat-hint>* Tipo cerrado solo se accedera mediante un link o codigo QR *</mat-hint>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" style="margin-top: 20px">
+            <mat-form-field appearance="fill">
               <mat-label>Categoria</mat-label>
               <mat-select name="tipoEncuesta" [(ngModel)]="encuesta.categoria">
                 <mat-option *ngFor="let cat of categorias" [value]="cat">
@@ -46,9 +32,8 @@
               </mat-select>
             </mat-form-field>
           </div>
-
-          <div style="width: 30%">
-            <mat-form-field appearance="fill">
+          <div class="right-header">
+            <mat-form-field appearance="fill" style="padding-right: 10px">
               <mat-label>Fecha Inicio de Encuesta</mat-label>
               <input matInput [min]="minDate" [matDatepicker]="ffini" name="ffini" [(ngModel)]="encuesta.fechaIni">
               <mat-datepicker-toggle matSuffix [for]="ffini"></mat-datepicker-toggle>
@@ -66,106 +51,118 @@
 
       </mat-card>
       <!--    tarjeta de pregunta-->
-      <div style="display: flex" *ngFor="let pregunta of encuesta.preguntas; let i = index" class="seccion-pregunta">
-        <mat-card style="margin-top: 10px; width: 100%">
-          <div class="pregunta-header">
-
-            <div style="width: 70%">
-              <h3>Pregunta {{i + 1}}: </h3>
-              <mat-form-field style="width: 50%">
-                <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
-                <mat-label>Ingrese su Pregunta a formular</mat-label>
-                <input name="descripcion{{i}}" matInput [(ngModel)]="pregunta.descripcion"/>
-              </mat-form-field>
-            </div>
-            <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
-
-            <div style="display: flex">
-              <mat-slide-toggle style="padding-right: 30px" [(ngModel)]="pregunta.required" ngDefaultControl name="required_{{pregunta.id}}_{{i}}}">Obligatorio *</mat-slide-toggle>
-              <mat-form-field appearance="fill">
-                <mat-label>Tipo</mat-label>
-                <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo" (selectionChange)="checkTipo($event, i)">
-                  <mat-option *ngFor="let tipo of tipos" [value]="tipo" >
-                    {{tipo}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="pregunta-body container" [ngSwitch]="pregunta.tipo">
-            <div *ngSwitchCase="'Respuesta Simple'">
-              Respuesta Simple:
-              <mat-form-field>
-                <mat-label></mat-label>
-                <input name="opcionSimple" disabled value="Respuesta Simple" matInput>
-              </mat-form-field>
-              <!--                            <div *ngFor="let opcion of pregunta.opciones">-->
-              <!--                              Respuesta Simple:-->
-              <!--                              <mat-form-field *ngIf="pregunta.opciones[0]">-->
-              <!--                                <mat-label></mat-label>-->
-              <!--                                <input name="opcionSimple" disabled value="Respuesta Simple" matInput [(ngModel)]="pregunta.opciones[0].texto">-->
-              <!--                              </mat-form-field>-->
-              <!--                            </div>-->
-
-              <!--              <button mat-mini-fab color="primary" aria-label="agregar opcion simple" (click)="agregarOpcionSimple(0)">-->
-              <!--                <mat-icon>add</mat-icon>-->
-              <!--              </button>-->
-            </div>
-            <div *ngSwitchCase="'Parrafo'">
-              Parrafo:
-              <mat-form-field>
-                <mat-label></mat-label>
-                <textarea disabled matInput placeholder="Ex. Esto me hace sentir..."></textarea>
-              </mat-form-field>
-            </div>
-            <div *ngSwitchCase="'Opcion Multiple'">
-              <button mat-mini-fab color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)">
-                <mat-icon>add</mat-icon>
-              </button>
-              <!-- tarjeta de opciones-->
-              <div *ngFor="let opcion of pregunta.opciones; let j = index">
-                <mat-radio-button disabled disableRipple></mat-radio-button>
-                <mat-form-field style="width: 50%">
-                  <mat-label>Opcion {{j + 1}}</mat-label>
+      <div>
+        <div style="display: flex" *ngFor="let pregunta of encuesta.preguntas; let i = index" class="seccion-pregunta">
+          <mat-card style="margin-top: 10px; width: 100%">
+            <div class="pregunta-header">
+              <div style="width: 500px">
+                <h3>Pregunta {{i + 1}}: </h3>
+                <mat-form-field style="width: 100%">
                   <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
-                  <input name="opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
+                  <mat-label>Ingrese su Pregunta a formular</mat-label>
+                  <input name="descripcion{{i}}" matInput [(ngModel)]="pregunta.descripcion"/>
+                </mat-form-field>
+              </div>
+              <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
+
+              <div style="display: flex;">
+                <mat-slide-toggle style="padding-right: 30px" [(ngModel)]="pregunta.required" ngDefaultControl name="required_{{pregunta.id}}_{{i}}}">Obligatorio *</mat-slide-toggle>
+                <mat-form-field appearance="fill">
+                  <mat-label>Tipo</mat-label>
+                  <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo" (selectionChange)="checkTipo($event, i)">
+                    <mat-option *ngFor="let tipo of tipos" [value]="tipo" >
+                      {{tipo}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
             </div>
-            <div *ngSwitchCase="'Casillas de Verificacion'">
-              <button mat-mini-fab color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)">
-                <mat-icon>add</mat-icon>
-              </button>
-              <!-- tarjeta de opciones-->
-              <div *ngFor="let opcion of pregunta.opciones; let j = index">
-                <mat-checkbox style="padding: 10px" disabled disableRipple></mat-checkbox>
-                <mat-form-field style="width: 50%">
-                  <mat-label>Opcion {{j + 1}}</mat-label>
-                  <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
-                  <input name="opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
+            <div class="pregunta-body container" [ngSwitch]="pregunta.tipo">
+              <div *ngSwitchCase="'Respuesta Simple'">
+                Respuesta Simple:
+                <mat-form-field>
+                  <mat-label></mat-label>
+                  <input name="opcionSimple" disabled value="Respuesta Simple" matInput>
                 </mat-form-field>
               </div>
+              <div *ngSwitchCase="'Parrafo'">
+                Parrafo:
+                <mat-form-field>
+                  <mat-label></mat-label>
+                  <textarea disabled matInput placeholder="Ex. Esto me hace sentir..."></textarea>
+                </mat-form-field>
+              </div>
+              <div *ngSwitchCase="'Opcion Multiple'">
+
+                <p style="color: rgba(0,0,0,.6); font-size: 80%;">* El usuario solo puede seleccionar una sola opcion de la siguiente lista: *</p>
+                <!-- tarjeta de opciones-->
+                <div *ngFor="let opcion of pregunta.opciones; let j = index">
+                  <mat-radio-button disabled disableRipple></mat-radio-button>
+                  <mat-form-field style="width: 50%">
+                    <mat-label>Opcion {{j + 1}}</mat-label>
+                    <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
+                    <input name="opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
+                  </mat-form-field>
+                </div>
+                <button mat-stroked-button color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)">
+                  Agregar Opcion
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+              <div *ngSwitchCase="'Casillas de Verificacion'">
+<!--                <button mat-mini-fab color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)">-->
+<!--                  <mat-icon>add</mat-icon>-->
+<!--                </button>-->
+                <!-- tarjeta de opciones-->
+                <p style="color: rgba(0,0,0,.6); font-size: 80%;">* El usuario puede seleccionar multiples opciones de la siguiente lista: *</p>
+                <div *ngFor="let opcion of pregunta.opciones; let j = index">
+                  <mat-checkbox style="padding: 10px" disabled disableRipple></mat-checkbox>
+                  <mat-form-field style="width: 50%">
+                    <mat-label>Opcion {{j + 1}}</mat-label>
+                    <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
+                    <input name="opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
+                  </mat-form-field>
+                </div>
+                <button mat-stroked-button color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)">
+                  Agregar Opcion
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+              <div *ngSwitchCase="'Escala Lineal'">
+                De:
+                <mat-form-field appearance="none" style="width: 3em">
+                  <mat-select name="linealMin" [(ngModel)]="pregunta.opciones[0].minValue">
+                    <mat-option [value]="0">0</mat-option>
+                    <mat-option [value]="1">1</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                a:
+                <mat-form-field appearance="none" style="width: 3em">
+                  <mat-select name="linealMax" [(ngModel)]="pregunta.opciones[0].maxValue">
+                    <mat-option *ngFor="let range of _rangeEscale" [value]="range">{{range}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!--              <div>-->
+                <!--                <mat-slider disabled thumbLabel min="1" max="5" step="1" value="2"></mat-slider>-->
+                <!--              </div>-->
+              </div>
             </div>
-            <div *ngSwitchCase="'Escala Lineal'">
-              De:
-              <mat-form-field appearance="none" style="width: 3em">
-                <mat-select name="linealMin" [(ngModel)]="pregunta.opciones[0].minValue">
-                  <mat-option [value]="0">0</mat-option>
-                  <mat-option [value]="1">1</mat-option>
-                </mat-select>
-              </mat-form-field>
-              a:
-              <mat-form-field appearance="none" style="width: 3em">
-                <mat-select name="linealMax" [(ngModel)]="pregunta.opciones[0].maxValue">
-                  <mat-option *ngFor="let range of _rangeEscale" [value]="range">{{range}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-<!--              <div>-->
-<!--                <mat-slider disabled thumbLabel min="1" max="5" step="1" value="2"></mat-slider>-->
-<!--              </div>-->
-            </div>
-          </div>
-        </mat-card>
+          </mat-card>
+        </div>
+        <div style="margin: 10px 0 10px 0; display: flex; justify-content: space-between">
+          <button mat-raised-button color="primary" aria-label="agrega pregunta" (click)="agregarPreguntaDefault()"
+                  matTooltip="Agrega una pregunta por debajo la ultima"
+                  [matTooltipPosition]="'below'">
+            Agregar Pregunta
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" (click)="salvarEncuesta()"
+                  matTooltip="Guarda la encuesta actual y la publica en la pagina."
+                  [matTooltipPosition]="'below'">
+            Guardar
+            <mat-icon>save</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   </form>

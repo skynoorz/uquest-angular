@@ -89,5 +89,9 @@ export class EncuestasService {
     return this.http.get<Encuesta[]>(`${this.urlEndpointNative}/encuestas/public`);
   }
 
+  getTotalRespuestasByEncuestaId(id):Observable<any>{
+    return this.http.get<Encuesta[]>(`${this.urlEndpointNative}/respuestas-total/encuesta/${id}`);
+  }
+
 
 }

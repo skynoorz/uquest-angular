@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels} from "@techiediaries/ngx-qrcode";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-copy-modal',
@@ -32,6 +33,6 @@ export class CopyModalComponent implements OnInit {
   }
 
   getPath(): string{
-    return `http://localhost:4200`+this.data.address;
+    return environment.basePath+this.data.address;
   }
 }

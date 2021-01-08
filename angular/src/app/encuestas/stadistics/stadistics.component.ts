@@ -19,6 +19,7 @@ import Swal from "sweetalert2";
 export class StadisticsComponent implements OnInit {
 
   public encuesta: Encuesta = new Encuesta();
+  public totalRespuestas = 0;
 
   private chartOM: am4charts.PieChart;
   private chartVerif: am4charts.PieChart;
@@ -46,6 +47,10 @@ export class StadisticsComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       let id = params ['id']
       if (id) {
+        this.encuestaService.getTotalRespuestasByEncuestaId(id).subscribe(total =>{
+          this.totalRespuestas = total.respuestas;
+          console.log("TOTAL RESPUESTAS: ", this.totalRespuestas);
+        })
         this.encuestaService.getEncuesta(id).subscribe((encuesta) => {
           if (encuesta.usuario.id == JSON.parse(sessionStorage.getItem('persona')).id) {
             this.encuesta = encuesta;
