@@ -17,15 +17,6 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto py-4 py-md-0">
-<!--              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">-->
-<!--                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Home</a>-->
-<!--                <div class="dropdown-menu">-->
-<!--                  <a class="dropdown-item" href="#">Action</a>-->
-<!--                  <a class="dropdown-item" href="#">Another action</a>-->
-<!--                  <a class="dropdown-item" href="#">Something else here</a>-->
-<!--                  <a class="dropdown-item" href="#">Another action</a>-->
-<!--                </div>-->
-<!--              </li>-->
               <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
                 <a class="nav-link" href="#" routerLinkActive="active-link">Home</a>
               </li>
@@ -55,32 +46,9 @@
                       <span>Logout</span>
                     </button>
                   </mat-menu>
-<!--                  <div>-->
-<!--                    <div style="flex-wrap: wrap">-->
-<!--                      <button mat-button [matMenuTriggerFor]="menu">-->
-<!--                        <mat-card style="display: none"></mat-card>-->
-<!--                        <div class="box-menu">-->
-<!--                          &lt;!&ndash;            <span style="padding-right: 8px; padding-left: 5px; color: black;">{{authService.persona.username}}</span>&ndash;&gt;-->
-<!--                          <div *ngIf="!hasFoto()" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/images/no_user.png)'}"></div>-->
-<!--                          <div *ngIf="hasFoto()" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/api/uploads/img/' + authService.persona.foto + ')'}"></div>-->
-<!--                        </div>-->
-<!--                      </button>-->
-<!--                    </div>-->
-<!--                    <mat-menu #menu="matMenu">-->
-<!--                      <button [routerLink]="['/profile']" mat-menu-item>-->
-<!--                        <mat-icon>person_pin</mat-icon>-->
-<!--                        <span>Perfil</span>-->
-<!--                      </button>-->
-<!--                      <button (click)="logout()" mat-menu-item>-->
-<!--                        <mat-icon>power_settings_new</mat-icon>-->
-<!--                        <span>Logout</span>-->
-<!--                      </button>-->
-<!--                    </mat-menu>-->
-<!--                  </div>-->
                 </div>
               </li>
               <li class="pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="!authService.isAuthenticated()">
-<!--                <a class="nav-link" [routerLink]="['/encuestas']" >MIS ENCUESTAS</a>-->
                 <a [routerLink]="['/login']">
                   <button mat-raised-button>Login</button>
                 </a>
@@ -95,46 +63,3 @@
 
 <div class="my-4 py-3"></div>
 <script type="text/javascript" src="/angular/src/assets/js/header.js"></script>
-
-
-<!--<div class="navbar-global">-->
-<!--  <div style="display: flex; justify-content: space-between; left: 0;right: 0">-->
-<!--    <div style="padding-left: 20px;">-->
-<!--      <a class="nav-link left-navbar" href="#" style="color: black;"></a>-->
-<!--    </div>-->
-<!--    <div style="display: flex; flex-direction: row; padding-right: 20px">-->
-<!--      <a class="navbar-link navbar-button" [routerLink]="['/personas']" *ngIf="authService.hasRole('ROLE_ADMIN')">USUARIOS</a>-->
-<!--      <a class="navbar-link navbar-button" [routerLink]="['/encuestas']" *ngIf="authService.hasRole('ROLE_USER') && !authService.hasRole('ROLE_ADMIN')">MIS ENCUESTAS</a>-->
-<!--      <a class="navbar-link navbar-button" style="padding-right: 24px" [routerLink]="['/encuestas/public']" *ngIf="!authService.hasRole('ROLE_ADMIN')">ENCUESTAS PUBLICAS</a>-->
-<!--      <div *ngIf="authService.isAuthenticated()" class="dropdown">-->
-<!--        <div>-->
-<!--          <div style="flex-wrap: wrap">-->
-<!--            <button mat-button [matMenuTriggerFor]="menu">-->
-<!--              <mat-card style="display: none"></mat-card>-->
-<!--              <div class="box-menu">-->
-<!--                &lt;!&ndash;            <span style="padding-right: 8px; padding-left: 5px; color: black;">{{authService.persona.username}}</span>&ndash;&gt;-->
-<!--                <div *ngIf="!hasFoto()" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/images/no_user.png)'}"></div>-->
-<!--                <div *ngIf="hasFoto()" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/api/uploads/img/' + authService.persona.foto + ')'}"></div>-->
-<!--              </div>-->
-<!--            </button>-->
-<!--          </div>-->
-<!--          <mat-menu #menu="matMenu">-->
-<!--            <button [routerLink]="['/profile']" mat-menu-item>-->
-<!--              <mat-icon>person_pin</mat-icon>-->
-<!--              <span>Perfil</span>-->
-<!--            </button>-->
-<!--            <button (click)="logout()" mat-menu-item>-->
-<!--              <mat-icon>power_settings_new</mat-icon>-->
-<!--              <span>Logout</span>-->
-<!--            </button>-->
-<!--          </mat-menu>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div *ngIf="!authService.isAuthenticated()">-->
-<!--        <a [routerLink]="['/login']">-->
-<!--            <button mat-raised-button>Login</button>-->
-<!--          </a>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
