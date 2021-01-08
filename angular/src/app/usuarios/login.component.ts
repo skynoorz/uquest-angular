@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   titulo: string = "Porfavor Sign In"
   persona: Persona;
+  isChecked: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {
     this.persona = new Persona()
@@ -27,6 +28,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  isRememberMeChecked(): boolean{
+    return this.isChecked;
+  }
+
   login(): void {
     console.log(this.persona);
     if (this.persona.username == null || this.persona.password == null) {
@@ -36,8 +41,16 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.persona).subscribe(response => {
       console.log(response);
 
-      this.authService.guardarPersona(response.access_token);
-      this.authService.guardarToken(response.access_token);
+      // ANTES
+
+      if (this.isRememberMeChecked()){
+        this.authService.guardarPersonaLS(response.access_token);
+        this.authService.guardarTokenLS(response.access_token);
+      }else {
+        this.authService.guardarPersonaSS(response.access_token);
+        this.authService.guardarTokenSS(response.access_token);
+      }
+
 
       let usuario = this.authService.persona;
 

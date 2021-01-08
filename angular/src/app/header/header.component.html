@@ -27,16 +27,16 @@
 <!--                </div>-->
 <!--              </li>-->
               <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="#" routerLinkActive="active-link">Home</a>
               </li>
               <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
-                <a class="nav-link" [routerLink]="['/personas']" >Usuarios</a>
+                <a class="nav-link"  [routerLinkActiveOptions]="{exact:true}"  [routerLink]="['/personas']" routerLinkActive="active-link">Usuarios</a>
               </li>
-              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_USER') && !authService.hasRole('ROLE_ADMIN')">
-                <a class="nav-link" [routerLink]="['/encuestas']" >Mis Encuestas</a>
+              <li  class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_USER') && !authService.hasRole('ROLE_ADMIN')">
+                <a class="nav-link"  [routerLinkActiveOptions]="{exact:true}"  [routerLink]="['/encuestas']" routerLinkActive="active-link">Mis Encuestas</a>
               </li>
               <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="!authService.hasRole('ROLE_ADMIN')">
-                <a class="nav-link" [routerLink]="['/encuestas/public']" >Encuestas Publicas</a>
+                <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/encuestas/public']" routerLinkActive="active-link">Encuestas Publicas</a>
               </li>
               <li>
                 <div *ngIf="authService.isAuthenticated()" class="dropdown">

@@ -30,13 +30,11 @@
             </mat-form-field>
             <mat-form-field style="margin-top: 10px; margin-bottom: 10px">
               <input [(ngModel)]="persona.password" matInput placeholder="Password" type="password" required minlength="4" name="password" ngModel #password="ngModel">
-              <mat-error *ngIf="password.errors && password.errors.required">Password necesario.
-              </mat-error>
-              <mat-error *ngIf="password.errors && password.errors.minlength">El password debe tener al menos 4 caracteres.
-              </mat-error>
+              <mat-error *ngIf="password.errors && password.errors.required">Password necesario.</mat-error>
+              <mat-error *ngIf="password.errors && password.errors.minlength">El password debe tener al menos 4 caracteres.</mat-error>
               <mat-icon matSuffix>lock</mat-icon>
             </mat-form-field>
-            <mat-checkbox>Recuerdame!</mat-checkbox>
+            <mat-checkbox [(ngModel)]="isChecked" [ngModelOptions]="{standalone: true}">Recuerdame!</mat-checkbox>
             <button mat-raised-button color="primary" class="login-button" (click)="login()">Ingresar</button>
             <!--            <button mat-raised-button class="login-button">Login with Google</button>-->
           </form>

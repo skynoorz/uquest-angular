@@ -93,5 +93,8 @@ export class EncuestasService {
     return this.http.get<Encuesta[]>(`${this.urlEndpointNative}/respuestas-total/encuesta/${id}`);
   }
 
+  delete(encuestaId: number):Observable<any>{
+    return this.http.delete<Encuesta[]>(`${this.urlEndpointNative}/encuesta/${encuestaId}`);
+  }
 
 }

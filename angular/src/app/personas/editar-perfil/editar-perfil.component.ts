@@ -236,7 +236,13 @@ export class EditarPerfilComponent implements OnInit {
     user.instituto = {id: user.institutoId};
     this.personaService.updateProfile(this.user).subscribe(
       response => {
-        Swal.fire('Cambios guardados', `${response.mensaje}`, 'success')
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Tus cambios han sido guardados.',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.router.navigate(['/profile'])
       },
       error => {

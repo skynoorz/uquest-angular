@@ -147,6 +147,11 @@
   transition: all 200ms linear;
 }
 
+.active-link{
+  /*color: #ea2845 !important;*/
+  color: #3f51b5 !important;
+}
+
 /* #Primary style
 ================================================== */
 

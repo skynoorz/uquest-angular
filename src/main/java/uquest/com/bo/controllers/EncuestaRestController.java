@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import uquest.com.bo.models.dao.IRespuestaDao;
 import uquest.com.bo.models.entity.Encuesta;
+import uquest.com.bo.models.entity.Usuario;
 import uquest.com.bo.models.projection.RespuestasStats;
 import uquest.com.bo.models.services.encuesta.IEncuestaService;
 
@@ -107,5 +108,21 @@ public class EncuestaRestController {
         response.put("respuestas", total);
         return new ResponseEntity<Map>(response, HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("/encuesta/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+//            String nombreFotoAnterior = usuario.getFoto();
+//            uploadFileService.eliminar(nombreFotoAnterior);
+            encuestaService.delete(id);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar la encuesta en la Base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "El registro de la encuesta con id: '".concat(id.toString().concat("' se elimino correctamente")));
+        return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
 }

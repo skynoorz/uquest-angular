@@ -42,7 +42,7 @@
               </button>
               <button mat-raised-button color="warn" aria-label="crea encuesta" *ngIf="authService.isAuthenticated()"
                       matTooltip="Esta opcion eliminara la encuesta junto con sus resultados, no podra retractarse de esta accion!"
-                      [matTooltipPosition]="'below'">
+                      [matTooltipPosition]="'below'" (click)="eliminarEncuesta(encuesta.id)">
                 Eliminar
               </button>
             </div>

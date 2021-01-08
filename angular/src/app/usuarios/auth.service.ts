@@ -57,7 +57,7 @@ export class AuthService {
     return this.http.post(urlEndpoint, params.toString(), {headers: httpHeaders})
   }
 
-  guardarPersona(accessToken: string): void {
+  guardarPersonaSS(accessToken: string): void {
     let payload = this.obtenerDatosToken(accessToken);
     this._persona = new Persona();
     this._persona.id = payload.id;
@@ -76,10 +76,35 @@ export class AuthService {
 
   }
 
-  guardarToken(accessToken: string): void {
+  guardarPersonaLS(accessToken: string): void {
+    let payload = this.obtenerDatosToken(accessToken);
+    this._persona = new Persona();
+    this._persona.id = payload.id;
+    this._persona.nombres = payload.nombres;
+    this._persona.apellidoPat = payload.apellido_pat;
+    this._persona.apellidoMat = payload.apellido_mat;
+    this._persona.username = payload.user_name;
+    this._persona.email = payload.email;
+    this._persona.foto = payload.foto;
+    this._persona.roles = payload.authorities;
+    console.log(this._persona)
+    console.log("authorities: " + payload.authorities)
+    // this._persona.carrera = payload.carrera;
+    // ACA GUARDO SESSION STORAGE
+    localStorage.setItem('persona', JSON.stringify(this._persona));
+
+  }
+
+  guardarTokenSS(accessToken: string): void {
     this._token = accessToken;
     sessionStorage.setItem('token', accessToken);
   }
+
+  guardarTokenLS(accessToken: string): void {
+    this._token = accessToken;
+    localStorage.setItem('token', accessToken);
+  }
+
 
   obtenerDatosToken(accessToken: string): any {
     if (accessToken != null) {
