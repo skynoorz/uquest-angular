@@ -140,13 +140,5 @@ INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 10, 16);
 -- SELECT pregunta_id, num_value AS resp, count(1) AS resp_count FROM respuestas
 -- WHERE num_value IS NOT NULL
 -- GROUP BY pregunta_id, num_value;
-
-create or replace view respuestas_stats_esc as
-select pregunta_id, num_value as resp, count(1) as resp_count from respuestas
-where num_value is not null
-group by pregunta_id, num_value;
-
-create or replace view respuestas_stats_op as
-select pregunta_id, opcion_id as resp, count(1) as resp_count from respuestas
-where opcion_id is not null
-group by pregunta_id, opcion_id;
+create or replace view respuestas_stats_esc as select pregunta_id, num_value as resp, count(1) as resp_count from respuestas where num_value is not null group by pregunta_id, num_value;
+create or replace view respuestas_stats_op as select pregunta_id, opcion_id as resp, count(1) as resp_count from respuestas where opcion_id is not null group by pregunta_id, opcion_id;
