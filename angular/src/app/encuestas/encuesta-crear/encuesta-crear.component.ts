@@ -42,7 +42,7 @@ export class EncuestaCrearComponent implements OnInit {
   public encuesta: Encuesta = new Encuesta();
 
   ngOnInit(): void {
-    this.encuesta.tipo = TipoEncuestaEnum.ABIERTO;
+    // this.encuesta.tipo = TipoEncuestaEnum.ABIERTO;
     this.cargarCategorias();
     this.agregarPreguntaDefault();
   }
@@ -95,6 +95,21 @@ export class EncuestaCrearComponent implements OnInit {
         this.errores = error.error.errors as string[];
         console.log('Codigo de error desde backend: ' + error.status)
         console.log(error.error.errors)
+        if (error.error.errors){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.error.errors[0],
+            // footer: '<a href>Why do I have this issue?</a>'
+          })
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Revisar bien las preguntas elaboradas!',
+            // footer: '<a href>Why do I have this issue?</a>'
+          })
+        }
       }
     );
     // console.log(this.encuestasService.save(this.encuesta));

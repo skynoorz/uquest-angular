@@ -24,22 +24,23 @@ public class Encuesta implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "El titulo no debe estar vacio.")
     private String titulo;
 
+    @NotEmpty(message = "La descripcion no debe estar vacia.")
     private String descripcion;
 
-    @NotEmpty
+    @NotEmpty(message = "El tipo no debe estar vacio.")
     private String tipo;
 
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
-    @NotNull
+    @NotNull(message = "La fecha de inicio de la encuesta no debe estar vacia!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaIni;
 
-    @NotNull
+    @NotNull(message = "La fecha final de la encuesta no debe estar vacia!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
 
@@ -53,6 +54,7 @@ public class Encuesta implements Serializable {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "La categoria no debe estar vacia")
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 //    @ManyToOne
     private Categoria categoria;
@@ -61,6 +63,7 @@ public class Encuesta implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "encuesta_id")
+    @NotNull(message = "Las preguntas no deben estar vacias!")
     private List<Pregunta> preguntas;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})

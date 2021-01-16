@@ -44,7 +44,7 @@ public class EncuestaRestController {
         if (result.hasErrors()) {
             List<String> errors = new ArrayList<>();
             for (FieldError err : result.getFieldErrors()) {
-                errors.add("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
+                errors.add(err.getDefaultMessage());
             }
             response.put("errors", errors);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);

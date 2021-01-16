@@ -22,13 +22,13 @@ public class Pregunta implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "La descripcion de la pregunta no debe estar vacia!")
     private String descripcion;
 
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
-    @NotEmpty
+    @NotEmpty(message = "El tipo de la pregunta no debe estar vacia!")
     private String tipo;
 
     private Boolean required;
