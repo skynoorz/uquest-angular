@@ -12,6 +12,7 @@ import {environment} from "../../../environments/environment";
 })
 export class EncuestaListarComponent implements OnInit {
   encuestas: Encuesta[];
+  encuestasAvailableIds: number[] = [];
 
   basePathFoto: string = environment.basePath;
 
@@ -22,6 +23,7 @@ export class EncuestaListarComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarEncuestasPublicas();
+    this.cargarEncuestasAvailables();
   }
 
   cargarEncuestasPublicas(){
@@ -37,5 +39,11 @@ export class EncuestaListarComponent implements OnInit {
         address: '/encuestas/solve/'+encuestaId
       }
     });
+  }
+
+  private cargarEncuestasAvailables() {
+    this.encuestaService.getEncuestasAvailable().subscribe(encuestasIds=>{
+      this.encuestasAvailableIds = encuestasIds;
+    })
   }
 }

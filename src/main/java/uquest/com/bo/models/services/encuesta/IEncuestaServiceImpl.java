@@ -52,4 +52,9 @@ public class IEncuestaServiceImpl implements IEncuestaService{
     public List<Encuesta> findAllPublic() {
         return encuestaDao.findAllPublic();
     }
+
+    @Override
+    public List<Long> available() {
+        return encuestaDao.availables();
+    }
 }

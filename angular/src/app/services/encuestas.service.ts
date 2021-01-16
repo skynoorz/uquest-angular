@@ -97,4 +97,8 @@ export class EncuestasService {
     return this.http.delete<Encuesta[]>(`${this.urlEndpointNative}/encuesta/${encuestaId}`);
   }
 
+  getEncuestasAvailable(): Observable<any>{
+    return this.http.get<number[]>(`${this.urlEndpointNative}/encuestas/available`);
+  }
+
 }

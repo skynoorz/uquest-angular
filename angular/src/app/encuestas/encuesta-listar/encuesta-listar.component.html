@@ -19,6 +19,8 @@
             <mat-chip-list aria-label="properties">
               <mat-chip>{{encuesta.createAt}}</mat-chip>
               <mat-chip>{{encuesta.tipo}}</mat-chip>
+              <mat-chip *ngIf="encuestasAvailableIds.includes(encuesta.id)" color="primary" selected>DISPONIBLE</mat-chip>
+              <mat-chip *ngIf="!encuestasAvailableIds.includes(encuesta.id)" color="warn" selected>CERRADO</mat-chip>
             </mat-chip-list>
           </mat-card-subtitle>
         </mat-card-header>
@@ -29,8 +31,8 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button [routerLink]="['/encuestas/solve/'+encuesta.id]">RESPONDER</button>
-          <button mat-button (click)="share(encuesta.id)">COMPARTIR</button>
+          <button *ngIf="encuestasAvailableIds.includes(encuesta.id)" mat-button [routerLink]="['/encuestas/solve/'+encuesta.id]" >RESPONDER</button>
+          <button *ngIf="encuestasAvailableIds.includes(encuesta.id)" mat-button (click)="share(encuesta.id)">COMPARTIR</button>
           <button mat-button [routerLink]="['/stadistics-public/encuesta/'+encuesta.id]">ESTADISTICAS</button>
         </mat-card-actions>
       </mat-card>

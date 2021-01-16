@@ -21,4 +21,5 @@ public interface IEncuestaService {
 
     public List<Encuesta> findAllPublic();
 
+    public List<Long> available();
 }

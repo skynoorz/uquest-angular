@@ -71,17 +71,17 @@ insert into preguntas_opciones (pregunta_id, opcion_id) values (6, 6);
 -- INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 2, 2);
 
 -- ENCUESTA CLASES VIRTUALES
-insert into encuestas (create_at, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values ('2020-09-24', '2020-10-24 01:00:00', '2020-09-24 01:00:00', 'Abierto', 'Clases Virtuales','Encuesta para saber la opinion de los estudiatnes respecto a las satisfaccion de las clases virtuales.', 1, 3);
-insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-24', '¿Que te parecio las clases en modalidad presencial?', 3, 'Parrafo');
-insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-24', 'Califica del 1 al 10 las clases virtuales en cuanto a calidad', 3, 'Escala Lineal');
+insert into encuestas (create_at, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values ('2021-01-16', '2021-04-30 01:00:00', '2021-01-16 01:00:00', 'Abierto', 'Clases Virtuales','Encuesta para saber la opinion de los estudiatnes respecto a las satisfaccion de las clases virtuales.', 1, 3);
+insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2021-01-16', '¿Que te parecio las clases en modalidad presencial?', 3, 'Parrafo');
+insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2021-01-16', 'Califica del 1 al 10 las clases virtuales en cuanto a calidad', 3, 'Escala Lineal');
 insert into opciones (max_value, min_value, tipo) values (10, 1, 5);
-insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-24', '¿Que plataformas utilizaste para tus clases virtuales?', 3, 'Casillas de Verificacion');
+insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2021-01-16', '¿Que plataformas utilizaste para tus clases virtuales?', 3, 'Casillas de Verificacion');
 insert into opciones (texto, tipo) values ('Zoom', 3);
 insert into opciones (texto, tipo) values ('Microsoft Teams', 3);
 insert into opciones (texto, tipo) values ('Jitsi', 3);
 insert into opciones (texto, tipo) values ('Google Meet', 3);
 insert into opciones (texto, tipo) values ('Otros', 3);
-insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2020-09-24', '¿Que plataforma usaste con mas frecuencia?', 3, 'Opcion Multiple');
+insert into preguntas (create_at, descripcion, encuesta_id, tipo) values ('2021-01-16', '¿Que plataforma usaste con mas frecuencia?', 3, 'Opcion Multiple');
 insert into opciones (texto, tipo) values ('Zoom', 3);
 insert into opciones (texto, tipo) values ('Microsoft Teams', 3);
 insert into opciones (texto, tipo) values ('Jitsi', 3);

@@ -17,4 +17,7 @@ public interface IEncuestaDao extends CrudRepository<Encuesta, Long> {
 
     @Query("from Encuesta where tipo='Abierto'")
     public List<Encuesta> findAllPublic();
+
+    @Query(value = "select id from encuestas where fecha_ini < SYSDATE() and fecha_fin > SYSDATE();",nativeQuery = true)
+    public List<Long> availables();
 }

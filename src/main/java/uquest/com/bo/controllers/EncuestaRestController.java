@@ -73,6 +73,11 @@ public class EncuestaRestController {
         return encuestaService.findOne(id);
     }
 
+    @GetMapping("/encuestas/available")
+    public List<Long> encuestasDate() {
+        return encuestaService.available();
+    }
+
     @GetMapping("/respuestas/encuesta/{id}")
     public ResponseEntity<?> respuestas(@PathVariable Long id) {
         List<RespuestasStats> respuestasNew;

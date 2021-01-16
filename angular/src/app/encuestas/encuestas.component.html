@@ -20,7 +20,9 @@
               <mat-panel-title style="font-family: Metropolis-Bold, sans-serif">
                 <h3 style="padding-right: 10px">{{encuesta.titulo}}</h3>
                 <mat-chip-list aria-label="tipo">
-                  <mat-chip>{{encuesta.tipo}}</mat-chip>
+<!--                  <mat-chip>{{encuesta.tipo}}</mat-chip>-->
+                  <mat-chip *ngIf="encuestasAvailable.includes(encuesta.id)" color="primary" selected>DISPONIBLE</mat-chip>
+                  <mat-chip *ngIf="!encuestasAvailable.includes(encuesta.id)" color="warn" selected>CERRADO</mat-chip>
                 </mat-chip-list>
               </mat-panel-title>
               <mat-panel-description>
@@ -30,11 +32,14 @@
             <h3>Preguntas</h3>
             <div>
               <div *ngFor="let pregunta of encuesta.preguntas">
-                <p class="font-italic">- {{pregunta.descripcion}}</p>
+                <div style="display: flex; justify-content: space-between" class="font-italic">
+                  <p>- {{pregunta.descripcion}}</p>
+                  <p>{{pregunta.tipo}}</p>
+                </div>
               </div>
             </div>
             <div style="float: right; font-family: Metropolis-Regular, sans-serif">
-              <button (click)="popupModal(encuesta.id)" style="margin-right: 20px;" mat-raised-button color="accent" aria-label="compartir">
+              <button *ngIf="encuestasAvailable.includes(encuesta.id)" (click)="popupModal(encuesta.id)" style="margin-right: 20px;" mat-raised-button color="accent" aria-label="compartir">
                 Compartir
               </button>
               <button [routerLink]="['/stadistics/encuesta/'+encuesta.id]" style="margin-right: 20px;" mat-raised-button color="secondary" aria-label="crea encuesta" *ngIf="authService.isAuthenticated()">
