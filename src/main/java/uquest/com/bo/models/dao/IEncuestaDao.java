@@ -1,5 +1,6 @@
 package uquest.com.bo.models.dao;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import uquest.com.bo.models.entity.Encuesta;
@@ -20,4 +21,8 @@ public interface IEncuestaDao extends CrudRepository<Encuesta, Long> {
 
     @Query(value = "select id from encuestas where fecha_ini < SYSDATE() and fecha_fin > SYSDATE();",nativeQuery = true)
     public List<Long> availables();
+
+    @Modifying
+    @Query(value = "update encuestas set fecha_fin = '1999-01-01' where id = ?1",nativeQuery = true)
+    public void finalizar(Long id);
 }

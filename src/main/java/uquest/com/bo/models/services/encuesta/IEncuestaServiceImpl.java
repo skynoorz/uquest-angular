@@ -3,6 +3,7 @@ package uquest.com.bo.models.services.encuesta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uquest.com.bo.models.dao.IEncuestaDao;
+import org.springframework.transaction.annotation.Transactional;
 import uquest.com.bo.models.entity.Encuesta;
 
 import java.util.List;
@@ -56,5 +57,11 @@ public class IEncuestaServiceImpl implements IEncuestaService{
     @Override
     public List<Long> available() {
         return encuestaDao.availables();
+    }
+
+    @Transactional
+    @Override
+    public void finalizar(Long id) {
+        encuestaDao.finalizar(id);
     }
 }

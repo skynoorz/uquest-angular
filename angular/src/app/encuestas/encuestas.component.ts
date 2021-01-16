@@ -84,4 +84,29 @@ export class EncuestasComponent implements OnInit {
       }
     })
   }
+
+  finalizarEncuesta(id: number) {Swal.fire({
+    title: 'Estas por finalizar esta encuesta',
+    text: "Puedes habilitarla luego usando el boton renovar!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, finalizalo!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.encuestasService.finalizarEncuesta(id).subscribe(response=>{
+        console.log(response);
+        Swal.fire(
+          'Finalizado!',
+          'Tu encuesta a sido finalizada.',
+          'success'
+        )
+      })
+
+    }
+  })
+
+
+  }
 }

@@ -101,4 +101,8 @@ export class EncuestasService {
     return this.http.get<number[]>(`${this.urlEndpointNative}/encuestas/available`);
   }
 
+  finalizarEncuesta(encuestaId): Observable<any> {
+    return this.http.get<any>(`${this.urlEndpointNative}/encuestas/finalizar/${encuestaId}`);
+  }
+
 }

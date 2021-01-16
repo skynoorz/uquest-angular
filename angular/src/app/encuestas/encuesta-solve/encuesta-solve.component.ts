@@ -47,7 +47,6 @@ export class EncuestaSolveComponent implements OnInit {
         this.encuestaService.getEncuesta(id).subscribe((encuesta) => {
           // initialize respuestasMap
           if (encuesta.tipo == 'Abierto') {
-            //TODO si es abierto validacion por ip
 
           } else if (encuesta.tipo == 'Cerrado') {
             console.log("enmtra cerrado")

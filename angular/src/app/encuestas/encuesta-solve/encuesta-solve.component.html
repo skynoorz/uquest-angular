@@ -20,7 +20,6 @@
               <div>
                 <mat-form-field hintLabel="Maximo 30 caracteres" appearance="fill">
                   <mat-label>Ingrese su respuesta</mat-label>
-<!--                  TODO validar campos para depender de pregunta.required-->
                   <div>
                     <input [required]="pregunta.required" matInput #input [(ngModel)]="respuestasMap[pregunta.id][0].textValue" maxlength="30" name="RespuestaSimple_{{i}}" placeholder="Ej. Nougat"><mat-hint align="end">{{input.value?.length || 0}}/30</mat-hint>
                   </div>

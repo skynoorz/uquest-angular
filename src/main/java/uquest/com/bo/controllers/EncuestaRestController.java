@@ -130,4 +130,18 @@ public class EncuestaRestController {
         response.put("mensaje", "El registro de la encuesta con id: '".concat(id.toString().concat("' se elimino correctamente")));
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/encuestas/finalizar/{id}")
+    public ResponseEntity<?> finalizar(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            encuestaService.finalizar(id);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al finalizar la encuesta en la Base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "La encuesta se finalizo correctamente");
+        return new ResponseEntity<Map>(response, HttpStatus.OK);
+    }
 }

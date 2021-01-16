@@ -18,7 +18,7 @@
             {{encuesta.usuario.nombres}}
             <mat-chip-list aria-label="properties">
               <mat-chip>{{encuesta.createAt}}</mat-chip>
-              <mat-chip>{{encuesta.tipo}}</mat-chip>
+<!--              <mat-chip>{{encuesta.tipo}}</mat-chip>-->
               <mat-chip *ngIf="encuestasAvailableIds.includes(encuesta.id)" color="primary" selected>DISPONIBLE</mat-chip>
               <mat-chip *ngIf="!encuestasAvailableIds.includes(encuesta.id)" color="warn" selected>CERRADO</mat-chip>
             </mat-chip-list>
