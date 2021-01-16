@@ -104,9 +104,13 @@
                     <input name="opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
                   </mat-form-field>
                 </div>
-                <button mat-stroked-button color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)">
+                <button mat-stroked-button color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)" style="margin-right: 5px">
                   Agregar Opcion
                   <mat-icon>add</mat-icon>
+                </button>
+                <button mat-stroked-button color="primary" aria-label="agregar opcion multiple" (click)="quitarOpcionMultiple(i)">
+                  Quitar Opcion
+                  <mat-icon>remove</mat-icon>
                 </button>
               </div>
               <div *ngSwitchCase="'Casillas de Verificacion'">
@@ -123,9 +127,13 @@
                     <input name="opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
                   </mat-form-field>
                 </div>
-                <button mat-stroked-button color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)">
+                <button mat-stroked-button color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)" style="margin-right: 5px">
                   Agregar Opcion
                   <mat-icon>add</mat-icon>
+                </button>
+                <button mat-stroked-button color="primary" aria-label="agregar opcion multiple" (click)="quitarOpcionMultiple(i)">
+                  Agregar Opcion
+                  <mat-icon>remove</mat-icon>
                 </button>
               </div>
               <div *ngSwitchCase="'Escala Lineal'">
@@ -150,12 +158,20 @@
           </mat-card>
         </div>
         <div style="margin: 10px 0 10px 0; display: flex; justify-content: space-between">
-          <button mat-raised-button color="primary" aria-label="agrega pregunta" (click)="agregarPreguntaDefault()"
-                  matTooltip="Agrega una pregunta por debajo la ultima"
-                  [matTooltipPosition]="'below'">
-            Agregar Pregunta
-            <mat-icon>add</mat-icon>
-          </button>
+          <div>
+            <button mat-raised-button color="primary" aria-label="agrega pregunta" (click)="agregarPreguntaDefault()"
+                    matTooltip="Agrega una pregunta por debajo la ultima"
+                    [matTooltipPosition]="'below'" style="margin: 5px 5px 5px 0px">
+              Agregar Pregunta
+              <mat-icon>add</mat-icon>
+            </button>
+            <button mat-raised-button color="warn" aria-label="agrega pregunta" (click)="quitarPreguntaDefault()"
+                    matTooltip="Quita la ultima pregunta"
+                    [matTooltipPosition]="'below'" style="margin: 5px 5px 5px 0px">
+              Quitar Pregunta
+              <mat-icon>remove</mat-icon>
+            </button>
+          </div>
           <button mat-raised-button color="primary" (click)="salvarEncuesta()"
                   matTooltip="Guarda la encuesta actual y la publica en la pagina."
                   [matTooltipPosition]="'below'">

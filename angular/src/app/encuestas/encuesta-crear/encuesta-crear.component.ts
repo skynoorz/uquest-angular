@@ -70,6 +70,9 @@ export class EncuestaCrearComponent implements OnInit {
     newPregunta.tipo = TipoPreguntaEnum.RESPUESTA_SIMPLE;
     this.encuesta.preguntas.push(newPregunta);
   }
+  quitarPreguntaDefault(){
+    this.encuesta.preguntas.pop();
+  }
 
   salvarEncuesta() {
     // console.log('encuesta DTO', this.encuesta);
@@ -100,6 +103,9 @@ export class EncuestaCrearComponent implements OnInit {
   agregarOpcionMultiple(id: number) {
     this.agregarOpcion(id, TipoOpcionEnum.OPCION_MULTIPLE);
   }
+  quitarOpcionMultiple(id: number) {
+    this.quitarOpcion(id);
+  }
 
   agregarOpcion(id: number, tipo: TipoOpcionEnum){
     if (!this.encuesta.preguntas[id].opciones) {
@@ -109,6 +115,9 @@ export class EncuestaCrearComponent implements OnInit {
     newOpcion.tipo = tipo;
     console.log(this.encuesta.preguntas[id].opciones)
     this.encuesta.preguntas[id].opciones.push(newOpcion);
+  }
+  quitarOpcion(id: number){
+    this.encuesta.preguntas[id].opciones.pop();
   }
 
   checkTipo(event: any, id: number) {
