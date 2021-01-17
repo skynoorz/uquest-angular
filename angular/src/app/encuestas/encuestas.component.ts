@@ -109,4 +109,8 @@ export class EncuestasComponent implements OnInit {
 
 
   }
+
+  modificarFechasOpenDialog(id: number) : void{
+
+  }
 }

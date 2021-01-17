@@ -2,10 +2,10 @@
   <form>
     <div>
       <mat-card>
-        <div style="width: 100%">
+        <div>
           <h2 style="font-family: Metropolis-Bold, sans-serif">Nombre de la encuesta:</h2>
           <input name="encuestaTitulo" class="form-control" [(ngModel)]="encuesta.titulo"/>
-          <div style="display: flex; margin: 10px">
+          <div style="display: flex; margin-top: 10px">
             <h3 style="font-family: Metropolis-Bold, sans-serif; padding-right: 1em">Descripcion:</h3>
             <input type="text" class="form-control" name="encuestaDesc" [(ngModel)]="encuesta.descripcion"/>
           </div>
@@ -70,7 +70,7 @@
                 <mat-form-field appearance="fill">
                   <mat-label>Tipo</mat-label>
                   <mat-select name="tipoPregunta{{i}}" [value]="tipos[0]" [(ngModel)]="pregunta.tipo" (selectionChange)="checkTipo($event, i)">
-                    <mat-option *ngFor="let tipo of tipos" [value]="tipo" >
+                    <mat-option *ngFor="let tipo of tipos" [value]="tipo">
                       {{tipo}}
                     </mat-option>
                   </mat-select>
@@ -114,9 +114,9 @@
                 </button>
               </div>
               <div *ngSwitchCase="'Casillas de Verificacion'">
-<!--                <button mat-mini-fab color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)">-->
-<!--                  <mat-icon>add</mat-icon>-->
-<!--                </button>-->
+                <!--                <button mat-mini-fab color="primary" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)">-->
+                <!--                  <mat-icon>add</mat-icon>-->
+                <!--                </button>-->
                 <!-- tarjeta de opciones-->
                 <p style="color: rgba(0,0,0,.6); font-size: 80%;">* El usuario puede seleccionar multiples opciones de la siguiente lista: *</p>
                 <div *ngFor="let opcion of pregunta.opciones; let j = index">
@@ -137,22 +137,42 @@
                 </button>
               </div>
               <div *ngSwitchCase="'Escala Lineal'">
-                De:
-                <mat-form-field appearance="none" style="width: 3em">
-                  <mat-select name="linealMin" [(ngModel)]="pregunta.opciones[0].minValue">
-                    <mat-option [value]="0">0</mat-option>
-                    <mat-option [value]="1">1</mat-option>
-                  </mat-select>
-                </mat-form-field>
-                a:
-                <mat-form-field appearance="none" style="width: 3em">
-                  <mat-select name="linealMax" [(ngModel)]="pregunta.opciones[0].maxValue">
-                    <mat-option *ngFor="let range of _rangeEscale" [value]="range">{{range}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <!--              <div>-->
-                <!--                <mat-slider disabled thumbLabel min="1" max="5" step="1" value="2"></mat-slider>-->
-                <!--              </div>-->
+                <div style="display: flex; align-items: center">
+                  <p style="width: 45px; align-self: flex-end; padding-bottom: 5px; margin-right: 5px;">Desde:</p>
+                  <mat-form-field style="width: 60px; margin-right: 10px">
+                    <mat-select name="linealMin" [(ngModel)]="pregunta.opciones[0].minValue">
+                      <mat-option [value]="0">0</mat-option>
+                      <mat-option [value]="1">1</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>Etiqueta (opcional)</mat-label>
+                    <!--                    <input matInput type="text" [(ngModel)]="value">-->
+                    <input matInput type="text">
+                    <!--                    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">-->
+                    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+
+                </div>
+                <div style="display: flex; align-items: center">
+                  <p style="width: 45px; align-self: flex-end; padding-bottom: 5px; margin-right: 5px;">Hasta:</p>
+                  <mat-form-field style="width: 60px; margin-right: 10px">
+                    <mat-select name="linealMax" [(ngModel)]="pregunta.opciones[0].maxValue">
+                      <mat-option *ngFor="let range of _rangeEscale" [value]="range">{{range}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>Etiqueta (opcional)</mat-label>
+                    <!--                    <input matInput type="text" [(ngModel)]="value">-->
+                    <input matInput type="text">
+                    <!--                    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">-->
+                    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
               </div>
             </div>
           </mat-card>

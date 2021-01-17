@@ -105,4 +105,6 @@ export class EncuestasService {
     return this.http.get<any>(`${this.urlEndpointNative}/encuestas/finalizar/${encuestaId}`);
   }
 
+
+
 }
