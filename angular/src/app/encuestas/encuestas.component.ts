@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {EncuestasService} from "../services/encuestas.service";
 import {Encuesta} from "../classes/encuesta";
 import {AuthService} from "../usuarios/auth.service";
 import {RespuestasService} from "../services/respuestas.services";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {CopyModalComponent} from "./encuesta-listar/copy-modal.component";
+import {DialogModificarFechaComponent} from "./dialog-modificar-fecha/dialog-modificar-fecha.component";
 
 @Component({
   selector: 'app-encuestas',
@@ -23,6 +24,7 @@ export class EncuestasComponent implements OnInit {
               private router: Router,
               private respuestaService: RespuestasService,
               public dialog: MatDialog) {
+
 
     if (this.authService.isAuthenticated()) {
       this.encuestasService.getEncuestasByUsername(JSON.parse(sessionStorage.getItem("persona")).username).subscribe(encuestas => {
@@ -111,6 +113,14 @@ export class EncuestasComponent implements OnInit {
   }
 
   modificarFechasOpenDialog(id: number) : void{
+      const dialogRef = this.dialog.open(DialogModificarFechaComponent, {
+        width: '350px',
+        data: {idEncuesta: id}
+      })
 
+    dialogRef.afterClosed().subscribe(result=>{
+      console.log("se cerro el dialog");
+      console.log("recibo del dialog: ",result);
+    })
   }
 }

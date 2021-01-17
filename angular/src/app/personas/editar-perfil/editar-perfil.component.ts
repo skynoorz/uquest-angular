@@ -9,8 +9,7 @@ import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-editar-perfil',
-  templateUrl: './editar-perfil.component.html',
-  styleUrls: ['./editar-perfil.component.css']
+  templateUrl: './editar-perfil.component.html'
 })
 export class EditarPerfilComponent implements OnInit {
 

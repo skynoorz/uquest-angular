@@ -66,6 +66,7 @@ import { StadisticsPublicComponent } from './encuestas/stadistics-public/stadist
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { DialogModificarFechaComponent } from './encuestas/dialog-modificar-fecha/dialog-modificar-fecha.component';
 
 registerLocaleData(localeES, 'es')
 
@@ -130,6 +131,7 @@ export function maxValidationMessage(err, field) {
     StadisticsComponent,
     EditarPerfilComponent,
     StadisticsPublicComponent,
+    DialogModificarFechaComponent,
   ],
     imports: [
         BrowserModule,
