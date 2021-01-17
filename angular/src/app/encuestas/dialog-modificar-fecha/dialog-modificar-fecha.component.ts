@@ -16,15 +16,10 @@ export class DialogModificarFechaComponent implements OnInit {
   encuesta: Encuesta;
 
   form = new FormGroup({});
-  options: FormlyFormOptions = {
-    formState: {
-      awesomeIsForced: false,
-    },
-  };
   fields: FormlyFieldConfig[] = [
     {
       key: 'fechaIni',
-      type: 'rangepicker',
+      type: 'datepicker',
       templateOptions: {
         label: 'Fecha de inicio',
         datepickerOptions: {
@@ -32,6 +27,14 @@ export class DialogModificarFechaComponent implements OnInit {
           max: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
         },
         required: true
+      },
+      validators: {
+        esMayor: {
+          expression: (control: FormControl) => {
+            return this.esMenor(new Date(control.value))
+          },
+          message: 'La fecha incial debe ser menor a la final',
+        }
       }
     },
     {
@@ -44,16 +47,32 @@ export class DialogModificarFechaComponent implements OnInit {
           max: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
         },
         required: true
+      },
+      validators: {
+        esMayor: {
+          expression: (control: FormControl) => {
+            return this.esMayor(new Date(control.value))
+          },
+          message: 'La fecha final debe ser mayor a la inicial',
+        }
       }
     }
   ]
 
-  checkDates(group: FormGroup) {
 
-    if(group.controls.endDate.value < group.controls.startDate.value) {
-      return { notValid:true }
+  private esMayor(value: Date): boolean {
+    if (new Date(new Date(this.encuesta.fechaIni)) >= value) {
+      return false;
     }
-    return null;
+    return true;
+
+  }
+  private esMenor(value: Date): boolean {
+    if (new Date(new Date(this.encuesta.fechaFin)) <= value) {
+      return false;
+    }
+    return true;
+
   }
 
   ngOnInit(): void {
@@ -63,27 +82,28 @@ export class DialogModificarFechaComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DialogModificarFechaComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { id: number },
               private encuestaService: EncuestasService) {
-    this.encuestaService.getEncuesta(data.id).subscribe(encuesta=>{
-        this.encuesta = encuesta;
+    this.encuestaService.getEncuesta(data.id).subscribe(encuesta => {
+      this.encuesta = encuesta;
     })
   }
 
   modificarFechaBD() {
 
-    this.encuestaService.save(this.encuesta).subscribe(response=>{
+    this.encuestaService.save(this.encuesta).subscribe(response => {
       this.dialogRef.close();
       Swal.fire(
         'Actualizado!',
         'Se actualizo la fecha satisfactoriamente.',
         'success'
       )
-    },error => {
+    }, error => {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Algo salio mal!',
-        footer: '<p>'+error.message+'</p>'
+        footer: '<p>' + error.message + '</p>'
       })
     })
   }
+
 }

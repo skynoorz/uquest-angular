@@ -1,7 +1,7 @@
-<form [formGroup]="form" (ngSubmit)="modificarFechaBD()">
+<form [formGroup]="form" (ngSubmit)="modificarFechaBD()" >
   <formly-form [model]="encuesta" [form]="form" [fields]="fields"></formly-form>
   <div style="display: flex; justify-content: space-between; margin-top: 10px">
-    <button mat-stroked-button color="primary">GUARDAR</button>
+    <button mat-stroked-button [disabled]="!form.valid"  color="primary">GUARDAR</button>
     <button mat-stroked-button color="warn" mat-dialog-close>CANCELAR</button>
   </div>
 </form>
