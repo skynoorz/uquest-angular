@@ -6,6 +6,7 @@ import uquest.com.bo.models.dao.IEncuestaDao;
 import org.springframework.transaction.annotation.Transactional;
 import uquest.com.bo.models.entity.Encuesta;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -64,4 +65,5 @@ public class IEncuestaServiceImpl implements IEncuestaService{
     public void finalizar(Long id) {
         encuestaDao.finalizar(id);
     }
+
 }

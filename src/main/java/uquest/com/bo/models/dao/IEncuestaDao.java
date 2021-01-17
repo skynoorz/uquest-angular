@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import uquest.com.bo.models.entity.Encuesta;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IEncuestaDao extends CrudRepository<Encuesta, Long> {

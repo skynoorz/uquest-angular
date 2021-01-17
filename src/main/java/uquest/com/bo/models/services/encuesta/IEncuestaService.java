@@ -2,6 +2,7 @@ package uquest.com.bo.models.services.encuesta;
 
 import uquest.com.bo.models.entity.Encuesta;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IEncuestaService {

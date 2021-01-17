@@ -115,7 +115,7 @@ export class EncuestasComponent implements OnInit {
   modificarFechasOpenDialog(id: number) : void{
       const dialogRef = this.dialog.open(DialogModificarFechaComponent, {
         width: '350px',
-        data: {idEncuesta: id}
+        data: {id: id}
       })
 
     dialogRef.afterClosed().subscribe(result=>{

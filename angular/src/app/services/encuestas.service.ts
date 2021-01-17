@@ -65,10 +65,6 @@ export class EncuestasService {
   }
 
   save(encuesta: Encuesta): Observable<any>{
-    console.log("entra al save")
-    console.log(encuesta)
-    console.log(JSON.stringify(encuesta))
-
     return this.http.post<any>(environment.basePath +"/api/encuestas", encuesta).pipe(
       catchError(err => {
         if (err.status == 400 ) {
