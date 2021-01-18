@@ -3,7 +3,7 @@ import {Persona} from "../classes/persona";
 import {PersonaService} from "./persona.service";
 import Swal from "sweetalert2";
 import {tap} from "rxjs/operators";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {ModalService} from "./detalle/modal.service";
 import {AuthService} from "../usuarios/auth.service";
@@ -25,37 +25,44 @@ export class PersonasComponent implements OnInit {
   constructor(private personaService: PersonaService,
               private activatedRoute: ActivatedRoute,
               private modalService: ModalService,
-              public authService: AuthService) {
+              public authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
-      let page: number = +params.get('page');
+    if (this.authService.hasRole("ROLE_ADMIN")){
+      this.activatedRoute.paramMap.subscribe(params => {
+        let page: number = +params.get('page');
 
-      if (!page)
-        page = 0;
+        if (!page)
+          page = 0;
 
-      this.personaService.getPersonas(page)
-        .pipe(
-          tap(response => {
-            console.log('ClientesComponent: tap 3');
-            (response.content as Persona[]).forEach(persona => {
-              console.log(persona.nombres);
-            });
-            // this.personas = personas
-          })).subscribe(response => {
-        this.personas = response.content as Persona[];
-        this.paginador = response;
+        this.personaService.getPersonas(page)
+          .pipe(
+            tap(response => {
+              console.log('ClientesComponent: tap 3');
+              (response.content as Persona[]).forEach(persona => {
+                console.log(persona.nombres);
+              });
+              // this.personas = personas
+            })).subscribe(response => {
+          this.personas = response.content as Persona[];
+          this.paginador = response;
+        });
       });
-    });
-    this.modalService.notificarUpload.subscribe(persona => {
-      this.personas = this.personas.map(personaOriginal => {
-        if (persona.id == personaOriginal.id) {
-          personaOriginal.foto = persona.foto;
-        }
-        return personaOriginal;
+      this.modalService.notificarUpload.subscribe(persona => {
+        this.personas = this.personas.map(personaOriginal => {
+          if (persona.id == personaOriginal.id) {
+            personaOriginal.foto = persona.foto;
+          }
+          return personaOriginal;
+        })
       })
-    })
+    }else {
+      Swal.fire("Acceso denegado","lo siento, no tienes acceso a este recurso", "warning")
+      this.router.navigate(['/'])
+    }
+
   }
 
   delete(persona: Persona): void {

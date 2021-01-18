@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {startWith, switchMap} from "rxjs/operators";
 import Swal from "sweetalert2";
+import {AuthService} from "../../usuarios/auth.service";
 
 @Component({
   selector: 'app-editar-perfil',
@@ -27,7 +28,8 @@ export class EditarPerfilComponent implements OnInit {
               private personaService: PersonaService,
               private carreraService: CarreraService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              public authService: AuthService) {
   }
 
   fields: FormlyFieldConfig[] = [

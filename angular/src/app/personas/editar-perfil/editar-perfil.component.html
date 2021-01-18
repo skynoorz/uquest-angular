@@ -1,6 +1,6 @@
 <div class="container my-2">
   <div class="text-left">
-    <button class="btn btn-primary rounded" [routerLink]="['/personas']">Volver</button>
+    <button class="btn btn-primary rounded" [routerLink]="['/personas']" *ngIf="this.authService.hasRole('ROLE_ADMIN')">Volver</button>
   </div>
   <div class="container p-0 mt-2 mb-3 pb-3 card">
     <h3 class="h3 card-header">{{titulo}}</h3>
