@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Encuesta, TipoEncuestaEnum} from "../../classes/encuesta";
 import {Pregunta, TipoPreguntaEnum} from "../../classes/pregunta";
 import {Opcion, TipoOpcionEnum} from "../../classes/opcion";
@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {Categoria} from "../../classes/categoria";
 import {PersonaService} from "../../personas/persona.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-encuesta-crear',
@@ -23,6 +24,9 @@ export class EncuestaCrearComponent implements OnInit {
   public categorias: Categoria[];
 
   public _rangeEscale: [number, number, number, number, number, number, number, number, number];
+
+  tiposEncuesta = Object.keys(TipoEncuestaEnum).map(key => TipoEncuestaEnum[key]);
+  tipos = Object.keys(TipoPreguntaEnum).map(key => TipoPreguntaEnum[key]);
 
   constructor(private encuestasService: EncuestasService,
               private personaService: PersonaService,
@@ -41,15 +45,36 @@ export class EncuestaCrearComponent implements OnInit {
 
   public encuesta: Encuesta = new Encuesta();
 
+  @ViewChild('form')
+  form: NgForm;
+
+  timer;
+
   ngOnInit(): void {
+    this.cargarEncuestaBackup();
     // this.encuesta.tipo = TipoEncuestaEnum.ABIERTO;
     this.cargarCategorias();
-    this.agregarPreguntaDefault();
+    if (!localStorage.getItem('encuestaBackup')) {
+      this.agregarPreguntaDefault();
+    }
+
+    this.timer = setTimeout(() => {
+      //   if (this.form){
+      this.form.valueChanges.subscribe(() => {
+        localStorage.setItem('encuestaBackup', JSON.stringify(this.encuesta));
+      })
+      // }
+    },1000)
   }
 
-  tiposEncuesta = Object.keys(TipoEncuestaEnum).map(key => TipoEncuestaEnum[key]);
+  reset() {
+    this.form.reset();
+  }
 
-  tipos = Object.keys(TipoPreguntaEnum).map(key => TipoPreguntaEnum[key]);
+  cargarEncuestaBackup() {
+    if (localStorage.getItem('encuestaBackup'))
+      this.encuesta = JSON.parse(localStorage.getItem('encuestaBackup'));
+  }
 
   cargarCategorias() {
     this.encuestasService.getAllCategorias().subscribe(categorias => {
@@ -65,13 +90,18 @@ export class EncuestaCrearComponent implements OnInit {
       // en caso de encuesta nueva, inicializamos las preguntas.
       this.encuesta.preguntas = [];
     }
+
     const newPregunta = new Pregunta();
     // inicializamos el tipo de pregunta como default REPUESTA_SIMPLE
     newPregunta.tipo = TipoPreguntaEnum.RESPUESTA_SIMPLE;
     this.encuesta.preguntas.push(newPregunta);
+
   }
-  quitarPreguntaDefault(){
-    this.encuesta.preguntas.pop();
+
+  quitarPreguntaDefault() {
+    if (this.encuesta.preguntas.length > 1) {
+      this.encuesta.preguntas.pop();
+    }
   }
 
   salvarEncuesta() {
@@ -82,47 +112,83 @@ export class EncuestaCrearComponent implements OnInit {
     this.encuesta.usuario = usuario_id;
     console.log("mi id desde session storage: " + this.encuesta.usuario.id);
 
+    if (this.encuesta.fechaIni && this.encuesta.fechaFin){
+      console.log("entra al if")
+      const fini = Date.parse(this.encuesta.fechaIni);
+      const ffin = Date.parse(this.encuesta.fechaFin);
+
+      // control de fechas improvisada
+      if (ffin < fini){
+        console.log("entra al ffin < fini")
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'La fecha final no puede ser menor a la inicial!',
+          // footer: '<a href>Why do I have this issue?</a>'
+        })
+      } else {
+        if (fini > ffin){
+          console.log("entra al fini > ffin")
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'La fecha inicial no puede ser mayor a la fecha final!',
+            // footer: '<a href>Why do I have this issue?</a>'
+          })
+        }
+        else {
+          this.encuestasService.save(this.encuesta).subscribe(response => {
+
+              localStorage.removeItem('encuestaBackup');
+              this.router.navigate(['/encuestas'])
+              localStorage.removeItem('encuestaBackup');
+              Swal.fire('Encuesta Generada', `${response.mensaje}: ${response.encuesta.titulo}`, 'success')
+
+
+              localStorage.removeItem('encuestaBackup');
+            },
+            error => {
+              this.errores = error.error.errors as string[];
+              console.log('Codigo de error desde backend: ' + error.status)
+              console.log(error.error.errors)
+              if (error.error.errors) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: error.error.errors[0],
+                  // footer: '<a href>Why do I have this issue?</a>'
+                })
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Revisar bien las preguntas elaboradas!',
+                  // footer: '<a href>Why do I have this issue?</a>'
+                })
+              }
+            }
+          );
+        }
+      }
+    }
+
     // this.personaService.getPersona(JSON.parse(sessionStorage.getItem('persona')).id).subscribe(response=>{
     //   console.log(response);
     //   this.encuesta.usuario = response;
     // })
-    this.encuestasService.save(this.encuesta).subscribe(response => {
-        this.router.navigate(['/encuestas'])
-        Swal.fire('Encuesta Generada', `${response.mensaje}: ${response.encuesta.titulo}`, 'success')
-        // this._snackBar.open("Encuesta Creada", "deshacer", {duration: 4000,verticalPosition: "bottom"});
-      },
-      error => {
-        this.errores = error.error.errors as string[];
-        console.log('Codigo de error desde backend: ' + error.status)
-        console.log(error.error.errors)
-        if (error.error.errors){
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: error.error.errors[0],
-            // footer: '<a href>Why do I have this issue?</a>'
-          })
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Revisar bien las preguntas elaboradas!',
-            // footer: '<a href>Why do I have this issue?</a>'
-          })
-        }
-      }
-    );
+
     // console.log(this.encuestasService.save(this.encuesta));
   }
 
   agregarOpcionMultiple(id: number) {
     this.agregarOpcion(id, TipoOpcionEnum.OPCION_MULTIPLE);
   }
+
   quitarOpcionMultiple(id: number) {
     this.quitarOpcion(id);
   }
 
-  agregarOpcion(id: number, tipo: TipoOpcionEnum){
+  agregarOpcion(id: number, tipo: TipoOpcionEnum) {
     if (!this.encuesta.preguntas[id].opciones) {
       this.encuesta.preguntas[id].opciones = [];
     }
@@ -131,8 +197,11 @@ export class EncuestaCrearComponent implements OnInit {
     console.log(this.encuesta.preguntas[id].opciones)
     this.encuesta.preguntas[id].opciones.push(newOpcion);
   }
-  quitarOpcion(id: number){
-    this.encuesta.preguntas[id].opciones.pop();
+
+  quitarOpcion(id: number) {
+    if (this.encuesta.preguntas[id].opciones.length > 1) {
+      this.encuesta.preguntas[id].opciones.pop();
+    }
   }
 
   checkTipo(event: any, id: number) {
@@ -156,7 +225,7 @@ export class EncuestaCrearComponent implements OnInit {
         break
       }
       case TipoPreguntaEnum.RESPUESTA_SIMPLE: {
-        console.log("comparo: "+TipoOpcionEnum+ " con: "+event.value)
+        console.log("comparo: " + TipoOpcionEnum + " con: " + event.value)
         this.encuesta.preguntas[id].opciones = [];
         // this.agregarOpcion(id, TipoOpcionEnum.RESPUESTA_SIMPLE);
         break
@@ -167,10 +236,19 @@ export class EncuestaCrearComponent implements OnInit {
         break
       }
     }
-    if (this.encuesta.preguntas[id].opciones){
+    if (this.encuesta.preguntas[id].opciones) {
       console.log("Ultimo length de las opciones: ")
       console.log(this.encuesta.preguntas[id].opciones.length)
     }
 
+  }
+
+  mostrarEncuesta() {
+    console.log(this.encuesta);
+  }
+
+  limpiarEncuesta() {
+    this.encuesta = new Encuesta();
+    this.agregarPreguntaDefault();
   }
 }
