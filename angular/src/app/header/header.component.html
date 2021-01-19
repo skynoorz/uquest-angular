@@ -29,6 +29,9 @@
               <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="!authService.hasRole('ROLE_ADMIN')">
                 <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/encuestas/public']" routerLinkActive="active-link">Encuestas Publicas</a>
               </li>
+              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
+                <a class="nav-link"  [routerLinkActiveOptions]="{exact:true}"  [routerLink]="['/categorias']" routerLinkActive="active-link">Categorias</a>
+              </li>
               <li>
                 <div *ngIf="authService.isAuthenticated()" class="dropdown">
                   <mat-card style="display: none"></mat-card>

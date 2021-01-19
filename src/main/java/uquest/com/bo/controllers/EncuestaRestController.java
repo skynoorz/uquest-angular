@@ -59,7 +59,7 @@ public class EncuestaRestController {
         }
 
         response.put("encuesta", encuestaNew);
-        response.put("mensaje", "El registro de la encuesta fue satisfactoriamente");
+        response.put("mensaje", "El registro de la encuesta fue satisfactorio.");
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 

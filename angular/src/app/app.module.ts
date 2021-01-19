@@ -67,6 +67,9 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { DialogModificarFechaComponent } from './encuestas/dialog-modificar-fecha/dialog-modificar-fecha.component';
+import { CategoriasListarComponent } from './categorias/categorias-listar/categorias-listar.component';
+import {MatTableModule} from "@angular/material/table";
+import { CategoriasEditarComponent } from './categorias/categorias-editar/categorias-editar.component';
 
 registerLocaleData(localeES, 'es')
 
@@ -81,6 +84,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent, pathMatch: 'full'},
   // {path: 'registro', component: RegistroComponent},
   {path: 'registro', component: RegistroComponent},
+  {path: 'categorias', component: CategoriasListarComponent},
   {path: 'encuestas/crear', component: EncuestaCrearComponent},
   {path: 'encuestas/solve/:id', component: EncuestaSolveComponent },
   {path: 'encuestas/public', component: EncuestaListarComponent },
@@ -132,6 +136,8 @@ export function maxValidationMessage(err, field) {
     EditarPerfilComponent,
     StadisticsPublicComponent,
     DialogModificarFechaComponent,
+    CategoriasListarComponent,
+    CategoriasEditarComponent,
   ],
     imports: [
         BrowserModule,
@@ -181,7 +187,8 @@ export function maxValidationMessage(err, field) {
         NgxQRCodeModule,
         MatSlideToggleModule,
         MatToolbarModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatTableModule
     ],
   providers: [
     {

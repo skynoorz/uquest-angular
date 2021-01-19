@@ -57,9 +57,9 @@ export class EncuestasComponent implements OnInit {
   }
 
   private cargarEncuestasAvailable() {
-      this.encuestasService.getEncuestasAvailable().subscribe(encuestasIds=>{
-        this.encuestasAvailable = encuestasIds;
-      })
+    this.encuestasService.getEncuestasAvailable().subscribe(encuestasIds => {
+      this.encuestasAvailable = encuestasIds;
+    })
   }
 
   eliminarEncuesta(encuestaId: number) {
@@ -87,40 +87,41 @@ export class EncuestasComponent implements OnInit {
     })
   }
 
-  finalizarEncuesta(id: number) {Swal.fire({
-    title: 'Estas por finalizar esta encuesta',
-    text: "Puedes habilitarla luego usando el boton renovar!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Si, finalizalo!'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.encuestasService.finalizarEncuesta(id).subscribe(response=>{
-        console.log(response);
-        Swal.fire(
-          'Finalizado!',
-          'Tu encuesta a sido finalizada.',
-          'success'
-        )
-      })
+  finalizarEncuesta(id: number) {
+    Swal.fire({
+      title: 'Estas por finalizar esta encuesta',
+      text: "Puedes habilitarla luego usando el boton renovar!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, finalizalo!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.encuestasService.finalizarEncuesta(id).subscribe(response => {
+          console.log(response);
+          Swal.fire(
+            'Finalizado!',
+            'Tu encuesta a sido finalizada.',
+            'success'
+          )
+        })
 
-    }
-  })
+      }
+    })
 
 
   }
 
-  modificarFechasOpenDialog(id: number) : void{
-      const dialogRef = this.dialog.open(DialogModificarFechaComponent, {
-        width: '350px',
-        data: {id: id}
-      })
+  modificarFechasOpenDialog(id: number): void {
+    const dialogRef = this.dialog.open(DialogModificarFechaComponent, {
+      width: '350px',
+      data: {id: id}
+    })
 
-    dialogRef.afterClosed().subscribe(result=>{
+    dialogRef.afterClosed().subscribe(result => {
       console.log("se cerro el dialog");
-      console.log("recibo del dialog: ",result);
+      console.log("recibo del dialog: ", result);
     })
   }
 }

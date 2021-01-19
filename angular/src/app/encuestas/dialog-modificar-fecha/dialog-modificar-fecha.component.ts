@@ -1,15 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormControl, FormGroup, ValidationErrors} from "@angular/forms";
-import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
+import {FormControl, FormGroup} from "@angular/forms";
+import {FormlyFieldConfig} from "@ngx-formly/core";
 import {EncuestasService} from "../../services/encuestas.service";
 import {Encuesta} from "../../classes/encuesta";
 import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-dialog-modificar-fecha',
-  templateUrl: './dialog-modificar-fecha.component.html',
-  styleUrls: ['./dialog-modificar-fecha.component.css']
+  templateUrl: './dialog-modificar-fecha.component.html'
 })
 
 export class DialogModificarFechaComponent implements OnInit {
