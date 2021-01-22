@@ -34,6 +34,11 @@ public class EncuestaRestController {
     @Autowired
     private IRespuestaDao respuestaDao;
 
+    @GetMapping("/encuestas")
+    public List<Encuesta> encuestasTodas() {
+        return this.encuestaService.findAll();
+    }
+
     @PostMapping("/encuestas")
     private ResponseEntity<?> create(@Valid @RequestBody Encuesta encuesta, BindingResult result) {
 

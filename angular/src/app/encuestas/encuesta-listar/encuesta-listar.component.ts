@@ -18,6 +18,7 @@ export class EncuestaListarComponent implements OnInit {
 
   public color: string = 'lightblue';
   address: string;
+  isLoadingResults: boolean = true;
   constructor(private encuestaService: EncuestasService,
               public dialog: MatDialog) { }
 
@@ -29,7 +30,8 @@ export class EncuestaListarComponent implements OnInit {
   cargarEncuestasPublicas(){
     this.encuestaService.getAllPublicEncuestas().subscribe(response=>{
       this.encuestas=response;
-      console.log(this.encuestas)
+      this.isLoadingResults = false;
+      // console.log(this.encuestas)
     });
   }
 

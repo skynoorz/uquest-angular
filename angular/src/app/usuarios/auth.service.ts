@@ -52,7 +52,7 @@ export class AuthService {
     params.set('username', persona.username);
     params.set('password', persona.password);
 
-    console.log(params.toString());
+    // console.log(params.toString());
 
     return this.http.post(urlEndpoint, params.toString(), {headers: httpHeaders})
   }
@@ -68,8 +68,8 @@ export class AuthService {
     this._persona.email = payload.email;
     this._persona.foto = payload.foto;
     this._persona.roles = payload.authorities;
-    console.log(this._persona)
-    console.log("authorities: " + payload.authorities)
+    // console.log(this._persona)
+    // console.log("authorities: " + payload.authorities)
     // this._persona.carrera = payload.carrera;
     // ACA GUARDO SESSION STORAGE
     sessionStorage.setItem('persona', JSON.stringify(this._persona));
@@ -87,8 +87,8 @@ export class AuthService {
     this._persona.email = payload.email;
     this._persona.foto = payload.foto;
     this._persona.roles = payload.authorities;
-    console.log(this._persona)
-    console.log("authorities: " + payload.authorities)
+    // console.log(this._persona)
+    // console.log("authorities: " + payload.authorities)
     // this._persona.carrera = payload.carrera;
     // ACA GUARDO SESSION STORAGE
     localStorage.setItem('persona', JSON.stringify(this._persona));

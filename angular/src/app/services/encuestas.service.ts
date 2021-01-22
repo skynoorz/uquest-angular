@@ -7,6 +7,7 @@ import {catchError} from "rxjs/operators";
 import {Categoria} from "../classes/categoria";
 import {OpcionSend} from "../classes/opcion";
 import {environment} from "../../environments/environment";
+import {EncuestaUsuario} from "../classes/encuesta-usuario";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class EncuestasService {
   }
 
   constructor(private http: HttpClient, private router: Router) {
+  }
+
+  getEncuestasTodas(): Observable<EncuestaUsuario[]>{
+    return this.http.get<EncuestaUsuario[]>(`${this.urlEndpointNative}/encuestas`);
   }
 
   getEncuestas(id): Observable<Encuesta[]>{

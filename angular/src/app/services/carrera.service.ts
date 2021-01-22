@@ -30,7 +30,7 @@ export class CarreraService {
   }
 
   getPersona(id): Observable<Persona> {
-    console.log("respuesta en service: "+this.http.get(`${this.urlEndpoint}/${id}`));
+    // console.log("respuesta en service: "+this.http.get(`${this.urlEndpoint}/${id}`));
     return this.http.get<Persona>(`${this.urlEndpoint}/${id}`).pipe(
       catchError(err => {
         if (err.status != 401 && err.error.mensaje){

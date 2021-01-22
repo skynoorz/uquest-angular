@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Persona} from "../../classes/persona";
 import {PersonaService} from "../persona.service";
 import {ActivatedRoute} from "@angular/router";
@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import {HttpEventType} from "@angular/common/http";
 import {ModalService} from "./modal.service";
 import {environment} from "../../../environments/environment";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'detalle-persona',

@@ -33,13 +33,13 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    console.log(this.persona);
+    // console.log(this.persona);
     if (this.persona.username == null || this.persona.password == null) {
       Swal.fire("Error Login", "Username o password vacias!", "error");
     }
     //aca guardo en el session storage
     this.authService.login(this.persona).subscribe(response => {
-      console.log(response);
+      // console.log(response);
 
       // ANTES
 
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
 
       // let rols: Rol = new Rol();
       // rols.nombre = "ROLE_ADMIN";
-      console.log("hasRole: "+this.authService.hasRole("ROLE_ADMIN"))
+      // console.log("hasRole: "+this.authService.hasRole("ROLE_ADMIN"))
       if (this.authService.hasRole("ROLE_ADMIN"))
         this.router.navigate(['/personas'])
       else

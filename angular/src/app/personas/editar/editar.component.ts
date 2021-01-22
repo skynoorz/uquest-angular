@@ -195,7 +195,7 @@ export class EditarComponent implements OnInit {
   ngOnInit(): void {
     // this.user = { carreraId: 1}
 
-    console.log(this.user)
+    // console.log(this.user)
     this.cargarPersona();
     // this.user.carreraId = this.user.carrera.id;
   }
@@ -222,7 +222,7 @@ export class EditarComponent implements OnInit {
           this.user.carreraId = user.carrera.id;
           if (user.instituto)
             this.user.institutoId = user.instituto.id;
-          console.log(this.user);
+          // console.log(this.user);
         })
         // console.log(id)
         // console.log("Persona que encuentra: " + this.personaService.getPersona(id));
@@ -231,13 +231,8 @@ export class EditarComponent implements OnInit {
     })
   }
 
-  mostrar(){
-    console.log(this.userDefault)
-    console.log(this.emailDefault)
-  }
-
   onSubmit(user: any) {
-    console.log('user', user);
+    // console.log('user', user);
     // creo persona model
     user.carrera = {id: user.carreraId};
     user.instituto = {id: user.institutoId};

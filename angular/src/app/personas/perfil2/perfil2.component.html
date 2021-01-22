@@ -1,0 +1,75 @@
+<div *ngIf="authService.isAuthenticated()">
+  <mat-card>
+    <mat-card-header>
+      <div class="body-desc">
+        <h1>Perfil</h1>
+      </div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <div class="card-content">
+        <div class="sub-card-content" style="padding-bottom: 1em;">
+          <h3 class="left-pos">FOTO:</h3>
+          <div mat-card-avatar style="background-size: cover; width: 80px;height: 80px" [ngStyle]="{ 'background-image': 'url('+basePath+'/api/uploads/img/' + persona.foto + ')'}"></div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">NOMBRES:</h3>
+          <div>{{persona.nombres}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">APELLIDO PATERNO:</h3>
+          <div>{{persona.apellidoPat}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">APELLIDO MATERNO:</h3>
+          <div>{{persona.apellidoMat}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">SEXO:</h3>
+          <div>{{persona.sexo}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">FECHA DE NACIMIENTO:</h3>
+          <div>{{persona.fnac | date:"EEEE dd, MMMM, yyyy"}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">USERNAME:</h3>
+          <div>{{persona.username}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">CONTRASEÑA:</h3>
+          <div>••••••••</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="sub-card-content">
+          <h3 class="left-pos">EMAIL:</h3>
+          <div>{{persona.email}}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <div *ngIf="persona.instituto">
+          <div class="sub-card-content">
+            <h3 class="left-pos">CARRERA:</h3>
+            <div>{{persona.carrera.nombre}}</div>
+          </div>
+        </div>
+        <div *ngIf="persona.instituto">
+          <mat-divider></mat-divider>
+          <div class="sub-card-content">
+            <h3 class="left-pos">INSTITUTO:</h3>
+            <div>{{persona.instituto.nombre}}</div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div style="display: flex; justify-content: flex-end; margin: 5px 0 0 0">
+    <button mat-button mat-dialog-close>Salir</button>
+  </div>
+</div>

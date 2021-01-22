@@ -110,16 +110,16 @@ export class EncuestaCrearComponent implements OnInit {
     const usuario_id = {id: JSON.parse(sessionStorage.getItem('persona')).id};
     // persona.id = JSON.parse(sessionStorage.getItem('persona')).id;
     this.encuesta.usuario = usuario_id;
-    console.log("mi id desde session storage: " + this.encuesta.usuario.id);
+    // console.log("mi id desde session storage: " + this.encuesta.usuario.id);
 
     if (this.encuesta.fechaIni && this.encuesta.fechaFin){
-      console.log("entra al if")
+      // console.log("entra al if")
       const fini = Date.parse(this.encuesta.fechaIni);
       const ffin = Date.parse(this.encuesta.fechaFin);
 
       // control de fechas improvisada
       if (ffin < fini){
-        console.log("entra al ffin < fini")
+        // console.log("entra al ffin < fini")
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -128,7 +128,7 @@ export class EncuestaCrearComponent implements OnInit {
         })
       } else {
         if (fini > ffin){
-          console.log("entra al fini > ffin")
+          // console.log("entra al fini > ffin")
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -194,7 +194,7 @@ export class EncuestaCrearComponent implements OnInit {
     }
     const newOpcion = new Opcion();
     newOpcion.tipo = tipo;
-    console.log(this.encuesta.preguntas[id].opciones)
+    // console.log(this.encuesta.preguntas[id].opciones)
     this.encuesta.preguntas[id].opciones.push(newOpcion);
   }
 
@@ -241,10 +241,6 @@ export class EncuestaCrearComponent implements OnInit {
       console.log(this.encuesta.preguntas[id].opciones.length)
     }
 
-  }
-
-  mostrarEncuesta() {
-    console.log(this.encuesta);
   }
 
   limpiarEncuesta() {

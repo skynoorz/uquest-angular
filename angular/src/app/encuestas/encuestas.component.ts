@@ -35,7 +35,7 @@ export class EncuestasComponent implements OnInit {
         //     console.log(`Respuestas: `,response);
         //   })
         // })
-        console.log(this.encuestas);
+        // console.log(this.encuestas);
       })
     } else {
       this.router.navigate(['/'])
@@ -81,7 +81,7 @@ export class EncuestasComponent implements OnInit {
             'success'
           )
           this.router.navigate(['/encuestas'])
-          console.log(msg);
+          // console.log(msg);
         })
       }
     })
@@ -98,8 +98,8 @@ export class EncuestasComponent implements OnInit {
       confirmButtonText: 'Si, finalizalo!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.encuestasService.finalizarEncuesta(id).subscribe(response => {
-          console.log(response);
+        this.encuestasService.finalizarEncuesta(id).subscribe(() => {
+          // console.log(response);
           Swal.fire(
             'Finalizado!',
             'Tu encuesta a sido finalizada.',
@@ -114,14 +114,9 @@ export class EncuestasComponent implements OnInit {
   }
 
   modificarFechasOpenDialog(id: number): void {
-    const dialogRef = this.dialog.open(DialogModificarFechaComponent, {
+    this.dialog.open(DialogModificarFechaComponent, {
       width: '350px',
       data: {id: id}
-    })
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("se cerro el dialog");
-      console.log("recibo del dialog: ", result);
     })
   }
 }

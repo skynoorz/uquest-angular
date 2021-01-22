@@ -70,6 +70,11 @@ import { DialogModificarFechaComponent } from './encuestas/dialog-modificar-fech
 import { CategoriasListarComponent } from './categorias/categorias-listar/categorias-listar.component';
 import {MatTableModule} from "@angular/material/table";
 import { CategoriasEditarComponent } from './categorias/categorias-editar/categorias-editar.component';
+import { EncuestaAdminComponent } from './encuestas/encuesta-admin/encuesta-admin.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortModule} from "@angular/material/sort";
+import { Perfil2Component } from './personas/perfil2/perfil2.component';
 
 registerLocaleData(localeES, 'es')
 
@@ -81,6 +86,7 @@ const routes: Routes = [
   {path: 'personas/form/:id', component: EditarComponent},
   {path: 'login', component: LoginComponent},
   {path: 'encuestas', component: EncuestasComponent},
+  {path: 'encuestas/admin', component: EncuestaAdminComponent},
   {path: '', component: HomeComponent, pathMatch: 'full'},
   // {path: 'registro', component: RegistroComponent},
   {path: 'registro', component: RegistroComponent},
@@ -138,58 +144,63 @@ export function maxValidationMessage(err, field) {
     DialogModificarFechaComponent,
     CategoriasListarComponent,
     CategoriasEditarComponent,
+    EncuestaAdminComponent,
+    Perfil2Component,
   ],
-    imports: [
-        BrowserModule,
-        RouterModule.forRoot(routes),
-        HttpClientModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        MatDatepickerModule,
-        MatMomentDateModule,
-        MatButtonModule,
-        MatStepperModule,
-        MatFormFieldModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatCardModule,
-        FormlyModule.forRoot(
-            {
-                validationMessages: [
-                    {name: 'required', message: 'This field is required'},
-                    {name: 'minlength', message: minlengthValidationMessage},
-                    {name: 'maxlength', message: maxlengthValidationMessage},
-                    {name: 'min', message: minValidationMessage},
-                    {name: 'max', message: maxValidationMessage},
-                ],
-            }
-        ),
-        FormlyMaterialModule,
-        FormlyMatDatepickerModule,
-        MatExpansionModule,
-        MatIconModule,
-        MatProgressBarModule,
-        MatBadgeModule,
-        MatTabsModule,
-        MatCheckboxModule,
-        MatDividerModule,
-        MatSnackBarModule,
-        MatSliderModule,
-        MatGridListModule,
-        MatRippleModule,
-        _MatMenuDirectivesModule,
-        MatMenuModule,
-        MatChipsModule,
-        MatDialogModule,
-        ClipboardModule,
-        NgxQRCodeModule,
-        MatSlideToggleModule,
-        MatToolbarModule,
-        MatTooltipModule,
-        MatTableModule
-    ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes),
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatButtonModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatCardModule,
+    FormlyModule.forRoot(
+      {
+        validationMessages: [
+          {name: 'required', message: 'This field is required'},
+          {name: 'minlength', message: minlengthValidationMessage},
+          {name: 'maxlength', message: maxlengthValidationMessage},
+          {name: 'min', message: minValidationMessage},
+          {name: 'max', message: maxValidationMessage},
+        ],
+      }
+    ),
+    FormlyMaterialModule,
+    FormlyMatDatepickerModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatBadgeModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatDividerModule,
+    MatSnackBarModule,
+    MatSliderModule,
+    MatGridListModule,
+    MatRippleModule,
+    _MatMenuDirectivesModule,
+    MatMenuModule,
+    MatChipsModule,
+    MatDialogModule,
+    ClipboardModule,
+    NgxQRCodeModule,
+    MatSlideToggleModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatSortModule
+  ],
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,

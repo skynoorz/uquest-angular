@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {PersonaService} from "../persona.service";
 import {CarreraService} from "../../services/carrera.service";
@@ -7,6 +7,8 @@ import {FormlyFieldConfig} from "@ngx-formly/core";
 import {startWith, switchMap} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {AuthService} from "../../usuarios/auth.service";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {Persona} from "../../classes/persona";
 
 @Component({
   selector: 'app-editar-perfil',
@@ -29,7 +31,12 @@ export class EditarPerfilComponent implements OnInit {
               private carreraService: CarreraService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              public authService: AuthService) {
+              public authService: AuthService,
+              // @Inject(MAT_DIALOG_DATA) public data: Persona
+  ) {
+    // if (data != null){
+    //   this.user = data;
+    // }
   }
 
   fields: FormlyFieldConfig[] = [

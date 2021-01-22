@@ -4,7 +4,6 @@ import {PersonaService} from "./persona.service";
 import Swal from "sweetalert2";
 import {tap} from "rxjs/operators";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs";
 import {ModalService} from "./detalle/modal.service";
 import {AuthService} from "../usuarios/auth.service";
 import {environment} from "../../environments/environment";
@@ -40,9 +39,9 @@ export class PersonasComponent implements OnInit {
         this.personaService.getPersonas(page)
           .pipe(
             tap(response => {
-              console.log('ClientesComponent: tap 3');
+              // console.log('ClientesComponent: tap 3');
               (response.content as Persona[]).forEach(persona => {
-                console.log(persona.nombres);
+                // console.log(persona.nombres);
               });
               // this.personas = personas
             })).subscribe(response => {

@@ -61,9 +61,9 @@ export class PersonaService {
   getPersonas(page: number): Observable<any> {
     return this.http.get(this.urlEndpoint + '/page/' + page).pipe(
       tap((response: any) => {
-        console.log('persona service: tap 1');
+        // console.log('persona service: tap 1');
         (response.content as Persona[]).forEach(persona => {
-          console.log(persona.nombres)
+          // console.log(persona.nombres)
         });
       }),
       map((response: any) => {
@@ -80,9 +80,9 @@ export class PersonaService {
       }),
       tap(
         response => {
-          console.log('persona service: tap 2');
+          // console.log('persona service: tap 2');
           (response.content as Persona[]).forEach(persona => {
-            console.log(persona.nombres)
+            // console.log(persona.nombres)
           });
         })
     )
@@ -105,12 +105,12 @@ export class PersonaService {
   }
 
   getPersona(id): Observable<Persona> {
-    console.log("respuesta en service: "+this.http.get(`${this.urlEndpoint}/${id}`));
+    // console.log("respuesta en service: "+this.http.get(`${this.urlEndpoint}/${id}`));
     return this.http.get<Persona>(`${this.urlEndpoint}/${id}`).pipe(
       catchError(err => {
         if (err.status != 401 && err.error.mensaje){
           this.router.navigate(['/personas'])
-          console.log(err.error.mensaje)
+          // console.log(err.error.mensaje)
         }
         return throwError(err);
       })
@@ -118,7 +118,7 @@ export class PersonaService {
   }
 
   getPersonaProfile(id): Observable<Persona> {
-    console.log("respuesta en service: "+this.http.get(`${this.urlEndpoint}/profile/${id}`));
+    // console.log("respuesta en service: "+this.http.get(`${this.urlEndpoint}/profile/${id}`));
     return this.http.get<Persona>(`${this.urlEndpoint}/profile/${id}`).pipe(
       catchError(err => {
         if (err.status != 401 && err.error.mensaje){
@@ -181,13 +181,13 @@ export class PersonaService {
   }
 
   userExist(username: string): Observable<any>{
-    console.log(username);
+    // console.log(username);
     // console.log(this.http.get(`${this.urlEndpoint}/userexist/${username}`))
     return this.http.get<any>(`${this.urlEndpoint}/userexist/${username}`);
   }
 
   emailExist(email: string): Observable<any>{
-    console.log(email);
+    // console.log(email);
     return this.http.get<any>(`${this.urlEndpoint}/emailexist/${email}`);
   }
 }

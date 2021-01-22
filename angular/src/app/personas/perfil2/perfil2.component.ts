@@ -1,20 +1,20 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {Persona} from "../../classes/persona";
+import {environment} from "../../../environments/environment";
+import {ModalService} from "../detalle/modal.service";
 import {AuthService} from "../../usuarios/auth.service";
 import {PersonaService} from "../persona.service";
-import {Persona} from "../../classes/persona";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {HttpEventType} from "@angular/common/http";
-import {ModalService} from "../detalle/modal.service";
-import {environment} from "../../../environments/environment";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-perfil',
-  templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.css']
+  selector: 'app-perfil2',
+  templateUrl: './perfil2.component.html',
+  styleUrls: ['./perfil2.component.css']
 })
-export class PerfilComponent implements OnInit {
+export class Perfil2Component implements OnInit {
 
   persona: Persona = new Persona();
   basePath: string = environment.basePath;
@@ -27,23 +27,23 @@ export class PerfilComponent implements OnInit {
               public authService: AuthService,
               private personaService: PersonaService,
               private router: Router,
-              // @Inject(MAT_DIALOG_DATA) public data: Persona
+              @Inject(MAT_DIALOG_DATA) public data: Persona
   ) {
-    // if (data!=null){
-    //   this.persona = data;
-    // }
+    if (data!=null){
+      this.persona = data;
+    }
   }
 
   ngOnInit(): void {
-    this.cargarUsuario();
+    // this.cargarUsuario();
   }
 
-  private cargarUsuario() {
-    this.personaService.getPersonaProfile(JSON.parse(sessionStorage.getItem("persona")).id).subscribe(persona => {
-      this.persona = persona;
-      // console.log(this.persona)
-    })
-  }
+  // private cargarUsuario() {
+  //   this.personaService.getPersonaProfile(JSON.parse(sessionStorage.getItem("persona")).id).subscribe(persona => {
+  //     this.persona = persona;
+  //     console.log(this.persona)
+  //   })
+  // }
 
   editar() {
     var id = JSON.parse(sessionStorage.getItem("persona")).id;
@@ -53,7 +53,7 @@ export class PerfilComponent implements OnInit {
   seleccionarFoto(event) {
     this.fotoSeleccionada = event.target.files[0];
     this.progreso = 0;
-    // console.log(this.fotoSeleccionada);
+    console.log(this.fotoSeleccionada);
     if (this.fotoSeleccionada.type.indexOf('image') < 0) {
       Swal.fire('Error', 'El archivo debe ser de tipo imagen', 'error');
     }
@@ -63,7 +63,7 @@ export class PerfilComponent implements OnInit {
     if (!this.fotoSeleccionada) {
       Swal.fire('Error', 'Debe seleccionar una foto', 'warning');
     } else {
-      // console.log(this.persona.id)
+      console.log(this.persona.id)
       this.personaService.subirFoto(this.fotoSeleccionada, this.persona.id)
         .subscribe(event => {
           if (event.type === HttpEventType.UploadProgress) {
@@ -81,4 +81,5 @@ export class PerfilComponent implements OnInit {
         });
     }
   }
+
 }

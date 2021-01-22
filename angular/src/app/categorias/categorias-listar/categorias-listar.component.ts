@@ -33,7 +33,6 @@ export class CategoriasListarComponent implements OnInit {
   cargarCategorias(){
     this.categoriaService.getCategorias().subscribe(categorias=>{
       this.categorias = categorias;
-      console.log(this.categorias)
     })
   }
 
