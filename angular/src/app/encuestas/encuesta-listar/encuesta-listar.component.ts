@@ -38,7 +38,7 @@ export class EncuestaListarComponent implements OnInit {
   share(encuestaId: number) {
     this.dialog.open(CopyModalComponent, {
       data: {
-        address: '/encuestas/solve/'+encuestaId
+        address: '/#/encuestas/solve/'+encuestaId
       }
     });
   }

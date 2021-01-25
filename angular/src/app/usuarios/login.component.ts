@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  isRememberMeChecked(): boolean{
-    return this.isChecked;
-  }
+  // isRememberMeChecked(): boolean{
+  //   return this.isChecked;
+  // }
 
   login(): void {
     // console.log(this.persona);
@@ -43,13 +43,13 @@ export class LoginComponent implements OnInit {
 
       // ANTES
 
-      if (this.isRememberMeChecked()){
-        this.authService.guardarPersonaLS(response.access_token);
-        this.authService.guardarTokenLS(response.access_token);
-      }else {
+      // if (this.isRememberMeChecked()){
+      //   this.authService.guardarPersonaLS(response.access_token);
+      //   this.authService.guardarTokenLS(response.access_token);
+      // }else {
         this.authService.guardarPersonaSS(response.access_token);
         this.authService.guardarTokenSS(response.access_token);
-      }
+      // }
 
 
       let usuario = this.authService.persona;
