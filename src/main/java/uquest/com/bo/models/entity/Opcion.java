@@ -23,6 +23,10 @@ public class Opcion {
 
     private Integer maxValue;
 
+    private String minText;
+
+    private String maxText;
+
     public Long getId() {
         return id;
     }
@@ -61,5 +65,21 @@ public class Opcion {
 
     public void setMaxValue(Integer maxValue) {
         this.maxValue = maxValue;
+    }
+
+    public String getMinText() {
+        return minText;
+    }
+
+    public void setMinText(String minText) {
+        this.minText = minText;
+    }
+
+    public String getMaxText() {
+        return maxText;
+    }
+
+    public void setMaxText(String maxText) {
+        this.maxText = maxText;
     }
 }

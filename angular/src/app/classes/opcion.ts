@@ -5,6 +5,8 @@ export class Opcion{
   total: number;
   minValue: number;
   maxValue: number;
+  minText: string;
+  maxText: string;
 }
 export class OpcionSend{
   texto: string;

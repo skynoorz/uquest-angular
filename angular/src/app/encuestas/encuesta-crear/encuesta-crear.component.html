@@ -143,9 +143,9 @@
                   <mat-form-field>
                     <mat-label>Etiqueta (opcional)</mat-label>
                     <!--                    <input matInput type="text" [(ngModel)]="value">-->
-                    <input matInput type="text">
+                    <input matInput type="text" [(ngModel)]="pregunta.opciones[0].minText" name="min_label_{{i}}">
                     <!--                    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">-->
-                    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+                    <button mat-button matSuffix type="button" (click)="pregunta.opciones[0].minText = ''" mat-icon-button aria-label="Clear">
                       <mat-icon>close</mat-icon>
                     </button>
                   </mat-form-field>
@@ -161,9 +161,9 @@
                   <mat-form-field>
                     <mat-label>Etiqueta (opcional)</mat-label>
                     <!--                    <input matInput type="text" [(ngModel)]="value">-->
-                    <input matInput type="text">
+                    <input matInput type="text" [(ngModel)]="pregunta.opciones[0].maxText" name="max_label_{{i}}">
                     <!--                    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">-->
-                    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+                    <button mat-button type="button" (click)="pregunta.opciones[0].maxText = ''" matSuffix mat-icon-button aria-label="Clear">
                       <mat-icon>close</mat-icon>
                     </button>
                   </mat-form-field>

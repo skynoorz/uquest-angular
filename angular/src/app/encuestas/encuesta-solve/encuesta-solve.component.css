@@ -1,0 +1,8 @@
+.escala_lineal{
+  display: flex;
+}
+
+.escala_lineal h4{
+  align-self: center;
+  margin: 0 7px 0 7px;
+}
