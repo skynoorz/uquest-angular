@@ -8,6 +8,7 @@ import {Categoria} from "../classes/categoria";
 import {OpcionSend} from "../classes/opcion";
 import {environment} from "../../environments/environment";
 import {EncuestaUsuario} from "../classes/encuesta-usuario";
+import {Carrera} from "../classes/carrera";
 
 @Injectable({
   providedIn: 'root'
@@ -106,6 +107,9 @@ export class EncuestasService {
     return this.http.get<any>(`${this.urlEndpointNative}/encuestas/finalizar/${encuestaId}`);
   }
 
+  getEncuestasByCarreraId(carreraId: number): Observable<Encuesta[]>{
+    return this.http.get<Encuesta[]>(`${this.urlEndpointNative}/encuestas/carrera/${carreraId}`)
+  }
 
 
 }

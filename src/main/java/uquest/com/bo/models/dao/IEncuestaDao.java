@@ -26,4 +26,7 @@ public interface IEncuestaDao extends CrudRepository<Encuesta, Long> {
     @Modifying
     @Query(value = "update encuestas set fecha_fin = '1999-01-01' where id = ?1",nativeQuery = true)
     public void finalizar(Long id);
+
+    @Query(value = "from Encuesta e, Usuario u, Carrera c where e.usuario = u and c = u.carrera and u.carrera.id = ?1")
+    List<Encuesta> getAllEncuestasByCarreraId(Long id);
 }

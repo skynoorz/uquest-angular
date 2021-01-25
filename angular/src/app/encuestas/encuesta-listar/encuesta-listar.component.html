@@ -1,6 +1,21 @@
 <div class="container mt-4" style="padding-bottom: 5em">
 
-  <h2 style="font-family: Metropolis-Regular, sans-serif">Encuestas Publicas</h2>
+  <div style="padding-top: 10px;" class="container">
+    <h2 style="font-family: Metropolis-Regular, sans-serif">Encuestas Publicas</h2>
+  </div>
+  <div class="container">
+    <mat-form-field appearance="fill">
+      <mat-label>Selecciona una carrera</mat-label>
+      <mat-select [(value)]="carrera" (selectionChange)="changeContent($event.value)">
+        <mat-option *ngFor="let carr of carreras" [value]="carr.id">{{carr.nombre}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div *ngIf="encuestas && encuestas.length == 0">
+    <mat-card>
+      <h3 style="font-family: Metropolis-Bold, sans-serif; color: #DB140D" >Aun no existen encuestas para esta carrera!</h3>
+    </mat-card>
+  </div>
   <!--    <mat-grid-list cols="4" rowHeight="100px">-->
   <!--      <mat-grid-tile [style.background]='color'>-->
   <!--        <h4>{{encuesta.titulo}}</h4>-->

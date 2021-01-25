@@ -66,4 +66,9 @@ public class IEncuestaServiceImpl implements IEncuestaService{
         encuestaDao.finalizar(id);
     }
 
+    @Override
+    public List<Encuesta> getEncuestasByCarrera(Long id) {
+        return this.encuestaDao.getAllEncuestasByCarreraId(id);
+    }
+
 }

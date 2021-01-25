@@ -25,4 +25,6 @@ public interface IEncuestaService {
     public List<Long> available();
 
     public void finalizar(Long id);
+
+    public List<Encuesta> getEncuestasByCarrera(Long id);
 }

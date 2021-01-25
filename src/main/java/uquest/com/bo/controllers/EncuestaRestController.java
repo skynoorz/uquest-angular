@@ -150,4 +150,27 @@ public class EncuestaRestController {
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/encuestas/carrera/{id}")
+    public ResponseEntity<?> encuestasByCarrera(@PathVariable Long id) {
+        List<Encuesta> encuestas;
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            encuestas = encuestaService.getEncuestasByCarrera(id);
+//            log.info(encuestaNew.toString());
+        } catch (DataAccessException e) {
+            response.put("mensaje", "No existen encuestas para la carrera solicitada");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+//        if (encuestas.isEmpty()){
+//            response.put("mensaje", "No existen encuestas para la carrera solicitada");
+////            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+//        }
+        response.put("encuestas", encuestas);
+//        response.put("mensaje", "El registro de la encuesta fue satisfactoriamente");
+        return new ResponseEntity<Map>(response, HttpStatus.OK);
+
+    }
 }

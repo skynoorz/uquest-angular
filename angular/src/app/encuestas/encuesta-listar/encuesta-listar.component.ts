@@ -4,12 +4,16 @@ import {Encuesta} from "../../classes/encuesta";
 import {MatDialog} from "@angular/material/dialog";
 import {CopyModalComponent} from "./copy-modal.component";
 import {environment} from "../../../environments/environment";
+import {MatSelectChange} from "@angular/material/select";
+import {CarreraService} from "../../services/carrera.service";
+import {Carrera} from "../../classes/carrera";
 
 @Component({
   selector: 'app-encuesta-listar',
   templateUrl: './encuesta-listar.component.html',
   styleUrls: ['./encuesta-listar.component.css']
 })
+
 export class EncuestaListarComponent implements OnInit {
   encuestas: Encuesta[];
   encuestasAvailableIds: number[] = [];
@@ -19,20 +23,31 @@ export class EncuestaListarComponent implements OnInit {
   public color: string = 'lightblue';
   address: string;
   isLoadingResults: boolean = true;
+  carreras: Carrera[];
+  carrera: number = 1;
   constructor(private encuestaService: EncuestasService,
+              private carreraService: CarreraService,
               public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.cargarEncuestasPublicas();
     this.cargarEncuestasAvailables();
+    this.cargarCarreras();
+    this.changeContent(1);
   }
 
   cargarEncuestasPublicas(){
     this.encuestaService.getAllPublicEncuestas().subscribe(response=>{
-      this.encuestas=response;
-      this.isLoadingResults = false;
+      // this.encuestas=response;
+      // this.isLoadingResults = false;
       // console.log(this.encuestas)
     });
+  }
+
+  cargarCarreras(){
+    this.carreraService.getCarreras().subscribe(carreras=>{
+      this.carreras = carreras;
+    })
   }
 
   share(encuestaId: number) {
@@ -46,6 +61,16 @@ export class EncuestaListarComponent implements OnInit {
   private cargarEncuestasAvailables() {
     this.encuestaService.getEncuestasAvailable().subscribe(encuestasIds=>{
       this.encuestasAvailableIds = encuestasIds;
+    })
+  }
+
+  changeContent(event: number) {
+    this.isLoadingResults = true;
+    this.encuestaService.getEncuestasByCarreraId(event).subscribe(encuestas=>{
+      // @ts-ignore
+      this.encuestas = encuestas.encuestas;
+      this.isLoadingResults = false;
+      // console.log(encuestas)
     })
   }
 }
