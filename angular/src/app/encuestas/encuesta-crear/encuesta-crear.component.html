@@ -100,7 +100,7 @@
                   <mat-form-field style="width: 50%">
                     <mat-label>Opcion {{j + 1}}</mat-label>
                     <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
-                    <input name="opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
+                    <input name="p{{i}}_opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
                   </mat-form-field>
                 </div>
                 <button mat-stroked-button color="primary" type="button" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)" style="margin-right: 5px">
@@ -119,7 +119,7 @@
                   <mat-form-field style="width: 50%">
                     <mat-label>Opcion {{j + 1}}</mat-label>
                     <!-- IMPORTANTE: cada input dentro el forEach tiene que tener su nombre unico, es por eso que agrego el index como sufijo. -->
-                    <input name="opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
+                    <input name="p{{i}}_opcionSimple{{j}}" matInput [(ngModel)]="opcion.texto"/>
                   </mat-form-field>
                 </div>
                 <button mat-stroked-button color="primary" type="button" aria-label="agregar opcion multiple" (click)="agregarOpcionMultiple(i)" style="margin-right: 5px">
