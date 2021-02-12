@@ -135,7 +135,7 @@
                 <div style="display: flex; align-items: center">
                   <p style="width: 45px; align-self: flex-end; padding-bottom: 5px; margin-right: 5px;">Desde:</p>
                   <mat-form-field style="width: 60px; margin-right: 10px">
-                    <mat-select name="linealMin" [(ngModel)]="pregunta.opciones[0].minValue">
+                    <mat-select name="{{i}}linealMin" [(ngModel)]="pregunta.opciones[0].minValue">
                       <mat-option [value]="0">0</mat-option>
                       <mat-option [value]="1">1</mat-option>
                     </mat-select>
@@ -154,7 +154,7 @@
                 <div style="display: flex; align-items: center">
                   <p style="width: 45px; align-self: flex-end; padding-bottom: 5px; margin-right: 5px;">Hasta:</p>
                   <mat-form-field style="width: 60px; margin-right: 10px">
-                    <mat-select name="linealMax" [(ngModel)]="pregunta.opciones[0].maxValue">
+                    <mat-select name="{{i}}linealMax" [(ngModel)]="pregunta.opciones[0].maxValue">
                       <mat-option *ngFor="let range of _rangeEscale" [value]="range">{{range}}</mat-option>
                     </mat-select>
                   </mat-form-field>
