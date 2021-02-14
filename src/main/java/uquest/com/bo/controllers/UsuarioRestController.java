@@ -3,6 +3,7 @@ package uquest.com.bo.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -20,16 +21,22 @@ import uquest.com.bo.models.entity.*;
 import uquest.com.bo.models.services.IUploadFileService;
 import uquest.com.bo.models.services.IUsuarioService;
 import uquest.com.bo.models.services.encuesta.IEncuestaService;
+import uquest.com.bo.models.services.listeners.OnRegistrationCompleteEvent;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.rmi.server.UID;
 import java.util.*;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/api")
 public class UsuarioRestController {
+
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
 
     private final Logger log = LoggerFactory.getLogger(UsuarioRestController.class);
 
@@ -105,7 +112,7 @@ public class UsuarioRestController {
 
     @PostMapping("/usuarios")
 //    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> create(@Valid @RequestBody Usuario usuario, BindingResult result) {
+    public ResponseEntity<?> create(@Valid @RequestBody Usuario usuario, BindingResult result, HttpServletRequest request) {
         Usuario usuarioNew;
         Map<String, Object> response = new HashMap<>();
 
@@ -119,12 +126,16 @@ public class UsuarioRestController {
             response.put("errors", errors);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
-        usuario.setEnabled(true);
+//        usuario.setEnabled(true);
         try {
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             if (usuario.getInstituto().getId() == null)
                 usuario.setInstituto(null);
+            usuario.setToken(UUID.randomUUID().toString());
+            usuario.setEnabled(false);
             usuarioNew = usuarioService.save(usuario);
+            String appUrl = request.getContextPath();
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(usuarioNew, appUrl));
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

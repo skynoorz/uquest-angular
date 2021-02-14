@@ -53,7 +53,7 @@ export class FormComponent implements OnInit {
     this.personaService.create(this.persona).subscribe(
       response => {
         this.router.navigate(['/personas'])
-        Swal.fire('Cliente Guardado', `${response.mensaje}: ${response.persona.nombres}`, 'success')
+        Swal.fire('Felicidades usted creo su cuenta satisfactoriamente', `${response.mensaje}: ${response.persona.nombres}`, 'success')
       },
       error => {
         this.errores = error.error.errors as string[];

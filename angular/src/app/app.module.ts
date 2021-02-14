@@ -75,6 +75,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import { Perfil2Component } from './personas/perfil2/perfil2.component';
+import { MessagesComponent } from './messages/messages.component';
 
 registerLocaleData(localeES, 'es')
 
@@ -98,6 +99,7 @@ const routes: Routes = [
   {path: 'profile/editar/:id', component: EditarPerfilComponent },
   {path: 'stadistics/encuesta/:id', component: StadisticsComponent },
   {path: 'stadistics-public/encuesta/:id', component: StadisticsPublicComponent },
+  {path: 'message/email/success', component: MessagesComponent },
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
@@ -146,6 +148,7 @@ export function maxValidationMessage(err, field) {
     CategoriasEditarComponent,
     EncuestaAdminComponent,
     Perfil2Component,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,
