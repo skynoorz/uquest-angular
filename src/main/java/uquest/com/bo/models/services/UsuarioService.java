@@ -60,6 +60,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
     }
 
     @Override
+    public Usuario findByCi(String ci) {
+        return this.usuarioDao.findByCi(ci);
+    }
+
+    @Override
     @Transactional
     public List<Usuario> findAll() {
         return (List<Usuario>) usuarioDao.findAll();

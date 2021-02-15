@@ -63,6 +63,12 @@ export class RegistroComponent implements OnInit {
         label: 'CI',
         maxLength: 8,
         required: true
+      },
+      asyncValidators: {
+        uniqueUsername: {
+          expression: (control: FormControl) => this.personaService.ciExists(control.value).toPromise(),
+          message: 'Cedula de identidad ya existente',
+        },
       }
     },
     {

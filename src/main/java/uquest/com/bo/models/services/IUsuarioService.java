@@ -32,4 +32,6 @@ public interface IUsuarioService {
     Usuario findByEmail(String email);
 
     Usuario findUserByToken(String token);
+
+    Usuario findByCi (String ci);
 }

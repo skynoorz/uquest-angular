@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/'])
       // Swal.fire('Login', `Hola ${usuario.nombres}, Bienvenido!`, "success")
     }, error => {
+      // TODO validacion por enabled en correo
       if (error.status == 400) {
         Swal.fire("Error Login", "Usuario o clave incorrecta", 'error');
       }

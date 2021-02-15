@@ -190,4 +190,9 @@ export class PersonaService {
     // console.log(email);
     return this.http.get<any>(`${this.urlEndpoint}/emailexist/${email}`);
   }
+
+  ciExists(ci: string): Observable<any>{
+    // console.log(email);
+    return this.http.get<any>(`${this.urlEndpoint}/ciexist/${ci}`);
+  }
 }

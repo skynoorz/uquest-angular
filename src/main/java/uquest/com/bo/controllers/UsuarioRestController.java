@@ -310,6 +310,12 @@ public class UsuarioRestController {
         return ResponseEntity.ok(Optional.ofNullable(usuarioNew).isEmpty());
     }
 
+    @GetMapping("/usuarios/ciexist/{ci}")
+    public ResponseEntity<Boolean> dataci(@PathVariable String ci){
+        Usuario usuarioNew = usuarioService.findByCi(ci);
+        return ResponseEntity.ok(Optional.ofNullable(usuarioNew).isEmpty());
+    }
+
     @GetMapping("/usuarios/encuestas/{id}")
     public List<Encuesta> encuestas(@PathVariable Long id){
         return encuestaService.findAllEncuestasByUsuarioId(id);

@@ -30,4 +30,7 @@ public interface IUsuarioDao extends JpaRepository<Usuario, Long> {
 
     @Query("from Usuario u where u.token = ?1")
     public Usuario findUsuarioByToken (String token);
+
+    @Query("from Usuario u where u.ci = ?1")
+    public Usuario findByCi (String ci);
 }
