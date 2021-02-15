@@ -76,6 +76,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import { Perfil2Component } from './personas/perfil2/perfil2.component';
 import { MessagesComponent } from './messages/messages.component';
+import { RegistrationConfirmComponent } from './messages/registration-confirm/registration-confirm.component';
 
 registerLocaleData(localeES, 'es')
 
@@ -100,6 +101,7 @@ const routes: Routes = [
   {path: 'stadistics/encuesta/:id', component: StadisticsComponent },
   {path: 'stadistics-public/encuesta/:id', component: StadisticsPublicComponent },
   {path: 'message/email/success', component: MessagesComponent },
+  {path: 'regitrationConfirm', component: RegistrationConfirmComponent },
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
@@ -149,6 +151,7 @@ export function maxValidationMessage(err, field) {
     EncuestaAdminComponent,
     Perfil2Component,
     MessagesComponent,
+    RegistrationConfirmComponent,
   ],
   imports: [
     BrowserModule,

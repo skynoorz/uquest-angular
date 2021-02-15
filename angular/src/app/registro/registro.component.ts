@@ -20,6 +20,8 @@ export class RegistroComponent implements OnInit {
   user: any = { carreraId: 1};
   form = new FormGroup({});
   public errores: string[];
+  isLoading: boolean = false;
+
 
   verificaCarrera (carreraId){
     if (this.carreraService.getInstitutosByCarreraId(carreraId))
@@ -191,9 +193,11 @@ export class RegistroComponent implements OnInit {
     // creo persona model
     user.carrera = {id: user.carreraId};
     user.instituto = {id: user.institutoId};
+    this.isLoading = true;
     this.personaService.create(this.user).subscribe(
       response => {
-        Swal.fire('Cliente Guardado', `${response.mensaje}`, 'success')
+        Swal.fire('Finalizado', `Se realizo el registro satisfactoriamente, porfavor revise su correo electronico para validar su cuenta!`, 'success')
+        this.isLoading = false;
         this.router.navigate(['/login'])
       },
       error => {

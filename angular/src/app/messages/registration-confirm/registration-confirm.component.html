@@ -1,0 +1,13 @@
+<div class="container" *ngIf="statusMessage">
+  <div class="card">
+    <div class="card-header h4">
+      Satisfactorio
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">¡Su correo a sido verificado!</h5>
+      <p class="card-text">Muchas gracias por validar su correo, ahora podemos verificar que es usted y ayuda a que la informacion dentro el sistema sea valida!</p>
+      <button mat-raised-button color="primary" (click)="redirect()">Continuar</button>
+    </div>
+  </div>
+
+</div>

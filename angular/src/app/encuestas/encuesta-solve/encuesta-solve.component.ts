@@ -42,7 +42,7 @@ export class EncuestaSolveComponent implements OnInit {
   checkIfAnswered() {
     this.activatedRoute.params.subscribe(params => {
       let id = params ['id']
-
+      console.log(id);
       if (id) {
         this.encuestaService.getEncuesta(id).subscribe((encuesta) => {
           // initialize respuestasMap

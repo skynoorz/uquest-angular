@@ -42,7 +42,7 @@ public class RegistrationListener implements
 
         String recipientAddress = user.getEmail();
         String subject = "UQUEST - Confirmación de Registro";
-        String confirmationUrl = event.getAppUrl() + "/regitrationConfirm?token=" + token;
+        String confirmationUrl = event.getAppUrl() + "/#/regitrationConfirm?token=" + token;
 //        String message = messages.getMessage("message.regSucc", null, event.getLocale());
 
         String message = "Ingrese al siguiente enlace para validar su cuenta en UQUEST! : ";

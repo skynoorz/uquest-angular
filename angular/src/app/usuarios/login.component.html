@@ -24,7 +24,7 @@
         <mat-card-content>
           <form method="post">
             <mat-form-field>
-              <input matInput [(ngModel)]="persona.username" placeholder="Usuario" id="username" autofocus required name="username" ngModel #username="ngModel">
+              <input matInput [(ngModel)]="persona.username" placeholder="Correo Electronico o Username" id="username" autofocus required name="username" ngModel #username="ngModel">
               <mat-error *ngIf="username.invalid">Usuario es necesario</mat-error>
               <mat-icon matSuffix>account_circle</mat-icon>
             </mat-form-field>
