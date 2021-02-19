@@ -52,7 +52,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
                     "  <div style='background:#8995AB;text-align: center; padding: 10px; color: white;'>\n" +
                     "    <p>"+message+"</p>\n" +
                     "    <div style='margin: 20px 0 20px 0'>\n" +
-                    "      <a href='"+baseURLAngular + confirmationUrl+"'>\n" +
+                    "      <a href='"+baseURL + confirmationUrl+"'>\n" +
                     "        <button type='submit' style='color: white; font-weight: bold; letter-spacing: 2px; width: 135px; height: 50px;background: transparent;border-color: floralwhite;border-style: solid;'>VALIDAR</button>\n" +
                     "      </a>\n" +
                     "    </div>\n" +
