@@ -4,21 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import uquest.com.bo.models.entity.Usuario;
 
-import java.util.UUID;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 @Component
-public class RegistrationListener implements
-        ApplicationListener<OnRegistrationCompleteEvent> {
+public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 
-//    @Autowired
-//    private IUserService service;
-
-//    @Autowired
     private MessageSource messages;
 
     @Autowired
@@ -38,18 +34,34 @@ public class RegistrationListener implements
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
         Usuario user = event.getUser();
         String token = user.getToken();
-//        service.createVerificationToken(user, token);
 
         String recipientAddress = user.getEmail();
         String subject = "UQUEST - Confirmación de Registro";
         String confirmationUrl = event.getAppUrl() + "/#/regitrationConfirm?token=" + token;
-//        String message = messages.getMessage("message.regSucc", null, event.getLocale());
-
         String message = "Ingrese al siguiente enlace para validar su cuenta en UQUEST! : ";
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(recipientAddress);
-        email.setSubject(subject);
-        email.setText(message + "\r\n" + baseURLAngular + confirmationUrl);
-        mailSender.send(email);
+
+        try {
+            MimeMessage mime = this.mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mime, true);
+            helper.setTo(recipientAddress);
+            helper.setSubject(subject);
+            helper.setText("<div style=\"width: 600px; margin: 0 auto;\">\n" +
+                    "  <div style='text-align:center;background:#505763;font-size:12pt;font-weight:bold;color:white;padding:10px;'>\n" +
+                    "    UQUEST - FCPN\n" +
+                    "  </div>\n" +
+                    "  <div style='background:#8995AB;text-align: center; padding: 10px; color: white;'>\n" +
+                    "    <p>"+message+"</p>\n" +
+                    "    <div style='margin: 20px 0 20px 0'>\n" +
+                    "      <a href='"+baseURLAngular + confirmationUrl+"'>\n" +
+                    "        <button type='submit' style='color: white; font-weight: bold; letter-spacing: 2px; width: 135px; height: 50px;background: transparent;border-color: floralwhite;border-style: solid;'>VALIDAR</button>\n" +
+                    "      </a>\n" +
+                    "    </div>\n" +
+                    "  </div>\n" +
+                    "</div>",true);
+            this.mailSender.send(mime);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
     }
 }

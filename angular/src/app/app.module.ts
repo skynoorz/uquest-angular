@@ -151,7 +151,7 @@ export function maxValidationMessage(err, field) {
     EncuestaAdminComponent,
     Perfil2Component,
     MessagesComponent,
-    RegistrationConfirmComponent,
+    RegistrationConfirmComponent
   ],
   imports: [
     BrowserModule,
