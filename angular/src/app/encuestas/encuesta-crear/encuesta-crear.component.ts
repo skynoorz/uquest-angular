@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Encuesta, TipoEncuestaEnum} from "../../classes/encuesta";
 import {Pregunta, TipoPreguntaEnum} from "../../classes/pregunta";
 import {Opcion, TipoOpcionEnum} from "../../classes/opcion";
@@ -9,6 +9,8 @@ import {Categoria} from "../../classes/categoria";
 import {PersonaService} from "../../personas/persona.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {NgForm} from "@angular/forms";
+import {CarreraService} from "../../services/carrera.service";
+import {Carrera} from "../../classes/carrera";
 
 @Component({
   selector: 'app-encuesta-crear',
@@ -22,6 +24,7 @@ export class EncuestaCrearComponent implements OnInit {
 
   public errores: string[];
   public categorias: Categoria[];
+  public carreras: Carrera[];
 
   public _rangeEscale: [number, number, number, number, number, number, number, number, number];
 
@@ -31,7 +34,8 @@ export class EncuestaCrearComponent implements OnInit {
   constructor(private encuestasService: EncuestasService,
               private personaService: PersonaService,
               private router: Router,
-              private _snackBar: MatSnackBar) {
+              private _snackBar: MatSnackBar,
+              private carreraService: CarreraService) {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
     const date = new Date().getDate();
@@ -54,6 +58,7 @@ export class EncuestaCrearComponent implements OnInit {
     this.cargarEncuestaBackup();
     // this.encuesta.tipo = TipoEncuestaEnum.ABIERTO;
     this.cargarCategorias();
+    this.cargarCarreras();
     if (!localStorage.getItem('encuestaBackup')) {
       this.agregarPreguntaDefault();
     }
@@ -69,6 +74,12 @@ export class EncuestaCrearComponent implements OnInit {
 
   reset() {
     this.form.reset();
+  }
+
+  cargarCarreras(){
+    this.carreraService.getCarreras().subscribe(carreras=>{
+      this.carreras = carreras;
+    })
   }
 
   cargarEncuestaBackup() {
@@ -137,6 +148,7 @@ export class EncuestaCrearComponent implements OnInit {
           })
         }
         else {
+          console.log(this.encuesta);
           this.encuestasService.save(this.encuesta).subscribe(response => {
 
               localStorage.removeItem('encuestaBackup');

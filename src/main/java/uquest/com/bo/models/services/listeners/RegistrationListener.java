@@ -3,7 +3,6 @@ package uquest.com.bo.models.services.listeners;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -15,16 +14,12 @@ import javax.mail.internet.MimeMessage;
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 
-    private MessageSource messages;
-
     @Autowired
     private JavaMailSender mailSender;
 
     @Value("${server.url}")
     private String baseURL;
 
-    @Value("${frontend.url}")
-    private String baseURLAngular;
 
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {

@@ -98,6 +98,14 @@ insert into preguntas_opciones (pregunta_id, opcion_id) values (10, 14);
 insert into preguntas_opciones (pregunta_id, opcion_id) values (10, 15);
 insert into preguntas_opciones (pregunta_id, opcion_id) values (10, 16);
 insert into preguntas_opciones (pregunta_id, opcion_id) values (10, 17);
+insert into encuestas_carreras (encuesta_id, carrera_id) values (1, 1);
+insert into encuestas_carreras (encuesta_id, carrera_id) values (2, 2);
+insert into encuestas_carreras (encuesta_id, carrera_id) values (3, 1);
+insert into encuestas_carreras (encuesta_id, carrera_id) values (3, 2);
+insert into encuestas_carreras (encuesta_id, carrera_id) values (3, 3);
+insert into encuestas_carreras (encuesta_id, carrera_id) values (3, 4);
+insert into encuestas_carreras (encuesta_id, carrera_id) values (3, 5);
+insert into encuestas_carreras (encuesta_id, carrera_id) values (3, 6);
 -- respuestas usuario 4 Helguero
 INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (4, 7, 'Dependiendo el docente encargado para que la enseñanza llegue a ser buena');
 INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (4, 8, 7);

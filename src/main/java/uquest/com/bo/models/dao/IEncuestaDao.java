@@ -29,4 +29,8 @@ public interface IEncuestaDao extends CrudRepository<Encuesta, Long> {
 
     @Query(value = "from Encuesta e, Usuario u, Carrera c where e.usuario = u and c = u.carrera and u.carrera.id = ?1")
     List<Encuesta> getAllEncuestasByCarreraId(Long id);
+
+    @Query(value = "select DISTINCT e.* from encuestas e, encuestas_carreras ec where e.id = ec.encuesta_id and ec.carrera_id = ?1", nativeQuery = true)
+    List<Encuesta> getAllEncuestasByCarreraList(Long id);
+
 }

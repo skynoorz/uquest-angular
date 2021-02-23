@@ -156,7 +156,7 @@ public class EncuestaRestController {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            encuestas = encuestaService.getEncuestasByCarrera(id);
+            encuestas = encuestaService.getEncuestasByCarreraList(id);
 //            log.info(encuestaNew.toString());
         } catch (DataAccessException e) {
             response.put("mensaje", "No existen encuestas para la carrera solicitada");
@@ -171,6 +171,6 @@ public class EncuestaRestController {
         response.put("encuestas", encuestas);
 //        response.put("mensaje", "El registro de la encuesta fue satisfactoriamente");
         return new ResponseEntity<Map>(response, HttpStatus.OK);
-
     }
+
 }

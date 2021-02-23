@@ -44,6 +44,14 @@ public class Encuesta implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JoinTable(name = "encuestas_carreras",
+            joinColumns = @JoinColumn(name = "encuesta_id"),
+            inverseJoinColumns = @JoinColumn(name = "carrera_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"encuesta_id","carrera_id"})})
+    private List<Carrera> carreras;
+
 //    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JoinColumn(name = "encuesta_id")
 //    private List<Usuario> usuarios = new ArrayList<Usuario>();
@@ -154,5 +162,13 @@ public class Encuesta implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public List<Carrera> getCarreras() {
+        return carreras;
+    }
+
+    public void setCarreras(List<Carrera> carreras) {
+        this.carreras = carreras;
     }
 }
