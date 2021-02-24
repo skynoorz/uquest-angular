@@ -109,14 +109,18 @@ export class EncuestasComponent implements OnInit {
 
       }
     })
-
-
   }
 
   modificarFechasOpenDialog(id: number): void {
     this.dialog.open(DialogModificarFechaComponent, {
       width: '350px',
       data: {id: id}
+    })
+  }
+
+  copiarEncuesta(id: number) {
+    this.encuestasService.getEncuesta(id).subscribe(encuesta=>{
+      sessionStorage.setItem("clipboard",JSON.stringify(encuesta));
     })
   }
 }

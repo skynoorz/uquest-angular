@@ -115,6 +115,28 @@ export class EncuestaCrearComponent implements OnInit {
     }
   }
 
+  clearIds(){
+    // @ts-ignore
+    this.encuesta.categoria = {"id": this.encuesta.categoria};
+    let carreras: any[] = [];
+    console.log("carreras:",this.encuesta.carreras)
+    this.encuesta.carreras.forEach(c=>{
+      carreras.push({"id": c})
+      this.encuesta.carreras = carreras;
+    });
+    this.encuesta.preguntas.map(p=>{
+      if (p.id){
+        delete p.id;
+      }
+      if (p.opciones.length >0){
+        p.opciones.map(o=>{
+          delete o.id;
+        })
+      }
+    })
+    delete this.encuesta.id;
+  }
+
   salvarEncuesta() {
     // console.log('encuesta DTO', this.encuesta);
 
@@ -149,6 +171,8 @@ export class EncuestaCrearComponent implements OnInit {
         }
         else {
           console.log(this.encuesta);
+          //limpia los ids antes de enviarlos, esto en caso de copiar una encuesta
+          this.clearIds();
           this.encuestasService.save(this.encuesta).subscribe(response => {
 
               localStorage.removeItem('encuestaBackup');
@@ -258,5 +282,24 @@ export class EncuestaCrearComponent implements OnInit {
   limpiarEncuesta() {
     this.encuesta = new Encuesta();
     this.agregarPreguntaDefault();
+  }
+
+  pegarEncuesta() {
+    if (sessionStorage.getItem("clipboard")){
+      console.log("recibo: ", JSON.parse(sessionStorage.getItem("clipboard")));
+      let encuestaNew = JSON.parse(sessionStorage.getItem("clipboard"));
+      encuestaNew.categoria = encuestaNew.categoria.id;
+      console.log("correccion: ", encuestaNew)
+      this.encuesta = encuestaNew
+      sessionStorage.removeItem("clipboard");
+    }else {
+      this._snackBar.open("No tiene una encuesta valida copiada al portapapeles!", "Cerrar", {
+        duration: 2000,
+      });
+    }
+  }
+
+  mostrarEncuesta() {
+    console.log(this.encuesta)
   }
 }

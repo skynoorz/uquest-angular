@@ -26,7 +26,7 @@
             <mat-form-field appearance="fill" style="padding-right: 10px">
               <mat-label>Categoria</mat-label>
               <mat-select name="tipoEncuesta" [(ngModel)]="encuesta.categoria">
-                <mat-option *ngFor="let cat of categorias" [value]="cat">
+                <mat-option *ngFor="let cat of categorias" [value]="cat.id">
                   {{cat.nombre}}
                 </mat-option>
               </mat-select>
@@ -34,7 +34,7 @@
             <mat-form-field appearance="fill">
               <mat-label>Carreras objetivo</mat-label>
               <mat-select name="carrerasObjetivo" multiple [(ngModel)]="encuesta.carreras">
-                <mat-option *ngFor="let carrera of carreras" [value]="carrera">{{carrera.nombre}}</mat-option>
+                <mat-option *ngFor="let carrera of carreras" [value]="carrera.id">{{carrera.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -194,11 +194,17 @@
             </button>
           </div>
           <div>
+            <button mat-raised-button type="button"
+                    matTooltip="Pega la encuesta copiada"
+                    [matTooltipPosition]="'below'" (click)="pegarEncuesta()" style="margin: 5px 5px 5px 0px">
+              Pegar Encuesta
+              <mat-icon>assignment</mat-icon>
+            </button >
             <button mat-raised-button color="primary" type="button"
                     matTooltip="Limpia todos los campos de la encuesta y comienza de nuevo!"
                     [matTooltipPosition]="'below'" (click)="limpiarEncuesta()" style="margin: 5px 5px 5px 0px">
               Limpiar
-              <!--            <mat-icon></mat-icon>-->
+              <mat-icon> clear_all</mat-icon>
             </button >
             <button mat-raised-button color="primary" type="submit"
                     matTooltip="Guarda la encuesta actual y la publica en la pagina."
@@ -206,6 +212,11 @@
               Guardar
               <mat-icon>save</mat-icon>
             </button>
+<!--            <button mat-raised-button color="primary" type="button"-->
+<!--                    matTooltip="sdsdsd"-->
+<!--                    [matTooltipPosition]="'below'" (click)="mostrarEncuesta()">-->
+<!--              mostrar-->
+<!--            </button>-->
           </div>
         </div>
       </div>
