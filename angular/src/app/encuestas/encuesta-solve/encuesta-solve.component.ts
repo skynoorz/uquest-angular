@@ -112,7 +112,7 @@ export class EncuestaSolveComponent implements OnInit {
     this.respuestaService.saveAllRespuetas(respuestas).subscribe(resp => {
       // do something here
       this.router.navigate(['/encuestas/public'])
-      Swal.fire('¡Gracias por su Respuesta!', `Se recibio su respuesta satisfactoriamente.`, 'success')
+      Swal.fire('¡Gracias por su Respuesta!', `Muchas gracias por su respuesta!`, 'success')
     })
   }
 

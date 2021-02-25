@@ -1,6 +1,5 @@
 <div class="container-card" style="margin-top: 30px; padding-bottom: 2em">
   <form #form="ngForm" (ngSubmit)="salvarEncuesta()">
-<!--  <form [formGroup]="myForm" #formu>-->
     <div>
       <mat-card>
         <div>
@@ -12,7 +11,7 @@
           </div>
         </div>
         <div class="encuesta-header">
-          <div class="middle-header">
+          <div>
             <mat-form-field appearance="fill" style="padding-right: 10px">
               <mat-label>Tipo</mat-label>
               <mat-select name="tipoEncuesta" [(ngModel)]="encuesta.tipo">
@@ -22,7 +21,6 @@
               </mat-select>
               <mat-hint>* Tipo cerrado solo se accedera mediante un link o codigo QR *</mat-hint>
             </mat-form-field>
-
             <mat-form-field appearance="fill" style="padding-right: 10px">
               <mat-label>Categoria</mat-label>
               <mat-select name="tipoEncuesta" [(ngModel)]="encuesta.categoria">
@@ -38,7 +36,7 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="right-header">
+          <div style="width: 250px">
             <mat-form-field appearance="fill" style="padding-right: 10px">
               <mat-label>Fecha Inicio de Encuesta</mat-label>
               <input matInput [min]="minDate" [matDatepicker]="ffini" name="ffini" [(ngModel)]="encuesta.fechaIni">

@@ -115,11 +115,11 @@ export function maxlengthValidationMessage(err, field) {
 }
 
 export function minValidationMessage(err, field) {
-  return `Este valor debe ser mas que ${field.templateOptions.min}`;
+  return `Este valor debe ser menor que ${field.templateOptions.min}`;
 }
 
 export function maxValidationMessage(err, field) {
-  return `Este valor debe ser mas que ${field.templateOptions.max}`;
+  return `Este valor debe ser mayor que ${field.templateOptions.max}`;
 }
 
 
@@ -172,7 +172,7 @@ export function maxValidationMessage(err, field) {
     FormlyModule.forRoot(
       {
         validationMessages: [
-          {name: 'required', message: 'This field is required'},
+          {name: 'required', message: 'Este campo es obligatorio.'},
           {name: 'minlength', message: minlengthValidationMessage},
           {name: 'maxlength', message: maxlengthValidationMessage},
           {name: 'min', message: minValidationMessage},

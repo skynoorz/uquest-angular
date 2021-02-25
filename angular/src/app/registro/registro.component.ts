@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {PersonaService} from "../personas/persona.service";
 import {Carrera} from "../classes/carrera";
 import {CarreraService} from "../services/carrera.service";
 import {Instituto} from "../classes/instituto";
 import Swal from "sweetalert2";
-import { FormlyFieldConfig } from "@ngx-formly/core";
-import { startWith, map, tap, switchMap } from "rxjs/operators";
+import {FormlyFieldConfig} from "@ngx-formly/core";
+import {startWith, map, tap, switchMap} from "rxjs/operators";
 import {Router} from "@angular/router";
 
+
+export function minAgeValidatorMessage(control: FormControl, date: Date): boolean {
+  return (new Date(control.value) < date);
+}
 
 @Component({
   selector: 'app-registro',
@@ -17,13 +21,15 @@ import {Router} from "@angular/router";
 })
 export class RegistroComponent implements OnInit {
 
-  user: any = { carreraId: 1};
+  user: any = {carreraId: 1};
   form = new FormGroup({});
   public errores: string[];
   isLoading: boolean = false;
 
+  minAge = new Date(new Date().getFullYear() - 18, new Date().getMonth(), new Date().getDate());
 
-  verificaCarrera (carreraId){
+
+  verificaCarrera(carreraId) {
     if (this.carreraService.getInstitutosByCarreraId(carreraId))
       return true;
     return false;
@@ -37,32 +43,58 @@ export class RegistroComponent implements OnInit {
         label: 'Nombres',
         minLength: 4,
         maxLength: 22,
-        required: true
-      }
+        required: true,
+        pattern: /^[a-zA-Z!@#$%^&*()]+$/
+      },
+      validation: {
+        messages: {
+          pattern: `El nombre no puede contener caracteres especiales como ser !@#$%^&*()]+$/ y tampoco números`
+        },
+      },
     },
     {
       key: 'apellidoPat',
       type: 'input',
       templateOptions: {
         label: 'Apellido paterno',
-        required: true
-      }
+        required: true,
+        pattern: /^[a-zA-Z!@#$%^&*()]+$/
+      },
+      validation: {
+        messages: {
+          pattern: `El apellido no puede contener caracteres especiales como ser !@#$%^&*()]+$/ y tampoco números`
+        },
+      },
     },
     {
       key: 'apellidoMat',
       type: 'input',
       templateOptions: {
         label: 'Apellido materno',
+        pattern: /^[a-zA-Z!@#$%^&*()]+$/,
         required: true
-      }
+      },
+      validation: {
+        messages: {
+          pattern: `El apellido no puede contener caracteres especiales como ser !@#$%^&*()]+$/ y tampoco números`
+        },
+      },
     },
     {
       key: 'ci',
       type: 'input',
       templateOptions: {
         label: 'CI',
-        maxLength: 8,
+        max: 99999999,
+        min: 1000000,
+        type: 'number',
         required: true
+      },
+      validation: {
+        messages: {
+          min: `Su cedula de identidad debe tener al menos 7 digitos`,
+          max: `Su cedula de identidad debe tener un maximo de 8 digitos`,
+        },
       },
       asyncValidators: {
         uniqueUsername: {
@@ -88,8 +120,20 @@ export class RegistroComponent implements OnInit {
       type: 'datepicker',
       templateOptions: {
         label: 'Fecha de nacimiento',
-        required: true
-      }
+        required: true,
+        datepickerOptions: {
+          max: new Date(),
+          startView: "multi-year"
+        }
+      },
+      validators: {
+        age: {
+          expression: (control: FormControl) => {
+            return (new Date(control.value) < this.minAge)
+          },
+          message: 'Usted tiene que ser mayor de edad.',
+        },
+      },
     },
     {
       key: 'carreraId',
@@ -101,13 +145,6 @@ export class RegistroComponent implements OnInit {
         labelProp: 'nombre',
         required: true
       },
-      // hooks:{
-      //   onChanges: field => {
-      //     const institutoControl = this.form.get('institutoId');
-      //     console.log(institutoControl.value);
-      //     console.log(field);
-      //   }
-      // }
     },
     {
       key: 'institutoId',
@@ -138,6 +175,7 @@ export class RegistroComponent implements OnInit {
       templateOptions: {
         label: 'Email',
         pattern: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+        // pattern: /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm,
         required: true,
       },
       validation: {
@@ -188,7 +226,8 @@ export class RegistroComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
               private personaService: PersonaService,
               private carreraService: CarreraService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit(): void {
 
@@ -208,7 +247,7 @@ export class RegistroComponent implements OnInit {
       },
       error => {
         this.errores = error.error.errors as string[];
-        console.log('Codigo de error desde backend: '+error.status)
+        console.log('Codigo de error desde backend: ' + error.status)
         console.log(error.error.errors)
       }
     );
