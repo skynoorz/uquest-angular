@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {PersonaService} from "../personas/persona.service";
 import {Carrera} from "../classes/carrera";
 import {CarreraService} from "../services/carrera.service";
@@ -22,11 +22,14 @@ export function minAgeValidatorMessage(control: FormControl, date: Date): boolea
 export class RegistroComponent implements OnInit {
 
   user: any = {carreraId: 1};
-  form = new FormGroup({});
+  form = new FormGroup({
+    recaptcha: new FormControl('', Validators.required)
+  });
   public errores: string[];
   isLoading: boolean = false;
 
   minAge = new Date(new Date().getFullYear() - 18, new Date().getMonth(), new Date().getDate());
+  siteKey: string;
 
 
   verificaCarrera(carreraId) {
@@ -227,6 +230,7 @@ export class RegistroComponent implements OnInit {
               private personaService: PersonaService,
               private carreraService: CarreraService,
               private router: Router) {
+    this.siteKey = '6Le3v2oaAAAAAKXBwA-bweH_Rrl8YvmP9TSKCAT1';
   }
 
   ngOnInit(): void {

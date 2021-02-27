@@ -77,6 +77,7 @@ import {MatSortModule} from "@angular/material/sort";
 import { Perfil2Component } from './personas/perfil2/perfil2.component';
 import { MessagesComponent } from './messages/messages.component';
 import { RegistrationConfirmComponent } from './messages/registration-confirm/registration-confirm.component';
+import {NgxCaptchaModule} from "ngx-captcha";
 
 registerLocaleData(localeES, 'es')
 
@@ -177,7 +178,7 @@ export function maxValidationMessage(err, field) {
           {name: 'maxlength', message: maxlengthValidationMessage},
           {name: 'min', message: minValidationMessage},
           {name: 'max', message: maxValidationMessage},
-        ],
+        ]
       }
     ),
     FormlyMaterialModule,
@@ -205,7 +206,8 @@ export function maxValidationMessage(err, field) {
     MatTableModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    NgxCaptchaModule
   ],
   providers: [
     {
