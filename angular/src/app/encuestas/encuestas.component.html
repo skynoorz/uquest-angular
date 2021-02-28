@@ -30,17 +30,19 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
             <div style="display: flex;align-items: center;">
-              <h3>Descripción: &nbsp;&nbsp;</h3>
+              <h3 style="font-family: Metropolis-Bold,sans-serif">Descripción: &nbsp;&nbsp;</h3>
               <p>{{encuesta.descripcion}}</p>
             </div>
+            <div style="display: flex">
+              <h3 style="font-family: Metropolis-Bold,sans-serif">Carreras objetivo: &nbsp;&nbsp;</h3><mat-chip style="margin-right: 5px" *ngFor="let carrera of encuesta.carreras">{{carrera.nombre}}</mat-chip>
+            </div>
             <div style="display: flex;align-items: center;">
-              <h3>Tipo: &nbsp;&nbsp;</h3>
+              <h3 style="font-family: Metropolis-Bold,sans-serif">Tipo: &nbsp;&nbsp;</h3>
               <h4 style="color: green; font-family: Metropolis-Bold, sans-serif" *ngIf="encuesta.tipo == 'Abierto'">ABIERTO</h4>
               <h4 style="color: mediumblue; font-family: Metropolis-Bold, sans-serif" *ngIf="encuesta.tipo=='Cerrado'">CERRADO</h4>
             </div>
 
-
-            <h3>Preguntas</h3>
+            <h3 style="font-family: Metropolis-Bold,sans-serif">Preguntas</h3>
             <div>
               <div *ngFor="let pregunta of encuesta.preguntas">
                 <div style="display: flex; justify-content: space-between" class="font-italic">
