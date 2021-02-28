@@ -13,7 +13,9 @@ import {environment} from "../../../environments/environment";
 export class CopyModalComponent implements OnInit {
 
   title='Copiar URL';
-  url = `http://localhost:4200`+this.data.address;
+
+  url = environment.basePath + this.data.address;
+  // url = `http://localhost:4200`+this.data.address;
   elementType = NgxQrcodeElementTypes.URL;
   errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
   value = this.url;
