@@ -54,13 +54,14 @@ export class EncuestaListarComponent implements OnInit {
 
   private cargarEncuestasAvailables() {
     this.encuestaService.getEncuestasAvailable().subscribe(encuestasIds => {
+      // console.log(encuestasIds)
       this.encuestasAvailableIds = encuestasIds;
     })
   }
 
   changeContent(event: number) {
     this.isLoadingResults = true;
-    this.encuestaService.getEncuestasByCarreraId(event).subscribe(encuestas => {
+    this.encuestaService.getEncuestasByCarreraIdAbierto(event).subscribe(encuestas => {
       // @ts-ignore
       this.encuestas = encuestas.encuestas;
       this.encuestas.forEach(e => {

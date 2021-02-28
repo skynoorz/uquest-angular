@@ -112,7 +112,7 @@ export class EncuestasService {
     return this.http.get<any>(`${this.urlEndpointNative}/encuestas/finalizar/${encuestaId}`);
   }
 
-  getEncuestasByCarreraId(carreraId: number): Observable<Encuesta[]>{
+  getEncuestasByCarreraIdAbierto(carreraId: number): Observable<Encuesta[]>{
     return this.http.get<Encuesta[]>(`${this.urlEndpointNative}/encuestas/carrera/${carreraId}`)
   }
 

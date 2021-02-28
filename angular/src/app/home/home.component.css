@@ -90,6 +90,11 @@
 .row{
   margin-left: -15px;
   margin-right: -15px;
+  font-family: Metropolis-Light, sans-serif;
+}
+.row h5{
+  font-family: Metropolis-SemiBold, sans-serif;
+  font-size: 16pt;
 }
 .icon-wrapper{
   height: 100px;

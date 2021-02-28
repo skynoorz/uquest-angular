@@ -42,17 +42,17 @@ export class EncuestaSolveComponent implements OnInit {
   checkIfAnswered() {
     this.activatedRoute.params.subscribe(params => {
       let id = params ['id']
-      console.log(id);
+      // console.log(id);
       if (id) {
         this.encuestaService.getEncuestaUID(id).subscribe((encuesta) => {
           // initialize respuestasMap
           if (encuesta.tipo == 'Abierto') {
 
           } else if (encuesta.tipo == 'Cerrado') {
-            console.log("enmtra cerrado")
+            // console.log("enmtra cerrado")
             if (this.authService.isAuthenticated()) {
               this.respuestaService.getUsersWhoAnsweredEncuestaUID(id).subscribe(response => {
-                console.log("Para validar si esta: ", response);
+                // console.log("Para validar si esta: ", response);
                 response.forEach(e => {
                   if (e == JSON.parse(sessionStorage.getItem("persona")).id) {
                     this.router.navigate(['/encuestas/public'])
@@ -74,9 +74,9 @@ export class EncuestaSolveComponent implements OnInit {
   cargarEncuesta(): void {
     this.activatedRoute.params.subscribe(params => {
       let id = params ['id']
-      console.log(id);
+      // console.log(id);
       if (!JSON.parse(sessionStorage.getItem("persona"))) {
-        console.log("es anonimo");
+        // console.log("es anonimo");
         this.usuarioId = 0;
       } else {
         this.usuarioId = JSON.parse(sessionStorage.getItem("persona")).id;
@@ -95,8 +95,8 @@ export class EncuestaSolveComponent implements OnInit {
               })
           });
           this.encuesta = encuesta;
-          console.log(encuesta)
-          console.log(this.respuestasMap)
+          // console.log(encuesta)
+          // console.log(this.respuestasMap)
         })
       }
     })
@@ -104,11 +104,11 @@ export class EncuestaSolveComponent implements OnInit {
 
   onSubmit() {
     // para que veas la estructura del map
-    console.log('respuestasMap', this.respuestasMap);
+    // console.log('respuestasMap', this.respuestasMap);
 
     const respuestas = this.convertRespuestaMapToArrayRespuesta(this.respuestasMap);
     // para que veas como quedo el map despues de la conversion
-    console.log('respuestas', respuestas);
+    // console.log('respuestas', respuestas);
 
     this.respuestaService.saveAllRespuetas(respuestas).subscribe(resp => {
       // do something here
@@ -139,7 +139,7 @@ export class EncuestaSolveComponent implements OnInit {
 
   private convertRespuestaMapToArrayRespuesta(respuestasMap): Array<IRespuesta> {
     const respuestas: Array<IRespuesta> = [];
-    console.log("respuestasMap: ", respuestasMap)
+    // console.log("respuestasMap: ", respuestasMap)
 
     Object.keys(respuestasMap).forEach(preguntaId => {
       const pregunta = respuestasMap[preguntaId];
@@ -150,12 +150,12 @@ export class EncuestaSolveComponent implements OnInit {
       Object.keys(pregunta).forEach(opcionId => {
         // clono la opcion para no tocar los valores de respuestasMap
         const respuesta: IRespuesta = Object.assign({}, respuestasMap[preguntaId][opcionId]);
-        console.log("respuesta para enviar:", respuesta)
+        // console.log("respuesta para enviar:", respuesta)
         // si la respuesta no esta vacia, la incluyo en el array de respuestas
         // para las casillas debido al checbox opcionId es un booleano, true si ha sido seleccionado, false | undefined si no fue selecionado
         // con el IF nos aseguramos solo seleccionar aquellas casillas seleccionadas = true
         if (respuesta.numValue) {
-          console.log("hay numvalue: ", respuesta.numValue)
+          // console.log("hay numvalue: ", respuesta.numValue)
           respuesta.preguntaId = Number(preguntaId);
           respuesta.usuarioId = this.usuarioId;
           respuestas.push(respuesta);

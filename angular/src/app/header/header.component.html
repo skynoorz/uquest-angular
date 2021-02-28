@@ -9,22 +9,22 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto py-4 py-md-0">
       <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-        <a class="nav-link" href="#" routerLinkActive="active-link">INICIO</a>
+        <a class="nav-link" href="#" >INICIO</a>
       </li>
       <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
-        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/personas']" routerLinkActive="active-link">Usuarios</a>
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" data-toggle="collapse" data-target=".navbar-collapse.show" [routerLink]="['/personas']" routerLinkActive="active-link">Usuarios</a>
       </li>
       <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_USER') && !authService.hasRole('ROLE_ADMIN')">
-        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/encuestas']" routerLinkActive="active-link">Mis Encuestas</a>
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" data-toggle="collapse" data-target=".navbar-collapse.show" [routerLink]="['/encuestas']" routerLinkActive="active-link">Mis Encuestas</a>
       </li>
       <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="!authService.hasRole('ROLE_ADMIN')">
-        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/encuestas/public']" routerLinkActive="active-link">Encuestas Publicas</a>
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" data-toggle="collapse" data-target=".navbar-collapse.show" [routerLink]="['/encuestas/public']" routerLinkActive="active-link">Encuestas Publicas</a>
       </li>
       <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
-        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/categorias']" routerLinkActive="active-link">Categorias</a>
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" data-toggle="collapse" data-target=".navbar-collapse.show" [routerLink]="['/categorias']" routerLinkActive="active-link">Categorias</a>
       </li>
       <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
-        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/encuestas/admin']" routerLinkActive="active-link">Encuestas</a>
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" data-toggle="collapse" data-target=".navbar-collapse.show" [routerLink]="['/encuestas/admin']" routerLinkActive="active-link">Encuestas</a>
       </li>
       <li>
         <div *ngIf="authService.isAuthenticated()" class="dropdown">
@@ -47,10 +47,10 @@
         </div>
       </li>
       <li class="pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="!authService.isAuthenticated()">
-        <a [routerLink]="['/registro']">
+        <a [routerLink]="['/registro']" data-toggle="collapse" data-target=".navbar-collapse.show">
           <button mat-raised-button>Registrarse</button>
         </a>
-        <a [routerLink]="['/login']" style="margin-left: 5px">
+        <a [routerLink]="['/login']" data-toggle="collapse" data-target=".navbar-collapse.show" style="margin-left: 5px">
           <button mat-raised-button>Login</button>
         </a>
       </li>

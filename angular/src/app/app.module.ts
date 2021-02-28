@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {LOCALE_ID, NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AbstractControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule, Routes} from "@angular/router";
 import {registerLocaleData} from "@angular/common";
@@ -123,6 +123,14 @@ export function maxValidationMessage(err, field) {
   return `Este valor debe ser mayor que ${field.templateOptions.max}`;
 }
 
+export function fieldMatchValidator(control: AbstractControl) {
+  const { password, passwordConfirm } = control.value;
+  // avoid displaying the message error when values are empty
+  if (!passwordConfirm || !password) return null;
+  if (passwordConfirm === password) return null;
+  return { fieldMatch: { message: 'La contraseña no coincide' } };
+}
+
 
 @NgModule({
   declarations: [
@@ -178,7 +186,10 @@ export function maxValidationMessage(err, field) {
           {name: 'maxlength', message: maxlengthValidationMessage},
           {name: 'min', message: minValidationMessage},
           {name: 'max', message: maxValidationMessage},
-        ]
+        ],
+        validators: [
+          { name: 'fieldMatch', validation: fieldMatchValidator },
+        ],
       }
     ),
     FormlyMaterialModule,

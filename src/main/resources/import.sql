@@ -79,34 +79,34 @@ insert into encuestas_carreras (encuesta_id, carrera_id) values (1, 3);
 -- D respuestas usuario 4 Helguero
 INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (4, 1, 'Dependiendo el docente encargado para que la enseñanza llegue a ser buena');
 INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (4, 2, 7);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 3, 10);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 3, 11);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 4, 16);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 3, 5);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 3, 6);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (4, 4, 10);
 -- D respuestas usuario 5 Garcia
 INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (5, 1, 'Me parecio muy buena en todas las materias');
-INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (5, 2, 9);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 3, 8);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 3, 10);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 3, 11);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 4, 15);
+INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (5, 2, 4);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 3, 3);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 3, 5);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 3, 6);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (5, 4, 10);
 -- D respuestas usuario 6 Gomez
 INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (6, 1, 'Pesima, prefiero las clases en modalidad presencial');
 INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (6, 2, 1);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 3, 10);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 3, 11);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 4, 16);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 3, 5);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 3, 6);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (6, 4, 11);
 -- D respuestas usuario 7 Jimenez
 INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (7, 1, 'Regular, hubo algunos docentes que no sabian usar las plataformas de comunicacion.');
 INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (7, 2, 5);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 3, 9);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 3, 10);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 3, 11);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 4, 15);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 3, 4);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 3, 5);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 3, 6);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (7, 4, 10);
 -- D respuestas usuario 8 Loza
 INSERT INTO respuestas (usuario_id, pregunta_id, text_value) VALUES (8, 1, 'Me gusto esta nueva modalidad de enseñanza, es mas moderna y creo que debemos habituarnos');
 INSERT INTO respuestas (usuario_id, pregunta_id, num_value) VALUES (8, 2, 10);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 3, 11);
-INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 4, 16);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 3, 6);
+INSERT INTO respuestas (usuario_id, pregunta_id, opcion_id) VALUES (8, 4, 11);
 
 # VISTAS
 create or replace view respuestas_stats_esc as select pregunta_id, num_value as resp, count(1) as resp_count from respuestas where num_value is not null group by pregunta_id, num_value;

@@ -34,12 +34,16 @@ public class MyUserPrincipal implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
+//        para bloquear la cuenta si no esta validada
         return this.user.getEnabled();
+//        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
+//        para bloquear la cuenta si no esta validada
         return this.user.getEnabled();
+//        return true;
     }
 
     @Override
@@ -49,6 +53,8 @@ public class MyUserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
+//        para bloquear la cuenta si no esta validada
         return this.user.getEnabled();
+//        return true;
     }
 }
