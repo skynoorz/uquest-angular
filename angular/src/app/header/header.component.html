@@ -1,73 +1,59 @@
-<div class="navigation-wrap bg-dark start-header start-style">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <nav class="navbar navbar-expand-md navbar-light">
-
-<!--          <a class="navbar-brand" href="#" target="_blank">-->
-<!--            <img src="favicon.ico" style="height: 40px; width: 40px;" alt="">-->
-<!--          </a>-->
-          <div style="padding-left: 20px;">
-            <a class="nav-link left-navbar" href="#" style="color: black;"></a>
-          </div>
-
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto py-4 py-md-0">
-              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                <a class="nav-link" href="#" routerLinkActive="active-link">INICIO</a>
-              </li>
-              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
-                <a class="nav-link"  [routerLinkActiveOptions]="{exact:true}"  [routerLink]="['/personas']" routerLinkActive="active-link">Usuarios</a>
-              </li>
-              <li  class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_USER') && !authService.hasRole('ROLE_ADMIN')">
-                <a class="nav-link"  [routerLinkActiveOptions]="{exact:true}"  [routerLink]="['/encuestas']" routerLinkActive="active-link">Mis Encuestas</a>
-              </li>
-              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="!authService.hasRole('ROLE_ADMIN')">
-                <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/encuestas/public']" routerLinkActive="active-link">Encuestas Publicas</a>
-              </li>
-              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
-                <a class="nav-link"  [routerLinkActiveOptions]="{exact:true}"  [routerLink]="['/categorias']" routerLinkActive="active-link">Categorias</a>
-              </li>
-              <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
-                <a class="nav-link"  [routerLinkActiveOptions]="{exact:true}"  [routerLink]="['/encuestas/admin']" routerLinkActive="active-link">Encuestas</a>
-              </li>
-              <li>
-                <div *ngIf="authService.isAuthenticated()" class="dropdown">
-                  <mat-card style="display: none"></mat-card>
-                  <div [matMenuTriggerFor]="menu" class="avatar-div">
-                      <div *ngIf="hasFoto()" class="avatar-div-2" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/api/uploads/img/' + authService.persona.foto + ')'}"></div>
-                      <div *ngIf="!hasFoto()" class="avatar-div-2" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/images/no_user.png)'}"></div>
-                  </div>
-                  <mat-menu #menu="matMenu">
-                    <button [routerLink]="['/profile']" mat-menu-item>
-                      <mat-icon>person_pin</mat-icon>
-                      <span>Perfil</span>
-                    </button>
-                    <button (click)="logout()" mat-menu-item>
-                      <mat-icon>power_settings_new</mat-icon>
-                      <span>Logout</span>
-                    </button>
-                  </mat-menu>
-                </div>
-              </li>
-              <li class="pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="!authService.isAuthenticated()">
-                <a [routerLink]="['/registro']">
-                  <button mat-raised-button>Registrarse</button>
-                </a>
-                <a [routerLink]="['/login']" style="margin-left: 5px">
-                  <button mat-raised-button>Login</button>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-family: Metropolis-Light, sans-serif">
+  <div style="padding-left: 20px;">
+    <a class="nav-link left-navbar" href="#" style="color: black;"></a>
   </div>
-</div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-<script type="text/javascript" src="/angular/src/assets/js/header.js"></script>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto py-4 py-md-0">
+      <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+        <a class="nav-link" href="#" routerLinkActive="active-link">INICIO</a>
+      </li>
+      <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/personas']" routerLinkActive="active-link">Usuarios</a>
+      </li>
+      <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_USER') && !authService.hasRole('ROLE_ADMIN')">
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/encuestas']" routerLinkActive="active-link">Mis Encuestas</a>
+      </li>
+      <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="!authService.hasRole('ROLE_ADMIN')">
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/encuestas/public']" routerLinkActive="active-link">Encuestas Publicas</a>
+      </li>
+      <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/categorias']" routerLinkActive="active-link">Categorias</a>
+      </li>
+      <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="authService.hasRole('ROLE_ADMIN')">
+        <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/encuestas/admin']" routerLinkActive="active-link">Encuestas</a>
+      </li>
+      <li>
+        <div *ngIf="authService.isAuthenticated()" class="dropdown">
+          <mat-card style="display: none"></mat-card>
+          <div [matMenuTriggerFor]="menu" class="avatar-div">
+            <div *ngIf="hasFoto()" class="avatar-div-2" mat-card-avatar style="background-size: cover;"
+                 [ngStyle]="{ 'background-image': 'url('+ basePath +'/api/uploads/img/' + authService.persona.foto + ')'}"></div>
+            <div *ngIf="!hasFoto()" class="avatar-div-2" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/images/no_user.png)'}"></div>
+          </div>
+          <mat-menu #menu="matMenu">
+            <button [routerLink]="['/profile']" mat-menu-item>
+              <mat-icon>person_pin</mat-icon>
+              <span>Perfil</span>
+            </button>
+            <button (click)="logout()" mat-menu-item>
+              <mat-icon>power_settings_new</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </div>
+      </li>
+      <li class="pl-4 pl-md-0 ml-0 ml-md-4" *ngIf="!authService.isAuthenticated()">
+        <a [routerLink]="['/registro']">
+          <button mat-raised-button>Registrarse</button>
+        </a>
+        <a [routerLink]="['/login']" style="margin-left: 5px">
+          <button mat-raised-button>Login</button>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
