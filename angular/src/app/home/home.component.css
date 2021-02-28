@@ -2,8 +2,8 @@
   color: #171a1d;
   font-size: 35px;
   font-family: Metropolis-Light, sans-serif;
-  padding-bottom: 30px;
-  padding-top: 30px;
+  padding-bottom: 40px;
+  padding-top: 60px;
   line-height: 30px;
 }
 .p1{
@@ -133,7 +133,7 @@
   width: 100%;
   height: 83vh;
   overflow: hidden;
-  margin-top: 51px;
+  margin-top: 41px;
 }
 
 .circles li{

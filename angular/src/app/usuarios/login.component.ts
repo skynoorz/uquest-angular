@@ -70,4 +70,8 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  redirectRegister() {
+    console.log("redirect")
+    this.router.navigate(['/registro'])
+  }
 }

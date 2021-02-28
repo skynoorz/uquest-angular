@@ -26,7 +26,7 @@ export class EncuestaCrearComponent implements OnInit {
   public categorias: Categoria[];
   public carreras: Carrera[];
 
-  public _rangeEscale: [number, number, number, number, number, number, number, number, number];
+  public _rangeEscale: number[];
 
   tiposEncuesta = Object.keys(TipoEncuestaEnum).map(key => TipoEncuestaEnum[key]);
   tipos = Object.keys(TipoPreguntaEnum).map(key => TipoPreguntaEnum[key]);

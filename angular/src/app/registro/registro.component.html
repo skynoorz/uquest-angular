@@ -4,7 +4,7 @@
     <div class="container">
       <formly-form [form]="form" [fields]="fields" [model]="user"></formly-form>
       <div style="margin-bottom: 10px">
-        <ngx-recaptcha2 [siteKey]="siteKey" formControlName="recaptcha"></ngx-recaptcha2>
+        <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="recaptcha"></ngx-recaptcha2>
       </div>
       <button type="submit" [disabled]="!form.valid" class="btn btn-success">Finalizar</button>
     </div>

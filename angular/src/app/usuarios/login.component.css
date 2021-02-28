@@ -4,6 +4,15 @@
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(13,85,128,1) 99%);
+  /*background: linear-gradient(163deg, rgba(196,0,0,1) 0%, rgba(74,15,15,1) 50%, rgba(20,6,158,1) 100%);*/
+}
+
+.header-style{
+  text-align:center;
+  font-family: Metropolis-Light,
+  sans-serif; font-size: 17pt;
+  padding: 23px 0 23px 0
 }
 
 mat-card {
@@ -16,15 +25,19 @@ mat-form-field, mat-checkbox {
   display: block;
   margin: auto;
 }
-mat-card-content {
-  margin-top: 20px;
-}
 
 .login-button {
   margin-top: 20px;
   display: block;
   width: 80%;
   margin: 20px auto;
+}
+
+.mat-raised-button.mat-primary{
+  color: #f0fff3;
+  /*background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);*/
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(13,85,128,1) 99%);
+  height: 4.3em;
 }
 
 @media only screen and (max-width: 600px) {
