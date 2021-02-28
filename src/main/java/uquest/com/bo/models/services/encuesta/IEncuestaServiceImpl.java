@@ -76,4 +76,9 @@ public class IEncuestaServiceImpl implements IEncuestaService{
         return this.encuestaDao.getAllEncuestasByCarreraList(id);
     }
 
+    @Override
+    public Encuesta findByUID(String uid) {
+        return this.encuestaDao.findByUID(uid);
+    }
+
 }

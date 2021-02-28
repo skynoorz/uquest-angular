@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.UUID;
+
 @SpringBootApplication
 public class UquestAngularApplication implements CommandLineRunner {
 
@@ -19,10 +21,12 @@ public class UquestAngularApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 //		String password = "gaal";
-//		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) {
 //			String passwordBcrypt = passwordEncoder.encode(password);
 //			System.out.println(passwordBcrypt);
-//		}
+			String uid = UUID.randomUUID().toString();
+			System.out.println(uid);
+		}
 
 	}
 }

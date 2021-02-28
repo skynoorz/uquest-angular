@@ -16,6 +16,7 @@ export class Encuesta{
   // usuario: Persona;
   usuario: {id: number}
   carreras: Carrera[];
+  uid: string;
 }
 
 export enum TipoEncuestaEnum {

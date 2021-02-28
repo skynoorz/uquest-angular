@@ -51,8 +51,8 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button *ngIf="encuestasAvailableIds.includes(encuesta.id)" mat-button [routerLink]="['/encuestas/solve/'+encuesta.id]" >RESPONDER</button>
-          <button *ngIf="encuestasAvailableIds.includes(encuesta.id)" mat-button (click)="share(encuesta.id)">COMPARTIR</button>
+          <button *ngIf="encuestasAvailableIds.includes(encuesta.id)" mat-button [routerLink]="['/encuestas/solve/'+encuesta.uid]" >RESPONDER</button>
+          <button *ngIf="encuestasAvailableIds.includes(encuesta.id)" mat-button (click)="share(encuesta.uid)">COMPARTIR</button>
           <button mat-button [routerLink]="['/stadistics-public/encuesta/'+encuesta.id]">ESTADISTICAS</button>
         </mat-card-actions>
       </mat-card>

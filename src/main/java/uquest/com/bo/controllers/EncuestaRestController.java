@@ -16,10 +16,7 @@ import uquest.com.bo.models.projection.RespuestasStats;
 import uquest.com.bo.models.services.encuesta.IEncuestaService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
@@ -55,6 +52,7 @@ public class EncuestaRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         try {
+            encuesta.setUID(UUID.randomUUID().toString());
             encuestaNew = encuestaService.save(encuesta);
 //            log.info(encuestaNew.toString());
         } catch (DataAccessException e) {
@@ -76,6 +74,11 @@ public class EncuestaRestController {
     @GetMapping("/encuestas/{id}")
     public Encuesta encuestas(@PathVariable Long id) {
         return encuestaService.findOne(id);
+    }
+
+    @GetMapping("/encuestas/uid/{uid}")
+    public Encuesta encuestasUID(@PathVariable String uid) {
+        return encuestaService.findByUID(uid);
     }
 
     @GetMapping("/encuestas/available")

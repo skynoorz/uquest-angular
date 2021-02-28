@@ -37,4 +37,7 @@ public class RespuestaService {
     return respuestaDao.getRespuestasTextValueByPregunta(encuestaId);
   }
 
+  public List<Long> findAllUsersAnsweredByEncuestaUID(String encuestaUID) {
+    return respuestaDao.findAllUsersAnsweredByEncuestaUID(encuestaUID);
+  }
 }

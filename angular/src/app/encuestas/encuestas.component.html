@@ -29,6 +29,17 @@
                 {{encuesta.categoria.descripcion}}
               </mat-panel-description>
             </mat-expansion-panel-header>
+            <div style="display: flex;align-items: center;">
+              <h3>Descripción: &nbsp;&nbsp;</h3>
+              <p>{{encuesta.descripcion}}</p>
+            </div>
+            <div style="display: flex;align-items: center;">
+              <h3>Tipo: &nbsp;&nbsp;</h3>
+              <h4 style="color: green; font-family: Metropolis-Bold, sans-serif" *ngIf="encuesta.tipo == 'Abierto'">ABIERTO</h4>
+              <h4 style="color: mediumblue; font-family: Metropolis-Bold, sans-serif" *ngIf="encuesta.tipo=='Cerrado'">CERRADO</h4>
+            </div>
+
+
             <h3>Preguntas</h3>
             <div>
               <div *ngFor="let pregunta of encuesta.preguntas">
@@ -51,7 +62,7 @@
                 Finalizar
                 <mat-icon>done_all</mat-icon>
               </button>
-              <button *ngIf="encuestasAvailable.includes(encuesta.id)" (click)="popupModal(encuesta.id)" style="margin-right: 20px;" mat-raised-button color="accent" aria-label="compartir">
+              <button *ngIf="encuestasAvailable.includes(encuesta.id)" (click)="popupModal(encuesta.uid)" style="margin-right: 20px;" mat-raised-button color="accent" aria-label="compartir">
                 Compartir
                 <mat-icon>share</mat-icon>
               </button>

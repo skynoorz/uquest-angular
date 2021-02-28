@@ -29,4 +29,6 @@ public interface IEncuestaService {
     public List<Encuesta> getEncuestasByCarrera(Long id);
 
     public List<Encuesta> getEncuestasByCarreraList(Long id);
+
+    public Encuesta findByUID(String uid);
 }

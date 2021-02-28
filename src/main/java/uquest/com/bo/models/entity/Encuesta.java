@@ -36,6 +36,8 @@ public class Encuesta implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
+    private String UID;
+
     @NotNull(message = "La fecha de inicio de la encuesta no debe estar vacia!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaIni;
@@ -170,5 +172,13 @@ public class Encuesta implements Serializable {
 
     public void setCarreras(List<Carrera> carreras) {
         this.carreras = carreras;
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 }

@@ -41,4 +41,7 @@ public interface IRespuestaDao extends CrudRepository<Respuesta, Long> {
 
   @Query("select r.textValue from Respuesta r where r.preguntaId = ?1")
   public List<String> getRespuestasTextValueByPregunta(Long idEncuesta);
+
+  @Query(value = "select DISTINCT r.usuario_id from respuestas r join preguntas p on r.pregunta_id = p.id, (select id as id from encuestas where UID = ?1) uidconector where uidconector.id = p.encuesta_id;", nativeQuery = true)
+  public List<Long> findAllUsersAnsweredByEncuestaUID (@Param("encuestaUID") String encuestaUID);
 }

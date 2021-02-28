@@ -66,6 +66,11 @@ export class EncuestasService {
     return this.http.get<Encuesta>(`${this.urlEndpointNative}/encuestas/${id}`)
   }
 
+  getEncuestaUID(id): Observable<Encuesta>{
+    // console.log("envio uid: ",id)
+    return this.http.get<Encuesta>(`${this.urlEndpointNative}/encuestas/uid/${id}`)
+  }
+
   getEncuestasByUsername(user): Observable<Encuesta[]>{
     return this.http.get<Encuesta[]>(`${this.urlEndpoint}/encuestas/user/${user}`);
   }

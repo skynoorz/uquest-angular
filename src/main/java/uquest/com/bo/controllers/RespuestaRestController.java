@@ -52,6 +52,13 @@ public class RespuestaRestController {
         );
     }
 
+    @GetMapping("/usuarios/encuesta/uid/{encuestaUID}")
+    public ResponseEntity<List<Long>> findUsersWhoAnsweredEncuestaUID(@PathVariable("encuestaUID") String encuestaUID) {
+        return ResponseEntity.ok(
+                respuestaService.findAllUsersAnsweredByEncuestaUID(encuestaUID)
+        );
+    }
+
     @GetMapping("/usuarios/pregunta/{preguntaId}")
     public ResponseEntity<List<String>> findRespuestasByPregunta(@PathVariable("preguntaId") Long preguntaId) {
         return ResponseEntity.ok(

@@ -44,14 +44,14 @@ export class EncuestaSolveComponent implements OnInit {
       let id = params ['id']
       console.log(id);
       if (id) {
-        this.encuestaService.getEncuesta(id).subscribe((encuesta) => {
+        this.encuestaService.getEncuestaUID(id).subscribe((encuesta) => {
           // initialize respuestasMap
           if (encuesta.tipo == 'Abierto') {
 
           } else if (encuesta.tipo == 'Cerrado') {
             console.log("enmtra cerrado")
             if (this.authService.isAuthenticated()) {
-              this.respuestaService.getUsersWhoAnsweredEncuesta(id).subscribe(response => {
+              this.respuestaService.getUsersWhoAnsweredEncuestaUID(id).subscribe(response => {
                 console.log("Para validar si esta: ", response);
                 response.forEach(e => {
                   if (e == JSON.parse(sessionStorage.getItem("persona")).id) {
@@ -82,7 +82,8 @@ export class EncuestaSolveComponent implements OnInit {
         this.usuarioId = JSON.parse(sessionStorage.getItem("persona")).id;
       }
       if (id) {
-        this.encuestaService.getEncuesta(id).subscribe((encuesta) => {
+        // this.encuestaService.getEncuesta(id).subscribe((encuesta) => {
+        this.encuestaService.getEncuestaUID(id).subscribe((encuesta) => {
           // initialize respuestasMap
           encuesta.preguntas.forEach(p => {
             this.respuestasMap[p.id] = {};

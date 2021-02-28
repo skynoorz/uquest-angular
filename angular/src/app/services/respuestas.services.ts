@@ -39,6 +39,9 @@ export class RespuestasService {
   getUsersWhoAnsweredEncuesta(id):Observable<number[]>{
     return this.http.get<number[]>(`${this.baseUrl}/usuarios/encuesta/${id}`);
   }
+  getUsersWhoAnsweredEncuestaUID(uid):Observable<number[]>{
+    return this.http.get<number[]>(`${this.baseUrl}/usuarios/encuesta/uid/${uid}`);
+  }
 
   getRespuestasByPreguntaId(idPregunta):Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/usuarios/pregunta/${idPregunta}`);

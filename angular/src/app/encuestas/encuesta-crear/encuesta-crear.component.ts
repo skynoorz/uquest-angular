@@ -128,7 +128,7 @@ export class EncuestaCrearComponent implements OnInit {
       if (p.id){
         delete p.id;
       }
-      if (p.opciones.length >0){
+      if (p.opciones){
         p.opciones.map(o=>{
           delete o.id;
         })
