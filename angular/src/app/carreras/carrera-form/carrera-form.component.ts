@@ -67,7 +67,6 @@ export class CarreraFormComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data != null) {
       this.carreraService.getCarreraByid(data.id).subscribe(c => {
-        console.log("carrera id: ", data.id, c)
         this.carrera = c;
       })
     }
@@ -77,6 +76,16 @@ export class CarreraFormComponent implements OnInit {
   }
 
   modificarCarrera() {
+    if (this.carrera.institutos) {
+      const institutosNew: any[] = [];
+      this.carrera.institutos.map(e => {
+        let instituto: any;
+        // agrego el id a los institutos que posee cada carrera para evitar la deserializacion en JPA
+        instituto = {...e, ...{carrera: {id: this.carrera.id}}};
+        institutosNew.push(instituto)
+      })
+      this.carrera.institutos = institutosNew;
+    }
     this.carreraService.saveCarrera(this.carrera).subscribe(e => {
       Swal.fire({
         position: 'center',
