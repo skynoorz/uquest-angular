@@ -24,8 +24,8 @@ public class ICarreraServiceImpl implements ICarreraService{
     }
 
     @Override
-    public void save(Carrera carrera) {
-        carreraDao.save(carrera);
+    public Carrera save(Carrera carrera) {
+        return carreraDao.save(carrera);
     }
 
     @Override
@@ -46,5 +46,10 @@ public class ICarreraServiceImpl implements ICarreraService{
     @Override
     public List<Instituto> findInstByCarreraId(Long id) {
         return this.institutoDao.findInstitutoByCarrera(id);
+    }
+
+    @Override
+    public Carrera findById(Long id) {
+        return this.carreraDao.findById(id).orElse(null);
     }
 }

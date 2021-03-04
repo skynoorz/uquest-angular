@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface IInstitutoDao extends CrudRepository<Instituto, Long> {
 
-    @Query("from Instituto where carrera.id = ?1")
+    @Query(value = "select * from institutos where carrera_id = ?1", nativeQuery = true)
     public List<Instituto> findInstitutoByCarrera(Long id);
 }

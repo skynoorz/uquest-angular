@@ -8,7 +8,7 @@ import java.util.List;
 public interface ICarreraService {
     public List<Carrera> findAll();
 
-    public void save(Carrera carrera);
+    public Carrera save(Carrera carrera);
 
     public Carrera findOne(Long id);
 
@@ -18,4 +18,5 @@ public interface ICarreraService {
 
     public List<Instituto> findInstByCarreraId(Long id);
 
+    public Carrera findById(Long id);
 }

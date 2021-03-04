@@ -258,9 +258,10 @@ export class RegistroComponent implements OnInit {
   onSubmit(user: any) {
     console.log('user', user);
     // creo persona model
-    user.carrera = {id: user.carreraId};
-    user.instituto = {id: user.institutoId};
+    this.user.carrera = {id: user.carreraId};
+    this.user.instituto = {id: user.institutoId};
     this.isLoading = true;
+    console.log("registro:", user)
     this.personaService.create(this.user).subscribe(
       response => {
         Swal.fire('Finalizado', `Se realizó el registro satisfactoriamente, porfavor revise su correo electronico para validar su cuenta!`, 'success')

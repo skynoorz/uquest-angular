@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uquest.com.bo.models.entity.Carrera;
 import uquest.com.bo.models.entity.Instituto;
-import uquest.com.bo.models.entity.Usuario;
 import uquest.com.bo.models.services.carrera.ICarreraService;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +35,7 @@ public class CarreraRestController {
     public List<Instituto> show(@PathVariable Long id) {
 
         return carreraService.findInstByCarreraId(id);
+//        return null;
 //        List<Instituto> institutos = null;
 //        Map<String, Object> response = new HashMap<>();
 //        try {
@@ -51,5 +52,43 @@ public class CarreraRestController {
 //        }
 //
 //        return new ResponseEntity<Instituto>(institutos, HttpStatus.OK);
+    }
+
+    @GetMapping("/carreras/id/{id}")
+    public Carrera carreraById(@PathVariable Long id) {
+        return carreraService.findById(id);
+    }
+
+    @PostMapping("/carreras")
+    private ResponseEntity<?> create(@Valid @RequestBody Carrera carrera) {
+
+        Carrera carreraNew;
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            carreraNew = carreraService.save(carrera);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la Base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("carrera", carreraNew);
+        response.put("mensaje", "El registro de la categoria fue satisfactorio.");
+        return new ResponseEntity<Map>(response, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/carreras/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            carreraService.delete(id);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar la carrera en la Base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "El registro de la carrera se elimino correctamente");
+        return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
 }

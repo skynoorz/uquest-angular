@@ -78,6 +78,9 @@ import { Perfil2Component } from './personas/perfil2/perfil2.component';
 import { MessagesComponent } from './messages/messages.component';
 import { RegistrationConfirmComponent } from './messages/registration-confirm/registration-confirm.component';
 import {NgxCaptchaModule} from "ngx-captcha";
+import { CarrerasInstitutoComponent } from './carreras/carreras-instituto/carreras-instituto.component';
+import { CarreraFormComponent } from './carreras/carrera-form/carrera-form.component';
+import { InstitutoFormComponent } from './carreras/instituto-form/instituto-form.component';
 
 registerLocaleData(localeES, 'es')
 
@@ -103,6 +106,7 @@ const routes: Routes = [
   {path: 'stadistics-public/encuesta/:id', component: StadisticsPublicComponent },
   {path: 'message/email/success', component: MessagesComponent },
   {path: 'regitrationConfirm', component: RegistrationConfirmComponent },
+  {path: 'carreras', component: CarrerasInstitutoComponent },
   // {path: 'personas/ver/:id', component: DetalleComponent}
 ]
 
@@ -160,7 +164,10 @@ export function fieldMatchValidator(control: AbstractControl) {
     EncuestaAdminComponent,
     Perfil2Component,
     MessagesComponent,
-    RegistrationConfirmComponent
+    RegistrationConfirmComponent,
+    CarrerasInstitutoComponent,
+    CarreraFormComponent,
+    InstitutoFormComponent
   ],
   imports: [
     BrowserModule,
@@ -188,7 +195,7 @@ export function fieldMatchValidator(control: AbstractControl) {
           {name: 'max', message: maxValidationMessage},
         ],
         validators: [
-          { name: 'fieldMatch', validation: fieldMatchValidator },
+          {name: 'fieldMatch', validation: fieldMatchValidator},
         ],
       }
     ),
@@ -218,7 +225,7 @@ export function fieldMatchValidator(control: AbstractControl) {
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatSortModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
   ],
   providers: [
     {

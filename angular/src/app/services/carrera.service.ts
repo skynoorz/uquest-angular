@@ -8,7 +8,6 @@ import {Carrera} from "../classes/carrera";
 import {Instituto} from "../classes/instituto";
 import { environment } from "../../environments/environment";
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -54,4 +53,24 @@ export class CarreraService {
     );
   }
 
+  getCarreraByid(id: number): Observable<Carrera> {
+    return this.http.get<Carrera>(`${this.urlEndpoint}/id/${id}`);
+  }
+
+  saveCarrera(carrera: Carrera) : Observable<any> {
+    return this.http.post<any>(`${this.urlEndpoint}`,carrera).pipe(
+      catchError(err => {
+        if (err.status == 400 ) {
+          return throwError(err);
+        }
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
+        return throwError(err);
+      })
+    )
+  }
+
+  delete(id: number): Observable<any>{
+    return this.http.delete<Carrera>(`${this.urlEndpoint}/delete/${id}`);
+  }
 }

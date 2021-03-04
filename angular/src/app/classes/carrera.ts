@@ -7,5 +7,5 @@ export class Carrera{
   direccion: string;
   fono: string;
   email: string;
-  instituto: Instituto[];
+  institutos: Instituto[];
 }

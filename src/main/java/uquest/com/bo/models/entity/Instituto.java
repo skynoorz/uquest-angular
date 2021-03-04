@@ -2,6 +2,7 @@ package uquest.com.bo.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -36,20 +37,26 @@ public class Instituto implements Serializable {
     @NotEmpty
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="carrera_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
     private Carrera carrera;
+
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    @JoinColumn(name="carrera_id")
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    private Carrera carrera;
 
 //    @JsonIgnore
 //    @ManyToMany(mappedBy = "institutos")
 //    private List<Persona> usuarios;
 
+    @JsonIgnore
     public Carrera getCarrera() {
         return carrera;
     }
 
+    @JsonProperty
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
     }

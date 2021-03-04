@@ -1,0 +1,87 @@
+<div class="container mt-3" style="font-family: Metropolis-Light, sans-serif">
+  <div style="display: flex; justify-content: space-between; margin: 20px 0 20px 0">
+    <h2> CARRERAS / INSTITUTOS </h2>
+    <button mat-raised-button color="primary" type="button" style="height: 40px" (click)="agregarCarreraOpenDialog()">
+      <mat-icon>add</mat-icon>
+      Carrera
+    </button>
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let carrera of carreras">
+      <mat-expansion-panel-header>
+        <mat-panel-title style="font-family: Metropolis-Bold,sans-serif;">
+          {{carrera.nombre}}
+        </mat-panel-title>
+        <mat-panel-description>
+          <div>{{carrera.direccion}}</div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <!-- content-->
+      <div class="shadow-none p-3 mb-3 bg-light rounded" style="font-family: Metropolis-Bold,sans-serif">
+        <div>
+          <p style="display: inline-block;">Carrera: &nbsp;</p>
+          <h4 style="display: inline-block">{{carrera.nombre}}</h4>
+        </div>
+        <div>
+          <p style="display: inline-block;">Fono: &nbsp;</p>
+          <h4 style="display: inline-block">{{carrera.fono}}</h4>
+        </div>
+        <div>
+          <p style="display: inline-block;">Dirección: &nbsp;</p>
+          <h4 style="display: inline-block">{{carrera.direccion}}</h4>
+        </div>
+        <div>
+          <p style="display: inline-block;">Email: &nbsp;</p>
+          <h4 style="display: inline-block">{{carrera.email}}</h4>
+        </div>
+        <div>
+          <button mat-stroked-button color="primary" class="mr-1" (click)="editarCarreraOpenDialog(carrera.id)">Editar</button>
+          <button mat-stroked-button color="warn" class="mr-1" (click)="eliminarCarrera(carrera.id)">Eliminar</button>
+        </div>
+      </div>
+      <div style="display: flex;justify-content: space-between">
+        <h4 style="font-family: Metropolis-Bold,sans-serif">INSTITUTOS</h4>
+        <button mat-mini-fab color="primary" aria-label="add" (click)="agregarInstitutoOpenDialog(carrera.id)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <!-- institutos-->
+      <div *ngIf="carrera.institutos.length > 0">
+        <div *ngFor="let instituto of carrera.institutos" class="col-auto mb-3" style="display: inline-block">
+          <div class="card" style="width: 18rem;display: inline-block">
+            <div class="card-header" style="font-family: Metropolis-Bold,sans-serif;">
+              {{instituto.nombre}}
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" style="padding-bottom: 0">
+                <h4 style="display: inline-block; font-family: Metropolis-Bold,sans-serif">Fono: &nbsp;</h4>
+                <p style="display: inline-block">{{instituto.fono}}</p>
+              </li>
+              <li class="list-group-item" style="padding-bottom: 0">
+                <h4 style="display: inline-block; font-family: Metropolis-Bold,sans-serif">Email: &nbsp;</h4>
+                <p style="display: inline-block">{{instituto.email}}</p>
+              </li>
+              <li class="list-group-item" style="padding-bottom: 0">
+                <h4 style="display: inline-block; font-family: Metropolis-Bold,sans-serif">Sigla: &nbsp;</h4>
+                <p style="display: inline-block">{{instituto.sigla}}</p>
+              </li>
+            </ul>
+            <div class="card-footer" style="display: flex;justify-content: space-between">
+              <button mat-stroked-button (click)="editarInstitutoOpenDialog(instituto.id, carrera.id)">Editar</button>
+              <button mat-stroked-button (click)="eliminarInstituto(instituto.id)">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="carrera.institutos.length == 0">
+        <div class="alert alert-warning" role="alert">
+          <h2 class="alert-heading">No existen Institutos!</h2>
+          <p>No existen institutos para la carrera "{{carrera.nombre}}", puedes empezar agregando un nuevo instituto a esta carrera, intentalo! </p>
+          <hr>
+          <p class="mb-0">Puedes agregar un nuevo instituto a esta carrera haciendo click <a style="color:blue; cursor: pointer;" (click)="agregarInstitutoOpenDialog(carrera.id)">aqui!</a>.</p>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

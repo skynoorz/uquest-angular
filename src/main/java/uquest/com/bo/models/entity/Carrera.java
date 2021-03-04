@@ -1,11 +1,10 @@
 package uquest.com.bo.models.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -34,6 +33,15 @@ public class Carrera implements Serializable {
     @Column
     @NotEmpty
     private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carrera", orphanRemoval = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Instituto> institutos;
+
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,  mappedBy = "carrera")
+////    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Instituto> institutos;
 
 //    @JsonIgnore
 //    @ManyToMany(mappedBy = "carreras")
@@ -79,6 +87,11 @@ public class Carrera implements Serializable {
         this.email = email;
     }
 
+    public List<Instituto> getInstitutos() {
+        return institutos;
+    }
 
-
+    public void setInstitutos(List<Instituto> institutos) {
+        this.institutos = institutos;
+    }
 }
