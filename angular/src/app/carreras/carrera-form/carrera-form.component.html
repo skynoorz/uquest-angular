@@ -1,0 +1,7 @@
+<form [formGroup]="form" (ngSubmit)="modificarCarrera()">
+  <formly-form [form]="form" [fields]="fields" [model]="carrera"></formly-form>
+  <div style="display: flex; justify-content: space-between; margin-top: 10px">
+    <button mat-stroked-button [disabled]="!form.valid" color="primary">GUARDAR</button>
+    <button mat-stroked-button color="warn" [mat-dialog-close]="carrera">CANCELAR</button>
+  </div>
+</form>
