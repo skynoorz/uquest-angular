@@ -10,6 +10,7 @@ import {Encuesta} from "../../classes/encuesta";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RespuestasService} from "../../services/respuestas.services";
 import Swal from "sweetalert2";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-stadistics',
@@ -20,6 +21,7 @@ export class StadisticsComponent implements OnInit {
 
   public encuesta: Encuesta = new Encuesta();
   public totalRespuestas = 0;
+  basePath: string = environment.basePath;
 
   private chartOM: am4charts.PieChart;
   private chartVerif: am4charts.PieChart;
@@ -29,7 +31,7 @@ export class StadisticsComponent implements OnInit {
   private arrChartVerif: am4charts.PieChart[] = [];
   private arrChartLineal: am4charts.XYChart[] = [];
 
-  private preguntaRespuestas: {preguntaDescripcion: string, respuestas: string[]}[] = []
+  private preguntaRespuestas: { preguntaDescripcion: string, respuestas: string[] }[] = []
 
   @ViewChild('containerPreguntas', {static: true}) divView: ElementRef
 
@@ -47,7 +49,7 @@ export class StadisticsComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       let id = params ['id']
       if (id) {
-        this.encuestaService.getTotalRespuestasByEncuestaId(id).subscribe(total =>{
+        this.encuestaService.getTotalRespuestasByEncuestaId(id).subscribe(total => {
           this.totalRespuestas = total.respuestas;
           console.log("TOTAL RESPUESTAS: ", this.totalRespuestas);
         })
@@ -82,7 +84,7 @@ export class StadisticsComponent implements OnInit {
               console.log("Respuestas: ", respuestas)
               console.log("Encuesta: ", encuesta)
               // Empiezo a generar los charts por cada pregunta
-              this.encuesta.preguntas.forEach((pregunta,index) => {
+              this.encuesta.preguntas.forEach((pregunta, index) => {
 
                 // genero divs en document
                 const div = document.createElement('div');
@@ -115,8 +117,8 @@ export class StadisticsComponent implements OnInit {
                     this.respuestaService.getRespuestasByPreguntaId(pregunta.id).subscribe(respuestas => {
 
                       const titulo = document.createElement('span');
-                      titulo.setAttribute("style","font-style: 400 14px/20px 'Roboto,Helvetica Neue', sans-serif;");
-                      titulo.innerHTML = index+1+".- "+pregunta.descripcion;
+                      titulo.setAttribute("style", "font-style: 400 14px/20px 'Roboto,Helvetica Neue', sans-serif;");
+                      titulo.innerHTML = index + 1 + ".- " + pregunta.descripcion;
                       div.appendChild(titulo);
 
                       respuestas.forEach(respuesta => {
@@ -126,14 +128,14 @@ export class StadisticsComponent implements OnInit {
                         // this.respuestasSimple.push(new Map().set(pregunta.descripcion,respuesta));
                       })
                       this.preguntaRespuestas.push({preguntaDescripcion: pregunta.descripcion, respuestas: respuestas})
-                      console.log("preguntaRespuestas: ",this.preguntaRespuestas);
+                      console.log("preguntaRespuestas: ", this.preguntaRespuestas);
                     })
                     break;
                   case 'Parrafo':
                     this.respuestaService.getRespuestasByPreguntaId(pregunta.id).subscribe(respuestas => {
                       const titulo = document.createElement('div');
-                      titulo.setAttribute("style","font-size: 25px;font-weight: 400;font-stretch: normal;line-height: 20px; padding-top: 30px; padding-bottom:30px; text-align: center");
-                      titulo.innerHTML = index+1+".- "+pregunta.descripcion;
+                      titulo.setAttribute("style", "font-size: 25px;font-weight: 400;font-stretch: normal;line-height: 20px; padding-top: 30px; padding-bottom:30px; text-align: center");
+                      titulo.innerHTML = index + 1 + ".- " + pregunta.descripcion;
                       div.appendChild(titulo);
                       respuestas.forEach(respuesta => {
                         const span = document.createElement('li')
@@ -142,7 +144,7 @@ export class StadisticsComponent implements OnInit {
                         // this.respuestasParrafo.push(new Map().set(pregunta.descripcion,respuesta));
                       })
                       this.preguntaRespuestas.push({preguntaDescripcion: pregunta.descripcion, respuestas: respuestas})
-                      console.log("preguntaRespuestas: ",this.preguntaRespuestas);
+                      console.log("preguntaRespuestas: ", this.preguntaRespuestas);
                     })
                     break;
                   case 'Opcion Multiple':
@@ -150,7 +152,7 @@ export class StadisticsComponent implements OnInit {
                     this.chartOM = am4core.create(divcontent.getAttribute("id"), am4charts.PieChart);
                     // TITULO
                     let title = this.chartOM.titles.create();
-                    title.text = index+1+".- "+pregunta.descripcion;
+                    title.text = index + 1 + ".- " + pregunta.descripcion;
                     title.fontSize = 25;
                     title.marginBottom = 30;
 
@@ -179,7 +181,7 @@ export class StadisticsComponent implements OnInit {
                     this.chartVerif = am4core.create(divcontent.getAttribute("id"), am4charts.PieChart);
                     // TITULO
                     let title2 = this.chartVerif.titles.create();
-                    title2.text = index+1+".- "+pregunta.descripcion;
+                    title2.text = index + 1 + ".- " + pregunta.descripcion;
                     title2.fontSize = 25;
                     title2.marginBottom = 30;
                     // @ts-ignore
@@ -202,7 +204,7 @@ export class StadisticsComponent implements OnInit {
                     this.chartLineal = am4core.create(divcontent.getAttribute("id"), am4charts.XYChart);
                     // TITULO
                     let title3 = this.chartLineal.titles.create();
-                    title3.text = index+1+".- "+pregunta.descripcion;
+                    title3.text = index + 1 + ".- " + pregunta.descripcion;
                     title3.fontSize = 25;
                     title3.marginBottom = 30;
 
@@ -293,7 +295,7 @@ export class StadisticsComponent implements OnInit {
 
       var d = new Date();
 
-      var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+      var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
         d.getFullYear() + " a las " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 
 
@@ -306,8 +308,8 @@ export class StadisticsComponent implements OnInit {
         content: [],
         header: {
           columns: [
-            { text: 'Encuesta creada en '+this.encuesta.createAt, alignment: 'left', margin:  [5, 2]},
-            { text: 'Estadisticas generadas el '+datestring, alignment: 'right', margin:  [5, 2]}
+            {text: 'Encuesta creada en ' + this.encuesta.createAt, alignment: 'left', margin: [5, 2]},
+            {text: 'Estadisticas generadas el ' + datestring, alignment: 'right', margin: [5, 2]}
           ]
         },
       }
@@ -320,7 +322,7 @@ export class StadisticsComponent implements OnInit {
       });
 
       doc.content.push({
-        text: '(tipo: '+this.encuesta.tipo+', categoria: '+this.encuesta.categoria.nombre+')',
+        text: '(tipo: ' + this.encuesta.tipo + ', categoria: ' + this.encuesta.categoria.nombre + ')',
         fontSize: 10,
         italics: true,
         margin: [0, 0, 0, 20]
@@ -336,17 +338,17 @@ export class StadisticsComponent implements OnInit {
 
       //Pregunta simple y Parrafo
 
-      if (this.preguntaRespuestas.length >0){
-        this.preguntaRespuestas.forEach(pr=>{
+      if (this.preguntaRespuestas.length > 0) {
+        this.preguntaRespuestas.forEach(pr => {
           doc.content.push({
             text: pr.preguntaDescripcion,
             alignment: 'center',
             fontSize: 15,
             margin: [0, 0, 0, 15]
           });
-          pr.respuestas.forEach(respuesta=>{
+          pr.respuestas.forEach(respuesta => {
             doc.content.push({
-              text: "- "+respuesta,
+              text: "- " + respuesta,
               fontSize: 9,
               margin: [0, 0, 0, 0]
             })
@@ -396,7 +398,6 @@ export class StadisticsComponent implements OnInit {
       })
 
 
-
       pdfMake.createPdf(doc).download("reporte_" + this.encuesta.createAt + ".pdf");
     });
 
@@ -421,4 +422,10 @@ export class StadisticsComponent implements OnInit {
     });
   }
 
+  saveCSV() {
+    this.respuestaService.getCSV(this.encuesta.id).subscribe(r => {
+        console.log("Respuesta: ", r);
+      }
+    )
+  }
 }

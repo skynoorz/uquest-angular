@@ -11,6 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RespuestasService} from "../../services/respuestas.services";
 import Swal from "sweetalert2";
 import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-stadistics-public',
@@ -20,6 +21,7 @@ import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
 export class StadisticsPublicComponent implements OnInit {
 
   public encuesta: Encuesta = new Encuesta();
+  basePath: string = environment.basePath;
 
   private chartOM: am4charts.PieChart;
   private chartVerif: am4charts.PieChart;

@@ -49,4 +49,8 @@ export class RespuestasService {
   getRespuestasPublicByPreguntaId(idPregunta):Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/usuarios/pregunta/public/${idPregunta}`);
   }
+
+  getCSV(id: number){
+    return this.http.get(`${this.baseUrl}/encuesta/results/export/${id}`);
+  }
 }

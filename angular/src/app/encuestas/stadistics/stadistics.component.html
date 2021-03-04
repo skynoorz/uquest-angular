@@ -8,7 +8,9 @@
           <p>Fecha de la Encuesta: {{this.encuesta.createAt}}</p>
         </div>
       </div>
-      <div class="mat-button alert-primary m-3" (click)="savePDF()">exportar PDF</div>
+      <div class="btn btn-primary m-3" (click)="savePDF()">Exportar PDF</div>
+<!--      <div class="mat-button alert-success m-3" (click)="saveCSV()">exportar CSV</div>-->
+      <a class="btn btn-success m-3" style="text-decoration: none;" href="{{basePath}}/api/respuesta/encuesta/results/export/{{encuesta.id}}">Exportar CSV</a>
       <div class="container">
         <div #containerPreguntas></div>
       </div>

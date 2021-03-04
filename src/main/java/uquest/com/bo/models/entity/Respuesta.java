@@ -33,6 +33,46 @@ public class Respuesta {
         this.id = id;
     }
 
+    public String getText_value() {
+        return textValue;
+    }
+
+    public void setText_value(String textValue) {
+        this.textValue = textValue;
+    }
+
+    public Double getNum_value() {
+        return numValue;
+    }
+
+    public void setNum_value(Double numValue) {
+        this.numValue = numValue;
+    }
+
+    public Long getOpcion_id() {
+        return opcionId;
+    }
+
+    public void setOpcion_id(Long opcionId) {
+        this.opcionId = opcionId;
+    }
+
+    public Long getPregunta_id() {
+        return preguntaId;
+    }
+
+    public void setPregunta_id(Long preguntaId) {
+        this.preguntaId = preguntaId;
+    }
+
+    public Long getUsuario_id() {
+        return usuarioId;
+    }
+
+    public void setUsuario_id(Long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
     public String getTextValue() {
         return textValue;
     }
@@ -84,4 +124,6 @@ public class Respuesta {
             ", usuarioId=" + usuarioId +
             '}';
     }
+
+
 }
