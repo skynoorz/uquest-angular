@@ -1,5 +1,6 @@
 package uquest.com.bo.models.services;
 
+import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,31 +21,32 @@ import uquest.com.bo.models.entity.Role;
 import uquest.com.bo.models.entity.Usuario;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UsuarioService implements UserDetailsService, IUsuarioService {
+public class UsuarioService implements IUsuarioService {
 
     private Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
     @Autowired
     private IUsuarioDao usuarioDao;
 
-    @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioDao.findByUsername(username);
-        if (usuario == null) {
-            logger.error("Error en el login, no existe usuario '" + username + "' en el sistema");
-            throw new UsernameNotFoundException("Error en el login, no existe usuario '" + username + "' en el sistema");
+    @Transactional
+    public Usuario loadUserByUsername(final String login) {
+
+        if (new EmailValidator().isValid(login, null)) {
+            return usuarioDao.findByEmail(login)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"));
         }
-        List<GrantedAuthority> authorities = usuario.getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getNombre()))
-                .peek(authority -> logger.info("Role: " + authority.getAuthority()))
-                .collect(Collectors.toList());
-        return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true, authorities);
+
+        return usuarioDao.findByUsername(login)
+            .orElseThrow(() -> new UsernameNotFoundException("User " + login + " was not found in the database"));
+
     }
+
+
+
 
 
 
@@ -111,11 +113,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
     @Override
     @Transactional(readOnly = true)
     public Usuario findByUsername(String name) {
-        return usuarioDao.findByUsername(name);
+        return usuarioDao.findByUsername(name).orElse(null);
     }
 
     @Override
     public Usuario findByEmail(String email) {
-        return usuarioDao.findByEmail(email);
+        return usuarioDao.findByEmail(email).orElse(null);
     }
 }

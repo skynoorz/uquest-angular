@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {startWith, map, tap, switchMap} from "rxjs/operators";
 import {Router} from "@angular/router";
+import { preRegisterSubject$ } from "../usuarios/auth.service";
 
 
 export function minAgeValidatorMessage(control: FormControl, date: Date): boolean {
@@ -21,7 +22,7 @@ export function minAgeValidatorMessage(control: FormControl, date: Date): boolea
 })
 export class RegistroComponent implements OnInit {
 
-  user: any = {carreraId: 1};
+  user: any;
   form = new FormGroup({
     recaptcha: new FormControl('', Validators.required)
   });
@@ -30,7 +31,6 @@ export class RegistroComponent implements OnInit {
 
   minAge = new Date(new Date().getFullYear() - 18, new Date().getMonth(), new Date().getDate());
   siteKey: string;
-
 
   verificaCarrera(carreraId) {
     if (this.carreraService.getInstitutosByCarreraId(carreraId))
@@ -249,6 +249,9 @@ export class RegistroComponent implements OnInit {
               private carreraService: CarreraService,
               private router: Router) {
     this.siteKey = '6Le3v2oaAAAAAKXBwA-bweH_Rrl8YvmP9TSKCAT1';
+    const user = preRegisterSubject$.getValue() || {};
+    user.carreraId = 1;
+    this.user = user;
   }
 
   ngOnInit(): void {

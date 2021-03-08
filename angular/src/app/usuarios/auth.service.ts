@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Persona} from "../classes/persona";
 import {Rol} from "../classes/rol";
 import {environment} from "../../environments/environment";
+
+export const preRegisterSubject$ = new BehaviorSubject<any>(null);
 
 @Injectable({
   providedIn: 'root'
@@ -39,22 +41,21 @@ export class AuthService {
 
 
   login(persona: Persona): Observable<any> {
-    const urlEndpoint = environment.basePath +'/oauth/token';
+    const urlEndpoint = environment.basePath +'/api/login';
 
-    const credenciales = btoa('angularapp' + ':' + '12345');
-    const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-      , 'Authorization': 'Basic ' + credenciales
-    });
-
-    let params = new URLSearchParams();
-    params.set('grant_type', 'password');
-    params.set('username', persona.username);
-    params.set('password', persona.password);
 
     // console.log(params.toString());
+    const payload = {
+      username: persona.username,
+      password: persona.password
+    }
 
-    return this.http.post(urlEndpoint, params.toString(), {headers: httpHeaders})
+    return this.http.post(urlEndpoint, payload )
+  }
+
+  socialLogin(code: string) {
+    const urlEndpoint = environment.basePath +'/api/google/login';
+    return this.http.post(urlEndpoint, { code });
   }
 
   guardarPersonaSS(accessToken: string): void {

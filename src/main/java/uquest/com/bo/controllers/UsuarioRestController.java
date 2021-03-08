@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class UsuarioRestController {
     private IEncuestaService encuestaService;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/usuarios")
     public List<Usuario> index() {
@@ -131,11 +132,14 @@ public class UsuarioRestController {
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             if (usuario.getInstituto().getId() == null)
                 usuario.setInstituto(null);
+            boolean isSocialRegistration = usuario.getSocialId() != null;
             usuario.setToken(UUID.randomUUID().toString());
-            usuario.setEnabled(false);
+            usuario.setEnabled(isSocialRegistration);
             usuarioNew = usuarioService.save(usuario);
             String appUrl = request.getContextPath();
-            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(usuarioNew, appUrl));
+            if (!isSocialRegistration) {
+                eventPublisher.publishEvent(new OnRegistrationCompleteEvent(usuarioNew, appUrl));
+            }
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

@@ -23,6 +23,9 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private String socialId;
+
     @NotEmpty(message = "no puede estar vacio")
     @Size(min = 4, max = 22, message = "debe tener entre 4 a 22 letras")
     @Column(nullable = false)
@@ -239,5 +242,13 @@ public class Usuario implements Serializable {
     @PrePersist
     public void prePersist() {
         createAt = new Date();
+    }
+
+    public String getSocialId() {
+        return socialId;
+    }
+
+    public void setSocialId(String socialId) {
+        this.socialId = socialId;
     }
 }
