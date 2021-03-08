@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uquest.com.bo.models.dao.IRespuestaDao;
 import uquest.com.bo.models.entity.Respuesta;
+import uquest.com.bo.models.projection.RespuestasReport;
 
 import java.util.List;
 
@@ -39,5 +40,9 @@ public class RespuestaService {
 
   public List<Long> findAllUsersAnsweredByEncuestaUID(String encuestaUID) {
     return respuestaDao.findAllUsersAnsweredByEncuestaUID(encuestaUID);
+  }
+
+  public List<RespuestasReport> getRespuestasReport(Long encuestaId) {
+    return respuestaDao.findRespuestasReport(encuestaId);
   }
 }

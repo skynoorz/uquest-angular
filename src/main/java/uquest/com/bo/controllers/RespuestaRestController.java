@@ -9,6 +9,7 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 import uquest.com.bo.models.entity.Respuesta;
+import uquest.com.bo.models.projection.RespuestasReport;
 import uquest.com.bo.models.services.respuesta.RespuestaService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -91,20 +92,19 @@ public class RespuestaRestController {
         String headerValue = "attachment; filename=respuestas_" + currentDateTime + ".csv";
         response.setHeader(headerKey, headerValue);
 
-        List<Respuesta> listRespuestas = respuestaService.getAllRespuestasByEncuesta(encuestaId);
+        List<RespuestasReport> listRespuestas = respuestaService.getRespuestasReport(encuestaId);
 
         ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-        String[] csvHeader = {"Respuesta Id", "Valor Seleccionado", "Opcion Id", "Pregunta Id", "Texto", "Usuario id"};
-        String[] nameMapping = {"id", "num_value", "opcion_id", "pregunta_id", "text_value","usuario_id"};
+        String[] csvHeader = {"Tipo Pregunta", "Titulo Pregunta", "Valor escogido", "Titulo Opcion", "Texto", "Apellido Paterno", "Apellido Materno", "Nombres"};
+        String[] nameMapping = {"tipo", "descripcion", "num_value", "texto", "text_value","apellido_pat", "apellido_mat", "nombres"};
 
         csvWriter.writeHeader(csvHeader);
 
-        for (Respuesta respuesta : listRespuestas) {
+        for (RespuestasReport respuesta : listRespuestas) {
             csvWriter.write(respuesta, nameMapping);
         }
 
         csvWriter.close();
-
     }
 
 }

@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import uquest.com.bo.models.entity.Respuesta;
+import uquest.com.bo.models.projection.RespuestasReport;
 import uquest.com.bo.models.projection.RespuestasStats;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public interface IRespuestaDao extends CrudRepository<Respuesta, Long> {
           "p.encuesta_id , p.descripcion,\n" +
           "o.id as opcion_id,\n" +
           "case when o.texto is null then rse.resp else o.texto end as resp_text,\n" +
-//          "case when o.texto is null then CAST(rse.resp as VARCHAR) else o.texto end as resp_text,\n" +
-          "case when rso.resp_count is null then rse.resp_count else rso.resp_count end as resp_count\n" +
+          "case when o.texto is null then CAST(rse.resp as VARCHAR) else o.texto end as resp_text,\n" +
+//          "case when rso.resp_count is null then rse.resp_count else rso.resp_count end as resp_count\n" +
           "from preguntas p\n" +
           "join preguntas_opciones po on p.id = po.pregunta_id\n" +
           "join opciones o on o.id = po.opcion_id\n" +
@@ -45,4 +46,14 @@ public interface IRespuestaDao extends CrudRepository<Respuesta, Long> {
 
   @Query(value = "select DISTINCT r.usuario_id from respuestas r join preguntas p on r.pregunta_id = p.id, (select id as id from encuestas where UID = ?1) uidconector where uidconector.id = p.encuesta_id;", nativeQuery = true)
   public List<Long> findAllUsersAnsweredByEncuestaUID (@Param("encuestaUID") String encuestaUID);
+
+  @Query(value = "SELECT p.tipo, p.descripcion, num_value, o.texto,  text_value, u.apellido_pat, u.apellido_mat, u.nombres\n" +
+          "FROM respuestas r\n" +
+          "LEFT JOIN opciones o\n" +
+          "ON r.opcion_id = o.id\n" +
+          "LEFT JOIN preguntas p\n" +
+          "ON r.pregunta_id = p.id\n" +
+          "LEFT JOIN usuarios u\n" +
+          "on r.usuario_id = u.id", nativeQuery = true)
+  List<RespuestasReport> findRespuestasReport(Long encuestaId);
 }
