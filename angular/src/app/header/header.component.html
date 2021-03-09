@@ -33,8 +33,10 @@
         <div *ngIf="authService.isAuthenticated()" class="dropdown">
           <mat-card style="display: none"></mat-card>
           <div [matMenuTriggerFor]="menu" class="avatar-div">
-            <div *ngIf="hasFoto()" class="avatar-div-2" mat-card-avatar style="background-size: cover;"
+            <div *ngIf="hasFoto() && authService.persona.foto.substr(0,4) != 'http'" class="avatar-div-2" mat-card-avatar style="background-size: cover;"
                  [ngStyle]="{ 'background-image': 'url('+ basePath +'/api/uploads/img/' + authService.persona.foto + ')'}"></div>
+            <div *ngIf="hasFoto() && authService.persona.foto.substr(0,4) == 'http'" class="avatar-div-2" mat-card-avatar style="background-size: cover;"
+                 [ngStyle]="{ 'background-image': 'url('+ authService.persona.foto + ')'}"></div>
             <div *ngIf="!hasFoto()" class="avatar-div-2" mat-card-avatar style="background-size: cover;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/images/no_user.png)'}"></div>
           </div>
           <mat-menu #menu="matMenu">

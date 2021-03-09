@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {PersonaService} from "../personas/persona.service";
 import {Carrera} from "../classes/carrera";
 import {CarreraService} from "../services/carrera.service";
@@ -53,7 +53,7 @@ export class RegistroComponent implements OnInit {
           minLength: 4,
           maxLength: 22,
           required: true,
-          pattern: /^[a-zA-Z!@#$%^&*()]+$/
+          pattern: /^[a-zA-Z\s]+$/
         },
         validation: {
           messages: {
@@ -67,7 +67,7 @@ export class RegistroComponent implements OnInit {
         templateOptions: {
           label: 'Apellido paterno',
           required: true,
-          pattern: /^[a-zA-Z!@#$%^&*()]+$/
+          pattern: /^[a-zA-Z]+$/
         },
         validation: {
           messages: {
@@ -80,7 +80,7 @@ export class RegistroComponent implements OnInit {
         type: 'input',
         templateOptions: {
           label: 'Apellido materno',
-          pattern: /^[a-zA-Z!@#$%^&*()]+$/,
+          pattern: /^[a-zA-Z]+$/,
           required: true
         },
         validation: {
@@ -259,24 +259,75 @@ export class RegistroComponent implements OnInit {
   }
 
   onSubmit(user: any) {
-    console.log('user', user);
-    // creo persona model
-    this.user.carrera = {id: user.carreraId};
-    this.user.instituto = {id: user.institutoId};
-    this.isLoading = true;
-    console.log("registro:", user)
-    this.personaService.create(this.user).subscribe(
-      response => {
-        Swal.fire('Finalizado', `Se realizó el registro satisfactoriamente, porfavor revise su correo electronico para validar su cuenta!`, 'success')
-        this.isLoading = false;
-        this.router.navigate(['/login'])
-      },
-      error => {
-        this.errores = error.error.errors as string[];
-        console.log('Codigo de error desde backend: ' + error.status)
-        console.log(error.error.errors)
+    if (this.form.valid){
+      console.log('user', user);
+      // creo persona model
+      this.user.carrera = {id: user.carreraId};
+      this.user.instituto = {id: user.institutoId};
+      this.isLoading = true;
+      console.log("registro:", user)
+      this.personaService.create(this.user).subscribe(
+        response => {
+          Swal.fire('Finalizado', `Se realizó el registro satisfactoriamente, porfavor revise su correo electronico para validar su cuenta!`, 'success')
+          this.isLoading = false;
+          this.router.navigate(['/login'])
+        },
+        error => {
+          this.errores = error.error.errors as string[];
+          console.log('Codigo de error desde backend: ' + error.status)
+          console.log(error.error.errors)
+        }
+      );
+    } else {
+      this.markDirty();
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Parece que no completaste bien alguno de los valores!'
+      })
+    }
+
+  }
+
+  markDirty() {
+    this.markGroupDirty(this.form);
+    console.log('FORM:', this.form);
+  }
+
+  markGroupDirty(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(key => {
+      switch (formGroup.get(key).constructor.name) {
+        case "FormGroup":
+          this.markGroupDirty(formGroup.get(key) as FormGroup);
+          break;
+        case "FormArray":
+          this.markArrayDirty(formGroup.get(key) as FormArray);
+          break;
+        case "FormControl":
+          this.markControlDirty(formGroup.get(key) as FormControl);
+          break;
       }
-    );
+    });
+  }
+
+  markArrayDirty(formArray: FormArray) {
+    formArray.controls.forEach(control => {
+      switch (control.constructor.name) {
+        case "FormGroup":
+          this.markGroupDirty(control as FormGroup);
+          break;
+        case "FormArray":
+          this.markArrayDirty(control as FormArray);
+          break;
+        case "FormControl":
+          this.markControlDirty(control as FormControl);
+          break;
+      }
+    });
+  }
+
+  markControlDirty(formControl: FormControl) {
+    formControl.markAsDirty();
   }
 
 }

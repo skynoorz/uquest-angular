@@ -6,7 +6,7 @@
       <div style="margin-bottom: 10px">
         <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="recaptcha"></ngx-recaptcha2>
       </div>
-      <button type="submit" [disabled]="!form.valid" class="btn btn-success">Finalizar</button>
+      <button type="submit" class="btn btn-success">Finalizar</button>
     </div>
   </form>
   <ul class="alert alert-danger" style="margin: 10px" *ngIf="errores?.length > 0">

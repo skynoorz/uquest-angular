@@ -1,10 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Persona} from "../classes/persona";
 import Swal from "sweetalert2";
-import { AuthService, preRegisterSubject$ } from "./auth.service";
+import {AuthService, preRegisterSubject$} from "./auth.service";
 import {Router} from "@angular/router";
 import {Rol} from "../classes/rol";
-import { RegistroComponent } from "../registro/registro.component"
+import {RegistroComponent} from "../registro/registro.component"
+import {DomSanitizer} from "@angular/platform-browser";
+import {MatIconRegistry} from "@angular/material/icon";
+
+const googleLogoURL = "https://raw.githubusercontent.com/fireflysemantics/logo/master/Google.svg";
 
 @Component({
   selector: 'app-login',
@@ -19,8 +23,13 @@ export class LoginComponent implements OnInit {
   gapiSetup = false;
   authInstance: gapi.auth2.GoogleAuth;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService,
+              private router: Router,
+              private matIconRegistry: MatIconRegistry,
+              private domSanitizer: DomSanitizer) {
     this.persona = new Persona()
+    this.matIconRegistry.addSvgIcon("logo",
+      this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
   }
 
   ngOnInit(): void {
@@ -46,7 +55,7 @@ export class LoginComponent implements OnInit {
     // loaded and that we can call gapi.init
     return pload.then(async () => {
       await gapi.auth2
-        .init({ client_id: 'CLIENT_ID_TO_REPLACE' })
+        .init({client_id: '93146694805-a2vo8cv7f1bu6tq3c9ckg3dnvrinrql0.apps.googleusercontent.com'})
         .then(auth => {
           this.gapiSetup = true;
           this.authInstance = auth;

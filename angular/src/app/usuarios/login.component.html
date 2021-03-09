@@ -22,9 +22,9 @@
         </mat-form-field>
         <!--          <mat-checkbox [(ngModel)]="isChecked" [ngModelOptions]="{standalone: true}">Recuerdame!</mat-checkbox>-->
         <button mat-raised-button color="primary" class="login-button" (click)="login()">Ingresar</button>
-        <br>
-        <button mat-raised-button color="red" class="login-button" (click)="googleLogin()">Ingresa con tu cuenta Google</button>
-        <!--            <button mat-raised-button class="login-button">Login with Google</button>-->
+        <button mat-button style="padding: 1rem; margin-top: 0; margin-bottom: 0" class="login-button" (click)="googleLogin()">
+          <mat-icon style="width: 50px; height:30px" svgIcon="logo"></mat-icon> Ingresa / Registrate con Google
+        </button>
       </form>
     </div>
     <div class="card-footer text-muted" style="cursor: pointer;" (click)="redirectRegister()">
@@ -33,11 +33,7 @@
         <h3 style="color: #3f51b5"> &nbsp;&nbsp;Registrate</h3>
       </div>
     </div>
-    <!--      </mat-tab>-->
-    <!--      <mat-tab label="Registrar" (click)="redirectRegister()">-->
-    <!--        <app-registro></app-registro>-->
-    <!--      </mat-tab>-->
-    <!--    </mat-tab-group>-->
+
   </div>
 </div>
 

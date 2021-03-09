@@ -69,11 +69,13 @@ public class AuthService {
         String email = payload.getEmail();
         String name = (String) payload.get("given_name");
         String familyName = (String) payload.get("family_name");
+        String foto = (String) payload.get("picture");
         Usuario usuario = new Usuario();
         usuario.setSocialId(userId);
         usuario.setEnabled(true);
         usuario.setEmail(email);
         usuario.setNombres(name);
+        usuario.setFoto(foto);
         usuario.setApellidoPat(familyName);
         Role role = new Role();
         role.setId(1L);
