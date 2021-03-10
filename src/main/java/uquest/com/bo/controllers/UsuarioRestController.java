@@ -3,6 +3,7 @@ package uquest.com.bo.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.rmi.server.UID;
 import java.util.*;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
@@ -38,6 +37,9 @@ public class UsuarioRestController {
 
     @Autowired
     ApplicationEventPublisher eventPublisher;
+
+    @Value("${spring.file.size.upload}")
+    private String maximumFileSize;
 
     private final Logger log = LoggerFactory.getLogger(UsuarioRestController.class);
 
@@ -233,7 +235,8 @@ public class UsuarioRestController {
             Usuario usuario = usuarioService.findById(id);
             String nombreFotoAnterior = usuario.getFoto();
 
-            uploadFileService.eliminar(nombreFotoAnterior);
+            if (!nombreFotoAnterior.startsWith("http"))
+                uploadFileService.eliminar(nombreFotoAnterior);
 
             // BORRAR CLIENTE
             usuarioService.delete(id);
@@ -251,23 +254,29 @@ public class UsuarioRestController {
         Map<String, Object> response = new HashMap<>();
         Usuario usuario = usuarioService.findById(id);
 
-        if (!archivo.isEmpty()) {
-            String nombreArchivo =null;
-            try {
-                nombreArchivo = uploadFileService.copiar(archivo);
-            }catch (IOException e){
-                response.put("mensaje", "Error al subir la imagen del usuario");
-                response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
-                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        long maximumBytes = Long.parseLong(maximumFileSize.substring(0,maximumFileSize.length()-2))*1024*1024;
+        if (archivo.getSize() > maximumBytes){
+            response.put("mensaje", "El archivo es demasiado grande, maximo permitido es "+maximumFileSize);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.PAYLOAD_TOO_LARGE);
+        }else{
+            if (!archivo.isEmpty()) {
+                String nombreArchivo =null;
+                try {
+                    nombreArchivo = uploadFileService.copiar(archivo);
+                }catch (IOException e){
+                    response.put("mensaje", "Error al subir la imagen del usuario");
+                    response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+                    return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+                String nombreFotoAnterior = usuario.getFoto();
+                uploadFileService.eliminar(nombreFotoAnterior);
+
+                usuario.setFoto(nombreArchivo);
+                usuarioService.save(usuario);
+
+                response.put("usuario", usuario);
+                response.put("mensaje", "se subio correctamente la imagen: " + nombreArchivo);
             }
-            String nombreFotoAnterior = usuario.getFoto();
-            uploadFileService.eliminar(nombreFotoAnterior);
-
-            usuario.setFoto(nombreArchivo);
-            usuarioService.save(usuario);
-
-            response.put("usuario", usuario);
-            response.put("mensaje", "se subio correctamente la imagen: " + nombreArchivo);
         }
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }

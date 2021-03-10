@@ -54,9 +54,11 @@ export class PerfilComponent implements OnInit {
     this.fotoSeleccionada = event.target.files[0];
     this.progreso = 0;
     // console.log(this.fotoSeleccionada);
+
     if (this.fotoSeleccionada.type.indexOf('image') < 0) {
       Swal.fire('Error', 'El archivo debe ser de tipo imagen', 'error');
     }
+
   }
 
   subirFoto() {
@@ -78,6 +80,11 @@ export class PerfilComponent implements OnInit {
             Swal.fire('La foto se subio correctamente!', 'Su foto se actualizara en el siguiente inicio de sesion!', 'success')
           }
           // this.persona = persona;
+        },error => {
+          if (error.status == 413){
+            Swal.fire('Error Foto', error.error.mensaje, 'error')
+            this.progreso = 0;
+          }
         });
     }
   }

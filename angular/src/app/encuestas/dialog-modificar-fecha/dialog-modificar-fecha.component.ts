@@ -60,15 +60,19 @@ export class DialogModificarFechaComponent implements OnInit {
 
 
   private esMayor(value: Date): boolean {
-    if (new Date(new Date(this.encuesta.fechaIni)) >= value) {
-      return false;
+    if (this.encuesta?.fechaIni){
+      if (new Date(new Date(this.encuesta.fechaIni)) >= value) {
+        return false;
+      }
     }
     return true;
 
   }
   private esMenor(value: Date): boolean {
-    if (new Date(new Date(this.encuesta.fechaFin)) <= value) {
-      return false;
+    if (this.encuesta?.fechaFin){
+      if (new Date(new Date(this.encuesta.fechaFin)) <= value) {
+        return false;
+      }
     }
     return true;
 

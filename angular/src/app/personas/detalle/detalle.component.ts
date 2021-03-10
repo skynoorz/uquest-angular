@@ -58,6 +58,11 @@ export class DetalleComponent implements OnInit {
             Swal.fire('La foto se subio correctamente!', response.mensaje, 'success')
           }
           // this.persona = persona;
+        },error => {
+          if (error.status == 413){
+            Swal.fire('Error Foto', error.error.mensaje, 'error')
+            this.progreso = 0;
+          }
         });
     }
   }
