@@ -27,7 +27,7 @@ export class EncuestasComponent implements OnInit {
 
 
     if (this.authService.isAuthenticated()) {
-      this.encuestasService.getEncuestasByUsername(JSON.parse(sessionStorage.getItem("persona")).username).subscribe(encuestas => {
+      this.encuestasService.getEncuestasByUsername(JSON.parse(localStorage.getItem("persona")).username).subscribe(encuestas => {
         this.encuestas = encuestas;
         // encuestas.map(encuesta=> {
         //   this.respuestaService.getRespuestasByEncuestaId(encuesta.id).subscribe(response=>{

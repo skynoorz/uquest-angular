@@ -260,12 +260,12 @@ export class RegistroComponent implements OnInit {
 
   onSubmit(user: any) {
     if (this.form.valid){
-      console.log('user', user);
+      // console.log('user', user);
       // creo persona model
       this.user.carrera = {id: user.carreraId};
       this.user.instituto = {id: user.institutoId};
       this.isLoading = true;
-      console.log("registro:", user)
+      // console.log("registro:", user)
       this.personaService.create(this.user).subscribe(
         response => {
           Swal.fire('Finalizado', `Se realizó el registro satisfactoriamente, porfavor revise su correo electronico para validar su cuenta!`, 'success')
@@ -291,7 +291,6 @@ export class RegistroComponent implements OnInit {
 
   markDirty() {
     this.markGroupDirty(this.form);
-    console.log('FORM:', this.form);
   }
 
   markGroupDirty(formGroup: FormGroup) {

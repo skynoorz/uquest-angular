@@ -39,14 +39,14 @@ export class PerfilComponent implements OnInit {
   }
 
   private cargarUsuario() {
-    this.personaService.getPersonaProfile(JSON.parse(sessionStorage.getItem("persona")).id).subscribe(persona => {
+    this.personaService.getPersonaProfile(JSON.parse(localStorage.getItem("persona")).id).subscribe(persona => {
       this.persona = persona;
       // console.log(this.persona)
     })
   }
 
   editar() {
-    var id = JSON.parse(sessionStorage.getItem("persona")).id;
+    var id = JSON.parse(localStorage.getItem("persona")).id;
     this.router.navigate([`/profile/editar/${id}`])
   }
 

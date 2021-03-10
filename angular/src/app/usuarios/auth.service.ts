@@ -20,20 +20,32 @@ export class AuthService {
   }
 
   public get persona(): Persona {
+    // if (this._persona != null) {
+    //   return this._persona;
+    // } else if (this._persona == null || sessionStorage.getItem('persona') != null) {
+    //   this._persona = JSON.parse(sessionStorage.getItem('persona')) as Persona;
+    //   return this._persona;
+    // }
     if (this._persona != null) {
       return this._persona;
-    } else if (this._persona == null || sessionStorage.getItem('persona') != null) {
-      this._persona = JSON.parse(sessionStorage.getItem('persona')) as Persona;
+    } else if (this._persona == null || localStorage.getItem('persona') != null) {
+      this._persona = JSON.parse(localStorage.getItem('persona')) as Persona;
       return this._persona;
     }
     return new Persona();
   }
 
   public get token(): string {
+    // if (this._token != null) {
+    //   return this._token;
+    // } else if (this._token == null || sessionStorage.getItem('token') != null) {
+    //   this._token = sessionStorage.getItem('token');
+    //   return this._token;
+    // }
     if (this._token != null) {
       return this._token;
-    } else if (this._token == null || sessionStorage.getItem('token') != null) {
-      this._token = sessionStorage.getItem('token');
+    } else if (this._token == null || localStorage.getItem('token') != null) {
+      this._token = localStorage.getItem('token');
       return this._token;
     }
     return null;
@@ -125,7 +137,7 @@ export class AuthService {
   logout(): void {
     this._token = null;
     this._persona = null;
-    sessionStorage.clear();
+    localStorage.clear();
   }
 
   // hasRole(role: Rol): boolean{

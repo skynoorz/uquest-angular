@@ -93,6 +93,8 @@ export class LoginComponent implements OnInit {
     const access_token = response.id_token;
     this.authService.guardarPersonaSS(access_token);
     this.authService.guardarTokenSS(access_token);
+    this.authService.guardarPersonaLS(access_token);
+    this.authService.guardarTokenLS(access_token);
 
     if (this.authService.hasRole("ROLE_ADMIN"))
       this.zone.run(() => {
@@ -106,7 +108,7 @@ export class LoginComponent implements OnInit {
   }
 
   handleErrorLogin(error): void {
-    console.log('login error', error);
+    // console.log('login error', error);
     if (error.status == 400) {
       Swal.fire("Error Login", "Usuario o clave incorrecta", 'error');
     }
@@ -120,13 +122,13 @@ export class LoginComponent implements OnInit {
     //aca guardo en el session storage
     // this.authService.login(this.persona).subscribe(this.handleLoginResponse, this.handleErrorLogin)
     this.authService.login(this.persona).subscribe(resp => {
-      console.log("resp: ",resp)
+      // console.log("resp: ",resp)
       this.handleLoginResponse(resp)
     }, this.handleErrorLogin)
   }
 
   redirectRegister() {
-    console.log("redirect")
+    // console.log("redirect")
     this.router.navigate(['/registro'])
   }
 }
