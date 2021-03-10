@@ -22,7 +22,9 @@
       <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Usuario</th>
       <td mat-cell *matCellDef="let element">
         <div style="justify-content: center; text-align: center; cursor: pointer;" (click)="mostrarPerfilOpenDialog(element.usuario)">
-          <div style="border-radius: 50px; background-color: black;background-size: cover; width: 40px; height: 40px; display: block;margin-left: auto;margin-right: auto;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/api/uploads/img/' + element.usuario.foto + ')'}"></div>
+          <div *ngIf="element.usuario?.foto && element.usuario.foto.substr(0,4) != 'http'" style="border-radius: 50px; background-color: black;background-size: cover; width: 40px; height: 40px; display: block;margin-left: auto;margin-right: auto;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/api/uploads/img/' + element.usuario.foto + ')'}"></div>
+          <div *ngIf="element.usuario?.foto && element.usuario.foto.substr(0,4) == 'http'" style="border-radius: 50px; background-color: black;background-size: cover; width: 40px; height: 40px; display: block;margin-left: auto;margin-right: auto;" [ngStyle]="{ 'background-image': 'url(' + element.usuario.foto + ')'}"></div>
+          <div *ngIf="!element.usuario?.foto" style="border-radius: 50px; background-color: black;background-size: cover; width: 40px; height: 40px; display: block;margin-left: auto;margin-right: auto;" [ngStyle]="{ 'background-image': 'url('+ basePath +'/images/no_user.png)'}"></div>
           <h5>{{element.usuario.nombres}}</h5>
         </div>
       </td>

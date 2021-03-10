@@ -22,7 +22,9 @@
           <div class="foto-container">
             <p style="font-family: Metropolis-LightItalic, sans-serif">Puedes personalizar tu cuenta con una foto.</p>
 
-            <div mat-card-avatar style="background-size: cover; width: 80px;height: 80px" [ngStyle]="{ 'background-image': 'url('+basePath+'/api/uploads/img/' + authService.persona.foto + ')'}"></div>
+            <div *ngIf="authService.persona?.foto && authService.persona.foto.substr(0,4) != 'http'" mat-card-avatar style="background-size: cover; width: 80px;height: 80px" [ngStyle]="{ 'background-image': 'url('+basePath+'/api/uploads/img/' + authService.persona.foto + ')'}"></div>
+            <div *ngIf="authService.persona?.foto && authService.persona.foto.substr(0,4) == 'http'" mat-card-avatar style="background-size: cover; width: 80px;height: 80px" [ngStyle]="{ 'background-image': 'url('+authService.persona.foto + ')'}"></div>
+            <div *ngIf="!authService.persona?.foto" mat-card-avatar style="background-size: cover; width: 80px;height: 80px" [ngStyle]="{ 'background-image': 'url('+ basePath +'/images/no_user.png)'}"></div>
           </div>
 
         </div>

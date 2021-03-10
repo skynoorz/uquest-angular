@@ -45,7 +45,11 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm" *ngIf="persona?.foto">
+              <div class="col-sm" *ngIf="persona?.foto && persona.foto.substr(0,4) == 'http'">
+                <img src="{{persona.foto}}" alt="{{persona.foto}}"
+                     class="img-thumbnail rounded">
+              </div>
+              <div class="col-sm" *ngIf="persona?.foto && persona.foto.substr(0,4) != 'http'">
                 <img src="{{basePath}}/api/uploads/img/{{persona.foto}}" alt="{{persona.foto}}"
                      class="img-thumbnail rounded">
               </div>

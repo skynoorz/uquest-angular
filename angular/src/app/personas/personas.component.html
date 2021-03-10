@@ -28,7 +28,11 @@
       <tbody>
       <tr *ngFor="let persona of personas">
         <td>
-          <img *ngIf="persona?.foto" (click)="abrirModal(persona)"
+          <img *ngIf="persona?.foto && persona.foto.substr(0,4) == 'http'" (click)="abrirModal(persona)"
+               src="{{persona.foto}}" alt="{{persona.foto}}"
+               class="img-thumbnail rounded"
+               style="width: 64px; cursor: pointer;">
+          <img *ngIf="persona?.foto && persona.foto.substr(0,4) != 'http'" (click)="abrirModal(persona)"
                src="{{basePath}}/api/uploads/img/{{persona.foto}}" alt="{{persona.foto}}"
                class="img-thumbnail rounded"
                style="width: 64px; cursor: pointer;">

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {Persona} from "../classes/persona";
 import Swal from "sweetalert2";
 import {AuthService, preRegisterSubject$} from "./auth.service";
@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService,
               private router: Router,
               private matIconRegistry: MatIconRegistry,
-              private domSanitizer: DomSanitizer) {
+              private domSanitizer: DomSanitizer,
+              private zone: NgZone) {
     this.persona = new Persona()
     this.matIconRegistry.addSvgIcon("logo",
       this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
@@ -76,7 +77,10 @@ export class LoginComponent implements OnInit {
         .then((resp: any) => {
           if (resp.usuario) {
             preRegisterSubject$.next(resp.usuario);
-            this.router.navigate(['/registro']);
+            // this.router.navigate(['/registro']);
+            this.zone.run(() => {
+              this.router.navigate(['/registro']);
+            });
           } else {
             this.handleLoginResponse(resp.token)
           }
@@ -91,9 +95,14 @@ export class LoginComponent implements OnInit {
     this.authService.guardarTokenSS(access_token);
 
     if (this.authService.hasRole("ROLE_ADMIN"))
-      this.router.navigate(['/personas'])
+      this.zone.run(() => {
+        this.router.navigate(['/personas']);
+      });
     else
-      this.router.navigate(['/'])
+      this.zone.run(() => {
+        this.router.navigate(['/']);
+      });
+
   }
 
   handleErrorLogin(error): void {
@@ -109,7 +118,11 @@ export class LoginComponent implements OnInit {
       Swal.fire("Error Login", "Username o password vacias!", "error");
     }
     //aca guardo en el session storage
-    this.authService.login(this.persona).subscribe(this.handleLoginResponse, this.handleErrorLogin)
+    // this.authService.login(this.persona).subscribe(this.handleLoginResponse, this.handleErrorLogin)
+    this.authService.login(this.persona).subscribe(resp => {
+      console.log("resp: ",resp)
+      this.handleLoginResponse(resp)
+    }, this.handleErrorLogin)
   }
 
   redirectRegister() {
