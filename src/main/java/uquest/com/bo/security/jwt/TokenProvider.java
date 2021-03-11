@@ -91,8 +91,9 @@ public class TokenProvider {
             .parseClaimsJws(token)
             .getBody();
 
+        List<String> roles = (List<String>) claims.get(AUTHORITIES_KEY);
         Collection<? extends GrantedAuthority> authorities =
-            Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+            roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
