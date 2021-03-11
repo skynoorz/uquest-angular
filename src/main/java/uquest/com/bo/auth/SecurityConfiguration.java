@@ -24,9 +24,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final CustomAuthenticationProvider authenticationProvider;
 
     public SecurityConfiguration(
-        TokenProvider tokenProvider,
-        CorsFilter corsFilter,
-        CustomAuthenticationProvider authenticationProvider
+            TokenProvider tokenProvider,
+            CorsFilter corsFilter,
+            CustomAuthenticationProvider authenticationProvider
     ) {
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
@@ -41,11 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/app/**/*.{js,html}")
-            .antMatchers("/content/**")
-            .antMatchers("/h2-console/**")
-            .antMatchers("/swagger-ui/index.html");
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .antMatchers("/app/**/*.{js,html}")
+                .antMatchers("/content/**")
+                .antMatchers("/h2-console/**")
+                .antMatchers("/swagger-ui/index.html");
     }
 
     @Override
@@ -57,35 +57,43 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-        http
-            .csrf()
-            .disable()
-            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-            .authorizeRequests()
-            .antMatchers("/**").permitAll()
-            .antMatchers("/api/google/login").permitAll()
-            .antMatchers(HttpMethod.GET,"/api/uploads/img/**", "/images/no_user.png", "/api/carreras", "/api/carreras/institutos/**", "/api/usuarios/encuestas/**", "/api/upr/**", "/api/usuarios/emailexist/**", "/api/categorias/**", "/api/encuestas/public/**", "/api/respuestas/encuesta/**", "/api/respuestas-total/encuesta/**").permitAll()
-            .antMatchers(HttpMethod.POST, "/api/usuarios",  "/api/encuestas/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/api/encuestas/**","/api/respuesta/usuarios/pregunta/public/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/api/usuarios/userexist/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/").hasAnyRole("USER","ADMIN")
-            //upload
-            .antMatchers(HttpMethod.POST, "/api/usuarios/upload").permitAll()
-//                .antMatchers(HttpMethod.GET, "/api/usuarios/{id}").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/api/usuarios").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.POST, "/api/usuarios/upload").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.POST, "/api/usuarios").hasRole("ADMIN")
-//                .antMatchers("/api/usuarios/page/**").hasRole("ADMIN")
-            .antMatchers(HttpMethod.GET,"/api/usuarios/profile/**").hasRole("USER")
-            .antMatchers(HttpMethod.PUT,"/api/usuarios/profile/**").hasRole("USER")
-            .antMatchers("/api/usuarios/**").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.GET,  "/api/usuarios/encuestas/**").hasRole("USER")
-            .anyRequest().authenticated()
-        .and()
-            .apply(securityConfigurerAdapter());
+        http.csrf()
+                .disable()
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+//                .antMatchers("/**").permitAll()
+                .antMatchers("/api/google/login", "/api/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/usuarios/page/**").hasAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated()
+//                .antMatchers(HttpMethod.GET, "/api/carreras").permitAll()
+//                .antMatchers("/api/carreras/**").hasRole("ADMIN")
+//                .antMatchers("/api/usuarios/**").hasRole("ADMIN")
+//            .antMatchers(HttpMethod.GET,"/api/uploads/img/**",
+//                    "/images/no_user.png",
+//                    "/api/carreras",
+//                    "/api/carreras/institutos/**",
+//                    "/api/usuarios/encuestas/**",
+//                    "/api/upr/**", "/api/usuarios/emailexist/**",
+//                    "/api/categorias/**",
+//                    "/api/encuestas/public/**",
+//                    "/api/respuestas/encuesta/**",
+//                    "/api/respuestas-total/encuesta/**").permitAll()
+//            .antMatchers(HttpMethod.POST, "/api/usuarios",  "/api/encuestas/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/api/encuestas/**","/api/respuesta/usuarios/pregunta/public/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/api/usuarios/userexist/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/").hasAnyRole("USER","ADMIN")
+//            .antMatchers(HttpMethod.POST, "/api/usuarios/upload").permitAll()
+//            .antMatchers(HttpMethod.GET,"/api/usuarios/profile/**").hasRole("USER")
+//            .antMatchers(HttpMethod.PUT,"/api/usuarios/profile/**").hasRole("USER")
+                //  new
+//                .antMatchers("/**").permitAll()
+//                .antMatchers("/api/usuarios/**").hasRole("ADMIN")
+
+                .and()
+                .apply(securityConfigurerAdapter());
         // @formatter:on
     }
 
