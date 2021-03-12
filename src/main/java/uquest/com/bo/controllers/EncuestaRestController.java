@@ -122,7 +122,7 @@ public class EncuestaRestController {
 
     }
 
-    @DeleteMapping("/encuesta/{id}")
+    @DeleteMapping("/encuestas/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
         try {

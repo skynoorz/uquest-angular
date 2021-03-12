@@ -6,6 +6,8 @@ import {CarreraFormComponent} from "../carrera-form/carrera-form.component";
 import {InstitutoFormComponent} from "../instituto-form/instituto-form.component";
 import Swal from "sweetalert2";
 import {InstitutoService} from "../../services/instituto.service";
+import {AuthService} from "../../usuarios/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-carreras-instituto',
@@ -19,11 +21,19 @@ export class CarrerasInstitutoComponent implements OnInit {
 
   constructor(private carreraService: CarreraService,
               private institutoService: InstitutoService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
-    this.cargarCarreras();
+    if (this.authService.hasRole('ROLE_ADMIN')){
+      this.cargarCarreras();
+    }else {
+      Swal.fire("Acceso denegado","lo siento, no tienes acceso a este recurso", "warning")
+      this.router.navigate(['/'])
+    }
+
   }
 
   cargarCarreras() {

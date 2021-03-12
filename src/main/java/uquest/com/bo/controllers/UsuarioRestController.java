@@ -83,12 +83,13 @@ public class UsuarioRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         if (usuario == null) {
-            response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            response.put("mensaje", "El cliente ID: " .concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     }
+
     @GetMapping("/usuarios/profile/{id}")
     public ResponseEntity<?> showProfile(@PathVariable Long id) {
 
@@ -106,7 +107,7 @@ public class UsuarioRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         if (usuario == null) {
-            response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            response.put("mensaje", "El cliente ID: " .concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
 
@@ -171,7 +172,7 @@ public class UsuarioRestController {
         }
 
         if (usuario.getId() == null) {
-            response.put("mensaje", "Error, no se pudo editar el cliente con id: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            response.put("mensaje", "Error, no se pudo editar el cliente con id: " .concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
         try {
@@ -208,7 +209,7 @@ public class UsuarioRestController {
         }
 
         if (usuario.getId() == null) {
-            response.put("mensaje", "Error, no se pudo editar el cliente con id: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            response.put("mensaje", "Error, no se pudo editar el cliente con id: " .concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
         try {
@@ -235,7 +236,7 @@ public class UsuarioRestController {
             Usuario usuario = usuarioService.findById(id);
             String nombreFotoAnterior = usuario.getFoto();
 
-            if (!nombreFotoAnterior.startsWith("http"))
+            if (usuario.getFoto() != null && !nombreFotoAnterior.startsWith("http"))
                 uploadFileService.eliminar(nombreFotoAnterior);
 
             // BORRAR CLIENTE
@@ -245,7 +246,7 @@ public class UsuarioRestController {
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        response.put("mensaje", "El registro de la usuario con id: '".concat(id.toString().concat("' se elimino correctamente")));
+        response.put("mensaje", "El registro de la usuario con id: '" .concat(id.toString().concat("' se elimino correctamente")));
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
 
@@ -254,22 +255,24 @@ public class UsuarioRestController {
         Map<String, Object> response = new HashMap<>();
         Usuario usuario = usuarioService.findById(id);
 
-        long maximumBytes = Long.parseLong(maximumFileSize.substring(0,maximumFileSize.length()-2))*1024*1024;
-        if (archivo.getSize() > maximumBytes){
-            response.put("mensaje", "El archivo es demasiado grande, maximo permitido es "+maximumFileSize);
+        long maximumBytes = Long.parseLong(maximumFileSize.substring(0, maximumFileSize.length() - 2)) * 1024 * 1024;
+        if (archivo.getSize() > maximumBytes) {
+            response.put("mensaje", "El archivo es demasiado grande, maximo permitido es " + maximumFileSize);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.PAYLOAD_TOO_LARGE);
-        }else{
+        } else {
             if (!archivo.isEmpty()) {
-                String nombreArchivo =null;
+                String nombreArchivo = null;
                 try {
                     nombreArchivo = uploadFileService.copiar(archivo);
-                }catch (IOException e){
+                } catch (IOException e) {
                     response.put("mensaje", "Error al subir la imagen del usuario");
                     response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
                     return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
                 String nombreFotoAnterior = usuario.getFoto();
-                uploadFileService.eliminar(nombreFotoAnterior);
+
+                if (usuario.getFoto() != null && !nombreFotoAnterior.startsWith("http"))
+                    uploadFileService.eliminar(nombreFotoAnterior);
 
                 usuario.setFoto(nombreArchivo);
                 usuarioService.save(usuario);
@@ -307,35 +310,35 @@ public class UsuarioRestController {
     }
 
     @GetMapping("/usuarios/roles")
-    public List<Role> listarRoles(){
+    public List<Role> listarRoles() {
         return usuarioService.findAllRoles();
     }
 
     @GetMapping("/usuarios/userexist/{username}")
-    public ResponseEntity<Boolean> datauser(@PathVariable String username){
+    public ResponseEntity<Boolean> datauser(@PathVariable String username) {
         Usuario usuarioNew = usuarioService.findByUsername(username);
         return ResponseEntity.ok(Optional.ofNullable(usuarioNew).isEmpty());
     }
 
     @GetMapping("/usuarios/emailexist/{email}")
-    public ResponseEntity<Boolean> dataemail(@PathVariable String email){
+    public ResponseEntity<Boolean> dataemail(@PathVariable String email) {
         Usuario usuarioNew = usuarioService.findByEmail(email);
         return ResponseEntity.ok(Optional.ofNullable(usuarioNew).isEmpty());
     }
 
     @GetMapping("/usuarios/ciexist/{ci}")
-    public ResponseEntity<Boolean> dataci(@PathVariable String ci){
+    public ResponseEntity<Boolean> dataci(@PathVariable String ci) {
         Usuario usuarioNew = usuarioService.findByCi(ci);
         return ResponseEntity.ok(Optional.ofNullable(usuarioNew).isEmpty());
     }
 
     @GetMapping("/usuarios/encuestas/{id}")
-    public List<Encuesta> encuestas(@PathVariable Long id){
+    public List<Encuesta> encuestas(@PathVariable Long id) {
         return encuestaService.findAllEncuestasByUsuarioId(id);
     }
 
     @GetMapping("/usuarios/encuestas/user/{user}")
-    public List<Encuesta> encuestas(@PathVariable String user){
+    public List<Encuesta> encuestas(@PathVariable String user) {
         return encuestaService.findAllEncuestasByUsername(user);
     }
 }

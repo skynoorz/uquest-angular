@@ -64,34 +64,35 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/**").permitAll()
-                .antMatchers("/api/google/login", "/api/login").permitAll()
+//                Login y respuestas
+                .antMatchers("/api/google/login", "/api/login", "/api/respuesta/all").permitAll()
+//                USUARIO sin registro
+                .antMatchers(HttpMethod.GET,"/api/uploads/img/**",
+                "/api/encuestas/available","/api/carreras",
+                "/api/encuestas/carrera/**",
+                "/images/no_user.png",
+                "/api/encuestas/uid/**",
+                "/api/respuestas/encuesta/**",
+                "/api/respuesta/encuesta/results/export/**",
+                "/api/usuarios/profile/**",
+                "/api/usuarios/userexist/**",
+                "/api/respuesta/usuarios/pregunta/public/**",
+                "/api/carreras/institutos/**",
+                "/api/usuarios/emailexist/**",
+                "/api/usuarios/ciexist/**").permitAll()
+//                GET control
                 .antMatchers(HttpMethod.GET, "/api/usuarios/page/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/usuarios/encuestas/user/**","/api/encuestas/finalizar/**").hasAuthority("ROLE_USER")
+                .antMatchers(HttpMethod.GET, "/api/categorias","/api/encuestas").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+                .antMatchers(HttpMethod.GET, "/api/encuestas/**").permitAll()
+//                POST, DELETE PUT control
+                .antMatchers(HttpMethod.POST,"/api/usuarios").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/encuestas", "/api/usuarios/upload").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+                .antMatchers(HttpMethod.DELETE, "/api/encuestas/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+                .antMatchers(HttpMethod.PUT, "/api/usuarios/profile/**").hasAnyAuthority("ROLE_USER")
+//                peticiones CRUD ADMIN
+                .antMatchers( "/api/categorias/**","/api/encuestas/**","/api/carreras/**","/api/usuarios/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
-//                .antMatchers(HttpMethod.GET, "/api/carreras").permitAll()
-//                .antMatchers("/api/carreras/**").hasRole("ADMIN")
-//                .antMatchers("/api/usuarios/**").hasRole("ADMIN")
-//            .antMatchers(HttpMethod.GET,"/api/uploads/img/**",
-//                    "/images/no_user.png",
-//                    "/api/carreras",
-//                    "/api/carreras/institutos/**",
-//                    "/api/usuarios/encuestas/**",
-//                    "/api/upr/**", "/api/usuarios/emailexist/**",
-//                    "/api/categorias/**",
-//                    "/api/encuestas/public/**",
-//                    "/api/respuestas/encuesta/**",
-//                    "/api/respuestas-total/encuesta/**").permitAll()
-//            .antMatchers(HttpMethod.POST, "/api/usuarios",  "/api/encuestas/**").permitAll()
-//            .antMatchers(HttpMethod.GET, "/api/encuestas/**","/api/respuesta/usuarios/pregunta/public/**").permitAll()
-//            .antMatchers(HttpMethod.GET, "/api/usuarios/userexist/**").permitAll()
-//            .antMatchers(HttpMethod.GET, "/").hasAnyRole("USER","ADMIN")
-//            .antMatchers(HttpMethod.POST, "/api/usuarios/upload").permitAll()
-//            .antMatchers(HttpMethod.GET,"/api/usuarios/profile/**").hasRole("USER")
-//            .antMatchers(HttpMethod.PUT,"/api/usuarios/profile/**").hasRole("USER")
-                //  new
-//                .antMatchers("/**").permitAll()
-//                .antMatchers("/api/usuarios/**").hasRole("ADMIN")
-
                 .and()
                 .apply(securityConfigurerAdapter());
         // @formatter:on

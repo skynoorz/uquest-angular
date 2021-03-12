@@ -11,6 +11,8 @@ import {DetalleComponent} from "../../personas/detalle/detalle.component";
 import {ModalService} from "../../personas/detalle/modal.service";
 import {Persona} from "../../classes/persona";
 import {Perfil2Component} from "../../personas/perfil2/perfil2.component";
+import {AuthService} from "../../usuarios/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-encuesta-admin',
@@ -29,14 +31,22 @@ export class EncuestaAdminComponent implements OnInit, AfterViewInit  {
 
   constructor(private encuestaService: EncuestasService,
               public dialog: MatDialog,
-              public modalService: ModalService) { }
+              public modalService: ModalService,
+              private authService: AuthService,
+              private router: Router) { }
 
   ngAfterViewInit() {
 
   }
 
   ngOnInit(): void {
-    this.cargarEncuestas();
+    if (this.authService.hasRole('ROLE_ADMIN')){
+      this.cargarEncuestas();
+    }else {
+      Swal.fire("Acceso denegado","lo siento, no tienes acceso a este recurso", "warning")
+      this.router.navigate(['/'])
+    }
+
   }
 
   private cargarEncuestas() {
