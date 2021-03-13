@@ -48,7 +48,7 @@ export class EncuestasComponent implements OnInit {
     this.cargarEncuestasAvailable();
   }
 
-  popupModal(encuestaId: number) {
+  popupModal(encuestaId: string) {
     this.dialog.open(CopyModalComponent, {
       data: {
         address: '/#/encuestas/solve/' + encuestaId

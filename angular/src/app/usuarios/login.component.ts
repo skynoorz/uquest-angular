@@ -3,8 +3,6 @@ import {Persona} from "../classes/persona";
 import Swal from "sweetalert2";
 import {AuthService, preRegisterSubject$} from "./auth.service";
 import {Router} from "@angular/router";
-import {Rol} from "../classes/rol";
-import {RegistroComponent} from "../registro/registro.component"
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatIconRegistry} from "@angular/material/icon";
 
@@ -21,6 +19,7 @@ export class LoginComponent implements OnInit {
   persona: Persona;
   isChecked: boolean = false;
   gapiSetup = false;
+  isLoadingResults: boolean = false;
   authInstance: gapi.auth2.GoogleAuth;
 
   constructor(private authService: AuthService,
@@ -40,10 +39,6 @@ export class LoginComponent implements OnInit {
     }
     this.initGoogleAuth();
   }
-
-  // isRememberMeChecked(): boolean{
-  //   return this.isChecked;
-  // }
 
   async initGoogleAuth(): Promise<void> {
     //  Create a new Promise where the resolve
@@ -111,6 +106,7 @@ export class LoginComponent implements OnInit {
     // console.log('login error', error);
     if (error.status == 400) {
       Swal.fire("Error Login", "Usuario o clave incorrecta", 'error');
+      this.isLoadingResults=false;
     }
   }
 
@@ -121,7 +117,9 @@ export class LoginComponent implements OnInit {
     }
     //aca guardo en el session storage
     // this.authService.login(this.persona).subscribe(this.handleLoginResponse, this.handleErrorLogin)
+    this.isLoadingResults = true;
     this.authService.login(this.persona).subscribe(resp => {
+      this.isLoadingResults = false;
       // console.log("resp: ",resp)
       this.handleLoginResponse(resp)
     }, this.handleErrorLogin)

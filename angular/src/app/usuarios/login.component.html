@@ -1,5 +1,10 @@
 <div class="login-page" style="height: 850px">
+
   <div class="mat-elevation-z12 card" style="max-width: 430px; min-width: 430px; width: 50%;margin: 0 auto;display: inherit;top: 50%;-ms-transform: translateY(-50%);transform: translateY(-50%);">
+    <div class="example-loading-shade"
+         *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
     <div class="card-header header-style">Ingresar al sistema</div>
     <div class="card-body">
       <form method="post">

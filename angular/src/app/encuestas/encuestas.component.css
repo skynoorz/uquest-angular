@@ -20,3 +20,21 @@ mat-expansion-panel-header {
 .example-headers-align .mat-form-field + .mat-form-field {
   margin-left: 8px;
 }
+
+.button-seccion{
+  display: inline-flex;
+  float: right;
+  font-family: Metropolis-Regular, sans-serif;
+}
+
+@media only screen and (max-width: 950px) {
+  /* For mobile phones: */
+  [class*="button-seccion"] {
+    display: flex;
+    justify-content: space-between;
+  }
+  [class*="button-seccion"] button {
+    width: 170px;
+    margin: 5px;
+  }
+}
