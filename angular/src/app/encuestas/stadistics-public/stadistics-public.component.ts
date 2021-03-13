@@ -5,11 +5,9 @@ import {isPlatformBrowser} from '@angular/common';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import {EncuestasService} from "../../services/encuestas.service";
-import {AuthService} from "../../usuarios/auth.service";
 import {Encuesta} from "../../classes/encuesta";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RespuestasService} from "../../services/respuestas.services";
-import Swal from "sweetalert2";
 import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
 import {environment} from "../../../environments/environment";
 

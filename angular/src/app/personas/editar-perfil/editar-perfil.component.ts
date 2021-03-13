@@ -7,8 +7,6 @@ import {FormlyFieldConfig} from "@ngx-formly/core";
 import {startWith, switchMap} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {AuthService} from "../../usuarios/auth.service";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
-import {Persona} from "../../classes/persona";
 
 @Component({
   selector: 'app-editar-perfil',

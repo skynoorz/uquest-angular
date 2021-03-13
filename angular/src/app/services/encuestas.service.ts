@@ -8,7 +8,6 @@ import {Categoria} from "../classes/categoria";
 import {OpcionSend} from "../classes/opcion";
 import {environment} from "../../environments/environment";
 import {EncuestaUsuario} from "../classes/encuesta-usuario";
-import {Carrera} from "../classes/carrera";
 
 @Injectable({
   providedIn: 'root'

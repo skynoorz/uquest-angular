@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {string} from "@amcharts/amcharts4/core";
 
 @Component({
   selector: 'app-home',

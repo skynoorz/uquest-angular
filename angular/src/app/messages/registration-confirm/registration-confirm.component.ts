@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {string} from "@amcharts/amcharts4/core";
 import {RegistrationService} from "../../services/registration.service";
 
 @Component({

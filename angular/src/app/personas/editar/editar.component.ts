@@ -4,7 +4,6 @@ import {PersonaService} from "../persona.service";
 import {CarreraService} from "../../services/carrera.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import Swal from "sweetalert2";
-import {Persona} from "../../classes/persona";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {startWith, switchMap, tap} from "rxjs/operators";
 

@@ -1,13 +1,12 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../usuarios/auth.service";
 import {PersonaService} from "../persona.service";
 import {Persona} from "../../classes/persona";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import Swal from "sweetalert2";
 import {HttpEventType} from "@angular/common/http";
 import {ModalService} from "../detalle/modal.service";
 import {environment} from "../../../environments/environment";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-perfil',

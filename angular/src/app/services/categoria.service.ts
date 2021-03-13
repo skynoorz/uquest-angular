@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Observable, throwError} from "rxjs";
 import {Categoria} from "../classes/categoria";
-import {Encuesta} from "../classes/encuesta";
 import {environment} from "../../environments/environment";
 import {catchError} from "rxjs/operators";
 

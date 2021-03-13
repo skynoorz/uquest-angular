@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 import {EncuestaUsuario} from "../../classes/encuesta-usuario";
 import {environment} from "../../../environments/environment";
 import {MatDialog} from "@angular/material/dialog";
-import {DetalleComponent} from "../../personas/detalle/detalle.component";
 import {ModalService} from "../../personas/detalle/modal.service";
 import {Persona} from "../../classes/persona";
 import {Perfil2Component} from "../../personas/perfil2/perfil2.component";

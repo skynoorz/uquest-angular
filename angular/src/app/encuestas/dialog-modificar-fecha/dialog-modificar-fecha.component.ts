@@ -5,7 +5,6 @@ import {FormlyFieldConfig} from "@ngx-formly/core";
 import {EncuestasService} from "../../services/encuestas.service";
 import {Encuesta} from "../../classes/encuesta";
 import Swal from "sweetalert2";
-import {newArray} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-dialog-modificar-fecha',

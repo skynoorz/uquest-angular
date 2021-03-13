@@ -4,7 +4,6 @@ import {Encuesta} from "../../classes/encuesta";
 import {MatDialog} from "@angular/material/dialog";
 import {CopyModalComponent} from "./copy-modal.component";
 import {environment} from "../../../environments/environment";
-import {MatSelectChange} from "@angular/material/select";
 import {CarreraService} from "../../services/carrera.service";
 import {Carrera} from "../../classes/carrera";
 

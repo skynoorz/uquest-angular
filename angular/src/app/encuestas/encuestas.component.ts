@@ -1,11 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EncuestasService} from "../services/encuestas.service";
 import {Encuesta} from "../classes/encuesta";
 import {AuthService} from "../usuarios/auth.service";
-import {RespuestasService} from "../services/respuestas.services";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import {CopyModalComponent} from "./encuesta-listar/copy-modal.component";
 import {DialogModificarFechaComponent} from "./dialog-modificar-fecha/dialog-modificar-fecha.component";
 
@@ -22,20 +21,12 @@ export class EncuestasComponent implements OnInit {
   constructor(private encuestasService: EncuestasService,
               public authService: AuthService,
               private router: Router,
-              private respuestaService: RespuestasService,
               public dialog: MatDialog) {
 
 
     if (this.authService.isAuthenticated()) {
       this.encuestasService.getEncuestasByUsername(JSON.parse(localStorage.getItem("persona")).username).subscribe(encuestas => {
         this.encuestas = encuestas;
-        // encuestas.map(encuesta=> {
-        //   this.respuestaService.getRespuestasByEncuestaId(encuesta.id).subscribe(response=>{
-        //     console.log('Encuesta id: ',encuesta.id)
-        //     console.log(`Respuestas: `,response);
-        //   })
-        // })
-        // console.log(this.encuestas);
       })
     } else {
       this.router.navigate(['/'])
