@@ -14,8 +14,8 @@
       </div>
 
       <mat-accordion class="example-headers-align">
-        <div *ngFor="let encuesta of encuestas" style="margin-bottom: 10px">
-          <mat-expansion-panel style="padding-top: 10px">
+        <div *ngFor="let encuesta of encuestas; first as isFirst" style="margin-bottom: 10px">
+          <mat-expansion-panel style="padding-top: 10px" [expanded]="isFirst">
             <mat-expansion-panel-header [collapsedHeight]="">
               <mat-panel-title style="font-family: Metropolis-Bold, sans-serif">
                 <h3 style="padding-right: 10px">{{encuesta.titulo}}</h3>

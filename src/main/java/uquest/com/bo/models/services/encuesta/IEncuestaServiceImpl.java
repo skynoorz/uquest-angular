@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uquest.com.bo.models.dao.IEncuestaDao;
 import org.springframework.transaction.annotation.Transactional;
+import uquest.com.bo.models.dao.IRespuestaDao;
 import uquest.com.bo.models.entity.Encuesta;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class IEncuestaServiceImpl implements IEncuestaService{
+
+    @Autowired
+    private IRespuestaDao respuestaDao;
 
     @Autowired
     private IEncuestaDao encuestaDao;
@@ -30,8 +33,10 @@ public class IEncuestaServiceImpl implements IEncuestaService{
         return encuestaDao.findById(id).orElse(null);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
+        respuestaDao.deleteByEncuestaId(id);
         encuestaDao.deleteById(id);
     }
 

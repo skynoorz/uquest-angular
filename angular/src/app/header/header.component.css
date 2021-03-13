@@ -11,10 +11,10 @@
 }
 
 .left-navbar{
-  background-image: url("src/favicon.ico");
+  background-image: url("src/assets/images/uquest_b.png");
   background-repeat: no-repeat;
-  background-size: 45px 45px;
-  width: 45px;
+  background-size: 140px 45px;
+  width: 140px;
   height: 45px;
 }
 
