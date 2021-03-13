@@ -53,8 +53,8 @@
                 </div>
               </div>
             </div>
+            <mat-divider></mat-divider>
             <div class="button-seccion">
-              <div>
                 <button (click)="copiarEncuesta(encuesta.id)" style="margin-right: 20px;" mat-raised-button color="secondary" aria-label="copiarEncuesta">
                   Copiar Encuesta
                   <mat-icon>file_copy</mat-icon>
@@ -68,8 +68,6 @@
                   Finalizar
                   <mat-icon>done_all</mat-icon>
                 </button>
-              </div>
-              <div>
                 <button *ngIf="encuestasAvailable.includes(encuesta.id)" (click)="popupModal(encuesta.uid)" style="margin-right: 20px;" mat-raised-button color="accent" aria-label="compartir">
                   Compartir
                   <mat-icon>share</mat-icon>
@@ -85,7 +83,6 @@
                   Eliminar
                   <mat-icon>delete</mat-icon>
                 </button>
-              </div>
             </div>
           </mat-expansion-panel>
         </div>

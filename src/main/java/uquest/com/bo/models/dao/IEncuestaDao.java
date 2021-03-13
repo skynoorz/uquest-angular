@@ -35,4 +35,11 @@ public interface IEncuestaDao extends CrudRepository<Encuesta, Long> {
 
     @Query("from Encuesta where UID=?1")
     Encuesta findByUID(String uid);
+
+    @Modifying
+    @Query(value = "UPDATE encuestas\n" +
+            " Set fecha_ini = ?1\n" +
+            "    ,fecha_fin =  ?2\n" +
+            " WHERE encuestas.id = ?3", nativeQuery = true)
+    public void updateDates(Date fechaIni, Date fechaFin, Long id);
 }

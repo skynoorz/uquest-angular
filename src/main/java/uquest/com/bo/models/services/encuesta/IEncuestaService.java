@@ -31,4 +31,6 @@ public interface IEncuestaService {
     public List<Encuesta> getEncuestasByCarreraList(Long id);
 
     public Encuesta findByUID(String uid);
+
+    public void updateDate(Date fechaIni, Date fechaFin, Long encuestaId);
 }

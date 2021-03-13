@@ -82,7 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/encuestas/**").permitAll()
 //                POST, DELETE PUT control
                 .antMatchers(HttpMethod.POST,"/api/usuarios").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/encuestas", "/api/usuarios/upload").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+                .antMatchers(HttpMethod.POST,"/api/encuestas", "/api/usuarios/upload", "/api/encuestas/up-date").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
                 .antMatchers(HttpMethod.DELETE, "/api/encuestas/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
                 .antMatchers(HttpMethod.PUT, "/api/usuarios/profile/**").hasAnyAuthority("ROLE_USER")
 //                peticiones CRUD ADMIN

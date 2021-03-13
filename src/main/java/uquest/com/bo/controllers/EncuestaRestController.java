@@ -65,6 +65,31 @@ public class EncuestaRestController {
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
+    @PostMapping("/encuestas/up-date")
+    private ResponseEntity<?> updateDate(@Valid @RequestBody Encuesta encuesta, BindingResult result) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (result.hasErrors()) {
+            List<String> errors = new ArrayList<>();
+            for (FieldError err : result.getFieldErrors()) {
+                errors.add(err.getDefaultMessage());
+            }
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            encuestaService.updateDate(encuesta.getFechaIni(), encuesta.getFechaFin(), encuesta.getId());
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al realizar update en la Base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "Se actualizo las fechas correctamente.");
+        return new ResponseEntity<Map>(response, HttpStatus.CREATED);
+    }
+
     @GetMapping("/encuestas/public")
     public List<Encuesta> encuestasPublic() {
         return this.encuestaService.findAllPublic();

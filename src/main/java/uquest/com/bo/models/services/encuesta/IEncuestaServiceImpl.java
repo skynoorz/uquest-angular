@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import uquest.com.bo.models.dao.IRespuestaDao;
 import uquest.com.bo.models.entity.Encuesta;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -84,6 +85,12 @@ public class IEncuestaServiceImpl implements IEncuestaService{
     @Override
     public Encuesta findByUID(String uid) {
         return this.encuestaDao.findByUID(uid);
+    }
+
+    @Transactional
+    @Override
+    public void updateDate(Date fechaIni, Date fechaFin, Long encuestaId) {
+        this.encuestaDao.updateDates(fechaIni, fechaFin, encuestaId);
     }
 
 }

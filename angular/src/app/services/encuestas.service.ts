@@ -116,5 +116,17 @@ export class EncuestasService {
     return this.http.get<Encuesta[]>(`${this.urlEndpointNative}/encuestas/carrera/${carreraId}`)
   }
 
+  updateDates(encuesta: Encuesta): Observable<any>{
+    return this.http.post<any>(environment.basePath +"/api/encuestas/up-date", encuesta).pipe(
+      catchError(err => {
+        if (err.status == 400 ) {
+          return throwError(err);
+        }
+        if (err.error.mensaje)
+          console.log(err.error.mensaje)
+        return throwError(err);
+      })
+    )
+  }
 
 }

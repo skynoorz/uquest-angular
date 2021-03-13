@@ -22,7 +22,8 @@ mat-expansion-panel-header {
 }
 
 .button-seccion{
-  display: inline-flex;
+  padding-top: 17px;
+  display: flex;
   float: right;
   font-family: Metropolis-Regular, sans-serif;
 }
@@ -30,11 +31,11 @@ mat-expansion-panel-header {
 @media only screen and (max-width: 950px) {
   /* For mobile phones: */
   [class*="button-seccion"] {
-    display: flex;
-    justify-content: space-between;
+    display: block;
+    width: 100%;
   }
   [class*="button-seccion"] button {
     width: 170px;
-    margin: 5px;
+    margin: 5px 0 5px 0;
   }
 }
