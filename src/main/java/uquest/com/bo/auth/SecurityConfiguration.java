@@ -79,7 +79,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/api/respuesta/usuarios/pregunta/public/**",
                 "/api/carreras/institutos/**",
                 "/api/usuarios/emailexist/**",
-                "/api/usuarios/ciexist/**","/","/favicon.ico").permitAll()
+                "/api/usuarios/ciexist/**").permitAll()
 //                GET control
                 .antMatchers(HttpMethod.GET, "/api/usuarios/page/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/usuarios/encuestas/user/**","/api/encuestas/finalizar/**").hasAuthority("ROLE_USER")
@@ -95,6 +95,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .apply(securityConfigurerAdapter());
+        http.requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
         // @formatter:on
     }
 
