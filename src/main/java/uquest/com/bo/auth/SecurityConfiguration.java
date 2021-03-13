@@ -79,7 +79,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/api/respuesta/usuarios/pregunta/public/**",
                 "/api/carreras/institutos/**",
                 "/api/usuarios/emailexist/**",
-                "/api/usuarios/ciexist/**","/resources/**").permitAll()
+                "/api/usuarios/ciexist/**").permitAll()
 //                GET control
                 .antMatchers(HttpMethod.GET, "/api/usuarios/page/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/usuarios/encuestas/user/**","/api/encuestas/finalizar/**").hasAuthority("ROLE_USER")
@@ -92,6 +92,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/usuarios/profile/**").hasAnyAuthority("ROLE_USER")
 //                peticiones CRUD ADMIN
                 .antMatchers( "/api/categorias/**","/api/encuestas/**","/api/carreras/**","/api/usuarios/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(securityConfigurerAdapter());
