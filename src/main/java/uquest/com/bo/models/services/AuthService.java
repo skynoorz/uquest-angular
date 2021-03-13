@@ -43,7 +43,6 @@ public class AuthService {
 
 
   public JWTToken authenticate(Authentication authentication) {
-    //    TODO validar aca con usuarioDao?? no entender haha
     String token = tokenProvider.createToken(authentication, false);
     return new JWTToken(token);
   }

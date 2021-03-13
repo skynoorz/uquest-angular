@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import uquest.com.bo.models.entity.Usuario;
 import uquest.com.bo.models.services.UsuarioService;
@@ -18,9 +19,11 @@ import java.util.stream.Collectors;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
   private final UsuarioService usuarioService;
+  private final PasswordEncoder passwordEncoder;
 
-  public CustomAuthenticationProvider(UsuarioService usuarioService) {
+  public CustomAuthenticationProvider(UsuarioService usuarioService, PasswordEncoder passwordEncoder) {
     this.usuarioService = usuarioService;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
@@ -29,6 +32,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     if (user == null) {
         throw new
             BadCredentialsException("Not user found");
+    }
+
+    if (authentication.getCredentials() == null) {
+      throw new BadCredentialsException("No password set");
+    }
+    String presentedPassword = authentication.getCredentials().toString();
+    if (!this.passwordEncoder.matches(presentedPassword, user.getPassword())) {
+      throw new BadCredentialsException("Wrong password");
     }
 
     List<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
