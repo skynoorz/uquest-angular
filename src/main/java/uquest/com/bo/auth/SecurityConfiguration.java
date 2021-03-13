@@ -79,7 +79,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/api/respuesta/usuarios/pregunta/public/**",
                 "/api/carreras/institutos/**",
                 "/api/usuarios/emailexist/**",
-                "/api/usuarios/ciexist/**").permitAll()
+                "/api/usuarios/ciexist/**","/","/favicon.ico").permitAll()
 //                GET control
                 .antMatchers(HttpMethod.GET, "/api/usuarios/page/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/usuarios/encuestas/user/**","/api/encuestas/finalizar/**").hasAuthority("ROLE_USER")
