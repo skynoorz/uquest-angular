@@ -227,7 +227,14 @@ export class RegistroComponent implements OnInit {
           type: 'password',
           label: 'Contraseña',
           maxLength: 60,
+          pattern:  /^.*[0-9].*$/,
+          minLength: 5,
           required: true
+        },
+        validation: {
+          messages: {
+            pattern: () => `La contraseña debe tener al menos un número`,
+          },
         }
       },
       {
