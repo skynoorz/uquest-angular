@@ -11,7 +11,8 @@ INSERT INTO institutos (nombre, sigla, fono, email, carrera_id) VALUES ('Institu
 INSERT INTO institutos (nombre, sigla, fono, email, carrera_id) VALUES ('Instituto de Investigaciones Químicas', 'IIQ', '279-5878 ','iq_umsa@gmail.com', 4);
 
 -- D USUARIOS DE PRUEBA
-INSERT INTO usuarios (ci, apellido_pat, apellido_mat, nombres, fnac, sexo, email, username, password, enabled, create_at, carrera_id) VALUES ('8451251','Ciencias Puras', 'y Naturales','Facultad','1993-02-10','Masculino','uquest.fcpn@gmail.com', 'admin', '$2y$12$pMWoXjzYkpQ3a4ZFDypfKepQARwAtjdQLptHDfE3hqxG.1aMDGEt2 ', true, '2020-05-25',1);
+INSERT INTO usuarios (ci, apellido_pat, apellido_mat, nombres, fnac, sexo, email, username, password, enabled, create_at, carrera_id) VALUES ('1111111','Ciencias Puras', 'y Naturales','Facultad','1993-02-10','Masculino','ronaldg@fcpn.edu.bo', 'uquest', '$2y$12$jRpn6FNUw2K631JRT.w4ieJd3vv9wDDCaNxk0p7aVfbqZ/QkjTrOa', true, '2020-05-25',1);
+INSERT INTO usuarios (ci, apellido_pat, apellido_mat, nombres, fnac, sexo, email, username, password, enabled, create_at, carrera_id) VALUES ('1234567','Ciencias Puras', 'y Naturales','Facultad','1993-02-10','Masculino','uquest.fcpn@gmail.com', 'admin', '$2y$12$pMWoXjzYkpQ3a4ZFDypfKepQARwAtjdQLptHDfE3hqxG.1aMDGEt2', true, '2020-05-25',1);
 
 -- ND CATEGORIAS
 INSERT INTO categorias (nombre, descripcion) VALUES ('Elecciones','Temporadas para las elecciones electorales dentro la UMSA');
@@ -25,7 +26,8 @@ INSERT INTO roles (nombre) VALUES ('ROLE_ADMIN');
 
 -- D ASIGNAR ROLES A LOS USUARIOS DE PRUEBA
 INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (1,1);
-INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (1,2);
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2,1);
+INSERT INTO usuarios_roles (usuario_id, role_id) VALUES (2,2);
 
 -- ENCUESTA 1 RESPONDER ENCUESTAS
 insert into encuestas (create_at, uid, fecha_fin, fecha_ini, tipo, titulo, descripcion, categoria_id, usuario_id) values ('2021-03-25', 'e50c69de-547f-425e-9532-eff2794e49a4', '2021-04-15 01:00:00', '2021-03-25 01:00:00', 'Abierto', 'Inteligibilidad','Comprensibilidad del sistema para los usuarios, tanto como coherencia y racionalidad.', 1, 1);
