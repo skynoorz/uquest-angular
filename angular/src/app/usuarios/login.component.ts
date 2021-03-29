@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit {
     this.isLoadingResults = true;
     this.authService.login(this.persona).subscribe(resp => {
       this.isLoadingResults = false;
-      // console.log("resp: ",resp)
+      console.log("resp: ",resp)
       this.handleLoginResponse(resp)
     }, this.handleErrorLogin)
   }
