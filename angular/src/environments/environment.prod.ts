@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  basePath: 'https://127.0.0.1'
+  basePath: 'http://localhost:8080/uquest-fcpn/'
 };

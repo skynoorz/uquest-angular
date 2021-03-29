@@ -10,7 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>uquest.com.bo</groupId>
-	<artifactId>uquest-angular</artifactId>
+	<artifactId>uquest-fcpn</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>uquest-angular</name>
 	<description>Plataforma de Consultoria Estudiantil en la Facultad de Ciencias Puras y Naturales</description>
