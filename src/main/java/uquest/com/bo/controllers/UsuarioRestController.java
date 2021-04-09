@@ -252,6 +252,9 @@ public class UsuarioRestController {
 
     @PostMapping("/usuarios/upload")
     public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
+
+        log.info("id: "+ id);
+        log.info("archivo: "+ archivo.getSize());
         Map<String, Object> response = new HashMap<>();
         Usuario usuario = usuarioService.findById(id);
 

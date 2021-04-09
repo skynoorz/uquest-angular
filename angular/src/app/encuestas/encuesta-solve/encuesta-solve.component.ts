@@ -16,7 +16,6 @@ import { AuthService } from "../../usuarios/auth.service";
 export class EncuestaSolveComponent implements OnInit {
 
   public encuesta: Encuesta = new Encuesta();
-  // public usuarioId: number = JSON.parse(sessionStorage.getItem("persona")).id;
   public usuarioId: number;
 
   respuestasMap: {
@@ -46,26 +45,33 @@ export class EncuestaSolveComponent implements OnInit {
       if (id) {
         this.encuestaService.getEncuestaUID(id).subscribe((encuesta) => {
           // initialize respuestasMap
-          if (encuesta.tipo == 'Abierto') {
+          if (encuesta){
+            if (encuesta.tipo == 'Abierto') {
 
-          } else if (encuesta.tipo == 'Cerrado') {
-            // console.log("enmtra cerrado")
-            if (this.authService.isAuthenticated()) {
-              this.respuestaService.getUsersWhoAnsweredEncuestaUID(id).subscribe(response => {
-                // console.log("Para validar si esta: ", response);
-                response.forEach(e => {
-                  if (e == JSON.parse(sessionStorage.getItem("persona")).id) {
-                    this.router.navigate(['/encuestas/public'])
-                    Swal.fire('Aviso', `Usted ya respondio a esta encuesta.`, 'warning')
-                  }
+            } else if (encuesta.tipo == 'Cerrado') {
+              // console.log("enmtra cerrado")
+              if (this.authService.isAuthenticated()) {
+                this.respuestaService.getUsersWhoAnsweredEncuestaUID(id).subscribe(response => {
+                  // console.log("Para validar si esta: ", response);
+                  response.forEach(e => {
+                    if (e == JSON.parse(sessionStorage.getItem("persona")).id) {
+                      this.router.navigate(['/encuestas/public'])
+                      Swal.fire('Aviso', `Usted ya respondio a esta encuesta.`, 'warning')
+                    }
+                  })
                 })
-              })
-            } else {
-              this.router.navigate(['/login'])
-              Swal.fire('Aviso', `Usted necesita estar authenticado para responder encuestas cerradas.`, 'warning')
-            }
+              } else {
+                this.router.navigate(['/login'])
+                Swal.fire('Aviso', `Usted necesita estar authenticado para responder encuestas cerradas.`, 'warning')
+              }
 
+            }
+          }else{
+            this.router.navigate(['/'])
+            Swal.fire('Error', `No se encontro la encuesta.`, 'error')
           }
+        }, error => {
+          Swal.fire('Error', `No se encontro la encuesta.`, 'error')
         })
       }
     })
@@ -92,22 +98,29 @@ export class EncuestaSolveComponent implements OnInit {
             else
               p.opciones.forEach(o => {
                 this.respuestasMap[p.id][o.id] = {};
+
               })
           });
           this.encuesta = encuesta;
+          encuesta.preguntas.forEach(pregunta=>{
+            if (pregunta.tipo == 'Escala Lineal'){
+              this.respuestasMap[pregunta.id][pregunta.opciones[0].id].numValue = pregunta.opciones[0].minValue;
+
+            }
+          })
           // console.log(encuesta)
-          // console.log(this.respuestasMap)
+          console.log(this.respuestasMap)
         })
       }
     })
   }
 
   onSubmit() {
-    // para que veas la estructura del map
+    // para ver la estructura del map
     // console.log('respuestasMap', this.respuestasMap);
 
     const respuestas = this.convertRespuestaMapToArrayRespuesta(this.respuestasMap);
-    // para que veas como quedo el map despues de la conversion
+    // para ver como quedo el map despues de la conversion
     // console.log('respuestas', respuestas);
 
     this.respuestaService.saveAllRespuetas(respuestas).subscribe(resp => {

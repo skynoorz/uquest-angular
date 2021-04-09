@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {startWith, tap, switchMap} from "rxjs/operators";
 import {Router} from "@angular/router";
-import { preRegisterSubject$ } from "../usuarios/auth.service";
+import {AuthService, preRegisterSubject$} from "../usuarios/auth.service";
 
 
 export function minAgeValidatorMessage(control: FormControl, date: Date): boolean {
@@ -53,7 +53,7 @@ export class RegistroComponent implements OnInit {
           minLength: 4,
           maxLength: 22,
           required: true,
-          pattern: /^[a-zA-Z\s]+$/
+          pattern: /^[a-zA-Zñ\s]+$/
         },
         validation: {
           messages: {
@@ -66,8 +66,10 @@ export class RegistroComponent implements OnInit {
         type: 'input',
         templateOptions: {
           label: 'Apellido paterno',
+          minLength: 4,
+          maxLength: 22,
           required: true,
-          pattern: /^[a-zA-Z]+$/
+          pattern: /^[a-zA-Zñ\s]+$/
         },
         validation: {
           messages: {
@@ -80,7 +82,9 @@ export class RegistroComponent implements OnInit {
         type: 'input',
         templateOptions: {
           label: 'Apellido materno',
-          pattern: /^[a-zA-Z]+$/,
+          minLength: 4,
+          maxLength: 22,
+          pattern: /^[a-zA-Zñ\s]+$/,
           required: true
         },
         validation: {
@@ -162,17 +166,18 @@ export class RegistroComponent implements OnInit {
           label: 'Instituto',
           options: [],
           valueProp: 'id',
-          labelProp: 'nombre'
+          labelProp: 'nombre',
         },
         hooks: {
           onInit: field => {
             const carreraControl = this.form.get('carreraId');
             field.templateOptions.options = carreraControl.valueChanges.pipe(
               startWith(carreraControl.value),
-              switchMap(carreraId => this.carreraService.getInstitutosByCarreraId(carreraId)),
+              switchMap(carreraId => {
+                return this.carreraService.getInstitutosByCarreraId(carreraId);
+              }),
               tap(() => {
                 field.formControl.setValue(null);
-
               }),
             );
           },
@@ -242,6 +247,7 @@ export class RegistroComponent implements OnInit {
         type: 'input',
         templateOptions: {
           type: 'password',
+          maxLength: 60,
           label: 'Confirme contraseña',
           placeholder: 'Confirme su contraseña',
           required: true,
@@ -254,11 +260,17 @@ export class RegistroComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
               private personaService: PersonaService,
               private carreraService: CarreraService,
-              private router: Router) {
-    this.siteKey = '6Le3v2oaAAAAAKXBwA-bweH_Rrl8YvmP9TSKCAT1';
-    const user = preRegisterSubject$.getValue() || {};
-    user.carreraId = 1;
-    this.user = user;
+              private router: Router,
+              private authService: AuthService) {
+    if (!authService.isAuthenticated()){
+      this.siteKey = '6Le3v2oaAAAAAKXBwA-bweH_Rrl8YvmP9TSKCAT1';
+      const user = preRegisterSubject$.getValue() || {};
+      user.carreraId = 1;
+      this.user = user;
+    } else{
+      Swal.fire('Finalizado', `Usted ya se encuentra registrado.`, 'warning')
+      this.router.navigate(['/'])
+    }
   }
 
   ngOnInit(): void {
@@ -267,12 +279,9 @@ export class RegistroComponent implements OnInit {
 
   onSubmit(user: any) {
     if (this.form.valid){
-      // console.log('user', user);
-      // creo persona model
       this.user.carrera = {id: user.carreraId};
       this.user.instituto = {id: user.institutoId};
       this.isLoading = true;
-      // console.log("registro:", user)
       this.personaService.create(this.user).subscribe(
         response => {
           Swal.fire('Finalizado', `Se realizó el registro satisfactoriamente, porfavor revise su correo electronico para validar su cuenta!`, 'success')

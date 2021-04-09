@@ -44,6 +44,14 @@ public class UploadFileServiceImpl implements IUploadFileService {
         String nombreArchivo = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename().replace(" ", "");
         Path rutaArchivo = getPath(nombreArchivo);
 
+//        START production tomcat directory replacement
+        String rutaArchivoNobin = rutaArchivo.toString();
+        rutaArchivoNobin = rutaArchivoNobin.replace("/bin","");
+        log.info("replaced: "+rutaArchivoNobin);
+        rutaArchivo = Paths.get(rutaArchivoNobin);
+//        END production tomcat directory replacement
+
+
         log.info(rutaArchivo.toString());
         Files.copy(archivo.getInputStream(), rutaArchivo);
 
@@ -65,6 +73,9 @@ public class UploadFileServiceImpl implements IUploadFileService {
 
     @Override
     public Path getPath(String nombreFoto) {
+        log.info("Paths.get(DIRECTORIO_UPLOAD): "+Paths.get(DIRECTORIO_UPLOAD).toString());
+        log.info("Paths.get(DIRECTORIO_UPLOAD).resolve(nombreFoto): "+Paths.get(DIRECTORIO_UPLOAD).resolve(nombreFoto).toString());
+        log.info("Paths.get(DIRECTORIO_UPLOAD).resolve(nombreFoto).toAbsolutePath(): "+Paths.get(DIRECTORIO_UPLOAD).resolve(nombreFoto).toAbsolutePath().toString());
         return Paths.get(DIRECTORIO_UPLOAD).resolve(nombreFoto).toAbsolutePath();
     }
 }

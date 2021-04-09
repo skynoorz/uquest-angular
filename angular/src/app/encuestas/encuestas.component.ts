@@ -81,7 +81,7 @@ export class EncuestasComponent implements OnInit {
   finalizarEncuesta(id: number) {
     Swal.fire({
       title: 'Estas por finalizar esta encuesta',
-      text: "Puedes habilitarla luego usando el boton renovar!",
+      text: "Puedes habilitarla luego actualizando las fechas!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

@@ -266,6 +266,8 @@ export class StadisticsComponent implements OnInit {
     let pdfMake;
     let arrayPromise = [];
     arrayPromise.push(this.chartOM.exporting.pdfmake);
+    arrayPromise.push(this.chartVerif.exporting.pdfmake);
+    arrayPromise.push(this.chartLineal.exporting.pdfmake);
     if (this.arrChartOM.length > 0) {
       this.arrChartOM.forEach((ch, index) => {
         // console.log("ch[index]", ch[index+1])

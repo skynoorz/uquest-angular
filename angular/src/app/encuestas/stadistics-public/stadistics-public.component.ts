@@ -4,6 +4,8 @@ import {isPlatformBrowser} from '@angular/common';
 // amCharts imports
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {EncuestasService} from "../../services/encuestas.service";
 import {Encuesta} from "../../classes/encuesta";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -20,6 +22,7 @@ export class StadisticsPublicComponent implements OnInit {
 
   public encuesta: Encuesta = new Encuesta();
   basePath: string = environment.basePath;
+  private pdfMake: pdfMake = pdfMake;
 
   private chartOM: am4charts.PieChart;
   private chartVerif: am4charts.PieChart;
@@ -31,8 +34,6 @@ export class StadisticsPublicComponent implements OnInit {
   private arrChartLineal: am4charts.XYChart[] = [];
   private arrChartCloud: am4plugins_wordCloud.WordCloud[] = [];
 
-  private preguntaRespuestas: { preguntaDescripcion: string, respuestas: string[] }[] = []
-
   @ViewChild('containerPreguntas', {static: true}) divView: ElementRef
 
   constructor(@Inject(PLATFORM_ID) private platformId,
@@ -41,7 +42,7 @@ export class StadisticsPublicComponent implements OnInit {
               private encuestaService: EncuestasService,
               private router: Router,
               private respuestaService: RespuestasService) {
-
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
 
   ngOnInit(): void {
@@ -76,8 +77,6 @@ export class StadisticsPublicComponent implements OnInit {
         if (id) {
           this.encuestaService.getEncuesta(id).subscribe((encuesta) => {
             this.respuestaService.getRespuestasByEncuestaId(id).subscribe(respuestas => {
-              console.log("Respuestas: ", respuestas)
-              console.log("Encuesta: ", encuesta)
               // Empiezo a generar los charts por cada pregunta
               this.encuesta.preguntas.forEach((pregunta, index) => {
 
@@ -103,7 +102,6 @@ export class StadisticsPublicComponent implements OnInit {
                         respuestas.forEach(respuesta => {
                           // series.text.concat(respuesta);
                           series.text = series.text + respuesta + " ";
-                          console.log("Serie cadena: ", series.text);
                         })
                         // TITULO
                         let title = this.chartCloud.titles.create();
@@ -119,7 +117,6 @@ export class StadisticsPublicComponent implements OnInit {
 
                         this.arrChartCloud.push(this.chartCloud);
                       } else {
-                        console.log("Respuesta Simple Vacia")
                         divcontent.setAttribute("style", "height: 0px;");
 
                         const h1 = document.createElement('h1');
@@ -146,7 +143,6 @@ export class StadisticsPublicComponent implements OnInit {
                         respuestas.forEach(respuesta => {
                           // series.text.concat(respuesta);
                           series.text = series.text + respuesta + " ";
-                          console.log("Serie cadena: ", series.text);
                         })
                         // TITULO
                         let title = this.chartCloud.titles.create();
@@ -162,7 +158,6 @@ export class StadisticsPublicComponent implements OnInit {
 
                         this.arrChartCloud.push(this.chartCloud);
                       } else {
-                        console.log("Parrafo vacio")
                         divcontent.setAttribute("style", "height: 0px;");
 
                         const h1 = document.createElement('h1');
@@ -216,7 +211,6 @@ export class StadisticsPublicComponent implements OnInit {
 
                       this.arrChartOM.push(this.chartOM);
                     } else {
-                      console.log("no hay ninguno en opcion multiple")
                       divcontent.setAttribute("style", "height: 0px;");
 
                       const h1 = document.createElement('h1');
@@ -306,7 +300,7 @@ export class StadisticsPublicComponent implements OnInit {
                       categoryAxis.title.text = "respuestas";
 
                       let valueAxis = this.chartLineal.yAxes.push(new am4charts.ValueAxis());
-                      valueAxis.title.text = "rango";
+                      valueAxis.title.text = "cantidad";
 
                       let series = this.chartLineal.series.push(new am4charts.ColumnSeries());
                       series.name = "Escala Lineal";
@@ -321,7 +315,6 @@ export class StadisticsPublicComponent implements OnInit {
 
                       this.arrChartLineal.push(this.chartLineal);
                     } else {
-                      console.log("no hay ninguno en lineal");
                       divcontent.setAttribute("style", "height: 0px;");
 
                       const h1 = document.createElement('h1');
@@ -347,64 +340,52 @@ export class StadisticsPublicComponent implements OnInit {
   ngOnDestroy() {
     // Clean up chart when the component is removed
     this.browserOnly(() => {
-      if (this.chartOM) {
-        this.chartOM.dispose();
-      }
-      if (this.chartVerif) {
-        this.chartVerif.dispose();
-      }
-      if (this.chartLineal) {
-        this.chartLineal.dispose();
-      }
+      this.arrChartLineal.forEach(cl=>{
+        cl.dispose();
+      });
+      this.arrChartOM.forEach(cl=>{
+        cl.dispose();
+      });
+      this.arrChartVerif.forEach(cl=>{
+        cl.dispose();
+      });
+      this.arrChartCloud.forEach(cc=>{
+        cc.dispose();
+      })
     });
   }
 
   savePDF() {
-    let pdfMake;
     let arrayPromise = [];
-    arrayPromise.push(this.chartOM.exporting.pdfmake);
-    if (this.arrChartOM.length > 0) {
+    // arrayPromise.push(this.chartOM.exporting.pdfmake);
+    if (this.arrChartOM) {
       this.arrChartOM.forEach((ch, index) => {
-        // console.log("ch[index]", ch[index+1])
         arrayPromise.push(ch.exporting.getImage("png"));
       })
     }
-    if (this.arrChartVerif.length > 0) {
+    if (this.arrChartVerif) {
       this.arrChartVerif.forEach((ch, index) => {
         arrayPromise.push(ch.exporting.getImage("png"));
       })
     }
-    if (this.arrChartLineal.length > 0) {
+    if (this.arrChartLineal) {
       this.arrChartLineal.forEach((ch, index) => {
         arrayPromise.push(ch.exporting.getImage("png"));
       })
     }
-    if (this.arrChartCloud.length > 0) {
+    if (this.arrChartCloud) {
       this.arrChartCloud.forEach((ch, index) => {
         arrayPromise.push(ch.exporting.getImage("png"));
       })
     }
 
-    // Promise.all([
-    //   this.chartOM.exporting.pdfmake,
-    //   this.arrChartOM[0].exporting.getImage("png"),
-    //   this.arrChartOM[1].exporting.getImage("png"),
-    //   // this.chartVerif.exporting.getImage("png"),
-    //   // this.chartLineal.exporting.getImage("png")
-    // ]).then((res) => {
     Promise.all(arrayPromise).then((res) => {
-
-      let countRes = 1;
-
+      let countRes = 0;
       var d = new Date();
-
       var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
         d.getFullYear() + " a las " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 
-
-      console.log("res", res)
-      pdfMake = res[0];
-      let doc = {
+      const doc = {
         pageSize: "A4",
         pageOrientation: "portrait",
         pageMargins: [30, 30, 30, 30],
@@ -498,26 +479,5 @@ export class StadisticsPublicComponent implements OnInit {
 
       pdfMake.createPdf(doc).download("reporte_" + this.encuesta.descripcion + "_" + this.encuesta.createAt + ".pdf");
     });
-
-
   }
-
-  generatePDF() {
-    // begin PDF layout
-    var layout = {
-      "content": []
-    };
-
-    // add chart 1
-    layout.content.push({
-      "image": this.chartOM.exporting.getImage('png'),
-      "fit": [523, 300]
-    });
-
-    // finally, download our PDF
-    this.chartOM.exporting.pdfmake.then(function (pdfMake) {
-      pdfMake.createPdf(layout).download("amcharts4.pdf");
-    });
-  }
-
 }
