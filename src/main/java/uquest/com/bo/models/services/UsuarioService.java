@@ -6,11 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +16,6 @@ import uquest.com.bo.models.entity.Role;
 import uquest.com.bo.models.entity.Usuario;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService implements IUsuarioService {
@@ -44,18 +37,6 @@ public class UsuarioService implements IUsuarioService {
             .orElseThrow(() -> new UsernameNotFoundException("User " + login + " was not found in the database"));
 
     }
-
-
-
-
-
-
-
-//    @Override
-//    @Transactional(readOnly = true)
-//    public Usuario findByUsername(String username) {
-//        return usuarioDao.findByUsername(username);
-//    }
 
     public Usuario findUserByToken(String token){
         return usuarioDao.findUsuarioByToken(token);

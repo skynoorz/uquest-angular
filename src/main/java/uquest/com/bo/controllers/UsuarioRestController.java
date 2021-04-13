@@ -97,7 +97,7 @@ public class UsuarioRestController {
         Map<String, Object> response = new HashMap<>();
         try {
             usuario = usuarioService.findById(id);
-            usuario.setPassword("");
+//            usuario.setPassword("");
 //            log.info(usuario.getPassword());
 //            passwordEncoder.matches('',usuario.getPassword());
 //            usuario.setEncuestas(null);

@@ -6,7 +6,7 @@ import {CarreraService} from "../services/carrera.service";
 import {Instituto} from "../classes/instituto";
 import Swal from "sweetalert2";
 import {FormlyFieldConfig} from "@ngx-formly/core";
-import {startWith, tap, switchMap} from "rxjs/operators";
+import {startWith, tap, switchMap, map} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {AuthService, preRegisterSubject$} from "../usuarios/auth.service";
 
@@ -175,6 +175,10 @@ export class RegistroComponent implements OnInit {
               startWith(carreraControl.value),
               switchMap(carreraId => {
                 return this.carreraService.getInstitutosByCarreraId(carreraId);
+              }),
+              map(institutos=>{
+                institutos.unshift({id: null, nombre: 'Ninguno',email: null, fono: null, sigla: null})
+                return institutos;
               }),
               tap(() => {
                 field.formControl.setValue(null);

@@ -7,7 +7,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit(user)">
       <div class="container">
         <formly-form [form]="form" [fields]="fields" [model]="user"></formly-form>
-        <button type="submit" (click)="form.dirty" class="btn btn-success">Finalizar</button>
+        <button type="submit" (click)="form.dirty" [disabled]="!form.dirty || !form.valid" class="btn btn-success">Finalizar</button>
         <button type="button" (click)="cancelar()" class="ml-2 btn btn-danger">Cancelar</button>
       </div>
     </form>
@@ -18,5 +18,4 @@
       </li>
     </ul>
   </div>
-  <!--  <button (click)="mostrar()">mostrar defaults</button>-->
 </div>
