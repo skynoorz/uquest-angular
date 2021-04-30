@@ -2,6 +2,32 @@
   position: absolute;
   /*display: block;*/
   bottom: 0;
-  height: 60px;
+  height: 140px;
   width: 100%;
+}
+.left-footer{
+  margin: 10px;
+  background-image: url("src/assets/images/logoFCPN.png");
+  background-repeat: no-repeat;
+  min-width: 100px;
+  background-size: 100px 100px;
+  display: block;
+  width: 100px;
+  height: 100px;
+}
+.right-footer{
+  margin: 10px;
+  display: block;
+  background-image: url("src/assets/images/logoUMSA.png");
+  background-repeat: no-repeat;
+  min-width: 50px;
+  background-size: 50px 100px;
+  width: 70px;
+  height: 100px;
+}
+
+@media only screen and (max-width: 950px) {
+  [class*="footer-contenido"] {
+    display: block;
+  }
 }

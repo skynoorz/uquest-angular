@@ -1,7 +1,20 @@
 <footer class="footer bg-dark text-center">
-  <div class="container py-2">
-    <p class="text-white my-2">
-      &copy;{{autor.nombre+ ' '+ autor.apellido}}
-    </p>
+  <div class="py-2 footer-contenido" style="align-content: space-between; display: flex;">
+    <div class="left-footer"></div>
+    <div class="container align-middle" style="align-self: center">
+      <p class="text-white mb-0">
+        &copy; {{year}} {{autor.nombre}}
+      </p>
+      <p class="text-white mb-0">
+        {{direccion}}
+      </p>
+      <p class="text-white mb-0">
+        {{autor.ciudad}} - {{autor.pais}}
+      </p>
+      <p class="text-white mb-0">
+        Email: {{autor.email}}
+      </p>
+    </div>
+    <div class="right-footer"></div>
   </div>
 </footer>

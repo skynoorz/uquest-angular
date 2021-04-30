@@ -1,5 +1,7 @@
 package uquest.com.bo.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,9 @@ import java.util.Map;
 
 @Controller
 public class RegistrationController {
+
+    private final Logger log = LoggerFactory.getLogger(OpcionRestController.class);
+
     @Autowired
     private IUsuarioService usuarioService;
 
@@ -24,6 +29,7 @@ public class RegistrationController {
 
         if (token == null) {
             response.put("error", "No se obtuvo ningun token");
+            log.error("No se obtuvo ningun token: "+ token);
             return new ResponseEntity<Map>(response, HttpStatus.BAD_REQUEST);
         }
 

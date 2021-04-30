@@ -1,5 +1,7 @@
 package uquest.com.bo.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,8 @@ import java.util.Map;
 @RequestMapping("/api")
 public class InstitutoRestController {
 
+    private final Logger log = LoggerFactory.getLogger(InstitutoRestController.class);
+
     @Autowired
     private InstitutoService institutoService;
 
@@ -31,11 +35,13 @@ public class InstitutoRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("instituto", institutoNew);
         response.put("mensaje", "El registro del instituto fue satisfactorio.");
+        log.info("El registro del instituto fue satisfactorio. id: "+instituto.getId());
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
@@ -48,13 +54,14 @@ public class InstitutoRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar la consulta en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         if (instituto == null) {
             response.put("mensaje", "El instituto ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            log.warn("El instituto ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity<Instituto>(instituto, HttpStatus.OK);
     }
 
@@ -66,9 +73,11 @@ public class InstitutoRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al eliminar el instituto en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("mensaje", "El instituto con id: '".concat(id.toString().concat("' se elimino correctamente")));
+        log.info("El instituto con id: '".concat(id.toString().concat("' se elimino correctamente")));
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
 }

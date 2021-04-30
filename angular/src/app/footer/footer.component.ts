@@ -8,6 +8,8 @@ import { Component} from '@angular/core';
 export class FooterComponent {
 
   constructor() { }
-  public autor: any = {nombre:'Ronald', apellido:'Guarachi'}
+  public direccion: any ='Av. Villazón N° 1995, Plaza del Bicentenario - Zona Central';
+  public year: number = 2021;
+  public autor: any = {email: 'puras@fcpn.edu.bo', nombre:'Facultad de Ciencias Puras y Naturales', ciudad:'Ciudad de La Paz', pais:'Bolivia'}
 
 }

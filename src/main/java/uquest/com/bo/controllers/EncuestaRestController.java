@@ -22,7 +22,7 @@ import java.util.*;
 @RequestMapping("/api")
 public class EncuestaRestController {
 
-    private final Logger log = LoggerFactory.getLogger(UsuarioRestController.class);
+    private final Logger log = LoggerFactory.getLogger(EncuestaRestController.class);
 
     @Autowired
     private IEncuestaService encuestaService;
@@ -57,11 +57,13 @@ public class EncuestaRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("encuesta", encuestaNew);
         response.put("mensaje", "El registro de la encuesta fue satisfactorio.");
+        log.info("El registro de la encuesta fue satisfactorio.");
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
@@ -83,10 +85,12 @@ public class EncuestaRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar update en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("mensaje", "Se actualizo las fechas correctamente.");
+        log.info("Se actualizo las fechas correctamente.");
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
@@ -121,6 +125,7 @@ public class EncuestaRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "No existen respuestas para la encuesta id: "+id);
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("respuestas", respuestasNew);
@@ -140,9 +145,11 @@ public class EncuestaRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "No existen respuestas para la encuesta id: "+id);
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.info(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("respuestas", total);
+        log.info("respuestas" + total);
         return new ResponseEntity<Map>(response, HttpStatus.OK);
 
     }
@@ -157,9 +164,11 @@ public class EncuestaRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al eliminar la encuesta en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("mensaje", "El registro de la encuesta con id: '".concat(id.toString().concat("' se elimino correctamente")));
+        log.info("El registro de la encuesta con id: '".concat(id.toString().concat("' se elimino correctamente")));
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
 
@@ -171,9 +180,11 @@ public class EncuestaRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al finalizar la encuesta en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("mensaje", "La encuesta se finalizo correctamente");
+        log.info("La encuesta se finalizo correctamente"+ "id: "+ id);
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
 
@@ -188,13 +199,9 @@ public class EncuestaRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "No existen encuestas para la carrera solicitada");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
-//        if (encuestas.isEmpty()){
-//            response.put("mensaje", "No existen encuestas para la carrera solicitada");
-////            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-//        }
         response.put("encuestas", encuestas);
 //        response.put("mensaje", "El registro de la encuesta fue satisfactoriamente");
         return new ResponseEntity<Map>(response, HttpStatus.OK);

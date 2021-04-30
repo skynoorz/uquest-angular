@@ -20,7 +20,7 @@ public class UploadFileServiceImpl implements IUploadFileService {
 
     private final Logger log = LoggerFactory.getLogger(UploadFileServiceImpl.class);
 
-    private final static String DIRECTORIO_UPLOAD = "uquest-fcpn/WEB-INF/classes/uploads/avatars";
+    private final static String DIRECTORIO_UPLOAD = "webapps/uquest-fcpn/WEB-INF/classes/uploads/avatars";
 
     @Override
     public Resource cargar(String nombreFoto) throws MalformedURLException {

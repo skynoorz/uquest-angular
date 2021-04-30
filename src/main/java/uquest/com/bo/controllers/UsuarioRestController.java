@@ -80,10 +80,12 @@ public class UsuarioRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar la consulta en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         if (usuario == null) {
-            response.put("mensaje", "El cliente ID: " .concat(id.toString().concat(" no existe en la base de datos!")));
+            response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            log.warn("El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
 
@@ -104,10 +106,12 @@ public class UsuarioRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar la consulta en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         if (usuario == null) {
-            response.put("mensaje", "El cliente ID: " .concat(id.toString().concat(" no existe en la base de datos!")));
+            response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            log.warn("El cliente ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
 
@@ -126,6 +130,7 @@ public class UsuarioRestController {
             List<String> errors = new ArrayList<>();
             for (FieldError err : result.getFieldErrors()) {
                 errors.add("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
+                log.warn("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
             }
             response.put("errors", errors);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
@@ -146,11 +151,13 @@ public class UsuarioRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("usuario", usuarioNew);
         response.put("mensaje", "El registro del usuario correctamente");
+        log.info("El registro del usuario correctamente, usuario: " + usuario.toString());
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
@@ -166,13 +173,15 @@ public class UsuarioRestController {
             List<String> errors = new ArrayList<>();
             for (FieldError err : result.getFieldErrors()) {
                 errors.add("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
+                log.warn("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
             }
             response.put("errors", errors);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
 
         if (usuario.getId() == null) {
-            response.put("mensaje", "Error, no se pudo editar el cliente con id: " .concat(id.toString().concat(" no existe en la base de datos!")));
+            response.put("mensaje", "Error, no se pudo editar el cliente con id: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            log.warn("Error, no se pudo editar el cliente con id: ".concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
         try {
@@ -184,10 +193,12 @@ public class UsuarioRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el update en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("mensaje", "El registro del usuario se actualizo correctamente");
         response.put("usuario", objectUpdated);
+        log.info("El registro del usuario se actualizo correctamente" + usuario.toString());
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
@@ -203,13 +214,15 @@ public class UsuarioRestController {
             List<String> errors = new ArrayList<>();
             for (FieldError err : result.getFieldErrors()) {
                 errors.add("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
+                log.warn("El campo: '" + err.getField() + "' '" + err.getDefaultMessage());
             }
             response.put("errors", errors);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
 
         if (usuario.getId() == null) {
-            response.put("mensaje", "Error, no se pudo editar el cliente con id: " .concat(id.toString().concat(" no existe en la base de datos!")));
+            response.put("mensaje", "Error, no se pudo editar el cliente con id: ".concat(id.toString().concat(" no existe en la base de datos!")));
+            log.warn("Error, no se pudo editar el cliente con id: ".concat(id.toString().concat(" no existe en la base de datos!")));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
         }
         try {
@@ -221,10 +234,12 @@ public class UsuarioRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el update en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("mensaje", "El registro del usuario se actualizo correctamente");
         response.put("usuario", objectUpdated);
+        log.info("El registro del usuario se actualizo correctamente" + usuario.toString());
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
@@ -244,17 +259,19 @@ public class UsuarioRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al eliminar el cliente en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        response.put("mensaje", "El registro de la usuario con id: '" .concat(id.toString().concat("' se elimino correctamente")));
+        response.put("mensaje", "El registro de la usuario con id: '".concat(id.toString().concat("' se elimino correctamente")));
+        log.info("El registro de la usuario con id: '".concat(id.toString().concat("' se elimino correctamente")));
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
 
     @PostMapping("/usuarios/upload")
     public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
 
-        log.info("id: "+ id);
-        log.info("archivo: "+ archivo.getSize());
+        log.info("id: " + id);
+        log.info("archivo: " + archivo.getSize());
         Map<String, Object> response = new HashMap<>();
         Usuario usuario = usuarioService.findById(id);
 
@@ -270,6 +287,7 @@ public class UsuarioRestController {
                 } catch (IOException e) {
                     response.put("mensaje", "Error al subir la imagen del usuario");
                     response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+                    log.error(e.getMessage().concat(": ").concat(e.getCause().getMessage()));
                     return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
                 String nombreFotoAnterior = usuario.getFoto();
@@ -282,6 +300,7 @@ public class UsuarioRestController {
 
                 response.put("usuario", usuario);
                 response.put("mensaje", "se subio correctamente la imagen: " + nombreArchivo);
+                log.info("se subio correctamente la imagen: " + nombreArchivo);
             }
         }
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);

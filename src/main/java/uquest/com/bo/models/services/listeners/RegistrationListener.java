@@ -17,7 +17,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${server.url}")
+    @Value("${server.email.url}")
     private String baseURL;
 
 

@@ -1,5 +1,7 @@
 package uquest.com.bo.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,8 @@ import java.util.Map;
 @RequestMapping("/api")
 public class CarreraRestController {
 
+    private final Logger log = LoggerFactory.getLogger(CarreraRestController.class);
+
     @Autowired
     private ICarreraService carreraService;
 
@@ -29,25 +33,7 @@ public class CarreraRestController {
 
     @GetMapping("/carreras/institutos/{id}")
     public List<Instituto> show(@PathVariable Long id) {
-
         return carreraService.findInstByCarreraId(id);
-//        return null;
-//        List<Instituto> institutos = null;
-//        Map<String, Object> response = new HashMap<>();
-//        try {
-//            institutos = carreraService.findInstByCarreraId(id);
-////            usuario.setEncuestas(null);
-//        } catch (DataAccessException e) {
-//            response.put("mensaje", "Error al realizar la consulta en la Base de datos");
-//            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//        if (institutos == null) {
-//            response.put("mensaje", "el instituto con ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
-//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-//        }
-//
-//        return new ResponseEntity<Instituto>(institutos, HttpStatus.OK);
     }
 
     @GetMapping("/carreras/id/{id}")
@@ -63,14 +49,17 @@ public class CarreraRestController {
 
         try {
             carreraNew = carreraService.save(carrera);
+
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         response.put("carrera", carreraNew);
         response.put("mensaje", "El registro de la categoria fue satisfactorio.");
+        log.info("El registro de la categoria fue satisfactorio.");
         return new ResponseEntity<Map>(response, HttpStatus.CREATED);
     }
 
@@ -82,8 +71,10 @@ public class CarreraRestController {
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al eliminar la carrera en la Base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            log.error(e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        log.info("El registro de la carrera se elimino correctamente");
         response.put("mensaje", "El registro de la carrera se elimino correctamente");
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
