@@ -7,7 +7,7 @@
       </mat-card>
       <!--    tarjeta de pregunta-->
       <div style="display: flex" *ngFor="let pregunta of encuesta.preguntas; let i = index;" class="seccion-pregunta">
-        <mat-card style="margin-top: 10px; width: 100%">
+        <mat-card style="margin-top: 10px; width: 100%; padding-bottom: 50px">
           <div class="pregunta-header">
             <div style="width: 70%">
               <h3>{{pregunta.descripcion}}<span style="color: red" *ngIf="pregunta.required"> *</span></h3>
@@ -17,22 +17,21 @@
           </div>
           <div class="pregunta-body container" [ngSwitch]="pregunta.tipo">
             <div *ngSwitchCase="'Respuesta Simple'">
-              <div>
-                <mat-form-field hintLabel="Maximo 30 caracteres" appearance="fill">
+              <div >
+                <mat-form-field hintLabel="Maximo 30 caracteres" appearance="fill" class="r_simple">
                   <mat-label>Ingrese su respuesta</mat-label>
                   <div>
-                    <input [required]="pregunta.required" matInput #input [(ngModel)]="respuestasMap[pregunta.id][0].textValue" maxlength="30" name="RespuestaSimple_{{i}}" placeholder="Ej. Nougat">
+                    <input [required]="pregunta.required" matInput #input [(ngModel)]="respuestasMap[pregunta.id][0].textValue" maxlength="30" name="RespuestaSimple_{{i}}" placeholder="Ej. Nougat" >
                     <mat-hint align="end">{{input.value?.length || 0}}/30</mat-hint>
                   </div>
-
                 </mat-form-field>
               </div>
             </div>
             <div *ngSwitchCase="'Parrafo'">
-              <mat-form-field hintLabel="Maximo 230 caracteres" appearance="fill">
+              <mat-form-field hintLabel="Maximo 230 caracteres" appearance="fill" class="parrafo">
                 <mat-label>Ingrese su respuesta</mat-label>
-                <textarea matInput [required]="pregunta.required" #textArea [(ngModel)]="respuestasMap[pregunta.id][0].textValue" name="Parrafo_{{i}}" maxlength="230"
-                          placeholder="Ej. Nougat"></textarea>
+                <textarea matInput [required]="pregunta.required" #textArea [(ngModel)]="respuestasMap[pregunta.id][0].textValue" name="Parrafo_{{i}}" maxlength="230" style="height: 100px"
+                          placeholder="Ej. Nougat" ></textarea>
                 <mat-hint align="end">{{textArea.value?.length || 0}}/230</mat-hint>
               </mat-form-field>
             </div>

@@ -6,3 +6,21 @@
   align-self: center;
   margin: 0 7px 0 7px;
 }
+
+.parrafo{
+  width: 400px;
+  height: 100px;
+}
+.r_simple{
+  width: 400px;
+}
+
+@media only screen and (max-width: 950px) {
+  /* For mobile phones: */
+  [class*="parrafo"] {
+    width: 100%;
+  }
+  [class*="r_simple"] {
+    width: 100%;
+  }
+}

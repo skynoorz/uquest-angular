@@ -17,7 +17,6 @@ import uquest.com.bo.controllers.vm.LoginVM;
 import uquest.com.bo.controllers.vm.SocialLoginResponse;
 import uquest.com.bo.models.services.AuthService;
 import uquest.com.bo.security.jwt.JWTFilter;
-import uquest.com.bo.security.jwt.TokenProvider;
 
 import javax.validation.Valid;
 

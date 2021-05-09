@@ -48,6 +48,7 @@ export class EncuestaCrearComponent implements OnInit {
   }
 
   public encuesta: Encuesta = new Encuesta();
+  public encuestaSend: Encuesta = new Encuesta();
 
   @ViewChild('form')
   form: NgForm;
@@ -115,38 +116,35 @@ export class EncuestaCrearComponent implements OnInit {
     }
   }
 
-  clearIds(){
-    // @ts-ignore
-    this.encuesta.categoria = {"id": this.encuesta.categoria};
+  clearIds(encuesta: Encuesta){
+    // CATEGORIAS
+    if (encuesta.categoria)
+      // @ts-ignore
+      encuesta.categoria = {"id": encuesta.categoria};
+    else
+      encuesta.categoria = null;
+    // CARRERAS
     let carreras: any[] = [];
-    console.log("carreras:",this.encuesta.carreras)
-    this.encuesta.carreras.forEach(c=>{
+    console.log("carreras:",encuesta.carreras)
+    encuesta.carreras.forEach(c=>{
       carreras.push({"id": c})
-      this.encuesta.carreras = carreras;
+      encuesta.carreras = carreras;
     });
-    this.encuesta.preguntas.map(p=>{
-      if (p.id){
-        delete p.id;
-      }
-      if (p.opciones){
-        p.opciones.map(o=>{
-          delete o.id;
-        })
-      }
+    // PREGUNTAS
+    encuesta.preguntas.map(p=>{
+      if (p.id) delete p.id;
+      if (p.opciones) p.opciones.map(o=>{delete o.id;})
     })
-    delete this.encuesta.id;
+    delete encuesta.id;
+    return encuesta;
   }
 
   salvarEncuesta() {
-    // console.log('encuesta DTO', this.encuesta);
 
     const usuario_id = {id: JSON.parse(sessionStorage.getItem('persona')).id};
-    // persona.id = JSON.parse(sessionStorage.getItem('persona')).id;
     this.encuesta.usuario = usuario_id;
-    // console.log("mi id desde session storage: " + this.encuesta.usuario.id);
 
     if (this.encuesta.fechaIni && this.encuesta.fechaFin){
-      // console.log("entra al if")
       const fini = Date.parse(this.encuesta.fechaIni);
       const ffin = Date.parse(this.encuesta.fechaFin);
 
@@ -154,7 +152,7 @@ export class EncuestaCrearComponent implements OnInit {
       if (ffin < fini){
         // console.log("entra al ffin < fini")
         Swal.fire({
-          icon: 'error',
+          icon: 'warning',
           title: 'Oops...',
           text: 'La fecha final no puede ser menor a la inicial!',
           // footer: '<a href>Why do I have this issue?</a>'
@@ -163,7 +161,7 @@ export class EncuestaCrearComponent implements OnInit {
         if (fini > ffin){
           // console.log("entra al fini > ffin")
           Swal.fire({
-            icon: 'error',
+            icon: 'warning',
             title: 'Oops...',
             text: 'La fecha inicial no puede ser mayor a la fecha final!',
             // footer: '<a href>Why do I have this issue?</a>'
@@ -171,41 +169,57 @@ export class EncuestaCrearComponent implements OnInit {
         }
         else {
           console.log(this.encuesta);
+          this.encuestaSend = JSON.parse(JSON.stringify(this.encuesta));
           //limpia los ids antes de enviarlos, esto en caso de copiar una encuesta
-          this.clearIds();
-          this.encuestasService.save(this.encuesta).subscribe(response => {
+          if (this.encuestaSend.carreras){
+            this.encuestaSend = this.clearIds(this.encuestaSend);
+            this.encuestasService.save(this.encuestaSend).subscribe(response => {
 
-              localStorage.removeItem('encuestaBackup');
-              this.router.navigate(['/encuestas'])
-              localStorage.removeItem('encuestaBackup');
-              Swal.fire('Encuesta Generada', `${response.mensaje}: ${response.encuesta.titulo}`, 'success')
-
-
-              localStorage.removeItem('encuestaBackup');
-            },
-            error => {
-              this.errores = error.error.errors as string[];
-              console.log('Codigo de error desde backend: ' + error.status)
-              console.log(error.error.errors)
-              if (error.error.errors) {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: error.error.errors[0],
-                  // footer: '<a href>Why do I have this issue?</a>'
-                })
-              } else {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Revisar bien las preguntas elaboradas!',
-                  // footer: '<a href>Why do I have this issue?</a>'
-                })
+                this.router.navigate(['/encuestas'])
+                Swal.fire('Encuesta Generada', `${response.mensaje}: ${response.encuesta.titulo}`, 'success')
+                this.limpiarEncuesta();
+                localStorage.removeItem('encuestaBackup');
+              },
+              error => {
+                this.errores = error.error.errors as string[];
+                console.log('Codigo de error desde backend: ' + error.status)
+                console.log(error.error.errors)
+                if (error.error.errors) {
+                  Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: error.error.errors[0],
+                    // footer: '<a href>Why do I have this issue?</a>'
+                  })
+                } else {
+                  Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'Revisar bien las preguntas elaboradas!',
+                    // footer: '<a href>Why do I have this issue?</a>'
+                  })
+                }
               }
-            }
-          );
+            );
+          }else{
+            Swal.fire({
+              icon: 'warning',
+              title: 'Oops...',
+              text: 'No hay carreras seleccionadas para publicar la encuesta!',
+              // footer: '<a href>Why do I have this issue?</a>'
+            })
+          }
+
         }
       }
+    }
+    else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Las fechas son requeridas!',
+        // footer: '<a href>Why do I have this issue?</a>'
+      })
     }
 
     // this.personaService.getPersona(JSON.parse(sessionStorage.getItem('persona')).id).subscribe(response=>{
@@ -286,10 +300,8 @@ export class EncuestaCrearComponent implements OnInit {
 
   pegarEncuesta() {
     if (sessionStorage.getItem("clipboard")){
-      console.log("recibo: ", JSON.parse(sessionStorage.getItem("clipboard")));
       let encuestaNew = JSON.parse(sessionStorage.getItem("clipboard"));
       encuestaNew.categoria = encuestaNew.categoria.id;
-      console.log("correccion: ", encuestaNew)
       this.encuesta = encuestaNew
       sessionStorage.removeItem("clipboard");
     }else {

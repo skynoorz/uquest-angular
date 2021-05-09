@@ -23,7 +23,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill" style="padding-right: 10px">
               <mat-label>Categoria</mat-label>
-              <mat-select name="tipoEncuesta" [(ngModel)]="encuesta.categoria">
+              <mat-select name="categoriaEncuesta" [(ngModel)]="encuesta.categoria">
                 <mat-option *ngFor="let cat of categorias" [value]="cat.id">
                   {{cat.nombre}}
                 </mat-option>
@@ -46,7 +46,7 @@
 
             <mat-form-field appearance="fill">
               <mat-label>Fecha Fin de Encuesta</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="ffin" name="ffini" [(ngModel)]="encuesta.fechaFin">
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="ffin" name="ffin" [(ngModel)]="encuesta.fechaFin">
               <mat-datepicker-toggle matSuffix [for]="ffin"></mat-datepicker-toggle>
               <mat-datepicker #ffin></mat-datepicker>
             </mat-form-field>
